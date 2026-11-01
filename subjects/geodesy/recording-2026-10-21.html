@@ -1,0 +1,1170 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>גיאודזיה - תורת המדידות · מבוא לגיאודזיה ומפת המדידה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=block">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});document.documentElement.dataset.math='done'"></script>
+<style>
+/* Lecture summary design system: A4, RTL Hebrew, print-first. */
+
+@page {
+  size: A4;
+  margin: 18mm 16mm 17mm 16mm;
+  @bottom-center {
+    content: counter(page);
+    font-family: Heebo, "Arial Hebrew", sans-serif;
+    font-size: 9pt;
+    color: #7a8394;
+  }
+}
+@page :first {
+  margin: 0;
+  @top-right { content: none; }
+  @top-left { content: none; }
+  @bottom-center { content: none; }
+}
+
+:root {
+  --accent: #4f46e5;
+  --accent-dark: #3730a3;
+  --accent-soft: #eef0ff;
+  --accent-mid: #c7cbfb;
+  --ink: #1d2230;
+  --muted: #5d6676;
+  --line: #dfe3ea;
+  --paper: #ffffff;
+  --bg-soft: #f6f7f9;
+  --ok: #0f7b5f;
+  --ok-soft: #e2f5ee;
+  --warn: #b45309;
+  --warn-soft: #fdf1e2;
+  --bad: #b91c1c;
+  --bad-soft: #fdeaea;
+  --info: #0e6aa8;
+  --info-soft: #e5f2fb;
+}
+
+/* one accent colour per course */
+body.course-math { --accent: #4f46e5; --accent-dark: #3730a3; --accent-soft: #eef0ff; --accent-mid: #c7cbfb; }
+body.course-roads { --accent: #c2620a; --accent-dark: #8f4505; --accent-soft: #fdf0e3; --accent-mid: #f6cfa6; }
+body.course-safety { --accent: #c62828; --accent-dark: #8e1b1b; --accent-soft: #fdecea; --accent-mid: #f5bcbc; }
+body.course-geodesy { --accent: #0f766e; --accent-dark: #0b524c; --accent-soft: #e2f4f1; --accent-mid: #a7dcd5; }
+body.course-building-theory { --accent: #a5502a; --accent-dark: #74371c; --accent-soft: #f8ece5; --accent-mid: #e8c2ad; }
+body.course-drafting { --accent: #0369a1; --accent-dark: #024b74; --accent-soft: #e3f1fa; --accent-mid: #a9d3ee; }
+body.course-labor-law { --accent: #7c3aed; --accent-dark: #5521b5; --accent-soft: #f1eafe; --accent-mid: #d4c0fb; }
+body.course-statics { --accent: #2563eb; --accent-dark: #1e40af; --accent-soft: #e8f0fe; --accent-mid: #b8cdfa; }
+
+* { box-sizing: border-box; }
+html { direction: rtl; }
+body {
+  margin: 0;
+  font-family: Heebo, "Arial Hebrew", Arial, sans-serif;
+  font-size: 11.5pt;
+  line-height: 1.62;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+p { margin: 0 0 2.2mm; }
+b, strong {
+  font-weight: 700;
+  background: linear-gradient(transparent 60%, var(--accent-mid) 60%);
+  padding: 0 0.5mm;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.box b, .box strong, .bl b, .bl strong, th b { background: none; padding: 0; }
+.ltr, .num, code { direction: ltr; unicode-bidi: isolate; }
+code {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.88em;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 1.2mm;
+  padding: 0 1mm;
+}
+.katex { direction: ltr; unicode-bidi: isolate; font-size: 1.08em; }
+.katex-display { margin: 1mm 0 !important; }
+small, .muted { color: var(--muted); }
+
+/* ---------- cover ---------- */
+.cover {
+  height: 297mm;
+  width: 210mm;
+  display: flex;
+  flex-direction: column;
+  break-after: page;
+  overflow: hidden;
+}
+.cover-band {
+  background: var(--accent);
+  color: #fff;
+  padding: 22mm 18mm 14mm;
+  position: relative;
+}
+.cover-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 30%, rgba(255,255,255,.16) 0 18mm, transparent 18.2mm),
+    radial-gradient(circle at 4% 85%, rgba(255,255,255,.10) 0 28mm, transparent 28.2mm),
+    radial-gradient(circle at 30% 105%, rgba(255,255,255,.08) 0 20mm, transparent 20.2mm);
+  pointer-events: none;
+}
+.cover-kicker { font-size: 12pt; font-weight: 500; opacity: .9; margin-bottom: 3mm; }
+.cover h1 { font-size: 30pt; line-height: 1.15; font-weight: 900; margin: 0 0 3mm; }
+.cover-sub { font-size: 14pt; font-weight: 500; opacity: .95; }
+.cover-meta { display: flex; flex-wrap: wrap; gap: 2.5mm; margin-top: 7mm; position: relative; z-index: 1; }
+.chip {
+  display: inline-block;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 20mm;
+  padding: 1mm 4mm;
+  font-size: 10.5pt;
+  font-weight: 500;
+}
+.cover-body { padding: 10mm 18mm 12mm; flex: 1; display: flex; flex-direction: column; gap: 6mm; }
+.cover-body h3 { margin: 0 0 2mm; font-size: 13pt; color: var(--accent-dark); }
+.roadmap { list-style: none; margin: 0; padding: 0; display: grid; gap: 2mm; }
+.roadmap li {
+  display: grid;
+  grid-template-columns: 9mm 1fr auto;
+  align-items: center;
+  gap: 3mm;
+  background: var(--bg-soft);
+  border-radius: 2.5mm;
+  padding: 1.6mm 3mm;
+}
+.roadmap .n {
+  width: 8mm; height: 8mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 11pt;
+}
+.roadmap .t { font-weight: 600; }
+.roadmap .when { direction: ltr; font-size: 9.5pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 2mm 5mm; font-size: 9.5pt; color: var(--muted); }
+
+/* ---------- topic sections: each starts on a new page ---------- */
+section.topic { break-before: page; }
+section.topic.cont { break-before: auto; margin-top: 8mm; }
+.topic-head {
+  display: flex;
+  align-items: center;
+  gap: 3.5mm;
+  border-bottom: 2.5px solid var(--accent);
+  padding-bottom: 2.5mm;
+  margin-bottom: 4mm;
+}
+.topic-head .n {
+  flex: none;
+  width: 11mm; height: 11mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-size: 15pt; font-weight: 900;
+}
+.topic-head h2 { margin: 0; font-size: 19pt; line-height: 1.2; font-weight: 800; color: var(--ink); flex: 1; }
+.time {
+  flex: none;
+  direction: ltr;
+  font-size: 9pt;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 10mm;
+  padding: 0.6mm 2.6mm;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+h3 { font-size: 13.5pt; font-weight: 800; margin: 5mm 0 2mm; color: var(--accent-dark); break-after: avoid; }
+h4 { font-size: 11.5pt; font-weight: 700; margin: 3mm 0 1.5mm; break-after: avoid; }
+
+/* bottom line: first thing in every section */
+.bl {
+  background: var(--accent-soft);
+  border-inline-start: 5px solid var(--accent);
+  border-radius: 2.5mm;
+  padding: 2.5mm 4mm;
+  font-weight: 700;
+  font-size: 12pt;
+  margin: 0 0 4mm;
+  break-inside: avoid;
+}
+.bl::before { content: "⚡ "; }
+
+/* bullets */
+ul.pts { list-style: none; padding: 0; margin: 0 0 3mm; }
+ul.pts > li { position: relative; padding-inline-start: 6mm; margin-bottom: 1.6mm; }
+ul.pts > li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 1mm;
+  top: 2.6mm;
+  width: 2.2mm; height: 2.2mm;
+  border-radius: 50%;
+  background: var(--accent);
+}
+ul.pts ul { margin-top: 1mm; }
+
+/* generic callout box */
+.box {
+  border-radius: 3mm;
+  padding: 3mm 4mm;
+  margin: 3mm 0;
+  break-inside: avoid;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+.box > .box-title { font-weight: 800; margin-bottom: 1.2mm; display: flex; gap: 2mm; align-items: center; }
+.box > :last-child { margin-bottom: 0; }
+.box.life { background: #fffbea; border-color: #f3e3a3; }
+.box.life > .box-title::before { content: "🏠"; }
+.box.formula { background: var(--accent-soft); border-color: var(--accent-mid); text-align: center; }
+.box.formula > .box-title { justify-content: center; }
+.box.formula > .box-title::before { content: "🧮"; }
+.box.tip { background: var(--ok-soft); border-color: #b6e3d2; }
+.box.tip > .box-title::before { content: "💡"; }
+.box.warn { background: var(--warn-soft); border-color: #f2cf9f; }
+.box.warn > .box-title::before { content: "⚠️"; }
+.box.remember { background: var(--info-soft); border-color: #b9dbf2; }
+.box.remember > .box-title::before { content: "🧠"; }
+.box.optional { background: #fafafa; border: 1.5px dashed #c5cad3; }
+.box.optional > .box-title::before { content: "📎"; }
+.box.optional > .box-title::after { content: "רשות"; font-size: 8.5pt; font-weight: 700; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; }
+.box.announce { background: var(--bad-soft); border-color: #f2c2c2; }
+.box.announce > .box-title::before { content: "📢"; }
+.box.unclear { background: #f4f1fb; border-color: #d9cff3; }
+.box.unclear > .box-title::before { content: "❓"; }
+.box.lecturer { background: #fff; border-inline-start: 4px solid var(--accent-mid); }
+.box.lecturer > .box-title::before { content: "🎙️"; }
+
+/* numbered procedure */
+ol.steps { list-style: none; counter-reset: st; padding: 0; margin: 2mm 0 3mm; }
+ol.steps > li { counter-increment: st; position: relative; padding-inline-start: 9mm; margin-bottom: 2mm; min-height: 6.5mm; }
+ol.steps > li::before {
+  content: counter(st);
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.2mm;
+  width: 6.5mm; height: 6.5mm;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 9.5pt;
+  display: grid;
+  place-items: center;
+}
+
+/* worked example */
+.worked {
+  border: 1.5px solid var(--accent-mid);
+  border-radius: 3mm;
+  margin: 3.5mm 0;
+  break-inside: avoid;
+  overflow: hidden;
+}
+.worked > .w-title { background: var(--accent); color: #fff; font-weight: 800; padding: 1.6mm 4mm; }
+.worked > .w-title::before { content: "✏️ "; }
+.worked > .w-body { padding: 3mm 4mm; }
+.worked .given { background: var(--bg-soft); border-radius: 2mm; padding: 2mm 3mm; margin-bottom: 2.5mm; }
+.worked .given::before { content: "נתון: "; font-weight: 800; }
+.worked .ask::before { content: "מחפשים: "; font-weight: 800; }
+.worked ol.lines { counter-reset: ln; list-style: none; padding: 0; margin: 2mm 0; }
+.worked ol.lines > li { counter-increment: ln; padding: 1.2mm 0; padding-inline-start: 13mm; border-bottom: 1px dashed var(--line); position: relative; }
+.worked ol.lines > li::before { content: "שלב " counter(ln); position: absolute; inset-inline-start: 0; font-size: 8.5pt; color: var(--muted); top: 1.8mm; }
+.worked .answer { margin-top: 2mm; font-weight: 800; }
+.worked .answer::before { content: "✅ תשובה: "; }
+.worked .check { margin-top: 1.5mm; color: var(--ok); font-weight: 700; }
+.worked .check::before { content: "✓ בדיקה: "; }
+
+/* figures */
+figure.fig { margin: 3.5mm 0; text-align: center; break-inside: avoid; }
+figure.fig svg { max-width: 100%; height: auto; }
+figure.fig figcaption { font-size: 9.5pt; color: var(--muted); margin-top: 1.5mm; }
+figure.fig.half { width: 60%; margin-inline: auto; }
+
+/* SVG helper classes (inline SVG lives in the HTML DOM, so CSS vars work) */
+svg text { font-family: Heebo, "Arial Hebrew", sans-serif; }
+svg .acc { stroke: var(--accent); }
+svg .acc-f { fill: var(--accent); }
+svg .soft-f { fill: var(--accent-soft); }
+svg .mid-f { fill: var(--accent-mid); }
+svg .dark-f { fill: var(--accent-dark); }
+svg .ink { stroke: var(--ink); }
+svg .ink-f { fill: var(--ink); }
+svg .muted-f { fill: var(--muted); }
+svg .line { stroke: #b8bfcb; }
+svg .ok { stroke: var(--ok); }
+svg .ok-f { fill: var(--ok); }
+svg .bad { stroke: var(--bad); }
+svg .bad-f { fill: var(--bad); }
+svg .warn-f { fill: var(--warn); }
+svg .lbl { font-size: 15px; fill: var(--ink); }
+svg .lbl-s { font-size: 12.5px; fill: var(--muted); }
+svg .lbl-b { font-size: 16px; font-weight: 700; fill: var(--ink); }
+svg .he { direction: rtl; unicode-bidi: plaintext; }
+
+/* tables */
+table.t { width: 100%; border-collapse: separate; border-spacing: 0; margin: 3mm 0; font-size: 10.5pt; break-inside: avoid; border: 1px solid var(--line); border-radius: 2.5mm; overflow: hidden; }
+table.t th { background: var(--accent-soft); color: var(--accent-dark); font-weight: 800; text-align: start; padding: 1.8mm 3mm; border-bottom: 1px solid var(--accent-mid); }
+table.t td { padding: 1.6mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.t tr:last-child td { border-bottom: none; }
+table.t tr:nth-child(even) td { background: #fafbfc; }
+
+/* layout helpers */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; }
+.grid2 > .box, .grid3 > .box { margin: 0; }
+.card { border: 1px solid var(--line); border-radius: 3mm; padding: 2.5mm 3.5mm; break-inside: avoid; background: #fff; }
+.card > .c-title { font-weight: 800; color: var(--accent-dark); margin-bottom: 1mm; }
+.vs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 3mm; align-items: stretch; }
+.vs > .mid { align-self: center; font-weight: 900; color: var(--accent); font-size: 14pt; }
+.keep { break-inside: avoid; }
+.pagebreak { break-before: page; }
+
+/* end matter */
+ol.quiz { padding-inline-start: 7mm; margin: 0; }
+ol.quiz > li { margin-bottom: 3mm; padding-bottom: 2mm; border-bottom: 1px dashed var(--line); break-inside: avoid; }
+ol.quiz .lvl { font-size: 8.5pt; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; margin-inline-start: 2mm; }
+ol.answers { padding-inline-start: 7mm; margin: 0; }
+ol.answers > li { margin-bottom: 2.5mm; break-inside: avoid; }
+dl.glossary { display: grid; grid-template-columns: max-content 1fr; gap: 1.5mm 5mm; margin: 0; }
+dl.glossary dt { font-weight: 800; color: var(--accent-dark); }
+dl.glossary dd { margin: 0; }
+
+@page {
+  @top-right { content: "גיאודזיה - תורת המדידות"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+  @top-left { content: "21/10/2026"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+}
+</style>
+</head>
+<body class="course-geodesy">
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="cover-band">
+    <div class="cover-kicker">🎥 סיכום הקלטה · גיאודזיה - תורת המדידות (850142)</div>
+    <h1>מבוא לגיאודזיה ומפת המדידה</h1>
+    <div class="cover-sub">הקלטת השיעור · יום רביעי 21/10/2026</div>
+    <div class="cover-meta">
+      <span class="chip">👤 ד״ר אדטל לוי-ניסנבוים</span>
+      <span class="chip">⏱ 2:18 שעות הקלטה</span>
+      <span class="chip">📄 16 עמודים</span>
+    </div>
+  </div>
+  <div class="cover-body">
+    <div class="bl">השיעור בשורה אחת: המודד מוסר <b>מפת מדידה</b>, וכל <b>אלמנט קרקעי</b> בה <b>עולה כסף</b>.</div>
+    <div>
+      <h3>🗺️ מפת השיעור</h3>
+      <ol class="roadmap">
+        <li><span class="n">1</span><span class="t">פתיחת הקורס, קורונה ומלחמה</span><span class="when">00:00:30</span></li>
+        <li><span class="n">2</span><span class="t">תכנון איטי, מחסור בדיור ומחירים</span><span class="when">00:30:47</span></li>
+        <li><span class="n">3</span><span class="t">מהי גיאודזיה ומיהו המודד</span><span class="when">01:32:02</span></li>
+        <li><span class="n">4</span><span class="t">מפת מדידה: התוצר של המודד</span><span class="when">01:38:35</span></li>
+        <li><span class="n">5</span><span class="t">דו״ח אפס: מה שעל הקרקע עולה כסף</span><span class="when">01:45:06</span></li>
+        <li><span class="n">6</span><span class="t">עצים במגרש: חוק, כסף ונוהל</span><span class="when">01:50:42</span></li>
+        <li><span class="n">7</span><span class="t">חול, פסולת ועתיקות: "מדינת חוק"</span><span class="when">02:03:36</span></li>
+      </ol>
+    </div>
+    <div class="box announce"><div class="box-title">הודעות מהשיעור</div>
+      <div class="grid2">
+        <ul class="pts">
+          <li>כנראה <b>תהיה בחינה</b>; <b>אין מה״ט</b> <span class="muted">⏱ <span class="ltr">00:04:01</span></span></li>
+          <li>במבחן: <b>כל מה שנאמר</b> <span class="muted">⏱ <span class="ltr">01:32:44</span></span></li>
+          <li>להביא <b>מחשבון מדעי</b> ו<b>מחברת</b> <span class="muted">⏱ <span class="ltr">00:02:39</span></span></li>
+        </ul>
+        <ul class="pts">
+          <li>הקלטות <b>בידיעון</b> תוך 24 שעות <span class="muted">⏱ <span class="ltr">00:01:31</span></span></li>
+          <li>פניות <b>רק דרך הידיעון</b> <span class="muted">⏱ <span class="ltr">00:06:30</span></span></li>
+          <li>בשבוע הבא (כנראה): ההיסטוריה של <b>רישום הקרקעות</b> <span class="muted">⏱ <span class="ltr">01:58:02</span></span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legend"><span>⚡ שורה תחתונה</span><span>🏠 דוגמה מהחיים</span><span>🧮 נוסחה</span><span>✏️ דוגמה פתורה</span><span>⚠️ טעות נפוצה</span><span>💡 טיפ</span><span>⏱ זמן בהקלטה</span></div>
+  </div>
+</div>
+
+<!-- ============ 1. COURSE OPENING, COVID AND WAR ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">1</span><h2>פתיחת הקורס, קורונה ומלחמה</h2><span class="time">⏱ 00:00:30</span></div>
+  <div class="bl">גיאודזיה היא <b>הבסיס</b> לכל בנייה. ובבנייה, יום בלי עבודה <b>לא חוזר</b>.</div>
+
+  <h3>📚 איך לומדים בקורס</h3>
+  <div class="grid3">
+    <div class="card"><div class="c-title">📓 מחברת משבצות</div><p>יש בקורס <b>תאוריה וחישובים</b>, ולכן דפי חשבון.</p></div>
+    <div class="card"><div class="c-title">🧮 מחשבון מדעי</div><p>עם <b>sin, cos, tan</b>. מחשבון <b>משלכם</b>: במבחן עובדים איתו.</p></div>
+    <div class="card"><div class="c-title">🎥 הקלטות</div><p>כל שיעור עולה ל<b>ידיעון</b> תוך <b>24 שעות</b>, אוטומטית.</p></div>
+  </div>
+
+  <p></p>
+  <ul class="pts">
+    <li>סמסטר של כ-<b>14 מפגשים</b>. היום <b>בלי נוסחאות</b>: הן מתחילות <b>מהשיעור השני</b>.</li>
+    <li><b>"ככל הנראה תהיה בחינה"</b>. הגעה, הקשבה ותרגול לאורך הסמסטר ← <b>בלי דרמה</b> בסוף.</li>
+    <li>פניות <b>רק דרך הידיעון</b>, לפי נוהלי המכללה: לא מייל, לא וואטסאפ, לא טלפון.</li>
+  </ul>
+
+  <div class="grid2">
+    <div class="box lecturer"><div class="box-title">חשוב גם בלי מה״ט <span class="time">⏱ 00:04:46</span></div><p><b>אין מבחן מה״ט</b> בגיאודזיה לכיתה הזו, אבל בלי מדידה אי אפשר <b>לתכנן או לבנות</b>.</p></div>
+    <div class="box tip"><div class="box-title">טיפ מהשיעור <span class="time">⏱ 00:06:50</span></div><p>לפני כל שיעור: <b>לעבור על הקודם</b>, לבדוק מה זוכרים ולהביא <b>שאלות</b>.</p></div>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה נוספת: האם המחשבון מכוון למעלות?</div><div class="w-body">
+    <div class="given">מחשבון מדעי. רוצים לוודא שהוא במצב <b>מעלות (DEG)</b>.</div>
+    <div class="ask">באיזה מצב המחשבון?</div>
+    <ol class="lines">
+      <li>מקלידים \(\sin 30\)</li>
+      <li>אם יצא \(0.5\): המחשבון <b>במעלות</b> (DEG).</li>
+      <li>אם יצא \(-0.988\): המחשבון <b>ברדיאנים</b> (RAD) ← לעבור ל-DEG.</li>
+    </ol>
+    <div class="answer">\(\sin 30^\circ = 0.5\) ← המחשבון מוכן.</div>
+    <div class="check">\(\tan 45^\circ = 1\) ✓</div>
+  </div></div>
+
+  <div class="box optional"><div class="box-title">עצות לדרך המקצועית <span class="time">⏱ 00:09:19</span></div>
+    <ul class="pts">
+      <li>להתחיל <b>לעבוד בתחום</b> כבר בזמן הלימודים, ולהציב <b>מטרה ל-<span class="ltr">5–10</span> שנים</b> (קבלן, יזם, מנהל עבודה, מנהל פרויקט).</li>
+      <li><b>שנת תכנון</b> (לא חובה, אחרי השנתיים) ← אפשר <b>לתכנן עד 4 קומות</b>. בשטח עובדים <b>שנים מוגבלות</b>.</li>
+    </ul>
+  </div>
+
+  <h3>🦠 קורונה ומלחמה: מקרקעין מול מיטלטלין <span class="time">⏱ 00:14:59</span></h3>
+  <div class="bl">חצי שנה בלי בנייה = <b>פער קבוע</b>. מוצרים אפשר להשלים, בניין <b>לא</b>.</div>
+
+  <div class="vs">
+    <div class="card"><div class="c-title">🧊 מיטלטלין (נכסים שזזים)</div><p>מקרר, מיקסר. חסר? עובדים <b>3 משמרות</b> ← הפער <b>נסגר</b> תוך <b>חודש עד חצי שנה</b>.</p></div>
+    <div class="mid">מול</div>
+    <div class="card"><div class="c-title">🏗️ מקרקעין (קרקע ובניין)</div><p>יום בלי בנייה <b>לא חוזר</b>. אי אפשר לבקש מבטון <b>להתייבש מהר יותר</b>.</p></div>
+  </div>
+
+  <p></p>
+  <ul class="pts">
+    <li>לפי המרצה, הבנייה <b>לא הוחרגה</b> מהסגר <b>חצי שנה</b>, כשמזון ותרופות כן. המרצה: <b>החלטה שגויה</b>.</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 144" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+      <rect x="300" y="55" width="170" height="18" rx="4" class="bad-f" opacity="0.15"/>
+      <line x1="705" y1="64" x2="18" y2="64" class="ink" stroke-width="2.5" marker-end="url(#ar1)"/>
+      <path d="M199 50 L207 78 M211 50 L219 78" fill="none" class="line" stroke-width="3"/>
+      <path d="M300 38 V28 H470 V38" fill="none" class="bad" stroke-width="2.5"/>
+      <text x="385" y="18" class="bad-f he" text-anchor="middle" font-weight="700" font-size="15">חצי שנה בלי החרגה</text>
+      <circle cx="583" cy="64" r="8" class="mid-f acc" stroke-width="2.5"/>
+      <circle cx="470" cy="64" r="8" class="acc-f"/>
+      <circle cx="300" cy="64" r="8" class="ok-f"/>
+      <circle cx="110" cy="64" r="8" class="bad-f"/>
+      <text direction="ltr" x="583" y="96" class="lbl-b" text-anchor="middle">11/2019</text>
+      <text x="583" y="117" class="lbl he" text-anchor="middle">שמועות ראשונות</text>
+      <text direction="ltr" x="470" y="96" class="lbl-b" text-anchor="middle">03/2020</text>
+      <text x="470" y="117" class="lbl he" text-anchor="middle">סגר ראשון</text>
+      <text direction="ltr" x="300" y="96" class="lbl-b" text-anchor="middle">09/2020</text>
+      <text x="300" y="117" class="lbl he" text-anchor="middle">הבנייה הוחרגה</text>
+      <text direction="ltr" x="110" y="96" class="lbl-b" text-anchor="middle">10/2023</text>
+      <text x="110" y="117" class="lbl he" text-anchor="middle">המלחמה</text>
+      <text x="110" y="136" class="lbl-s he" text-anchor="middle">פועלים לא נכנסים</text>
+      <text x="36" y="50" class="lbl-s he" text-anchor="middle">זמן</text>
+    </svg>
+    <figcaption>ציר הזמן, מימין לשמאל (לפי המרצה): בין הסגר הראשון להחרגת הבנייה עברה <b>חצי שנה</b> (הפס האדום). זמן שלא חוזר.</figcaption>
+  </figure>
+
+  <ul class="pts">
+    <li><b>כוח אדם</b>: רוב הפועלים הגיעו מ<b>הרשות הפלסטינית</b>. בקורונה ואחרי 7.10 הם <b>לא נכנסו</b>.</li>
+    <li>מסין הגיעו רק <b>כ-8,000</b> פועלים. גם מסרי לנקה והודו, אבל רבים <b>בלי ניסיון</b> בבנייה.</li>
+    <li>לפי המרצה, ישראלים בוחרים עבודה <b>קלה</b>: גם ב<b>"עבודה מועדפת"</b> רובם הולכים ל<b>תחנת דלק</b>, לא לבניין.</li>
+  </ul>
+
+  <div class="worked"><div class="w-title">דוגמה נוספת: מקרר מול בניין</div><div class="w-body">
+    <div class="given">מפעל: <b>1,000</b> מקררים ביום (משמרת אחת), ופיגור של <b>60,000</b>. עובר ל-<b>3 משמרות</b>. בניין של <b>24 חודשים</b> נעצר ל-<b>6 חודשים</b>.</div>
+    <div class="ask">מתי כל אחד מהם משלים את הפער?</div>
+    <ol class="lines">
+      <li>תוספת ביום: \(3{,}000 - 1{,}000 = 2{,}000\) מקררים</li>
+      <li>הפיגור נסגר אחרי: \(60{,}000 \div 2{,}000 = 30\) יום</li>
+      <li>בניין: 6 החודשים לא חוזרים ← \(24 + 6 = 30\) חודשים</li>
+    </ol>
+    <div class="answer">המפעל משלים תוך <b>חודש</b>. הבניין מתעכב <b>חצי שנה</b>.</div>
+    <div class="check">\(30 \times 2{,}000 = 60{,}000\) ✓</div>
+  </div></div>
+
+  <div class="box optional"><div class="box-title">אסון ורסאי: כשל הנדסי <span class="time">⏱ 00:15:36</span></div>
+    <p>לפי המרצה: מבנה תעשייה הוסב ל<b>אולם אירועים</b>, ובשינוי <b>הוסר עמוד תמך</b> ← הרצפה <b>קרסה</b>. רוב המוזמנים נפצעו, היו <b>הרוגים</b>, והמהנדס <b>נכלא</b>.</p>
+  </div>
+</section>
+
+<!-- ============ 2. PLANNING, HOUSING, PRICES ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">2</span><h2>תכנון איטי, מחסור בדיור ומחירים</h2><span class="time">⏱ 00:30:47</span></div>
+  <div class="bl">היתר בארץ לוקח <b>שנים</b>. עד 2048 יחסרו כ-<b>1.4 מיליון דירות</b>, והמחירים <b>גבוהים מדי</b>.</div>
+
+  <ul class="pts">
+    <li>בעיה מרכזית: <b>כמה זמן לוקח היתר בנייה</b>, מהבקשה ועד שמקבלים אותו.</li>
+    <li>בחו״ל (לפי המרצה) <b><span class="ltr">2–3</span> שבועות</b>. בארץ: מרפסת <b><span class="ltr">1.5–2</span> שנים</b>, פינוי-בינוי <b>כ-30 שנה</b>.</li>
+    <li>במחלקת תכנון <b><span class="ltr">2–4</span> עובדים</b> מול <b>אלפי בקשות</b> בשנה. הפתרון לפי המרצה: <b>החלטת מדינה</b> (תקציב ותקנים).</li>
+    <li>תחזית ל-<b>2048</b> (100 שנה למדינה), לפי המרצה: כ-<b>20 מיליון</b> תושבים, לעומת כ-<b>10 מיליון</b> היום.</li>
+    <li>לפני הקורונה נבנו כ-<b>50,000</b> דירות בשנה, והשוק צריך <b>60,000 עד 65,000</b> ← חסרו כ-<b>15,000 בשנה</b>.</li>
+    <li>לפי המרצה, המדינה עובדת ב<b>"שיטת כיבוי שרפות"</b>. תשתיות צריך לתכנן <b>כ-20 שנה מראש</b>. <span class="muted">⏱ <span class="ltr">00:38:30</span></span></li>
+  </ul>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): כמה דירות יחסרו ב-2048?</div><div class="w-body">
+    <div class="given">מ-<b>10</b> ל-<b>20 מיליון</b> תושבים · <b>4</b> נפשות בדירה · <b>50,000</b> דירות בשנה (הקצב הממוצע לפני הקורונה) · <b>22</b> שנים (מ-2026 עד 2048)</div>
+    <div class="ask">כמה דירות צריך, וכמה יחסרו?</div>
+    <ol class="lines">
+      <li>תוספת תושבים: \(\Delta P = 20{,}000{,}000 - 10{,}000{,}000 = 10{,}000{,}000\)</li>
+      <li>דירות: \(N = \Delta P \div 4 = 2{,}500{,}000\)</li>
+      <li>זמן: \(t = N \div 50{,}000 = 50\) שנה, ולא 22</li>
+      <li>ייבנו עד 2048: \(22 \times 50{,}000 = 1{,}100{,}000\)</li>
+      <li>יחסרו: \(2{,}500{,}000 - 1{,}100{,}000 = 1{,}400{,}000\) דירות</li>
+    </ol>
+    <div class="answer">חסרות <b>1.4 מיליון</b> דירות. עם 4 נפשות בדירה: כ-<b>5.6 מיליון</b> איש בלי דיור (בשיעור: "כשישה מיליון").</div>
+    <div class="check">\(1{,}100{,}000 + 1{,}400{,}000 = 2{,}500{,}000\) ✓</div>
+  </div></div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 150" xmlns="http://www.w3.org/2000/svg">
+      <text x="640" y="40" class="lbl-b he" text-anchor="middle">צריך</text>
+      <text direction="ltr" x="640" y="58" class="lbl-s" text-anchor="middle">2026–2048</text>
+      <rect x="80" y="20" width="480" height="34" rx="4" class="mid-f"/>
+      <text direction="ltr" x="320" y="43" class="lbl-b" text-anchor="middle">2,500,000</text>
+      <text x="640" y="100" class="lbl-b he" text-anchor="middle">ייבנה</text>
+      <text x="640" y="118" class="lbl-s he" text-anchor="middle">בקצב שלפני הקורונה</text>
+      <rect x="348.8" y="80" width="211.2" height="34" rx="4" class="soft-f acc" stroke-width="2.5"/>
+      <text direction="ltr" x="454" y="103" class="lbl-b" text-anchor="middle">1,100,000</text>
+      <rect x="80" y="80" width="268.8" height="34" rx="4" class="bad-f" opacity="0.16"/>
+      <rect x="80" y="80" width="268.8" height="34" rx="4" fill="none" class="bad" stroke-width="2" stroke-dasharray="7 5"/>
+      <text direction="ltr" x="214" y="103" class="lbl-b" text-anchor="middle">1,400,000</text>
+      <text x="454" y="140" class="lbl he" text-anchor="middle">נבנות</text>
+      <text x="214" y="140" class="bad-f he" text-anchor="middle" font-weight="700" font-size="15">חסרות</text>
+    </svg>
+    <figcaption>מתוך <b>2.5 מיליון</b> דירות שצריך, בקצב שלפני הקורונה (50,000 בשנה) ייבנו רק <b>1.1 מיליון</b>. חסרות <b>1.4 מיליון</b>: יותר ממחצית.</figcaption>
+  </figure>
+
+  <div class="box optional"><div class="box-title">כמה צריך לבנות בשנה? (תוספת)</div>
+    <p>\(2{,}500{,}000 \div 22 \approx 113{,}600\) דירות בשנה: <b>יותר מפי 2</b> מהקצב שלפני הקורונה.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="box warn"><div class="box-title">38/2 ≠ פינוי-בינוי <span class="time">⏱ 00:43:09</span></div>
+      <ul class="pts">
+        <li><b>תמ״א 38/1</b>: מחזקים ומוסיפים <b><span class="ltr">2–2.5</span> קומות</b>.</li>
+        <li><b>תמ״א 38/2</b>: <b>הורסים ובונים</b> <span class="ltr">1–2</span> בניינים.</li>
+        <li><b>פינוי-בינוי</b>: <b>שכונה שלמה</b>, <span class="ltr">20–30</span> שנה.</li>
+      </ul>
+    </div>
+    <div class="box optional"><div class="box-title">חוקים (לפי המרצה) <span class="time">⏱ 00:39:29</span></div>
+      <ul class="pts">
+        <li><b>ממ״ד</b>: חובה בבנייה חדשה מ-<b>1992</b>.</li>
+        <li><b>תמ״א 38</b> (רעידות אדמה): <b>בוטלה</b>.</li>
+        <li><b>מכוני בקרה</b> (גופים חיצוניים שיבדקו בקשות להיתר במקום העירייה): החוק עבר, <b>התקנות לא הושלמו</b>.</li>
+        <li><b>חוק המכר (דירות)</b>: מגן על הקונים ← קונים רק בפרויקט עם <b>ליווי בנקאי</b>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>💰 ריבית, מחירים ומשרדים <span class="time">⏱ 00:50:51</span></h3>
+  <div class="bl">דירה ממוצעת עולה היום <b>163 משכורות</b>, לעומת <b>93</b> ב-2011. רבים <b>לא יכולים לקנות</b>.</div>
+
+  <ul class="pts">
+    <li>עוד השפעות של הקורונה: <b>חומרי גלם</b> נעצרו. לפי המרצה, מעל <b>90%</b> מהם מגיעים <b>מסין</b>. <span class="muted">⏱ <span class="ltr">00:51:01</span></span></li>
+    <li><b>3 עד 5 סבבי בחירות</b> ← אין ממשלה ← <b>אין תקציב</b> ← ועדות התכנון כמעט <b>לא עבדו</b>.</li>
+    <li><b>הריבית</b>: כמעט <b>0</b> בקורונה, ואחר כך עד <b>כמעט 8%</b> (לפי המרצה) ← מימון <b>יקר</b> לקבלנים ולמשכנתאות.</li>
+    <li>בשיא: מעל <b>מיליון מובטלים</b>, והותר <b>לדחות משכנתא</b>. דחייה, <b>לא ביטול</b>: הריבית המשיכה ← מי שדחה שילם <b>יותר</b>. <span class="muted">⏱ <span class="ltr">00:57:44</span></span></li>
+    <li>בגוש דן: <b><span class="ltr">60–80</span> אלף ₪ למ״ר</b>. דירה של 100 מ״ר <b>ברוטו</b> היא כ-<b><span class="ltr">70–74</span> מ״ר נטו</b>.</li>
+    <li>יש <b>כ-80,000</b> דירות שלא נמכרו. לא כי אין צורך, אלא כי <b>אי אפשר לקנות</b>.</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 196" xmlns="http://www.w3.org/2000/svg">
+      <line x1="360" y1="8" x2="360" y2="190" class="line" stroke-width="1.5" stroke-dasharray="4 5"/>
+      <text x="540" y="20" class="lbl-b he" text-anchor="middle">מחיר דירה ממוצעת</text>
+      <text x="540" y="38" class="lbl-s he" text-anchor="middle">מיליוני שקלים</text>
+      <rect x="580" y="112.4" width="60" height="59.6" class="soft-f acc" stroke-width="2"/>
+      <rect x="440" y="62" width="60" height="110" class="mid-f acc" stroke-width="2"/>
+      <line x1="420" y1="172" x2="660" y2="172" class="ink" stroke-width="2"/>
+      <text direction="ltr" x="610" y="105" class="lbl-b" text-anchor="middle">1.3</text>
+      <text direction="ltr" x="470" y="55" class="lbl-b" text-anchor="middle">2.4</text>
+      <text direction="ltr" x="540" y="128" class="dark-f" text-anchor="middle" font-weight="700" font-size="16">+84%</text>
+      <text direction="ltr" x="610" y="191" class="lbl" text-anchor="middle">2011</text>
+      <text x="470" y="191" class="lbl he" text-anchor="middle">היום</text>
+      <text x="180" y="20" class="lbl-b he" text-anchor="middle">משכורות לדירה</text>
+      <text x="180" y="38" class="lbl-s he" text-anchor="middle">משכורות ממוצעות</text>
+      <rect x="220" y="109.2" width="60" height="62.8" class="soft-f acc" stroke-width="2"/>
+      <rect x="80" y="62" width="60" height="110" class="mid-f acc" stroke-width="2"/>
+      <line x1="60" y1="172" x2="300" y2="172" class="ink" stroke-width="2"/>
+      <text direction="ltr" x="250" y="102" class="lbl-b" text-anchor="middle">93</text>
+      <text direction="ltr" x="110" y="55" class="lbl-b" text-anchor="middle">163</text>
+      <text direction="ltr" x="250" y="191" class="lbl" text-anchor="middle">2011</text>
+      <text x="110" y="191" class="lbl he" text-anchor="middle">היום</text>
+    </svg>
+    <figcaption>מאז מחאת 2011 (מהשיעור): הדירה התייקרה ב-<b>84%</b>, וצריך <b>163</b> משכורות במקום <b>93</b>. בדיקה: \(1.3 \times 1.84 \approx 2.4\) ✓</figcaption>
+  </figure>
+
+  <div class="grid2">
+    <div class="worked"><div class="w-title">מהשיעור, עם תיקון: שטח של מיטה</div><div class="w-body">
+      <div class="given">מיטה <b>2 × 2 מ׳</b>, בגוש דן</div>
+      <div class="ask">כמה עולה השטח שלה?</div>
+      <ol class="lines">
+        <li>\(A = 2 \times 2 = 4\ \text{m}^2\)</li>
+        <li>\(4 \times 60{,}000 = 240{,}000\)</li>
+        <li>\(4 \times 80{,}000 = 320{,}000\)</li>
+      </ol>
+      <div class="answer"><b><span class="ltr">240–320</span> אלף ₪</b> רק לשטח המיטה</div>
+      <div class="check">\(320{,}000 \div 4 = 80{,}000\) ✓</div>
+      <p class="muted">בשיעור נאמר "500 עד 700 אלף"; לפי 60 עד 80 אלף ₪ למ״ר יוצא פחות.</p>
+    </div></div>
+    <div class="worked"><div class="w-title">מהשיעור: כמה שנים של משכורת?</div><div class="w-body">
+      <div class="given"><b>50,000 ₪ נטו</b> בחודש, חוסכים <b>הכול</b>. דירה: <b>6 מיליון ₪</b></div>
+      <div class="ask">כמה שנים?</div>
+      <ol class="lines">
+        <li>בשנה: \(50{,}000 \times 12 = 600{,}000\)</li>
+        <li>\(6{,}000{,}000 \div 600{,}000 = 10\)</li>
+      </ol>
+      <div class="answer"><b>10 שנים</b> בלי שום הוצאה</div>
+      <div class="check">\(10 \times 600{,}000 = 6{,}000{,}000\) ✓</div>
+    </div></div>
+  </div>
+
+  <h3>🏢 משרדים ופיצול דירות <span class="time">⏱ 01:03:33</span></h3>
+  <ul class="pts">
+    <li>אחרי הזום צריך <b>פחות משרדים</b>, ובכל זאת בונים <b>יותר מסחר ומשרדים</b> ממגורים. לפי המרצה, בגלל <b>המיסוי</b>.</li>
+    <li>להפוך משרד לדירה? <b>לא</b>: למגורים יש <b>תקנים ותברואה</b> אחרים. עדיף <b>לתכנן מראש</b> למגורים.</li>
+    <li><b>פיצול דירה</b> בלי היתר = <b>לא חוקי</b>. יותר משפחות על <b>אותן תשתיות</b> ← <b>עומס</b>.</li>
+  </ul>
+</section>
+
+<!-- ============ 3. WHAT IS GEODESY, WHO IS THE SURVEYOR ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">3</span><h2>מהי גיאודזיה ומיהו המודד</h2><span class="time">⏱ 01:32:02</span></div>
+  <div class="bl">גיאודזיה = <b>תורת המדידות</b>. מודד מוסמך = <b>מב״ר</b>, ברישיון ממנהל <b>מפ״י</b>.</div>
+
+  <ul class="pts">
+    <li><b>גיאודזיה</b> = כל מה שקשור ל<b>מדידה</b>. המילה <b>ביוונית</b>, ופירושה <b>"חלוקת הקרקע"</b>.</li>
+    <li><b>גיאודטים</b> לומדים <b>הנדסה גיאודטית</b> (למשל בטכניון): מתחילים ב<b>הנדסה אזרחית</b> ואז מתמחים.</li>
+    <li><b>4 שנים</b>, ובסוף <b>2 פרויקטי גמר</b> עם <b>הגנה</b> ← הסמכה ← <b>מב״ר: מודד בעל רישיון</b>.</li>
+    <li>את הרישיון נותן <b>מנהל מפ״י</b>. <b>מפ״י = המרכז למיפוי ישראל</b>, האחראי על <b>כל המדידות בארץ</b>.</li>
+    <li>אפשר להגיע למקצוע גם ב<b>הסבה</b>, אחרי לימודים אחרים.</li>
+  </ul>
+
+  <div class="grid2">
+    <div class="box lecturer"><div class="box-title">בשיעור הודגש <span class="time">⏱ 01:32:44</span></div>
+      <p>במבחן אפשר לשאול על <b>כל מה שנאמר</b> ← <b>לרשום הכול</b>, גם מה שעל הלוח.</p>
+    </div>
+    <div class="box tip"><div class="box-title">טיפ לזיכרון</div>
+      <p><b>מב״ר</b> = <b>מ</b>ודד <b>ב</b>על <b>ר</b>ישיון. המודד <b>מקבל</b> את הרישיון ממנהל מפ״י.</p>
+    </div>
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 142" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+      <path d="M195 34 V26 H705 V34" fill="none" class="line" stroke-width="2"/>
+      <text x="450" y="18" class="lbl-s he" text-anchor="middle">ארבע שנות לימוד</text>
+      <rect x="555" y="42" width="150" height="72" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="630" y="73" class="lbl-b he" text-anchor="middle">הנדסה אזרחית</text>
+      <text x="630" y="97" class="lbl-s he" text-anchor="middle">הבסיס</text>
+      <line x1="551" y1="78" x2="530" y2="78" class="ink" stroke-width="2" marker-end="url(#ar2)"/>
+      <rect x="375" y="42" width="150" height="72" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="450" y="73" class="lbl-b he" text-anchor="middle">התמחות</text>
+      <text x="450" y="97" class="lbl-s he" text-anchor="middle">הנדסה גיאודטית</text>
+      <line x1="371" y1="78" x2="350" y2="78" class="ink" stroke-width="2" marker-end="url(#ar2)"/>
+      <rect x="195" y="42" width="150" height="72" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="270" y="73" class="lbl-b he" text-anchor="middle">פרויקטי גמר</text>
+      <text x="270" y="97" class="lbl-s he" text-anchor="middle">שניים, עם הגנה</text>
+      <line x1="191" y1="78" x2="170" y2="78" class="ink" stroke-width="2" marker-end="url(#ar2)"/>
+      <rect x="15" y="42" width="150" height="72" rx="10" class="mid-f acc" stroke-width="3"/>
+      <text x="90" y="73" class="lbl-b he" text-anchor="middle">מב״ר</text>
+      <text x="90" y="97" class="lbl-s he" text-anchor="middle">רישיון ממנהל מפ״י</text>
+      <text x="90" y="134" class="lbl-s he" text-anchor="middle">המרכז למיפוי ישראל</text>
+    </svg>
+    <figcaption>הדרך לרישיון, מימין לשמאל: הנדסה אזרחית ← התמחות גיאודטית ← פרויקטי גמר ← <b>מב״ר</b>.</figcaption>
+  </figure>
+
+  <div class="grid2">
+    <figure class="fig">
+      <svg viewBox="0 0 360 210" xmlns="http://www.w3.org/2000/svg">
+        <text x="312" y="36" class="lbl-b he" text-anchor="middle">מודדים</text>
+        <rect x="252" y="20" width="10" height="24" rx="2" class="acc-f"/>
+        <text direction="ltr" x="200" y="38" class="lbl-b" text-anchor="middle">700–750</text>
+        <text x="312" y="86" class="lbl-b he" text-anchor="middle">שמאים</text>
+        <rect x="235" y="70" width="27" height="24" rx="2" class="mid-f acc" stroke-width="1.5"/>
+        <text direction="ltr" x="190" y="88" class="lbl-b" text-anchor="middle">2,000+</text>
+        <text x="312" y="136" class="lbl-b he" text-anchor="middle">מתווכים</text>
+        <rect x="62" y="120" width="200" height="24" rx="2" class="mid-f acc" stroke-width="1.5"/>
+        <rect x="22" y="120" width="40" height="24" rx="2" class="soft-f acc" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text direction="ltr" x="150" y="138" class="lbl-b" text-anchor="middle">15,000–18,000</text>
+        <text x="312" y="186" class="lbl-b he" text-anchor="middle">עורכי דין</text>
+        <rect x="22" y="170" width="240" height="24" rx="2" class="mid-f acc" stroke-width="1.5"/>
+        <path d="M44 164 L52 200 M54 164 L62 200" fill="none" class="line" stroke-width="3"/>
+        <text direction="ltr" x="160" y="188" class="lbl-b" text-anchor="middle">100,000+</text>
+      </svg>
+      <figcaption>בעלי רישיון בארץ (לפי המרצה). מודדים: <b>הכי מעט</b>. הפס של עורכי הדין <b>חתוך</b>.</figcaption>
+    </figure>
+    <div class="worked"><div class="w-title">דוגמה נוספת: עורכי דין למודד</div><div class="w-body">
+      <div class="given">כ-<b>100,000</b> עורכי דין, <b><span class="ltr">700–750</span></b> מודדים</div>
+      <div class="ask">כמה עורכי דין על כל מודד?</div>
+      <ol class="lines">
+        <li>\(100{,}000 \div 750 \approx 133\)</li>
+        <li>\(100{,}000 \div 700 \approx 143\)</li>
+      </ol>
+      <div class="answer">כ-<b>133 עד 143</b> לכל מודד ← מקצוע <b>מבוקש</b></div>
+      <div class="check">\(750 \times 133 = 99{,}750\) ✓</div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ============ 4. SURVEY MAP ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">4</span><h2>מפת מדידה: התוצר של המודד</h2><span class="time">⏱ 01:38:35</span></div>
+  <div class="bl">המודד מוסר <b>מפת מדידה</b>: <b>גבולות</b>, <b>קווי בניין</b> ו<b>אלמנטים קרקעיים</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהשיעור</div>
+    <p>רופא נותן <b>מרשם</b>. מודד נותן <b>מפת מדידה</b>. לא שמאות ולא "אישור": <b>מפה</b>.</p>
+  </div>
+
+  <ul class="pts">
+    <li>בשביל מה המפה? <b>בקשה להיתר בנייה</b> בוועדה.</li>
+    <li><b>סכסוך שכנים</b>: איפה בדיוק עובר <b>הגבול</b>. ויכוח על <b>20 ס״מ</b> יכול להימשך <b>30 שנה</b>.</li>
+    <li>איפה תעבור <b>גדר או חומה</b> בין שני חלקי מגרש. הפתרון: מודד ש<b>שני הצדדים מקבלים</b> מסמן קו, וזהו.</li>
+  </ul>
+
+  <h3>🗺️ מה יש במפה: 3 רכיבים <span class="time">⏱ 01:42:22</span></h3>
+  <div class="grid3">
+    <div class="card"><div class="c-title">1. גבולות</div><p>של <b>גוש</b>, <b>חלקה</b> או <b>מגרש</b>. יפורט בהמשך הקורס.</p></div>
+    <div class="card"><div class="c-title">2. קווי בניין</div><p>כמה הבניין <b>מתרחק</b> מכל גבול, לפי ה<b>תב״ע</b>.</p></div>
+    <div class="card"><div class="c-title">3. אלמנטים קרקעיים</div><p><b>מבנים</b>, צנרת השקיה וביוב, <b>צמחייה</b>, <b>עצים</b>.</p></div>
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 348" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker>
+        <marker id="ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker>
+      </defs>
+      <line x1="10" y1="300" x2="710" y2="300" class="line" stroke-width="2"/>
+      <line x1="10" y1="342" x2="710" y2="342" class="line" stroke-width="2"/>
+      <line x1="10" y1="324" x2="710" y2="324" class="ink" stroke-width="2" stroke-dasharray="12 4 3 4"/>
+      <text x="62" y="317" class="lbl-s he" text-anchor="middle">קו ביוב</text>
+      <text x="660" y="317" class="lbl-s he" text-anchor="middle">רחוב</text>
+      <polygon points="150,62 575,50 598,282 128,292" fill="none" class="ink" stroke-width="3"/>
+      <circle cx="150" cy="62" r="5" class="ink-f"/><circle cx="575" cy="50" r="5" class="ink-f"/>
+      <circle cx="598" cy="282" r="5" class="ink-f"/><circle cx="128" cy="292" r="5" class="ink-f"/>
+      <polygon points="169,98 557,87 572,247 154,256" fill="none" class="acc" stroke-width="2.5" stroke-dasharray="9 6"/>
+      <rect x="240" y="122" width="120" height="70" class="mid-f ink" stroke-width="2"/>
+      <text x="300" y="153" class="lbl he" text-anchor="middle">מבנה קיים</text>
+      <text x="300" y="175" class="lbl-s he" text-anchor="middle">להריסה</text>
+      <text x="350" y="274" class="lbl-b he" text-anchor="middle">חלקה</text>
+      <text direction="ltr" x="308" y="274" class="lbl-b" text-anchor="middle">12</text>
+      <circle cx="450" cy="130" r="13" fill="none" class="ok" stroke-width="2.5"/><text direction="ltr" x="450" y="135" class="lbl-s" text-anchor="middle">1</text>
+      <circle cx="490" cy="120" r="13" fill="none" class="ok" stroke-width="2.5"/><text direction="ltr" x="490" y="125" class="lbl-s" text-anchor="middle">2</text>
+      <circle cx="512" cy="160" r="13" fill="none" class="ok" stroke-width="2.5"/><text direction="ltr" x="512" y="165" class="lbl-s" text-anchor="middle">3</text>
+      <circle cx="472" cy="168" r="13" fill="none" class="ok" stroke-width="2.5"/><text direction="ltr" x="472" y="173" class="lbl-s" text-anchor="middle">4</text>
+      <circle cx="205" cy="232" r="13" fill="none" class="ok" stroke-width="2.5"/><text direction="ltr" x="205" y="237" class="lbl-s" text-anchor="middle">5</text>
+      <circle cx="242" cy="244" r="13" fill="none" class="ok" stroke-width="2.5"/><text direction="ltr" x="242" y="249" class="lbl-s" text-anchor="middle">6</text>
+      <path d="M136 208 C 220 206, 300 214, 380 207 S 470 200, 540 207" fill="none" class="ink" stroke-width="2" stroke-dasharray="3 5"/>
+      <line x1="420" y1="324" x2="420" y2="251" class="ink" stroke-width="2" stroke-dasharray="12 4 3 4"/>
+      <circle cx="420" cy="243" r="8" fill="none" class="ink" stroke-width="2"/>
+      <text x="468" y="236" class="lbl-s he" text-anchor="middle">חיבור ביוב</text>
+      <path d="M492 272 q7 -13 14 0 q7 -13 14 0 q7 -13 14 0" fill="none" class="ok" stroke-width="2.2"/>
+      <line x1="140" y1="176" x2="161" y2="176" class="ink" stroke-width="1.6" marker-start="url(#ar4)" marker-end="url(#ar4)"/>
+      <text direction="ltr" x="112" y="181" class="lbl-s" text-anchor="middle">3 m</text>
+      <line x1="330" y1="58" x2="330" y2="92" class="ink" stroke-width="1.6" marker-start="url(#ar4)" marker-end="url(#ar4)"/>
+      <text direction="ltr" x="353" y="80" class="lbl-s" text-anchor="middle">5 m</text>
+      <line x1="60" y1="112" x2="60" y2="66" class="ink" stroke-width="2.5" marker-end="url(#ar3)"/>
+      <text direction="ltr" x="60" y="56" class="lbl-b" text-anchor="middle">N</text>
+      <text x="490" y="24" class="lbl he" text-anchor="middle">עצים ממוספרים</text>
+      <line x1="490" y1="32" x2="490" y2="106" class="line" stroke-width="1.5"/>
+      <text x="660" y="110" class="lbl he" text-anchor="middle">גבול המגרש</text>
+      <line x1="612" y1="114" x2="584" y2="114" class="line" stroke-width="1.5"/>
+      <text x="660" y="180" class="dark-f he" text-anchor="middle" font-weight="700" font-size="15">קו בניין</text>
+      <line x1="622" y1="184" x2="568" y2="184" class="line" stroke-width="1.5"/>
+      <text x="660" y="262" class="lbl he" text-anchor="middle">צמחייה</text>
+      <line x1="626" y1="266" x2="536" y2="268" class="line" stroke-width="1.5"/>
+      <text x="62" y="222" class="lbl he" text-anchor="middle">צנרת השקיה</text>
+      <line x1="104" y1="216" x2="135" y2="209" class="line" stroke-width="1.5"/>
+    </svg>
+    <figcaption>לשים לב: <b>העצים</b> נמצאים <b>בתוך קו הבניין</b> ← בלי טיפול בהם אין היתר, וכל עץ עולה כסף. קו שחור = <b>גבול המגרש</b>, מקווקו = <b>קו בניין</b>.</figcaption>
+  </figure>
+
+  <div class="box warn"><div class="box-title">טעות נפוצה <span class="time">⏱ 01:44:20</span></div>
+    <p>אלמנטים קרקעיים ≠ <b>הרים ועמקים</b>. אלה שייכים ל<b>תבליט</b> (טופוגרפיה): נושא אחר.</p>
+  </div>
+
+  <h3>📏 קווי בניין ותב״ע <span class="time">⏱ 01:42:39</span></h3>
+  <ul class="pts">
+    <li><b>תב״ע</b> = <b>תוכנית בניין עיר</b>. היא קובעת את <b>קווי הבניין</b>.</li>
+    <li><b>קו בניין</b> = כמה הבניין חייב <b>להתרחק מכל גבול</b> של המגרש. מקובל <b>3 או 5 מטר</b>.</li>
+    <li>בית <b>דו-משפחתי</b> ("דו"): <b>קיר משותף</b> על הגבול ← בצד הזה <b>אין מרווח</b>.</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 262" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+      <line x1="370" y1="12" x2="370" y2="250" class="line" stroke-width="1.5" stroke-dasharray="4 5"/>
+      <text x="550" y="20" class="lbl-b he" text-anchor="middle">בית בודד</text>
+      <rect x="400" y="30" width="300" height="200" fill="none" class="ink" stroke-width="3"/>
+      <rect x="430" y="80" width="240" height="100" fill="none" class="acc" stroke-width="2.5" stroke-dasharray="9 6"/>
+      <rect x="462" y="100" width="176" height="60" class="mid-f acc" stroke-width="2"/>
+      <text x="550" y="136" class="lbl he" text-anchor="middle">הבניין</text>
+      <line x1="520" y1="33" x2="520" y2="77" class="ink" stroke-width="1.8" marker-start="url(#ar5)" marker-end="url(#ar5)"/>
+      <text direction="ltr" x="545" y="61" class="lbl-s" text-anchor="middle">5 m</text>
+      <line x1="520" y1="183" x2="520" y2="227" class="ink" stroke-width="1.8" marker-start="url(#ar5)" marker-end="url(#ar5)"/>
+      <text direction="ltr" x="545" y="211" class="lbl-s" text-anchor="middle">5 m</text>
+      <line x1="403" y1="130" x2="427" y2="130" class="ink" stroke-width="1.8" marker-start="url(#ar5)" marker-end="url(#ar5)"/>
+      <text direction="ltr" x="415" y="121" class="muted-f" font-size="11" text-anchor="middle">3 m</text>
+      <line x1="673" y1="130" x2="697" y2="130" class="ink" stroke-width="1.8" marker-start="url(#ar5)" marker-end="url(#ar5)"/>
+      <text direction="ltr" x="685" y="121" class="muted-f" font-size="11" text-anchor="middle">3 m</text>
+      <text x="550" y="252" class="lbl-s he" text-anchor="middle">מקווקו = קו הבניין</text>
+      <text x="180" y="20" class="lbl-b he" text-anchor="middle">דו-משפחתי</text>
+      <rect x="20" y="30" width="320" height="200" fill="none" class="ink" stroke-width="3"/>
+      <line x1="180" y1="30" x2="180" y2="230" class="ink" stroke-width="2"/>
+      <rect x="50" y="80" width="260" height="100" class="mid-f acc" stroke-width="2"/>
+      <line x1="180" y1="80" x2="180" y2="180" class="acc" stroke-width="6"/>
+      <text x="245" y="136" class="lbl he" text-anchor="middle">בית א</text>
+      <text x="115" y="136" class="lbl he" text-anchor="middle">בית ב</text>
+      <text x="235" y="60" class="lbl-s he" text-anchor="middle">מגרש א</text>
+      <text x="125" y="60" class="lbl-s he" text-anchor="middle">מגרש ב</text>
+      <line x1="70" y1="33" x2="70" y2="77" class="ink" stroke-width="1.8" marker-start="url(#ar5)" marker-end="url(#ar5)"/>
+      <text direction="ltr" x="46" y="61" class="lbl-s" text-anchor="middle">5 m</text>
+      <line x1="23" y1="130" x2="47" y2="130" class="ink" stroke-width="1.8" marker-start="url(#ar5)" marker-end="url(#ar5)"/>
+      <text direction="ltr" x="35" y="121" class="muted-f" font-size="11" text-anchor="middle">3 m</text>
+      <line x1="313" y1="130" x2="337" y2="130" class="ink" stroke-width="1.8" marker-start="url(#ar5)" marker-end="url(#ar5)"/>
+      <text direction="ltr" x="325" y="121" class="muted-f" font-size="11" text-anchor="middle">3 m</text>
+      <text x="252" y="214" class="dark-f he" text-anchor="middle" font-weight="700" font-size="15">קיר משותף</text>
+      <line x1="212" y1="208" x2="184" y2="182" class="line" stroke-width="1.5"/>
+    </svg>
+    <figcaption>ימין: <b>קווי בניין</b> = מרחק מכל גבול (כאן 3 מ׳ בצדדים, 5 מ׳ מלפנים ומאחור). שמאל: <b>דו-משפחתי</b>, קיר משותף על הגבול, בלי מרווח. המספרים לדוגמה: התב״ע קובעת.</figcaption>
+  </figure>
+
+  <div class="box formula"><div class="box-title">השטח המרבי לבניין (תוספת)</div>
+    \[ A_{\max} = (W - s_1 - s_2) \times (L - f - r) \]
+    <p class="muted">W, L = רוחב ואורך המגרש · s₁, s₂ = קווי בניין בצדדים · f, r = קדמי ואחורי</p>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה נוספת: כמה מותר לבנות?</div><div class="w-body">
+    <div class="given">מגרש <b>20 × 30 מ׳</b>. קווי בניין: <b>3 מ׳</b> בכל צד, <b>5 מ׳</b> מלפנים ו-<b>5 מ׳</b> מאחור.</div>
+    <div class="ask">השטח המרבי של הבניין</div>
+    <ol class="lines">
+      <li>רוחב: \(20 - 3 - 3 = 14\) מ׳</li>
+      <li>אורך: \(30 - 5 - 5 = 20\) מ׳</li>
+      <li>שטח: \(14 \times 20 = 280\ \text{m}^2\) מתוך \(20 \times 30 = 600\ \text{m}^2\) (כ-47%)</li>
+      <li>אם זה "דו" (צד אחד 0): \((20 - 3) \times 20 = 340\ \text{m}^2\)</li>
+    </ol>
+    <div class="answer"><b>280 מ״ר</b> (בבית דו: <b>340 מ״ר</b>)</div>
+    <div class="check">מורידים רצועות: \(600 - 2 \times (3 \times 30) - 2 \times (5 \times 14) = 600 - 180 - 140 = 280\) ✓</div>
+  </div></div>
+</section>
+
+<!-- ============ 5. ZERO REPORT ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">5</span><h2>דו״ח אפס: מה שעל הקרקע עולה כסף</h2><span class="time">⏱ 01:45:06</span></div>
+  <div class="bl"><b>דו״ח אפס</b> בודק אם פרויקט <b>כדאי</b>. כל <b>אלמנט קרקעי</b> במפת המדידה = עוד <b>הוצאה</b>.</div>
+
+  <ul class="pts">
+    <li>מהלוח: <b>דו״ח אפס</b> = דו״ח ש<b>שמאי מקרקעין</b> מכין, כדי לבחון את <b>הכדאיות הכלכלית</b> של פרויקט בנייה.</li>
+    <li>לפי המרצה: <b>המספרים חייבים להתחבר</b>. לא מתחבר ← יש <b>בעיה</b>. <span class="muted">⏱ <span class="ltr">01:47:53</span></span></li>
+    <li>שתי עמודות: <b>הוצאות</b> מול <b>הכנסות</b>. ההכנסות לפי <b>סקר שוק</b>: כמה משלמים <b>למ״ר</b> בנכסים דומים.</li>
+  </ul>
+
+  <div class="grid2">
+    <div class="box life"><div class="box-title">דוגמה מהחיים</div>
+      <p>קונים <b>רכב</b> ב-20 אלף ומוכרים ב-30 אלף. כל <b>תיקון</b> בדרך <b>אוכל מהרווח</b>.</p>
+    </div>
+    <div class="box formula"><div class="box-title">מחיר ורווח</div>
+      \[ P = L + C + R \qquad R = I - E \]
+      <p class="muted">L = קרקע · C = בנייה · R = רווח<br>I = הכנסות · E = הוצאות</p>
+    </div>
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 180" xmlns="http://www.w3.org/2000/svg">
+      <rect x="30" y="8" width="480" height="168" rx="10" fill="none" class="ink" stroke-width="2"/>
+      <line x1="270" y1="8" x2="270" y2="146" class="ink" stroke-width="2"/>
+      <line x1="30" y1="40" x2="510" y2="40" class="ink" stroke-width="2"/>
+      <line x1="30" y1="146" x2="510" y2="146" class="ink" stroke-width="2"/>
+      <text x="390" y="31" class="bad-f he" text-anchor="middle" font-weight="700" font-size="16">הוצאות</text>
+      <text x="150" y="31" class="ok-f he" text-anchor="middle" font-weight="700" font-size="16">הכנסות</text>
+      <text x="390" y="59" class="lbl he" text-anchor="middle">עלות קרקע</text>
+      <text x="390" y="78" class="lbl he" text-anchor="middle">עלות בנייה</text>
+      <text x="390" y="97" class="dark-f he" text-anchor="middle" font-weight="700" font-size="15">הריסה ופינוי מבנים</text>
+      <text x="390" y="116" class="dark-f he" text-anchor="middle" font-weight="700" font-size="15">פינוי צמחייה</text>
+      <text x="390" y="135" class="dark-f he" text-anchor="middle" font-weight="700" font-size="15">העתקת עצים</text>
+      <text x="150" y="59" class="lbl he" text-anchor="middle">מכירת הדירות</text>
+      <text x="150" y="78" class="lbl he" text-anchor="middle">שטח × מחיר למ״ר</text>
+      <text x="150" y="97" class="lbl-s he" text-anchor="middle">המחיר לפי סקר שוק</text>
+      <text x="270" y="167" class="lbl-b he" text-anchor="middle">הכנסות פחות הוצאות = רווח יזמי</text>
+      <rect x="575" y="10" width="100" height="28" fill="none" class="ok" stroke-width="2.5" stroke-dasharray="6 4"/>
+      <rect x="575" y="38" width="100" height="56" class="mid-f acc" stroke-width="2"/>
+      <rect x="575" y="94" width="100" height="56" class="soft-f acc" stroke-width="2"/>
+      <text x="625" y="29" class="lbl-s he" text-anchor="middle">רווח יזמי</text>
+      <text x="625" y="71" class="lbl he" text-anchor="middle">בנייה</text>
+      <text x="625" y="127" class="lbl he" text-anchor="middle">קרקע</text>
+      <text x="625" y="172" class="lbl-b he" text-anchor="middle">מחיר הדירה</text>
+    </svg>
+    <figcaption>דו״ח אפס: <b>הוצאות</b> מול <b>הכנסות</b>. מודגש: הוצאות שמגיעות <b>ממפת המדידה</b>. מימין: ממה בנוי מחיר הדירה.</figcaption>
+  </figure>
+
+  <div class="worked"><div class="w-title">דוגמה נוספת: דו״ח אפס מקוצר</div><div class="w-body">
+    <div class="given">קרקע <b>6 מיליון ₪</b>, בנייה <b>9 מיליון ₪</b>. במפה: מבנה להריסה <b>250,000</b>, <b>4 עצים</b> × <b>100,000</b>, צמחייה <b>30,000</b>. מכירה: <b>12</b> דירות × <b>90 מ״ר</b> × <b>15,000 ₪</b>.</div>
+    <div class="ask">הרווח היזמי, וכמה ממנו "אכלה" המפה</div>
+    <ol class="lines">
+      <li>הכנסות: \(I = 12 \times 90 \times 15{,}000 = 16{,}200{,}000\)</li>
+      <li>מהמפה: \(250{,}000 + 4 \times 100{,}000 + 30{,}000 = 680{,}000\)</li>
+      <li>הוצאות: \(E = 6{,}000{,}000 + 9{,}000{,}000 + 680{,}000 = 15{,}680{,}000\)</li>
+      <li>רווח: \(R = 16{,}200{,}000 - 15{,}680{,}000 = 520{,}000\) (כ-3.3% מההוצאות)</li>
+      <li>בלי המפה: \(R = 1{,}200{,}000\) ← \(680{,}000 \div 1{,}200{,}000 \approx 57\%\)</li>
+    </ol>
+    <div class="answer">רווח <b>520,000 ₪</b>. מה שעל הקרקע אכל <b>יותר ממחצית</b> הרווח.</div>
+    <div class="check">\(15{,}680{,}000 + 520{,}000 = 16{,}200{,}000\) = ההכנסות ✓</div>
+  </div></div>
+</section>
+
+<!-- ============ 6. TREES ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">6</span><h2>עצים במגרש: חוק, כסף ונוהל</h2><span class="time">⏱ 01:50:42</span></div>
+  <div class="bl">עץ במגרש = <b>אישור, זמן וכסף</b>. פועלים רק <b>לפי הנוהל</b>, כי עץ מייצג <b>בעלות</b>.</div>
+
+  <ul class="pts">
+    <li>לפי החוק אסור <b>לגדוע או לעקור</b> עץ בלי אישור של <b>משרד החקלאות</b> או <b>קק״ל</b> (קרן קיימת לישראל).</li>
+    <li><b>העתקת עץ</b> עולה <b><span class="ltr">50–150</span> אלף ₪</b> לעץ. גם כשהעץ <b>בקרקע פרטית</b>.</li>
+    <li>קרקע פרטית ≠ עושים מה שרוצים. לפי המרצה, אין הרבה קרקע פרטית, ו<b>גם בה חייבים לפי החוק</b>.</li>
+    <li><b>עצי פרי</b> ו<b>עצי זית</b> מוגנים במיוחד: כמעט <b>אי אפשר</b> לגעת בהם.</li>
+  </ul>
+
+  <div class="grid2">
+    <div class="worked"><div class="w-title">מהשיעור: 10 עצים במגרש</div><div class="w-body">
+      <div class="given"><b>10</b> עצים, <b><span class="ltr">50,000–150,000</span> ₪</b> לעץ</div>
+      <div class="ask">כמה עולה להעתיק?</div>
+      <ol class="lines">
+        <li>\(K = n \times c\) (מספר × מחיר)</li>
+        <li>\(10 \times 50{,}000 = 500{,}000\)</li>
+        <li>\(10 \times 150{,}000 = 1{,}500{,}000\)</li>
+      </ol>
+      <div class="answer"><b><span class="ltr">0.5–1.5</span> מיליון ₪</b>: לפעמים <b>כל הרווח</b></div>
+      <div class="check">\(1{,}500{,}000 \div 10 = 150{,}000\) ✓</div>
+    </div></div>
+    <div>
+      <div class="box lecturer"><div class="box-title">מהשיעור <span class="time">⏱ 01:53:55</span></div>
+        <p>בבניין המגורים של המרצה, ההיתר <b>התעכב כמעט שנתיים</b> בגלל <b>עץ רגיל</b> שהפריע ל-<b>2 חניות</b>.</p>
+      </div>
+      <div class="box tip"><div class="box-title">פתרון חוקי</div>
+        <p>לשלב עצים קיימים ב<b>פיתוח הסביבתי</b> (הגינון סביב הבניין) ו<b>לבנות סביבם</b>.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>🌳 למה עץ זה כל כך רגיש? <span class="time">⏱ 01:57:47</span></h3>
+  <ul class="pts">
+    <li>היסטורית, עץ <b>מסמן בעלות</b> על קרקע ← הזזת עץ פוגעת ב<b>זכות קניינית</b> (הזכות של הבעלים בנכס).</li>
+    <li>עץ ששתלו בעצמם? <b>תלוי בסוג ובגיל</b> העץ, לא בבעלות. עץ צעיר ← הליך <b>פשוט</b>.</li>
+    <li>עץ בתוך שטח הבנייה ← <b>אין היתר</b> בלי טיפול בו. <b>צנרת</b> פחות בעייתית: אפשר להזיז אותה.</li>
+  </ul>
+
+  <h3>📋 הנוהל: מהמודד ועד הוועדה <span class="time">⏱ 01:59:14</span></h3>
+  <ol class="steps">
+    <li>ה<b>מודד</b> מסמן במפת המדידה את <b>מיקום כל עץ</b>: עיגול עם <b>מספר</b>.</li>
+    <li>המפה עוברת ל<b>אגרונום</b> (מוכר ע״י משרד החקלאות). בדרך כלל משלם לו <b>היזם או הקבלן</b>.</li>
+    <li>האגרונום מכין <b>טבלה</b>: מספר עץ · סוג העץ · <b>פעולה מומלצת</b>.</li>
+    <li>הטבלה עוברת ל<b>קק״ל</b> ול<b>משרד החקלאות</b>. האגרונום רק <b>ממליץ</b>: <b>ועדה מחליטה</b>.</li>
+    <li>זמן סביר: <b>כמה שבועות עד כמה חודשים</b>. בפועל לפעמים הרבה יותר.</li>
+  </ol>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 140" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+      <rect x="560" y="20" width="150" height="100" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="635" y="52" class="lbl-b he" text-anchor="middle">מודד</text>
+      <text x="635" y="78" class="lbl-s he" text-anchor="middle">מסמן ומספר עצים</text>
+      <text x="635" y="98" class="lbl-s he" text-anchor="middle">במפת המדידה</text>
+      <line x1="556" y1="70" x2="534" y2="70" class="ink" stroke-width="2.5" marker-end="url(#ar6)"/>
+      <rect x="380" y="20" width="150" height="100" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="455" y="52" class="lbl-b he" text-anchor="middle">אגרונום</text>
+      <text x="455" y="78" class="lbl-s he" text-anchor="middle">מכין טבלה</text>
+      <text x="455" y="98" class="lbl-s he" text-anchor="middle">וממליץ</text>
+      <line x1="376" y1="70" x2="354" y2="70" class="ink" stroke-width="2.5" marker-end="url(#ar6)"/>
+      <rect x="200" y="20" width="150" height="100" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="275" y="50" class="lbl-b he" text-anchor="middle">קק״ל ומשרד</text>
+      <text x="275" y="72" class="lbl-b he" text-anchor="middle">החקלאות</text>
+      <text x="275" y="98" class="lbl-s he" text-anchor="middle">ועדה דנה</text>
+      <line x1="196" y1="70" x2="174" y2="70" class="ink" stroke-width="2.5" marker-end="url(#ar6)"/>
+      <rect x="20" y="20" width="150" height="100" rx="10" class="mid-f acc" stroke-width="3"/>
+      <text x="95" y="52" class="lbl-b he" text-anchor="middle">החלטה</text>
+      <text x="95" y="78" class="lbl-s he" text-anchor="middle">מה עושים בכל עץ</text>
+      <text x="95" y="98" class="lbl-s he" text-anchor="middle">למשל העתקה</text>
+    </svg>
+    <figcaption>הנוהל, מימין לשמאל: <b>המודד מסמן</b> ← <b>האגרונום ממליץ</b> ← <b>קק״ל ומשרד החקלאות מחליטים</b>.</figcaption>
+  </figure>
+
+  <div class="grid2">
+    <div>
+      <table class="t">
+        <tr><th>מס׳ עץ</th><th>סוג העץ</th><th>פעולה מומלצת</th></tr>
+        <tr><td>1</td><td>זית</td><td>העתקה</td></tr>
+        <tr><td>2</td><td>חרוב</td><td>העתקה</td></tr>
+        <tr><td>3</td><td>אלון</td><td>העתקה</td></tr>
+        <tr><td>4</td><td>אקליפטוס</td><td>העתקה</td></tr>
+      </table>
+      <p class="muted">טבלת האגרונום, כמו על הלוח. <b>אין עמודת עלות</b>. העתקה = העברת העץ <b>למקום אחר</b>.</p>
+    </div>
+    <div>
+      <div class="box warn"><div class="box-title">טעות נפוצה <span class="time">⏱ 02:00:35</span></div>
+        <p>המודד <b>לא</b> מכין את הטבלה ו<b>לא</b> מחליט. הוא רק <b>מסמן</b> את העצים. את הטבלה מכין <b>האגרונום</b>, וההחלטה של <b>הוועדה</b>.</p>
+      </div>
+      <div class="box warn"><div class="box-title">"רעיונות יצירתיים" לא עובדים <span class="time">⏱ 01:52:19</span></div>
+        <p>להרעיל עץ או לכרות בלילה? <b>שכנים מדווחים</b>, פקחים עוברים, יש רחפנים ← <b>קנס כבד</b> ופרויקט <b>תקוע</b>. עובדים <b>לפי הספר</b>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה נוספת: לשמור או להעתיק?</div><div class="w-body">
+    <div class="given"><b>6</b> עצים במגרש, <b><span class="ltr">50,000–150,000</span> ₪</b> לעץ. האדריכל מצליח <b>לשמור 2</b> עצים בפיתוח הסביבתי.</div>
+    <div class="ask">כמה חוסכים?</div>
+    <ol class="lines">
+      <li>כל 6: \(6 \times 50{,}000 = 300{,}000\) עד \(6 \times 150{,}000 = 900{,}000\)</li>
+      <li>רק 4: \(4 \times 50{,}000 = 200{,}000\) עד \(4 \times 150{,}000 = 600{,}000\)</li>
+      <li>חיסכון: \(2 \times 50{,}000 = 100{,}000\) עד \(2 \times 150{,}000 = 300{,}000\)</li>
+    </ol>
+    <div class="answer">חוסכים <b><span class="ltr">100–300</span> אלף ₪</b>, בלי לעבור על החוק.</div>
+    <div class="check">\(900{,}000 - 600{,}000 = 300{,}000\) ✓</div>
+  </div></div>
+</section>
+
+<!-- ============ 7. SAND, WASTE, ANTIQUITIES ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">7</span><h2>חול, פסולת ועתיקות: "מדינת חוק"</h2><span class="time">⏱ 02:03:36</span></div>
+  <div class="bl">גם בקרקע פרטית <b>לא עושים מה שרוצים</b>: חול, פסולת וממצאים כפופים <b>לחוק</b>.</div>
+
+  <div class="grid2">
+    <div class="card"><div class="c-title">🏖️ חול מחוף הים</div><p>של <b>הציבור</b>. לוקחים חול רק <b>ממקום שמיועד לכך</b>, ו<b>משלמים</b>.</p></div>
+    <div class="card"><div class="c-title">⛏️ חול מהחפירה במגרש</div><p><b>לא זורקים</b>: מסננים אבנים, שומרים, ו<b>משתמשים שוב</b> בבנייה.</p></div>
+    <div class="card"><div class="c-title">🗑️ פסולת בניין</div><p><b>מכולה</b> ← <b>מטמנה</b> לפסולת בניין. <b>לא</b> בפח הירוק.</p></div>
+    <div class="card"><div class="c-title">🏺 שלדים, עתיקות, זהב, נפט</div><p><b>עוצרים</b> את העבודה. לפי המרצה, הם <b>של המדינה</b>, גם בחצר פרטית.</p></div>
+  </div>
+
+  <p></p>
+  <ul class="pts">
+    <li>חול הוא מ<b>ההוצאות הגדולות</b> על חומרי גלם ← יש <b>גניבות חול</b> (למשל ליד הים בראשון לציון).</li>
+    <li>שימוש חוזר בחול מהחפירה <b>חוסך משאיות</b>, אם המגרש <b>גדול מספיק</b> לאחסון.</li>
+    <li>מה קובע את <b>שווי הקרקע</b>? בעיקר <b>זכויות הבנייה</b>: כמה מותר לבנות עליה. <span class="muted">⏱ <span class="ltr">02:06:59</span></span></li>
+    <li>דוגמה מהשיעור: קרקע מלאה צמחייה, אבל עם זכויות ל-<b>3 מגדלים של 40 קומות</b> ← בפרויקט של כ-<b>10 מיליארד ₪</b>, העתקת עצים היא <b>זניחה</b>. לפי המרצה, אחרת לא היו פרויקטים בארץ. <span class="muted">⏱ <span class="ltr">02:07:44</span></span></li>
+    <li>ממצאים: בהרחבת <b>בית החולים ברזילי</b> (אשקלון) נמצאו שלדים ← <b>עצרו</b> ובדקו אם אלה קברים יהודיים, שצריך להביא <b>לקבורה</b>. כך גם ביהוד. <span class="muted">⏱ <span class="ltr">02:11:30</span></span></li>
+  </ul>
+
+  <div class="worked"><div class="w-title">דוגמה נוספת: כמה משאיות חול נחסכו?</div><div class="w-body">
+    <div class="given">חפירה <b>30 × 20 מ׳</b>, עומק <b>3 מ׳</b>. הנחות לתרגול: <b>60%</b> מהנפח חול שמיש, משאית = <b>20 מ״ק</b>.</div>
+    <div class="ask">כמה משאיות לא צריך להזמין?</div>
+    <ol class="lines">
+      <li>נפח: \(V = 30 \times 20 \times 3 = 1{,}800\ \text{m}^3\)</li>
+      <li>חול שמיש: \(1{,}800 \times 0.6 = 1{,}080\ \text{m}^3\)</li>
+      <li>משאיות: \(1{,}080 \div 20 = 54\)</li>
+    </ol>
+    <div class="answer">כ-<b>54 משאיות</b> חול שלא קונים.</div>
+    <div class="check">\(54 \times 20 = 1{,}080\) וגם \(1{,}080 \div 0.6 = 1{,}800\) ✓</div>
+  </div></div>
+
+  <div class="box warn"><div class="box-title">פסולת בניין <span class="time">⏱ 02:09:40</span></div>
+    <p>פסולת בפח הירוק ← <b>קנס</b>. מטמנה פועלת <b>כ-30 שנה</b>, ועומק הבור <b>לפי ההיתר</b>.</p>
+  </div>
+</section>
+
+<!-- ============ REMEMBER ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">🧠</span><h2>לזכור</h2></div>
+  <div class="bl">10 דברים שחייבים לדעת מהשיעור הזה.</div>
+  <ul class="pts">
+    <li><b>גיאודזיה</b> = תורת המדידות. ביוונית: <b>"חלוקת הקרקע"</b>.</li>
+    <li><b>מב״ר</b> = מודד בעל רישיון, מ<b>מנהל מפ״י</b> (המרכז למיפוי ישראל). יש רק <b>כ-<span class="ltr">700–750</span></b>.</li>
+    <li>התוצר של המודד = <b>מפת מדידה</b>: <b>גבולות</b>, <b>קווי בניין</b>, <b>אלמנטים קרקעיים</b>.</li>
+    <li><b>קו בניין</b> = מרחק מהגבול לפי ה<b>תב״ע</b>, בדרך כלל <b>3 או 5 מ׳</b>. בבית <b>דו</b>: קיר משותף.</li>
+    <li><b>דו״ח אפס</b> (שמאי מקרקעין): <b>הכנסות פחות הוצאות = רווח יזמי</b>.</li>
+    <li>עץ: רק <b>באישור</b> משרד החקלאות או קק״ל. העתקה: <b><span class="ltr">50–150</span> אלף ₪</b> לעץ.</li>
+    <li>נוהל עצים: <b>מודד</b> מסמן ← <b>אגרונום</b> ממליץ ← <b>ועדה</b> מחליטה.</li>
+    <li>עץ מסמל <b>בעלות</b> ← <b>זכות קניינית</b>. גם בקרקע פרטית: <b>לפי החוק</b>.</li>
+    <li>שווי קרקע = בעיקר <b>זכויות הבנייה</b>.</li>
+    <li><b>"מדינת חוק"</b>: חול מהים של <b>הציבור</b>; פסולת בניין ← <b>מכולה ← מטמנה</b>; ממצא בחפירה ← <b>עוצרים</b>.</li>
+  </ul>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="topic cont">
+  <div class="topic-head"><span class="n">❓</span><h2>שאלות חזרה</h2></div>
+  <div class="bl">לענות בלי להציץ. התשובות בעמוד הבא.</div>
+  <ol class="quiz">
+    <li>מה ראשי התיבות <b>מב״ר</b> ו<b>מפ״י</b>? <span class="lvl">קל</span></li>
+    <li>מהו התוצר של המודד, ומה שלושת הרכיבים שלו? <span class="lvl">קל</span></li>
+    <li>מה עושים כשמוצאים בחפירה <b>שלדים</b>, עתיקות, זהב או נפט? <span class="lvl">קל</span></li>
+    <li>מה ההבדל בין מקרקעין למיטלטלין, ולמה זה חשוב לבנייה? <span class="lvl">בינוני</span></li>
+    <li>מי מכין דו״ח אפס, ומה הוא בודק? <span class="lvl">בינוני</span></li>
+    <li>מי מסמן את העצים, מי מכין את הטבלה, ומי מחליט? <span class="lvl">בינוני</span></li>
+    <li>צריך <b>2.5 מיליון</b> דירות ב-22 שנה, ובונים <b>50,000</b> בשנה. כמה שנים זה ייקח, וכמה יחסרו? <span class="lvl">בינוני</span></li>
+    <li>מגרש: חזית <b>25 מ׳</b>, עומק <b>40 מ׳</b>. קווי בניין <b>3 מ׳</b> בצדדים, <b>5 מ׳</b> מלפנים ומאחור. שטח מרבי? <span class="lvl">מאתגר</span></li>
+    <li>הכנסות <b>16.2 מיליון ₪</b>, הוצאות <b>15 מיליון ₪</b>, ועוד <b>4 עצים</b> × <b>150,000 ₪</b>: מה הרווח? <span class="lvl">מאתגר</span></li>
+  </ol>
+</section>
+
+<!-- ============ ANSWERS ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">✅</span><h2>תשובות</h2></div>
+  <ol class="answers">
+    <li><b>מב״ר</b> = מודד בעל רישיון. <b>מפ״י</b> = המרכז למיפוי ישראל; מנהל מפ״י נותן את הרישיון.</li>
+    <li><b>מפת מדידה</b>: גבולות (גוש / חלקה / מגרש), קווי בניין, אלמנטים קרקעיים.</li>
+    <li><b>עוצרים את העבודה</b>. לפי המרצה, הם <b>של המדינה</b>, גם בחצר פרטית.</li>
+    <li>מיטלטלין ← אפשר לייצר עוד (משמרות) ולהשלים. מקרקעין ← יום בלי בנייה <b>לא חוזר</b>, ולכן עצירה = פער קבוע.</li>
+    <li><b>שמאי מקרקעין</b>. בודק <b>כדאיות כלכלית</b>: הכנסות מול הוצאות ← רווח יזמי.</li>
+    <li>ה<b>מודד</b> מסמן. ה<b>אגרונום</b> מכין טבלה וממליץ. <b>ועדה</b> של קק״ל ומשרד החקלאות מחליטה.</li>
+    <li>\({2{,}500{,}000 \div 50{,}000 = 50}\) שנה, ולא 22. נבנה \({22 \times 50{,}000 = 1{,}100{,}000}\) ← חסרות \({1{,}400{,}000}\) דירות.</li>
+    <li>\({(25 - 3 - 3) \times (40 - 5 - 5) = 19 \times 30 = 570\ \text{m}^2}\)<br>בדיקה: רצועות צד \({2 \times 3 \times 40 = 240}\) ורצועות חזית \({2 \times 5 \times 19 = 190}\) ← נשאר \({1{,}000 - 240 - 190 = 570}\) ✓</li>
+    <li>עצים: \({4 \times 150{,}000 = 600{,}000}\) ← הוצאות: \({15{,}000{,}000 + 600{,}000 = 15{,}600{,}000}\)<br>רווח בשקלים: \({16{,}200{,}000 - 15{,}600{,}000 = 600{,}000}\) ← בדיקה: \({15.6 + 0.6 = 16.2}\) מיליון ✓</li>
+  </ol>
+
+  <h3>📖 מילון מונחים</h3>
+  <dl class="glossary">
+    <dt>גיאודזיה</dt><dd>תורת המדידות. ביוונית: "חלוקת הקרקע".</dd>
+    <dt>גיאודטים</dt><dd>מי שלמדו הנדסה גיאודטית ועוסקים במדידות (מודדים).</dd>
+    <dt>מב״ר</dt><dd>מודד בעל רישיון.</dd>
+    <dt>מפ״י</dt><dd>המרכז למיפוי ישראל. אחראי על כל המדידות בארץ; מנהל מפ״י נותן את הרישיון.</dd>
+    <dt>מפת מדידה</dt><dd>התוצר של המודד: גבולות, קווי בניין, אלמנטים קרקעיים.</dd>
+    <dt>גוש · חלקה · מגרש</dt><dd>יחידות קרקע שהגבולות שלהן במפה (יפורט בהמשך הקורס).</dd>
+    <dt>תב״ע</dt><dd>תוכנית בניין עיר. קובעת קווי בניין (וזכויות).</dd>
+    <dt>קו בניין</dt><dd>המרחק המינימלי של הבניין מגבול המגרש. בדרך כלל 3 או 5 מ׳.</dd>
+    <dt>אלמנטים קרקעיים</dt><dd>מה שעל הקרקע: מבנים, צנרת השקיה וביוב, צמחייה, עצים.</dd>
+    <dt>תבליט</dt><dd>הרים ועמקים (טופוגרפיה). לא אלמנט קרקעי.</dd>
+    <dt>דו״ח אפס</dt><dd>דו״ח של שמאי מקרקעין שבודק את הכדאיות הכלכלית של פרויקט.</dd>
+    <dt>שמאי מקרקעין</dt><dd>מעריך את השווי של קרקעות ונכסים.</dd>
+    <dt>רווח יזמי</dt><dd>הכנסות הפרויקט פחות ההוצאות.</dd>
+    <dt>זכויות בנייה</dt><dd>כמה מותר לבנות על הקרקע. הגורם העיקרי בשווי שלה.</dd>
+    <dt>זכות קניינית</dt><dd>הזכות של הבעלים בנכס.</dd>
+    <dt>אגרונום</dt><dd>מומחה לצמחים, מוכר ע״י משרד החקלאות. מכין את טבלת העצים.</dd>
+    <dt>העתקת עץ</dt><dd>העברת עץ למקום אחר. <span class="ltr">50–150</span> אלף ₪ לעץ.</dd>
+    <dt>מקרקעין · מיטלטלין</dt><dd>קרקע ומה שבנוי עליה · נכסים שזזים ואפשר לייצר מחדש.</dd>
+    <dt>פינוי-בינוי</dt><dd>הריסת שכונה שלמה ובנייתה מחדש (התחדשות עירונית). <span class="ltr">20–30</span> שנה.</dd>
+    <dt>מטמנה</dt><dd>אתר מורשה לקבורת פסולת. פועל כ-30 שנה.</dd>
+  </dl>
+
+  <div class="box unclear"><div class="box-title">לא היה ברור בהקלטה</div>
+    <ul class="pts">
+      <li><span class="ltr">00:01:18</span> נשמע "14 מובשים" ← כנראה <b>14 מפגשים</b>. לבדוק את מספר השיעורים.</li>
+      <li><span class="ltr">00:22:45</span> סגר במרץ 2020 והחרגה רק בספטמבר 2020: <b>זה התיאור של המרצה</b>, כדאי לבדוק.</li>
+      <li><span class="ltr">00:35:33</span> לפי המרצה כ-20 מיליון תושבים ב-2048. לפי ידע כללי (לא נאמר בשיעור), התחזית הבינונית של הלמ״ס היא כ-<b>15 מיליון</b> ב-2048, ו-20 מיליון רק ב-2065. לבדוק.</li>
+      <li><span class="ltr">00:36:50</span> נשמע "500,000 בשנה", בסתירה לחשבון. בסיכום: <b>50,000</b>, כמו בשאר החשבון.</li>
+      <li><span class="ltr">00:40:47</span> "רעידת האדמה האחרונה: 1926 בצפת". לפי ידע כללי: הרעידה החזקה האחרונה ב-<b>1927</b> (יריחו), וצפת נהרסה ב-<b>1837</b>.</li>
+      <li><span class="ltr">00:41:02</span> מספרי תמ״א 38 (כמה בניינים מתאימים, כמה בוצעו) <b>לא ברורים</b>.</li>
+      <li><span class="ltr">00:52:00</span> הריבית: "כמעט 8%" בשיא; הריבית היום (נאמרו <b>4%</b> וגם <b>6.5%</b>) לא ברורה.</li>
+      <li><span class="ltr">00:52:29</span> 80,000 דירות "בעשרות מיליארדים". לפי החשבון (80,000 × 2.4 מיליון ₪): כ-<b>192 מיליארד ₪</b>.</li>
+      <li><span class="ltr">00:53:05</span> מיטה 2×2 מ׳ נאמרה כ-"<span class="ltr">500–700</span> אלף ₪". לפי <span class="ltr">60–80</span> אלף ₪ למ״ר יוצא <b><span class="ltr">240–320</span> אלף</b>.</li>
+      <li><span class="ltr">01:33:24</span> המוסד הנוסף ללימודי הנדסה גיאודטית (מלבד הטכניון) <b>לא נשמע ברור</b>.</li>
+      <li><span class="ltr">01:33:41</span> מסלול הרישוי פושט בשיעור (4 שנים, 2 פרויקטי גמר, הגנה). לבדוק אם יש גם <b>התמחות מעשית</b> ו<b>בחינות רישוי</b> של מפ״י.</li>
+      <li><span class="ltr">01:40:12</span> נאמר (תוך כדי בדיחה) שהמבחן <b>בכתב יד</b> ← לוודא.</li>
+      <li><span class="ltr">01:56:17</span> סכום הקנס על עקירת עץ ("250,000, לא 10,000") <b>לא ברור</b>, וגם לא ברור מי אמר.</li>
+      <li><span class="ltr">02:12:41</span> ברזילי: לא ברור מה הוחלט בסוף ("והשאירו את התהליך").</li>
+    </ul>
+  </div>
+</section>
+
+</body>
+</html>

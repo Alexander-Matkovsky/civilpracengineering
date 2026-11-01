@@ -26,12 +26,15 @@ Things to ask for:
 
 ## Subjects
 
-Each subject has an index with all its notes, in study order.
+Each subject has an index with all its notes, in study order. 🎥 = a PDF summary of a recorded lesson.
 
 - 🏗️ [סטטיקה (חישוב סטטי)](subjects/statics/index.md): מומנטים, סמכים, עומסים ומהלכים · 📌 [עבודת בית 1](subjects/statics/homework-1.md)
-- 🛣️ [כבישים ותשתיות](subjects/roads/index.md): 6 מצגות ו-11 נושאי תרגול
-- ➗ [מתמטיקה](subjects/math/index.md): 20 פתקי נוסחאות ומפה של חוברת התרגילים
-- ⚖️ [דיני עבודה](subjects/labor-law/index.md): 4 נושאים ב-13 חלקים קצרים
-- 📐 [שרטוט ואוטוקד](subjects/drafting/index.md): התקנת AutoCAD
+- 🛣️ [כבישים ותשתיות](subjects/roads/index.md): 6 מצגות, 11 נושאי תרגול ו-🎥 הקלטה אחת
+- ➗ [מתמטיקה](subjects/math/index.md): 20 פתקי נוסחאות, מפה של חוברת התרגילים ו-🎥 הקלטה אחת
+- ⚖️ [דיני עבודה](subjects/labor-law/index.md): 4 נושאים ב-13 חלקים קצרים ו-🎥 הקלטה אחת
+- 📐 [שרטוט ואוטוקד](subjects/drafting/index.md): התקנת AutoCAD ו-🎥 הקלטה אחת
+- 🦺 [בטיחות](subjects/safety/index.md): 🎥 2 הקלטות: חפירות, מדרכות מעבר
+- 🧱 [תורת הבניה והמבנים](subjects/building-theory/index.md): 🎥 הקלטה אחת: מי מוסמך לעשות מה בבנייה
+- 📏 [גיאודזיה](subjects/geodesy/index.md): 🎥 הקלטה אחת: המודד ומפת המדידה
 
-_No files on the site yet:_ בטיחות · תורת הבניה · גיאודזיה · חומרי בנין
+_No files on the site yet:_ חומרי בנין

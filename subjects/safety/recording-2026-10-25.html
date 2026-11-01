@@ -1,0 +1,1083 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>בטיחות · מדרכות מעבר: שיפוע 1:4 ו-1:1.5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=block">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});document.documentElement.dataset.math='done'"></script>
+<style>
+/* Lecture summary design system: A4, RTL Hebrew, print-first. */
+
+@page {
+  size: A4;
+  margin: 18mm 16mm 17mm 16mm;
+  @bottom-center {
+    content: counter(page);
+    font-family: Heebo, "Arial Hebrew", sans-serif;
+    font-size: 9pt;
+    color: #7a8394;
+  }
+}
+@page :first {
+  margin: 0;
+  @top-right { content: none; }
+  @top-left { content: none; }
+  @bottom-center { content: none; }
+}
+
+:root {
+  --accent: #4f46e5;
+  --accent-dark: #3730a3;
+  --accent-soft: #eef0ff;
+  --accent-mid: #c7cbfb;
+  --ink: #1d2230;
+  --muted: #5d6676;
+  --line: #dfe3ea;
+  --paper: #ffffff;
+  --bg-soft: #f6f7f9;
+  --ok: #0f7b5f;
+  --ok-soft: #e2f5ee;
+  --warn: #b45309;
+  --warn-soft: #fdf1e2;
+  --bad: #b91c1c;
+  --bad-soft: #fdeaea;
+  --info: #0e6aa8;
+  --info-soft: #e5f2fb;
+}
+
+/* one accent colour per course */
+body.course-math { --accent: #4f46e5; --accent-dark: #3730a3; --accent-soft: #eef0ff; --accent-mid: #c7cbfb; }
+body.course-roads { --accent: #c2620a; --accent-dark: #8f4505; --accent-soft: #fdf0e3; --accent-mid: #f6cfa6; }
+body.course-safety { --accent: #c62828; --accent-dark: #8e1b1b; --accent-soft: #fdecea; --accent-mid: #f5bcbc; }
+body.course-geodesy { --accent: #0f766e; --accent-dark: #0b524c; --accent-soft: #e2f4f1; --accent-mid: #a7dcd5; }
+body.course-building-theory { --accent: #a5502a; --accent-dark: #74371c; --accent-soft: #f8ece5; --accent-mid: #e8c2ad; }
+body.course-drafting { --accent: #0369a1; --accent-dark: #024b74; --accent-soft: #e3f1fa; --accent-mid: #a9d3ee; }
+body.course-labor-law { --accent: #7c3aed; --accent-dark: #5521b5; --accent-soft: #f1eafe; --accent-mid: #d4c0fb; }
+body.course-statics { --accent: #2563eb; --accent-dark: #1e40af; --accent-soft: #e8f0fe; --accent-mid: #b8cdfa; }
+
+* { box-sizing: border-box; }
+html { direction: rtl; }
+body {
+  margin: 0;
+  font-family: Heebo, "Arial Hebrew", Arial, sans-serif;
+  font-size: 11.5pt;
+  line-height: 1.62;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+p { margin: 0 0 2.2mm; }
+b, strong {
+  font-weight: 700;
+  background: linear-gradient(transparent 60%, var(--accent-mid) 60%);
+  padding: 0 0.5mm;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.box b, .box strong, .bl b, .bl strong, th b { background: none; padding: 0; }
+.ltr, .num, code { direction: ltr; unicode-bidi: isolate; }
+code {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.88em;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 1.2mm;
+  padding: 0 1mm;
+}
+.katex { direction: ltr; unicode-bidi: isolate; font-size: 1.08em; }
+.katex-display { margin: 1mm 0 !important; }
+small, .muted { color: var(--muted); }
+
+/* ---------- cover ---------- */
+.cover {
+  height: 297mm;
+  width: 210mm;
+  display: flex;
+  flex-direction: column;
+  break-after: page;
+  overflow: hidden;
+}
+.cover-band {
+  background: var(--accent);
+  color: #fff;
+  padding: 22mm 18mm 14mm;
+  position: relative;
+}
+.cover-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 30%, rgba(255,255,255,.16) 0 18mm, transparent 18.2mm),
+    radial-gradient(circle at 4% 85%, rgba(255,255,255,.10) 0 28mm, transparent 28.2mm),
+    radial-gradient(circle at 30% 105%, rgba(255,255,255,.08) 0 20mm, transparent 20.2mm);
+  pointer-events: none;
+}
+.cover-kicker { font-size: 12pt; font-weight: 500; opacity: .9; margin-bottom: 3mm; }
+.cover h1 { font-size: 30pt; line-height: 1.15; font-weight: 900; margin: 0 0 3mm; }
+.cover-sub { font-size: 14pt; font-weight: 500; opacity: .95; }
+.cover-meta { display: flex; flex-wrap: wrap; gap: 2.5mm; margin-top: 7mm; position: relative; z-index: 1; }
+.chip {
+  display: inline-block;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 20mm;
+  padding: 1mm 4mm;
+  font-size: 10.5pt;
+  font-weight: 500;
+}
+.cover-body { padding: 10mm 18mm 12mm; flex: 1; display: flex; flex-direction: column; gap: 6mm; }
+.cover-body h3 { margin: 0 0 2mm; font-size: 13pt; color: var(--accent-dark); }
+.roadmap { list-style: none; margin: 0; padding: 0; display: grid; gap: 2mm; }
+.roadmap li {
+  display: grid;
+  grid-template-columns: 9mm 1fr auto;
+  align-items: center;
+  gap: 3mm;
+  background: var(--bg-soft);
+  border-radius: 2.5mm;
+  padding: 1.6mm 3mm;
+}
+.roadmap .n {
+  width: 8mm; height: 8mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 11pt;
+}
+.roadmap .t { font-weight: 600; }
+.roadmap .when { direction: ltr; font-size: 9.5pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 2mm 5mm; font-size: 9.5pt; color: var(--muted); }
+
+/* ---------- topic sections: each starts on a new page ---------- */
+section.topic { break-before: page; }
+section.topic.cont { break-before: auto; margin-top: 8mm; }
+.topic-head {
+  display: flex;
+  align-items: center;
+  gap: 3.5mm;
+  border-bottom: 2.5px solid var(--accent);
+  padding-bottom: 2.5mm;
+  margin-bottom: 4mm;
+}
+.topic-head .n {
+  flex: none;
+  width: 11mm; height: 11mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-size: 15pt; font-weight: 900;
+}
+.topic-head h2 { margin: 0; font-size: 19pt; line-height: 1.2; font-weight: 800; color: var(--ink); flex: 1; }
+.time {
+  flex: none;
+  direction: ltr;
+  font-size: 9pt;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 10mm;
+  padding: 0.6mm 2.6mm;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+h3 { font-size: 13.5pt; font-weight: 800; margin: 5mm 0 2mm; color: var(--accent-dark); break-after: avoid; }
+h4 { font-size: 11.5pt; font-weight: 700; margin: 3mm 0 1.5mm; break-after: avoid; }
+
+/* bottom line: first thing in every section */
+.bl {
+  background: var(--accent-soft);
+  border-inline-start: 5px solid var(--accent);
+  border-radius: 2.5mm;
+  padding: 2.5mm 4mm;
+  font-weight: 700;
+  font-size: 12pt;
+  margin: 0 0 4mm;
+  break-inside: avoid;
+}
+.bl::before { content: "⚡ "; }
+
+/* bullets */
+ul.pts { list-style: none; padding: 0; margin: 0 0 3mm; }
+ul.pts > li { position: relative; padding-inline-start: 6mm; margin-bottom: 1.6mm; }
+ul.pts > li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 1mm;
+  top: 2.6mm;
+  width: 2.2mm; height: 2.2mm;
+  border-radius: 50%;
+  background: var(--accent);
+}
+ul.pts ul { margin-top: 1mm; }
+
+/* generic callout box */
+.box {
+  border-radius: 3mm;
+  padding: 3mm 4mm;
+  margin: 3mm 0;
+  break-inside: avoid;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+.box > .box-title { font-weight: 800; margin-bottom: 1.2mm; display: flex; gap: 2mm; align-items: center; }
+.box > :last-child { margin-bottom: 0; }
+.box.life { background: #fffbea; border-color: #f3e3a3; }
+.box.life > .box-title::before { content: "🏠"; }
+.box.formula { background: var(--accent-soft); border-color: var(--accent-mid); text-align: center; }
+.box.formula > .box-title { justify-content: center; }
+.box.formula > .box-title::before { content: "🧮"; }
+.box.tip { background: var(--ok-soft); border-color: #b6e3d2; }
+.box.tip > .box-title::before { content: "💡"; }
+.box.warn { background: var(--warn-soft); border-color: #f2cf9f; }
+.box.warn > .box-title::before { content: "⚠️"; }
+.box.remember { background: var(--info-soft); border-color: #b9dbf2; }
+.box.remember > .box-title::before { content: "🧠"; }
+.box.optional { background: #fafafa; border: 1.5px dashed #c5cad3; }
+.box.optional > .box-title::before { content: "📎"; }
+.box.optional > .box-title::after { content: "רשות"; font-size: 8.5pt; font-weight: 700; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; }
+.box.announce { background: var(--bad-soft); border-color: #f2c2c2; }
+.box.announce > .box-title::before { content: "📢"; }
+.box.unclear { background: #f4f1fb; border-color: #d9cff3; }
+.box.unclear > .box-title::before { content: "❓"; }
+.box.lecturer { background: #fff; border-inline-start: 4px solid var(--accent-mid); }
+.box.lecturer > .box-title::before { content: "🎙️"; }
+
+/* numbered procedure */
+ol.steps { list-style: none; counter-reset: st; padding: 0; margin: 2mm 0 3mm; }
+ol.steps > li { counter-increment: st; position: relative; padding-inline-start: 9mm; margin-bottom: 2mm; min-height: 6.5mm; }
+ol.steps > li::before {
+  content: counter(st);
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.2mm;
+  width: 6.5mm; height: 6.5mm;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 9.5pt;
+  display: grid;
+  place-items: center;
+}
+
+/* worked example */
+.worked {
+  border: 1.5px solid var(--accent-mid);
+  border-radius: 3mm;
+  margin: 3.5mm 0;
+  break-inside: avoid;
+  overflow: hidden;
+}
+.worked > .w-title { background: var(--accent); color: #fff; font-weight: 800; padding: 1.6mm 4mm; }
+.worked > .w-title::before { content: "✏️ "; }
+.worked > .w-body { padding: 3mm 4mm; }
+.worked .given { background: var(--bg-soft); border-radius: 2mm; padding: 2mm 3mm; margin-bottom: 2.5mm; }
+.worked .given::before { content: "נתון: "; font-weight: 800; }
+.worked .ask::before { content: "מחפשים: "; font-weight: 800; }
+.worked ol.lines { counter-reset: ln; list-style: none; padding: 0; margin: 2mm 0; }
+.worked ol.lines > li { counter-increment: ln; padding: 1.2mm 0; padding-inline-start: 13mm; border-bottom: 1px dashed var(--line); position: relative; }
+.worked ol.lines > li::before { content: "שלב " counter(ln); position: absolute; inset-inline-start: 0; font-size: 8.5pt; color: var(--muted); top: 1.8mm; }
+.worked .answer { margin-top: 2mm; font-weight: 800; }
+.worked .answer::before { content: "✅ תשובה: "; }
+.worked .check { margin-top: 1.5mm; color: var(--ok); font-weight: 700; }
+.worked .check::before { content: "✓ בדיקה: "; }
+
+/* figures */
+figure.fig { margin: 3.5mm 0; text-align: center; break-inside: avoid; }
+figure.fig svg { max-width: 100%; height: auto; }
+figure.fig figcaption { font-size: 9.5pt; color: var(--muted); margin-top: 1.5mm; }
+figure.fig.half { width: 60%; margin-inline: auto; }
+
+/* SVG helper classes (inline SVG lives in the HTML DOM, so CSS vars work) */
+svg text { font-family: Heebo, "Arial Hebrew", sans-serif; }
+svg .acc { stroke: var(--accent); }
+svg .acc-f { fill: var(--accent); }
+svg .soft-f { fill: var(--accent-soft); }
+svg .mid-f { fill: var(--accent-mid); }
+svg .dark-f { fill: var(--accent-dark); }
+svg .ink { stroke: var(--ink); }
+svg .ink-f { fill: var(--ink); }
+svg .muted-f { fill: var(--muted); }
+svg .line { stroke: #b8bfcb; }
+svg .ok { stroke: var(--ok); }
+svg .ok-f { fill: var(--ok); }
+svg .bad { stroke: var(--bad); }
+svg .bad-f { fill: var(--bad); }
+svg .warn-f { fill: var(--warn); }
+svg .lbl { font-size: 15px; fill: var(--ink); }
+svg .lbl-s { font-size: 12.5px; fill: var(--muted); }
+svg .lbl-b { font-size: 16px; font-weight: 700; fill: var(--ink); }
+svg .he { direction: rtl; unicode-bidi: plaintext; }
+
+/* tables */
+table.t { width: 100%; border-collapse: separate; border-spacing: 0; margin: 3mm 0; font-size: 10.5pt; break-inside: avoid; border: 1px solid var(--line); border-radius: 2.5mm; overflow: hidden; }
+table.t th { background: var(--accent-soft); color: var(--accent-dark); font-weight: 800; text-align: start; padding: 1.8mm 3mm; border-bottom: 1px solid var(--accent-mid); }
+table.t td { padding: 1.6mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.t tr:last-child td { border-bottom: none; }
+table.t tr:nth-child(even) td { background: #fafbfc; }
+
+/* layout helpers */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; }
+.grid2 > .box, .grid3 > .box { margin: 0; }
+.card { border: 1px solid var(--line); border-radius: 3mm; padding: 2.5mm 3.5mm; break-inside: avoid; background: #fff; }
+.card > .c-title { font-weight: 800; color: var(--accent-dark); margin-bottom: 1mm; }
+.vs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 3mm; align-items: stretch; }
+.vs > .mid { align-self: center; font-weight: 900; color: var(--accent); font-size: 14pt; }
+.keep { break-inside: avoid; }
+.pagebreak { break-before: page; }
+
+/* end matter */
+ol.quiz { padding-inline-start: 7mm; margin: 0; }
+ol.quiz > li { margin-bottom: 3mm; padding-bottom: 2mm; border-bottom: 1px dashed var(--line); break-inside: avoid; }
+ol.quiz .lvl { font-size: 8.5pt; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; margin-inline-start: 2mm; }
+ol.answers { padding-inline-start: 7mm; margin: 0; }
+ol.answers > li { margin-bottom: 2.5mm; break-inside: avoid; }
+dl.glossary { display: grid; grid-template-columns: max-content 1fr; gap: 1.5mm 5mm; margin: 0; }
+dl.glossary dt { font-weight: 800; color: var(--accent-dark); }
+dl.glossary dd { margin: 0; }
+
+@page {
+  @top-right { content: "בטיחות"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+  @top-left { content: "25/10/2026"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+}
+</style>
+</head>
+<body class="course-safety">
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="cover-band">
+    <div class="cover-kicker">🎥 סיכום הקלטה · בטיחות (850138)</div>
+    <h1>מדרכות מעבר: שיפוע 1:4 ו-1:1.5</h1>
+    <div class="cover-sub">הקלטת השיעור · יום ראשון 25/10/2026</div>
+    <div class="cover-meta">
+      <span class="chip">👤 בהומי הרצל</span>
+      <span class="chip">⏱ 1:50 שעות הקלטה</span>
+      <span class="chip">📄 14 עמודים</span>
+    </div>
+  </div>
+  <div class="cover-body">
+    <div class="bl">עד <b>1:4</b> ← מדרכה פשוטה · עד <b>1:1.5</b> ← עם שלבים · תלול יותר ← <b>סולם או מדרגות</b>.</div>
+    <div>
+      <h3>🗺️ מפת השיעור</h3>
+      <ol class="roadmap">
+        <li><span class="n">1</span><span class="t">מדרכה פשוטה: יחס 1:4</span><span class="when">00:12:54</span></li>
+        <li><span class="n">2</span><span class="t">מדרכה עם שלבים: יחס 1:1.5</span><span class="when">00:21:38</span></li>
+        <li><span class="n">3</span><span class="t">"על פי התקנות": לוקחים את הגבול</span><span class="when">00:28:54</span></li>
+        <li><span class="n">4</span><span class="t">ארגז הכלים: משולש ישר-זווית</span><span class="when">00:33:35</span></li>
+        <li><span class="n">5</span><span class="t">תרגול: המרות, ואיזו מדרכה מתאימה</span><span class="when">00:44:33</span></li>
+        <li><span class="n">6</span><span class="t">שאלות מה"ט: מדרכה בין שני בניינים</span><span class="when">01:09:32</span></li>
+        <li><span class="n">7</span><span class="t">משימה: קורס בטיחות בקמפוס IL</span><span class="when">01:42:11</span></li>
+      </ol>
+    </div>
+    <div class="box announce"><div class="box-title">הודעות מהשיעור</div>
+      <ul class="pts">
+        <li><b>מבחן אמצע</b> מתוכנן; התאריכים יעלו <b>השבוע</b>. <span class="ltr muted">00:07:33</span></li>
+        <li><b>עד השיעור הבא</b>: קורס בקמפוס IL ← להראות <b>תעודה בטלפון</b> (נושא 7). <span class="ltr muted">01:42:11</span></li>
+        <li>בעוד <b>כשבועיים</b>: <b>מבדק</b>. השאלות נפתרות בכיתה מראש; רק המספרים ישתנו. <span class="ltr muted">00:32:27</span></li>
+        <li>במבחן מותרים <b>2 דפים דו-צדדיים בכתב יד</b>. להכין לבד. <span class="ltr muted">00:36:20</span></li>
+      </ul>
+    </div>
+    <div class="legend"><span>⚡ שורה תחתונה</span><span>🏠 דוגמה מהחיים</span><span>🧮 נוסחה</span><span>✏️ דוגמה פתורה</span><span>⚠️ טעות נפוצה</span><span>💡 טיפ</span><span>🎙️ הודגש בשיעור</span><span>📢 הודעות</span><span>❓ לא ברור</span><span>⏱ זמן בהקלטה</span></div>
+  </div>
+</div>
+
+<!-- ============ TOPIC 1 ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">1</span><h2>מדרכה פשוטה: יחס 1:4</h2><span class="time">⏱ 00:12:54</span></div>
+  <div class="bl">מדרכה פשוטה: עד יחס <b>1:4</b> ← על כל <b>1 מ'</b> גובה, <b>4 מ'</b> אופקי (<b>0.25</b>, כ-<b>14°</b>).</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p>שולחן <b>70 ס"מ</b>: כדי לרדת לרצפה צריך לפחות <b>2.80 מ'</b>. ליד הקיר אין מקום ← <b>לא מתאים</b>.</p>
+  </div>
+
+  <ul class="pts">
+    <li><b>מדרכת מעבר</b> = משטח של הפועלים באתר: בין <b>שני גבהים</b> או מעל <b>תעלה</b>, ברגל או עם <b>מריצה</b>.</li>
+    <li>איפה: בין <b>פיגומים</b>, בין <b>מבנים</b>, ממבנה <b>לקרקע</b>, מעל תעלה <b>בחפירה</b>.</li>
+    <li>יחס <b>1:4</b> = חלק <b>אחד</b> אנכי, <b>4</b> חלקים אופקיים. (הסוג השני, <b>עם שלבים</b>, בנושא 2.)</li>
+    <li>מבנה: <b>פלטה</b> למעלה, <b>2 קרשים</b> של <span class="ltr">5×10</span> ס"מ מתחת.</li>
+    <li>רוחב לפחות <b>60 ס"מ</b>.</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 106 640 179" xmlns="http://www.w3.org/2000/svg" style="width:88%">
+      <defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+      <line x1="20" y1="220" x2="620" y2="220" class="ink" stroke-width="2.5"/>
+      <rect x="466" y="140" width="124" height="7" rx="2" class="dark-f"/>
+      <line x1="480" y1="147" x2="480" y2="220" class="ink" stroke-width="4"/>
+      <line x1="576" y1="147" x2="576" y2="220" class="ink" stroke-width="4"/>
+      <text x="528" y="128" class="lbl he" text-anchor="middle">שולחן</text>
+      <line x1="470" y1="140" x2="470" y2="220" class="line" stroke-width="2" stroke-dasharray="5 4"/>
+      <line x1="150" y1="220" x2="470" y2="140" class="acc" stroke-width="7" stroke-linecap="round"/>
+      <text x="305" y="162" class="lbl-b he" text-anchor="middle" transform="rotate(-14.04 305 162)">מדרכה פשוטה</text>
+      <text x="444" y="200" class="lbl-b ltr" text-anchor="middle">0.70</text>
+      <path d="M205,220 A55,55 0 0 0 203.4,206.7" class="ink" fill="none" stroke-width="1.5"/>
+      <text x="242" y="215" class="lbl ltr" text-anchor="middle">14°</text>
+      <line x1="150" y1="250" x2="470" y2="250" class="ink" stroke-width="1.5" marker-start="url(#ar1)" marker-end="url(#ar1)"/>
+      <line x1="230" y1="244" x2="230" y2="256" class="ink" stroke-width="1.5"/>
+      <line x1="310" y1="244" x2="310" y2="256" class="ink" stroke-width="1.5"/>
+      <line x1="390" y1="244" x2="390" y2="256" class="ink" stroke-width="1.5"/>
+      <text x="190" y="242" class="lbl-s ltr" text-anchor="middle">0.70</text>
+      <text x="270" y="242" class="lbl-s ltr" text-anchor="middle">0.70</text>
+      <text x="350" y="242" class="lbl-s ltr" text-anchor="middle">0.70</text>
+      <text x="430" y="242" class="lbl-s ltr" text-anchor="middle">0.70</text>
+      <text x="310" y="277" class="lbl-b ltr" text-anchor="middle">2.80</text>
+      <rect x="38" y="196" width="104" height="24" class="line" fill="none" stroke-width="2" stroke-dasharray="5 4"/>
+      <text x="90" y="186" class="lbl-s he" text-anchor="middle">מקום להסתובב</text>
+      <text x="90" y="242" class="lbl-s he" text-anchor="middle">עוד כמטר</text>
+    </svg>
+    <figcaption>הגובה (0.70 מ') נכנס 4 פעמים באופקי ← לפחות 2.80 מ', ועוד כמטר כדי להסתובב. מידות במטרים.</figcaption>
+  </figure>
+
+  <ol class="steps">
+    <li>למדוד <b>אנכי</b> ו<b>אופקי</b>, באותן יחידות.</li>
+    <li>לחלק <b>אנכי ÷ אופקי</b> (זה \(\tan\alpha\)). האנכי תמיד למעלה.</li>
+    <li>להשוות ל-<b>0.25</b>: מעל ← <b>לא מתאימה</b> (גם 0.251); מתחת ← <b>מתאימה</b>; בדיוק ← <b>שיקול דעת</b>.</li>
+  </ol>
+
+  <div class="grid2">
+    <div class="worked" style="margin:0"><div class="w-title">דוגמה פתורה (מהשיעור): שולחן 70 ס"מ</div><div class="w-body">
+      <div class="given">גובה 0.70 מ', יחס 1:4.</div>
+      <div class="ask">האופקי המינימלי.</div>
+      <ol class="lines">
+        <li>האופקי גדול <b>פי 4</b>.</li>
+        <li>\(b = 4 \times 0.70 = 2.80\ \text{m}\)</li>
+      </ol>
+      <div class="answer">לפחות <span class="ltr">2.80</span> מ'.</div>
+      <div class="check">\(0.70 \div 2.80 = 0.25\) ✓</div>
+    </div></div>
+    <div class="box lecturer"><div class="box-title">הודגש בשיעור</div>
+      <ul class="pts">
+        <li>זו המדרכה <b>שכולם מעדיפים</b>: כמעט בלי שיפוע, הכי נוחה, מינימום עבודה.</li>
+        <li><b>כמה שפחות שיפוע, יותר טוב.</b> 2.80 מ' הוא רק <b>המינימום</b>.</li>
+        <li>ועוד <b>כמטר</b> בסוף, כדי להסתובב עם מריצה.</li>
+        <li><b>הזווית</b>: כ-<b>14°</b>.<br>במחשבון: \(\tan^{-1}(0.25) = 14.04^\circ\).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOPIC 2 ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">2</span><h2>מדרכה עם שלבים: יחס 1:1.5</h2><span class="time">⏱ 00:21:38</span></div>
+  <div class="bl">מדרכה <b>עם שלבים</b>: עד <b>1:1.5</b> (<b>0.667</b>, כ-<b>34°</b>). תלול יותר ← <b>סולם או מדרגות</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p>דוחפים <b>מריצה</b> בשיפוע תלול ← קל <b>להחליק</b>. לכן <b>שלבים</b>: הרגליים דורכות עליהם.</p>
+    <p>אבל הגלגל קופץ על כל שלב ("טק-טק-טק") ← מתאמצים. לכן <b>רווח 10 ס"מ</b> באמצע, לגלגל.</p>
+  </div>
+
+  <ul class="pts">
+    <li>"המדרכה <b>המיוחדת</b>": <b>פלטה</b>, <b>עצים תומכים</b> מתחת, ועליה <b>שלבים חצויים</b>.</li>
+    <li>רוחב לפחות <b>60 ס"מ</b> (כמו <b>גשרון</b>).</li>
+    <li><b>שלבים</b> כל <b>30 עד 35 ס"מ</b>, במרווח <b>קבוע</b>.</li>
+    <li>שולחן 70 ס"מ: כאן רק \(1.5 \times 0.70 = 1.05\) מ' (במקום 2.80) ← <b>תלול</b> ← שלבים.</li>
+    <li>בלוח ובשיעור: <b>0.66</b> (מדויק: 0.667), ו-<b>34°</b> בכוונה (המחשבון: <b>33.69°</b>).</li>
+  </ul>
+
+  <div class="grid3">
+    <div class="box tip"><p><b>מתחת ל-0.667</b><br>✓ מתאימה.</p></div>
+    <div class="box warn"><p><b>בדיוק 0.667</b><br>לבחור: זו או סולם.</p></div>
+    <div class="box announce"><p><b>מעל 0.667</b><br>✗ סולם / מדרגות.</p></div>
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 12 640 174" xmlns="http://www.w3.org/2000/svg" style="width:72%">
+      <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+      <rect x="80" y="60" width="480" height="120" rx="3" class="soft-f ink" stroke-width="2"/>
+      <line x1="88" y1="120" x2="552" y2="120" class="line" stroke-width="2" stroke-dasharray="5 5"/>
+      <g class="acc-f">
+        <rect x="110" y="60" width="10" height="50"/><rect x="110" y="130" width="10" height="50"/>
+        <rect x="175" y="60" width="10" height="50"/><rect x="175" y="130" width="10" height="50"/>
+        <rect x="240" y="60" width="10" height="50"/><rect x="240" y="130" width="10" height="50"/>
+        <rect x="305" y="60" width="10" height="50"/><rect x="305" y="130" width="10" height="50"/>
+        <rect x="370" y="60" width="10" height="50"/><rect x="370" y="130" width="10" height="50"/>
+        <rect x="435" y="60" width="10" height="50"/><rect x="435" y="130" width="10" height="50"/>
+        <rect x="500" y="60" width="10" height="50"/><rect x="500" y="130" width="10" height="50"/>
+      </g>
+      <rect x="455" y="114" width="34" height="12" rx="6" class="ink-f"/>
+      <line x1="44" y1="60" x2="80" y2="60" class="line" stroke-width="1.2"/>
+      <line x1="44" y1="180" x2="80" y2="180" class="line" stroke-width="1.2"/>
+      <line x1="52" y1="62" x2="52" y2="178" class="ink" stroke-width="1.5" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+      <text x="30" y="126" class="lbl-b ltr" text-anchor="middle">60</text>
+      <line x1="514" y1="110" x2="580" y2="110" class="line" stroke-width="1.2" stroke-dasharray="3 3"/>
+      <line x1="514" y1="130" x2="580" y2="130" class="line" stroke-width="1.2" stroke-dasharray="3 3"/>
+      <line x1="586" y1="60" x2="586" y2="180" class="ink" stroke-width="1.5"/>
+      <line x1="580" y1="60" x2="592" y2="60" class="ink" stroke-width="1.5"/>
+      <line x1="580" y1="110" x2="592" y2="110" class="ink" stroke-width="1.5"/>
+      <line x1="580" y1="130" x2="592" y2="130" class="ink" stroke-width="1.5"/>
+      <line x1="580" y1="180" x2="592" y2="180" class="ink" stroke-width="1.5"/>
+      <text x="612" y="91" class="lbl ltr" text-anchor="middle">25</text>
+      <text x="612" y="125" class="lbl-b ltr" text-anchor="middle">10</text>
+      <text x="612" y="161" class="lbl ltr" text-anchor="middle">25</text>
+      <line x1="180" y1="56" x2="180" y2="32" class="line" stroke-width="1.2"/>
+      <line x1="245" y1="56" x2="245" y2="32" class="line" stroke-width="1.2"/>
+      <line x1="182" y1="38" x2="243" y2="38" class="ink" stroke-width="1.5" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+      <text x="212" y="26" class="lbl-b ltr" text-anchor="middle">30–35</text>
+      <text x="310" y="30" class="lbl he" text-anchor="middle">שלב</text>
+      <line x1="310" y1="36" x2="310" y2="58" class="ink" stroke-width="1"/>
+      <text x="472" y="30" class="lbl he" text-anchor="middle">גלגל המריצה נוסע ברווח</text>
+      <line x1="472" y1="36" x2="472" y2="112" class="ink" stroke-width="1"/>
+    </svg>
+    <figcaption>מבט מלמעלה, לא סולם (בס"מ): מרווח קבוע 30 עד 35, רווח 10 לגלגל, וחצי שלב \((60 - 10) \div 2 = 25\).</figcaption>
+  </figure>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): 1.49 או 1.51? <span class="ltr">⏱ 01:15:52</span></div><div class="w-body">
+    <div class="given">אנכי 1 מ'. האופקי: 1.49 מ' או 1.51 מ'.</div>
+    <div class="ask">באיזה מקרה מותרת מדרכה עם שלבים?</div>
+    <ol class="lines">
+      <li>\(1 \div 1.49 = 0.671\) ← מעל 0.667 ← <b>אסור</b></li>
+      <li>\(1 \div 1.51 = 0.662\) ← מתחת ל-0.667 ← <b>מותר</b></li>
+    </ol>
+    <div class="answer">רק עם <span class="ltr">1.51</span> מ'.</div>
+    <div class="check">בזוויות (חושבו לסיכום): <span class="ltr">33.87°</span> מעל הגבול <span class="ltr">33.69°</span>, ו-<span class="ltr">33.51°</span> מתחת ✓</div>
+  </div></div>
+</section>
+
+<!-- ============ TOPIC 3 ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">3</span><h2>"על פי התקנות": לוקחים את הגבול</h2><span class="time">⏱ 00:28:54</span></div>
+  <div class="bl">"על פי התקנות" = <b>הגבול המותר</b>: למדרכה <b>1:1.5</b> ו-<b>34°</b>, המדרכה <b>הקצרה ביותר</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (תוספת)</div>
+    <p>"כמה זמן <b>לפחות</b> לנסוע 90 ק"מ בכביש של 90 קמ"ש?" ← מחשבים עם <b>הגבול</b>. כך גם כאן.</p>
+  </div>
+
+  <ul class="pts">
+    <li>בשאלות מבחן חסר לפעמים <b>נתון אחד</b>, וכתוב <b>"על פי התקנות"</b> ← לוקחים מיד <b>1:1.5</b> ו-<b>34°</b>.</li>
+    <li>זה <b>לא האידאל</b> (1:4). "מותחים את הגבול עד הקצה" ← <b>המדרכה הקצרה ביותר</b>.</li>
+    <li>גם <b>בלי המילים</b>: בין 2 בניינים, ונתונים <b>רק הגבהים</b>? ← מפעילים את התקנות לבד.</li>
+    <li>מעבר ל-1:1.5 = <b>"התחום האדום"</b> ← אין מדרכה: <b>סולם או מדרגות</b>.</li>
+    <li>אותו רעיון ב<b>סולם</b> (אולי בשבוע הבא): <b>4:1</b>, <b>76°</b>.</li>
+    <li>וב<b>יציאה מחפירה</b>: נתון רק העומק ← הזווית לפי התקנות.</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 18 640 236" xmlns="http://www.w3.org/2000/svg" style="width:66%">
+      <defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+      <rect x="298" y="25" width="26" height="14" rx="3" class="ok-f"/>
+      <text x="225" y="37" class="lbl he" text-anchor="middle">מדרכה פשוטה</text>
+      <text x="95" y="37" class="lbl ltr" text-anchor="middle">1:4 · 14°</text>
+      <rect x="298" y="55" width="26" height="14" rx="3" class="warn-f"/>
+      <text x="225" y="67" class="lbl he" text-anchor="middle">מדרכה עם שלבים</text>
+      <text x="95" y="67" class="lbl ltr" text-anchor="middle">1:1.5 · 34°</text>
+      <rect x="298" y="85" width="26" height="14" rx="3" class="bad-f"/>
+      <text x="225" y="97" class="lbl he" text-anchor="middle">סולם (בהמשך)</text>
+      <text x="95" y="97" class="lbl ltr" text-anchor="middle">4:1 · 76°</text>
+      <line x1="20" y1="200" x2="625" y2="200" class="ink" stroke-width="2.5"/>
+      <rect x="560" y="80" width="62" height="120" class="soft-f ink" stroke-width="2"/>
+      <line x1="606" y1="86" x2="606" y2="194" class="ink" stroke-width="1.5" marker-start="url(#ar3)" marker-end="url(#ar3)"/>
+      <text x="586" y="146" class="lbl-b ltr" text-anchor="middle">1</text>
+      <polygon points="80,200 560,80 558.3,73.2 78.3,193.2" class="ok-f"/>
+      <polygon points="380,200 560,80 556.1,74.2 376.1,194.2" class="warn-f"/>
+      <g class="ink" stroke-width="3">
+        <line x1="412.1" y1="170.2" x2="408.2" y2="164.4"/>
+        <line x1="448.1" y1="146.2" x2="444.2" y2="140.4"/>
+        <line x1="484.1" y1="122.2" x2="480.2" y2="116.4"/>
+        <line x1="520.1" y1="98.2" x2="516.2" y2="92.4"/>
+      </g>
+      <polygon points="530,200 560,80 553.2,78.3 523.2,198.3" class="bad-f"/>
+      <path d="M125,200 A45,45 0 0 0 123.7,189.1" class="ink" fill="none" stroke-width="1.5"/>
+      <text x="168" y="195" class="lbl ltr" text-anchor="middle">14°</text>
+      <path d="M420,200 A40,40 0 0 0 413.3,177.8" class="ink" fill="none" stroke-width="1.5"/>
+      <text x="444" y="194" class="lbl ltr" text-anchor="middle">34°</text>
+      <path d="M552,200 A22,22 0 0 0 535.3,178.7" class="ink" fill="none" stroke-width="1.5"/>
+      <line x1="80" y1="222" x2="560" y2="222" class="line" stroke-width="1.5"/>
+      <line x1="80" y1="216" x2="80" y2="228" class="ink" stroke-width="1.5"/>
+      <line x1="380" y1="216" x2="380" y2="228" class="ink" stroke-width="1.5"/>
+      <line x1="530" y1="216" x2="530" y2="228" class="ink" stroke-width="1.5"/>
+      <line x1="560" y1="216" x2="560" y2="228" class="ink" stroke-width="1.5"/>
+      <text x="80" y="246" class="lbl-b ltr" text-anchor="middle">4</text>
+      <text x="380" y="246" class="lbl-b ltr" text-anchor="middle">1.5</text>
+      <text x="526" y="246" class="lbl-b ltr" text-anchor="middle">0.25</text>
+    </svg>
+    <figcaption>אותו גובה (1 מ'), שלושה פתרונות. המספרים למטה = המרחק האופקי מהמבנה (מ'). הקשת הקטנה ליד המבנה = 76° של הסולם. ככל שהזווית גדלה, הפתרון מתחלף.</figcaption>
+  </figure>
+
+  <div class="worked"><div class="w-title">דוגמה נוספת: הפרש גובה 2.4 מ', על פי התקנות</div><div class="w-body">
+    <div class="given">צריך לגשר על 2.4 מ'. אין נתון נוסף.</div>
+    <div class="ask">המרחק האופקי.</div>
+    <ol class="lines">
+      <li>על פי התקנות ← יחס <b>1:1.5</b>: \(b = 1.5 \times 2.4 = 3.6\ \text{m}\)</li>
+    </ol>
+    <div class="answer">אופקי <span class="ltr">3.6</span> מ'.</div>
+    <div class="check">\(2.4 \div 3.6 = 0.667\) ← בדיוק הגבול ✓</div>
+  </div></div>
+
+  <div class="box lecturer"><div class="box-title">הודגש בשיעור</div>
+    <p>רוב הסטודנטים <b>לא יודעים</b> מה "על פי התקנות" רוצה מהם. לכן זה נלמד <b>עכשיו</b>.</p>
+  </div>
+</section>
+
+<!-- ============ TOPIC 4 ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">4</span><h2>ארגז הכלים: משולש ישר-זווית</h2><span class="time">⏱ 00:33:35</span></div>
+  <div class="bl">כל מדרכה = <b>משולש ישר-זווית</b>: אנכי = <b>מול</b>, אופקי = <b>ליד</b>, המדרכה = <b>היתר</b>.</div>
+
+  <div class="grid2" style="grid-template-columns:1fr 1.3fr; align-items:center; margin-bottom:4mm">
+    <div class="box life"><div class="box-title">דוגמה מהחיים (תוספת)</div>
+      <p><b>מגלשה</b> בגן: הסולם = <b>אנכי</b>, הרצפה מתחת = <b>אופקי</b>, המגלשה עצמה = <b>היתר</b>.</p>
+    </div>
+    <figure class="fig" style="margin:0">
+      <svg viewBox="30 16 360 134" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+        <line x1="40" y1="120" x2="280" y2="120" class="ink" stroke-width="2.5"/>
+        <line x1="280" y1="120" x2="280" y2="30" class="ink" stroke-width="2.5"/>
+        <line x1="40" y1="120" x2="280" y2="30" class="acc" stroke-width="6" stroke-linecap="round"/>
+        <path d="M266,120 L266,106 L280,106" class="ink" fill="none" stroke-width="1.5"/>
+        <path d="M80,120 A40,40 0 0 0 77.5,106" class="ink" fill="none" stroke-width="1.5"/>
+        <text x="96" y="116" class="lbl-b ltr" text-anchor="middle">α</text>
+        <text x="294" y="80" class="lbl-b ltr" text-anchor="middle">a</text>
+        <text x="345" y="72" class="lbl he" text-anchor="middle">צלע מול</text>
+        <text x="345" y="92" class="lbl he" text-anchor="middle">(אנכי)</text>
+        <text x="110" y="142" class="lbl-b ltr" text-anchor="middle">b</text>
+        <text x="190" y="142" class="lbl he" text-anchor="middle">צלע ליד (אופקי)</text>
+        <text x="170" y="62" class="lbl-b ltr" text-anchor="middle">c</text>
+        <text x="95" y="34" class="lbl he" text-anchor="middle">יתר = המדרכה</text>
+        <text x="95" y="54" class="lbl he" text-anchor="middle">(אורך המדרון)</text>
+      </svg>
+      <figcaption>α היא הזווית בתחתית המדרכה. "מול" ו"ליד" תמיד ביחס אליה.</figcaption>
+    </figure>
+  </div>
+
+  <ul class="pts">
+    <li><b>אנכי</b> (a) = הפרש הגובה = <b>צלע מול</b> הזווית α. <b>אופקי</b> (b) = <b>צלע ליד</b>.</li>
+    <li><b>המדרכה</b> (c) = <b>היתר</b> = "<b>אורך המדרון</b>".</li>
+    <li>כדי לפתור צריך <b>2 נתונים</b>: 2 צלעות, או צלע וזווית.</li>
+    <li><b>2 זוויות לא מספיקות</b> (בשיעור נאמר גם "או שתי זוויות"; תיקון: בלי צלע אין אורך).</li>
+    <li>בשיעור כותבים <b>במילים</b> (מול, ליד, יתר), לא באותיות, כדי לדבר באותה שפה. <span class="ltr muted">00:40:05</span></li>
+  </ul>
+
+  <div class="box formula"><div class="box-title">הנוסחאות (הודגש: לרשום בצד ולהסתכל עליהן בפתרון)</div>
+    \[ \sin\alpha = \frac{a}{c} \qquad \cos\alpha = \frac{b}{c} \qquad \tan\alpha = \frac{a}{b} \qquad a^2 + b^2 = c^2 \]
+    \[ \alpha = \tan^{-1}\!\left(\frac{a}{b}\right) \qquad c = \sqrt{a^2 + b^2} \qquad c = \frac{a}{\sin\alpha} \]
+    <p class="muted">sin = מול ÷ יתר · cos = ליד ÷ יתר · tan = מול ÷ ליד ("האהוב") · פיתגורס: "כולם בריבוע"</p>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): אנכי 2 מ', אופקי 7 מ' <span class="ltr">⏱ 00:18:28</span></div><div class="w-body">
+    <div class="given">אנכי 2 מ', אופקי 7 מ'. (בשיעור הודגמה הדרך; המספרים חושבו לסיכום.)</div>
+    <div class="ask">זווית השיפוע, ואיזו מדרכה מתאימה.</div>
+    <ol class="lines">
+      <li>מחלקים: \(\tan\alpha = 2 \div 7 = 0.286\) ← Shift + tan: \(\alpha = 15.9^\circ\)</li>
+      <li>מעל 14° ← פשוטה <b>לא</b>; מתחת ל-34° ← עם שלבים <b>כן</b>.</li>
+    </ol>
+    <div class="answer">כ-<span class="ltr">15.9°</span> ← מדרכה עם שלבים.</div>
+    <div class="check">\(\tan 15.9^\circ \approx 0.285\), כמעט \(2 \div 7\) ✓</div>
+  </div></div>
+</section>
+
+<!-- ============ TOPIC 5 ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">5</span><h2>תרגול: המרות, ואיזו מדרכה מתאימה</h2><span class="time">⏱ 00:44:33</span></div>
+  <div class="bl">נתון צד אחד ← <b>כופלים</b> או <b>מחלקים</b> ביחס. נמדדו שניהם ← <b>מחלקים ומשווים</b>.</div>
+
+  <h3>א. מאנכי לאופקי ובחזרה</h3>
+  <div class="box life"><div class="box-title">דוגמה מהחיים (תוספת)</div>
+    <p>מתכון: <b>כוס אורז</b> על <b>2 כוסות מים</b>. 3 כוסות אורז ← 6 מים (<b>כפל</b>); 8 כוסות מים ← 4 אורז (<b>חילוק</b>).</p>
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 16 600 210" xmlns="http://www.w3.org/2000/svg" style="width:72%">
+      <text x="566" y="66" class="lbl-b ltr" text-anchor="middle">1:4</text>
+      <text x="510" y="44" class="lbl he" text-anchor="middle">אנכי</text>
+      <text x="510" y="89" class="lbl he" text-anchor="middle">אופקי</text>
+      <rect x="380" y="24" width="90" height="30" rx="4" class="mid-f"/>
+      <text x="425" y="45" class="lbl ltr" text-anchor="middle">1.10</text>
+      <rect x="380" y="69" width="90" height="30" rx="4" class="soft-f ink" stroke-width="1.2"/>
+      <rect x="290" y="69" width="90" height="30" rx="4" class="soft-f ink" stroke-width="1.2"/>
+      <rect x="200" y="69" width="90" height="30" rx="4" class="soft-f ink" stroke-width="1.2"/>
+      <rect x="110" y="69" width="90" height="30" rx="4" class="soft-f ink" stroke-width="1.2"/>
+      <text x="425" y="90" class="lbl-s ltr" text-anchor="middle">1.10</text>
+      <text x="335" y="90" class="lbl-s ltr" text-anchor="middle">1.10</text>
+      <text x="245" y="90" class="lbl-s ltr" text-anchor="middle">1.10</text>
+      <text x="155" y="90" class="lbl-s ltr" text-anchor="middle">1.10</text>
+      <text x="58" y="90" class="lbl-b ltr" text-anchor="middle">4.40 =</text>
+      <line x1="20" y1="122" x2="580" y2="122" class="line" stroke-width="1.5" stroke-dasharray="5 5"/>
+      <text x="566" y="186" class="lbl-b ltr" text-anchor="middle">1:1.5</text>
+      <text x="510" y="164" class="lbl he" text-anchor="middle">אנכי</text>
+      <text x="510" y="209" class="lbl he" text-anchor="middle">אופקי</text>
+      <rect x="380" y="144" width="90" height="30" rx="4" class="mid-f"/>
+      <text x="425" y="165" class="lbl ltr" text-anchor="middle">2</text>
+      <rect x="380" y="189" width="90" height="30" rx="4" class="soft-f ink" stroke-width="1.2"/>
+      <rect x="335" y="189" width="45" height="30" rx="4" class="soft-f ink" stroke-width="1.2"/>
+      <text x="425" y="210" class="lbl-s ltr" text-anchor="middle">2</text>
+      <text x="357" y="210" class="lbl-s ltr" text-anchor="middle">1</text>
+      <text x="300" y="210" class="lbl-b ltr" text-anchor="middle">3 =</text>
+    </svg>
+    <figcaption>"חלק אחד אנכי, 4 חלקים אופקיים" (או חלק וחצי). מאנכי לאופקי כופלים; מאופקי לאנכי מחלקים. (מהשיעור, במטרים)</figcaption>
+  </figure>
+
+  <div class="grid2">
+    <table class="t">
+      <tr><th>1:4 (מהשיעור)</th><th>חישוב</th><th>יצא</th></tr>
+      <tr><td>אנכי 1.10</td><td>\(\times 4\)</td><td>אופקי <b>4.40</b></td></tr>
+      <tr><td>אנכי 1.75</td><td>\(\times 4\)</td><td>אופקי <b>7.00</b></td></tr>
+      <tr><td>אנכי 2.20</td><td>\(\times 4\)</td><td>אופקי <b>8.80</b></td></tr>
+      <tr><td>אנכי 1.80</td><td>\(\times 4\)</td><td>אופקי <b>7.20</b></td></tr>
+      <tr><td>אופקי 3</td><td>\(\div 4\)</td><td>אנכי <b>0.75</b></td></tr>
+      <tr><td>אופקי 5</td><td>\(\div 4\)</td><td>אנכי <b>1.25</b></td></tr>
+      <tr><td>אופקי 6</td><td>\(\div 4\)</td><td>אנכי <b>1.50</b></td></tr>
+    </table>
+    <div>
+      <table class="t">
+        <tr><th>1:1.5 (מהשיעור)</th><th>חישוב</th><th>יצא</th></tr>
+        <tr><td>אנכי 2</td><td>\(\times 1.5\)</td><td>אופקי <b>3</b></td></tr>
+        <tr><td>אופקי 5</td><td>\(\div 1.5\)</td><td>אנכי <b>3.33</b></td></tr>
+        <tr><td>אנכי 3.5</td><td>\(\times 1.5\)</td><td>אופקי <b>5.25</b></td></tr>
+      </table>
+      <div class="box warn"><div class="box-title">טעות שנשמעה בכיתה</div>
+        <p>\(3.5 \times 1.5 = 5.25\), <b>לא 5.5</b>.</p>
+        <p>בדיקה: \(5.25 \div 1.5 = 3.5\) ✓</p>
+      </div>
+    </div>
+  </div>
+  <div class="box tip"><div class="box-title">טיפ</div>
+    <ul class="pts">
+      <li><b>בעל פה</b> (×4): 1 ← 4 · 1.5 ← 6 · 2.5 ← 10 · 10 ← 40.</li>
+      <li><b>ובחזרה</b> (÷4): 40 ← 10 · 28 ← 7.</li>
+      <li><b>בדיקה מהירה</b> (תוספת): האופקי תמיד <b>גדול</b> מהאנכי.</li>
+    </ul>
+  </div>
+
+  <h3 class="pagebreak">ב. איזו מדרכה מתאימה? <span class="time">⏱ 00:59:16</span></h3>
+  <div class="bl">נמדדו <b>אנכי ואופקי</b> ← מחלקים ← משווים ל-<b>0.25</b> ול-<b>0.667</b>. (יהיה במבדק)</div>
+  <ul class="pts">
+    <li>התרגיל (מהלוח): <b>4 מקומות</b>; בכל אחד נמדדו <b>אנכי ואופקי</b>.</li>
+    <li>"מגיעים ל<b>מבוי סתום</b>? לומר מה <b>הפתרון</b>": סולם, מדרגות, או לא לעבור משם.</li>
+    <li>שאלה מהכיתה: למה עכשיו <b>מחלקים</b>? ← כי <b>שתי המידות נמדדו בשטח</b>.</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 10 640 186" xmlns="http://www.w3.org/2000/svg" style="width:94%">
+      <defs><marker id="ar5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+      <rect x="496" y="30" width="138" height="60" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="565" y="53" class="lbl-s he" text-anchor="middle">מודדים ומחלקים</text>
+      <text x="565" y="77" class="lbl-b he" text-anchor="middle">אנכי ÷ אופקי</text>
+      <line x1="496" y1="60" x2="454" y2="60" class="ink" stroke-width="2" marker-end="url(#ar5)"/>
+      <polygon points="395,20 450,60 395,100 340,60" class="soft-f acc" stroke-width="2"/>
+      <text x="395" y="66" class="lbl-b ltr" text-anchor="middle">≤ 0.25 ?</text>
+      <line x1="395" y1="100" x2="395" y2="124" class="ink" stroke-width="2" marker-end="url(#ar5)"/>
+      <text x="410" y="117" class="lbl-s he" text-anchor="middle">כן</text>
+      <rect x="320" y="128" width="150" height="56" rx="10" class="ok-f" fill-opacity="0.15"/>
+      <text x="395" y="152" class="lbl-b he" text-anchor="middle">מדרכה פשוטה</text>
+      <text x="395" y="173" class="lbl-s ltr" text-anchor="middle">1:4 · ≤14°</text>
+      <line x1="340" y1="60" x2="294" y2="60" class="ink" stroke-width="2" marker-end="url(#ar5)"/>
+      <text x="317" y="51" class="lbl-s he" text-anchor="middle">לא</text>
+      <polygon points="235,20 290,60 235,100 180,60" class="soft-f acc" stroke-width="2"/>
+      <text x="235" y="66" class="lbl-b ltr" text-anchor="middle">≤ 0.667 ?</text>
+      <line x1="235" y1="100" x2="235" y2="124" class="ink" stroke-width="2" marker-end="url(#ar5)"/>
+      <text x="250" y="117" class="lbl-s he" text-anchor="middle">כן</text>
+      <rect x="150" y="128" width="160" height="56" rx="10" class="warn-f" fill-opacity="0.17"/>
+      <text x="230" y="152" class="lbl-b he" text-anchor="middle">מדרכה עם שלבים</text>
+      <text x="230" y="173" class="lbl-s ltr" text-anchor="middle">1:1.5 · ≤34°</text>
+      <line x1="180" y1="60" x2="134" y2="60" class="ink" stroke-width="2" marker-end="url(#ar5)"/>
+      <text x="157" y="51" class="lbl-s he" text-anchor="middle">לא</text>
+      <rect x="4" y="30" width="126" height="60" rx="10" class="bad-f" fill-opacity="0.14"/>
+      <text x="67" y="56" class="lbl-b he" text-anchor="middle">סולם / מדרגות</text>
+      <text x="67" y="78" class="lbl-s he" text-anchor="middle">או דרך אחרת</text>
+    </svg>
+    <figcaption>שני מספרים קובעים הכול: 0.25 ו-0.667. בודקים קודם את המדרכה הפשוטה. בדיוק על הגבול ← שיקול דעת.</figcaption>
+  </figure>
+
+  <table class="t">
+    <tr><th>מקום</th><th>אנכי (מ')</th><th>אופקי (מ')</th><th>אנכי ÷ אופקי</th><th>זווית (חושבה)</th><th>מה מתאים</th></tr>
+    <tr><td>1</td><td>1.30</td><td>4.30</td><td><b>0.30</b> <small>(בלוח 0.32)</small></td><td>16.8°</td><td>עם שלבים (1:1.5)</td></tr>
+    <tr><td>2</td><td>3</td><td>5</td><td><b>0.60</b></td><td>31.0°</td><td>עם שלבים (1:1.5)</td></tr>
+    <tr><td>3</td><td>2</td><td>1.80</td><td><b>1.11</b></td><td>48.0°</td><td>אין מדרכה ← סולם / מדרגות</td></tr>
+    <tr><td>4</td><td>2.5</td><td>3</td><td><b>0.83</b></td><td>39.8°</td><td>אין מדרכה ← סולם / מדרגות</td></tr>
+  </table>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): מקום 1</div><div class="w-body">
+    <div class="given">אנכי 1.30 מ', אופקי 4.30 מ'.</div>
+    <div class="ask">איזו מדרכה מתאימה?</div>
+    <ol class="lines">
+      <li>\(1.30 \div 4.30 = 0.30\)</li>
+      <li>מעל 0.25 ← מדרכה פשוטה <b>לא</b>; מתחת ל-0.667 ← עם שלבים <b>כן</b>.</li>
+    </ol>
+    <div class="answer">מדרכה עם שלבים (1:1.5).</div>
+    <div class="check">ב-1:4 צריך \(4 \times 1.30 = 5.20\) מ' ויש רק 4.30 ✗;<br>ב-1:1.5 צריך \(1.5 \times 1.30 = 1.95\) מ' ויש ✓</div>
+  </div></div>
+</section>
+
+<!-- ============ TOPIC 6 ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">6</span><h2>שאלות מה"ט: מדרכה בין שני בניינים</h2><span class="time">⏱ 01:09:32</span></div>
+  <div class="bl">מה"ט (<b>10 נק'</b>): רק <b>הפרש הגבהים</b> ← <b>1:1.5</b> ← אופקי ← פיתגורס ← <b>מדרון</b>.</div>
+
+  <h3>א. בניינים של 9 מ' ו-5 מ'</h3>
+  <div class="card"><div class="c-title">השאלה (מהלוח)</div>
+    <p>נתון מבנה בגובה 9 מ'. מבנה נוסף בגובה 5 מ'. יש למצוא את <b>אורך המדרון</b> של המדרכה המגשרת בין הבתים.</p>
+  </div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <ul class="pts">
+      <li><b>רק ההפרש חשוב</b>: לרדת מ-100 מ' ל-90 מ' = לרדת <b>10 מ'</b>.</li>
+      <li>הנתון השני <b>"מאחורי הווילון"</b>, כמו מים צלולים מתחת ל<b>ירוקת</b>: כאן זה יחס התקנות.</li>
+    </ul>
+  </div>
+
+  <div class="grid2" style="align-items:center">
+    <div>
+      <h4 style="margin-top:0">איך פותרים (4 צעדים)</h4>
+      <ol class="steps">
+        <li><b>הפרש</b> הגבהים: גבוה פחות נמוך.</li>
+        <li><b>"על פי התקנות"</b>: אופקי = 1.5 × הפרש.</li>
+        <li><b>פיתגורס</b> ← אורך המדרון.</li>
+        <li><b>בדיקה</b>: הפרש ÷ אופקי = 0.667.</li>
+      </ol>
+    </div>
+  <figure class="fig" style="margin:0">
+    <svg viewBox="148 28 416 200" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+      <defs><marker id="ar6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+      <line x1="140" y1="220" x2="580" y2="220" class="ink" stroke-width="2.5"/>
+      <rect x="420" y="40" width="90" height="180" class="soft-f ink" stroke-width="2"/>
+      <rect x="200" y="120" width="100" height="100" class="soft-f ink" stroke-width="2"/>
+      <text x="465" y="208" class="lbl he" text-anchor="middle">בניין גבוה</text>
+      <text x="250" y="208" class="lbl he" text-anchor="middle">בניין נמוך</text>
+      <line x1="300" y1="120" x2="420" y2="120" class="line" stroke-width="2" stroke-dasharray="6 5"/>
+      <line x1="420" y1="120" x2="420" y2="40" class="bad" stroke-width="4"/>
+      <line x1="300" y1="120" x2="420" y2="40" class="acc" stroke-width="6" stroke-linecap="round"/>
+      <path d="M336,120 A36,36 0 0 0 330,100" class="ink" fill="none" stroke-width="1.5"/>
+      <text x="352" y="116" class="lbl ltr" text-anchor="middle">34°</text>
+      <text x="360" y="140" class="lbl-b ltr" text-anchor="middle">6</text>
+      <text x="405" y="90" class="lbl-b ltr" text-anchor="middle">4</text>
+      <text x="340" y="60" class="lbl-b ltr" text-anchor="middle">c ≈ 7.21</text>
+      <line x1="534" y1="42" x2="534" y2="218" class="ink" stroke-width="1.5" marker-start="url(#ar6)" marker-end="url(#ar6)"/>
+      <text x="550" y="135" class="lbl-b ltr" text-anchor="middle">9</text>
+      <line x1="176" y1="122" x2="176" y2="218" class="ink" stroke-width="1.5" marker-start="url(#ar6)" marker-end="url(#ar6)"/>
+      <text x="160" y="175" class="lbl-b ltr" text-anchor="middle">5</text>
+    </svg>
+    <figcaption>במקום 2 בניינים, משולש אחד: \(9 - 5 = 4\) מ' (באדום). לפי התקנות ← אופקי 6 מ' ← מדרון <span class="ltr">√52 ≈ 7.21</span> מ'.</figcaption>
+  </figure>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): דרך 1, יחס ופיתגורס</div><div class="w-body">
+    <div class="given">בניינים של 9 מ' ו-5 מ'. על פי התקנות: 1:1.5.</div>
+    <div class="ask">אורך המדרון c.</div>
+    <ol class="lines">
+      <li>הפרש הגבהים: \(9 - 5 = 4\ \text{m}\)</li>
+      <li>הנתון "מאחורי הווילון": יחס <b>1:1.5</b> ← \(b = 4 \times 1.5 = 6\ \text{m}\)</li>
+      <li>פיתגורס: \(c^2 = 4^2 + 6^2 = 16 + 36 = 52\) ← \(c = \sqrt{52} \approx 7.21\ \text{m}\)</li>
+    </ol>
+    <div class="answer">אורך המדרון כ-<span class="ltr">7.21</span> מ' (זווית כ-34°).</div>
+    <div class="check">\(\cos\alpha = 6 \div 7.21 = 0.832\) ← \(\alpha \approx 33.7^\circ\) ✓</div>
+  </div></div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): דרך 2, עם הזווית <span class="ltr">⏱ 01:24:21</span></div><div class="w-body">
+    <div class="given">הצלע מול הזווית: 4 מ'. הזווית α: 34°.</div>
+    <div class="ask">c, דרך סינוס.</div>
+    <ol class="lines">
+      <li>\(\sin 34^\circ = 4 / c\) ← \(c = 4 \div 0.559 = 7.15\ \text{m}\) (בשיעור לא חושב עד הסוף)</li>
+      <li>עם הזווית המדויקת: \(4 \div \sin 33.69^\circ = 4 \div 0.5547 = 7.21\ \text{m}\)</li>
+    </ol>
+    <div class="answer">שוב כ-<span class="ltr">7.21</span> מ'. ההפרש (6 ס"מ) בא רק מעיגול הזווית.</div>
+    <div class="check">\(\sin\alpha = 4 \div 7.21 = 0.555\) ← \(\alpha \approx 33.7^\circ\) ✓</div>
+  </div></div>
+
+  <h3>ב. בניינים של 8 מ' ו-3 מ' <span class="time">⏱ 01:27:44</span></h3>
+  <div class="card"><div class="c-title">השאלה (מהלוח, "על אותה פלטפורמה")</div>
+    <p>נתון מבנה בגובה 8 מ'. מבנה נוסף בגובה 3 מ'. יש למצוא את <b>המרחק האופקי</b> בין הבניינים.</p>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): 8 מ' ו-3 מ', מרחק אופקי</div><div class="w-body">
+    <div class="given">בניינים של 8 מ' ו-3 מ'. על פי התקנות.</div>
+    <div class="ask">המרחק האופקי b.</div>
+    <ol class="lines">
+      <li>הפרש הגבהים: \(8 - 3 = 5\ \text{m}\)</li>
+      <li>על פי התקנות ← <b>1:1.5</b>: \(b = 5 \times 1.5 = 7.5\ \text{m}\)</li>
+    </ol>
+    <div class="answer">המרחק האופקי <span class="ltr">7.5</span> מ' (תוספת: מדרון כ-<span class="ltr">9.01</span> מ').</div>
+    <div class="check">\(5 \div 7.5 = 0.667\) ← בדיוק הגבול ✓</div>
+  </div></div>
+
+  <div class="grid2" style="grid-template-columns:1.3fr 1fr">
+    <div class="box lecturer"><div class="box-title">הודגש בשיעור</div>
+      <ul class="pts">
+        <li>"<b>שאלת מתנה</b>" שנראית מפחידה: לא להשאיר ריק.</li>
+        <li>מה"ט: <b>10 נקודות</b>, <b>2 סעיפים</b>.</li>
+        <li>בסוף שאלת מה"ט גם: "<b>מי רשאי</b> לבצע?", "<b>אילו תקנות</b>?" (כרגע לא נדרש). <span class="ltr muted">01:26:39</span></li>
+        <li>במבדק: שאלה <b>מלאה</b>, שתוצג קודם עם פתרון.</li>
+        <li>במבחן האמצע: <b>סעיפים נוספים</b>.</li>
+      </ul>
+    </div>
+    <div>
+      <div class="box warn" style="margin-top:0"><div class="box-title">טעות נפוצה (קרתה גם בכיתה)</div>
+        <p>לחשב עם <b>גובה בניין</b> (9, או 8 בתרגיל ב') במקום עם <b>ההפרש</b> (4, או 5).</p>
+      </div>
+      <div class="box tip"><div class="box-title">טיפ</div>
+        <p><b>יחס + פיתגורס</b> לתשובה; sin ו-cos <b>לבדיקה</b>, כמו בשיעור.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOPIC 7 ============ -->
+<section class="topic cont">
+  <div class="topic-head"><span class="n">7</span><h2>משימה: קורס בטיחות בקמפוס IL</h2><span class="time">⏱ 01:42:11</span></div>
+  <div class="bl">עד השיעור הבא: קורס בטיחות <b>חינמי</b> בקמפוס IL ← להראות <b>תעודה בטלפון</b>.</div>
+
+  <figure class="fig">
+    <div class="grid3">
+      <div class="card"><div class="c-title">1. נכנסים</div><p>לאתר <b>קמפוס IL</b>.</p></div>
+      <div class="card"><div class="c-title">2. מחפשים</div><p>את המילה <b>"בטיחות"</b>.</p></div>
+      <div class="card"><div class="c-title">3. בוחרים</div><p>את הקורס (<b>חינם</b>).</p></div>
+      <div class="card"><div class="c-title">4. לומדים</div><p><b>כשעתיים</b>, לאט.</p></div>
+      <div class="card"><div class="c-title">5. מבדק</div><p><b>10 שאלות</b> אמריקאיות.</p></div>
+      <div class="card"><div class="c-title">6. מראים</div><p><b>תעודה בטלפון</b>.</p></div>
+    </div>
+    <figcaption>המשימה בשישה צעדים (מהמסך בסוף השיעור). בשיעור הבא בודקים את צעד 6: תעודה בטלפון.</figcaption>
+  </figure>
+
+  <ul class="pts">
+    <li>שם הקורס: <b>"עקרונות בבטיחות לעובדים בבנייה ובנייה הנדסית"</b>.</li>
+    <li>קורס של <b>משרד העבודה</b>: מאפס, בעברית פשוטה, "מכניס לאווירה של אתר בנייה".</li>
+    <li>משך: <b>שעה וחצי עד שעתיים וחצי</b>.</li>
+    <li><b>לא מגישים ולא מדפיסים</b>: מראים בטלפון.</li>
+    <li>ערך: קורס <b>נאמן בטיחות</b> עולה <b>1,500 עד 2,500 ₪</b>; כאן חינם.</li>
+  </ul>
+
+  <div class="box announce"><div class="box-title">עוד הודעות</div>
+    <ul class="pts">
+      <li><b>נוכחות</b>: חיסור משיעור = הפסד; "לא לימדו אותנו" לא יעזור במבחן. <span class="ltr muted">00:07:13</span></li>
+      <li>השיעור <b>ברצף</b>, בלי הפסקה: לצאת ולהיכנס <b>בשקט</b>, גם באיחור. <span class="ltr muted">00:10:09</span></li>
+      <li>ציון על הקורס (כפי שנשמע): <b>נקודה אחת</b> לציון הסופי. לבדוק. <span class="ltr muted">01:45:05</span></li>
+      <li>במבדק: 100 ← <b>חצי נקודה</b>, 50 ← רבע, 0 ← חצי נקודה "עפה".</li>
+      <li><b>בשיעור הבא</b>: תרגיל בין בניינים ותרגילי חפירה, ואז סולם שנשען על קיר או גגות. <span class="ltr muted">01:25:54</span></li>
+      <li>התקנות על <b>סולמות, גגות ומדרכות</b> יתווספו ל<b>תמצית החומר</b>. <span class="ltr muted">00:29:06</span></li>
+      <li><b>תכנית</b>: חודש וחצי עד חודשיים של חישובים, ואז שאר החומר. <span class="ltr muted">00:11:22</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ REMEMBER ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">🧠</span><h2>לזכור</h2></div>
+  <div class="bl">שני מספרים קובעים הכול: <b>0.25</b> ו-<b>0.667</b>. ובשאלה "על פי התקנות" ← <b>1:1.5</b>.</div>
+  <ul class="pts">
+    <li>מדרכה פשוטה: יחס <b>1:4</b> ← עד <b>0.25</b> ← עד <b>14°</b>.</li>
+    <li>מדרכה עם שלבים: יחס <b>1:1.5</b> ← עד <b>0.667</b> ← עד <b>34°</b> (33.69°).</li>
+    <li>מעל 0.667 ← <b>אין מדרכה</b>: סולם, מדרגות או דרך אחרת.</li>
+    <li>בדיוק על הגבול ← <b>שיקול דעת</b>.</li>
+    <li>מחלקים <b>אנכי ÷ אופקי</b>: האנכי תמיד למעלה, ובאותן יחידות.</li>
+    <li>מאנכי לאופקי <b>כופלים</b> (ב-4 או ב-1.5); מאופקי לאנכי <b>מחלקים</b>.</li>
+    <li>תמיד לנסות קודם <b>1:4</b>, המדרכה הנוחה והמועדפת.</li>
+    <li><b>"על פי התקנות"</b> ← לוקחים את הגבול: <b>1:1.5</b> ו-<b>34°</b>, המדרכה הקצרה ביותר.</li>
+    <li>בין שני בניינים קובע רק <b>הפרש הגבהים</b>: \(9 - 5 = 4\).</li>
+    <li>משולש: <b>מול, ליד, יתר</b>. \(\tan\alpha = a/b\), \(\sin\alpha = a/c\), \(\cos\alpha = b/c\), \(a^2 + b^2 = c^2\).</li>
+  </ul>
+
+  <h3>מספרים לזכור (לדפי העזר)</h3>
+  <div class="box lecturer"><div class="box-title">הודגש בשיעור</div>
+    <p>במה"ט שואלים גם <b>שאלות שינון</b> (למשל <b>גובה אזן היד</b>) ← לשנן, או לרשום ב-<b>2 דפי העזר</b>. <span class="ltr muted">00:35:51</span></p>
+  </div>
+  <table class="t">
+    <tr><th>מה</th><th>המספר</th><th>⏱</th></tr>
+    <tr><td>מדרכה פשוטה</td><td><b>1:4</b> ← 0.25 ← 14°</td><td class="ltr">00:13:13</td></tr>
+    <tr><td>מדרכה עם שלבים</td><td><b>1:1.5</b> ← 0.667 ← 34°</td><td class="ltr">00:21:38</td></tr>
+    <tr><td>סולם (אולי בשבוע הבא)</td><td><b>4:1</b> ← 76° (sin 76° = 0.97)</td><td class="ltr">00:31:08</td></tr>
+    <tr><td>רוחב מדרכה, וגם גשרון *</td><td>לפחות <b>60 ס"מ</b></td><td class="ltr">00:23:54</td></tr>
+    <tr><td>מרווח בין שלבים</td><td><b>30 עד 35 ס"מ</b>, קבוע</td><td class="ltr">00:24:17</td></tr>
+    <tr><td>רווח באמצע</td><td><b>10 ס"מ</b> (לגלגל המריצה)</td><td class="ltr">00:24:31</td></tr>
+    <tr><td>תעלה רחבה מ-60 ס"מ *</td><td><b>אסור לקפוץ</b>, רק בגשרון</td><td class="ltr">00:37:39</td></tr>
+    <tr><td>תעלה עמוקה מ-2 מ'</td><td>בגשרון גם <b>מעקה</b></td><td class="ltr">00:32:15</td></tr>
+    <tr><td>גובה אזן היד (?)</td><td><b>0.90 עד 1.15 מ'</b> (נשמע לא ברור)</td><td class="ltr">00:35:51</td></tr>
+  </table>
+  <p class="muted">* מהשיעור הקודם (חפירות), הוזכר כאן בדרך אגב.</p>
+</section>
+
+<!-- ============ QUESTIONS ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">❓</span><h2>שאלות חזרה</h2></div>
+  <div class="bl">לענות בלי להציץ. התשובות בעמוד הבא.</div>
+  <ol class="quiz">
+    <li>מה היחס המרבי למדרכה פשוטה, ומה הזווית המתאימה? <span class="lvl">קל</span></li>
+    <li>לסמן במשולש: <b>מול</b>, <b>ליד</b> ו<b>יתר</b> ביחס ל-α. <span class="lvl">קל</span>
+      <figure class="fig">
+        <svg viewBox="28 20 266 110" xmlns="http://www.w3.org/2000/svg" style="width:40%">
+          <line x1="40" y1="120" x2="280" y2="120" class="ink" stroke-width="2.5"/>
+          <line x1="280" y1="120" x2="280" y2="30" class="ink" stroke-width="2.5"/>
+          <line x1="40" y1="120" x2="280" y2="30" class="acc" stroke-width="6" stroke-linecap="round"/>
+          <path d="M266,120 L266,106 L280,106" class="ink" fill="none" stroke-width="1.5"/>
+          <path d="M80,120 A40,40 0 0 0 77.5,106" class="ink" fill="none" stroke-width="1.5"/>
+          <text x="96" y="116" class="lbl-b ltr" text-anchor="middle">α</text>
+        </svg>
+        <figcaption>α בתחתית המדרכה (הקו האדום).</figcaption>
+      </figure>
+    </li>
+    <li>למה משאירים רווח של 10 ס"מ באמצע המדרכה עם השלבים? <span class="lvl">קל</span></li>
+    <li>כל כמה ס"מ שמים שלבים, ולמה המרווח צריך להיות קבוע? <span class="lvl">קל</span></li>
+    <li>מדרכה פשוטה לגובה 0.85 מ'. כמה מרחק אופקי צריך לפחות? <span class="lvl">בינוני</span></li>
+    <li>יש רק 6 מ' אופקי. מה הגובה המרבי שאפשר לגשר במדרכה עם שלבים? <span class="lvl">בינוני</span></li>
+    <li>מדדו אנכי 1.20 מ' ואופקי 4 מ'. איזו מדרכה מתאימה? <span class="lvl">בינוני</span></li>
+    <li>מה אומר "על פי התקנות" בשאלה על מדרכה, ולמה? <span class="lvl">בינוני</span></li>
+    <li>מדרכה עם שלבים ברוחב 80 ס"מ. מה אורך כל חצי שלב? <span class="lvl">בינוני</span></li>
+    <li>מדדו אנכי 2.10 מ' ואופקי 2.80 מ'. (א) איזו מדרכה מתאימה? (ב) כמה אופקי צריך לפחות כדי לשים מדרכה עם שלבים? <span class="lvl">מאתגר</span></li>
+    <li>שני בניינים: 10 מ' ו-4 מ'. על פי התקנות, מה אורך המדרון של המדרכה ביניהם? <span class="lvl">מאתגר</span></li>
+    <li>למה \(4 \div \sin 34^\circ\) נותן 7.15 מ', ופיתגורס נותן 7.21 מ'? <span class="lvl">מאתגר</span></li>
+  </ol>
+</section>
+
+<!-- ============ ANSWERS ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">✅</span><h2>תשובות</h2></div>
+  <ol class="answers">
+    <li>יחס <b>1:4</b>: אנכי ÷ אופקי עד 0.25 ← זווית עד כ-<b>14°</b> (14.04°).</li>
+    <li>מול = <b>האנכי</b>, ליד = <b>האופקי</b>, יתר = <b>המדרכה</b>.</li>
+    <li>ל<b>גלגל המריצה</b>: הוא נוסע ברווח ולא קופץ על כל שלב.</li>
+    <li>כל <b>30 עד 35 ס"מ</b>. קבוע, כדי ללכת בקצב אחיד ולא למעוד ("כמו ברווז צולע").</li>
+    <li>\(b = 4 \times 0.85 = 3.40\ \text{m}\). בדיקה: \(0.85 \div 3.40 = 0.25\) ✓</li>
+    <li>\(a = 6 \div 1.5 = 4\ \text{m}\). בדיקה: \(4 \div 6 = 0.667\) ✓</li>
+    <li>\(1.20 \div 4 = 0.30\): מעל 0.25 ← לא פשוטה; מתחת ל-0.667 ← <b>מדרכה עם שלבים</b>.</li>
+    <li>לקחת את <b>הגבול</b>: 1:1.5 ו-34°. חסר נתון, והגבול נותן את המדרכה הקצרה ביותר שמותרת.</li>
+    <li>\((80 - 10) \div 2 = 35\) ס"מ. בדיקה: \(35 + 10 + 35 = 80\) ✓</li>
+    <li>(א) \(2.10 \div 2.80 = 0.75\), מעל 0.667 ← <b>אין מדרכה</b>: סולם או מדרגות.<br>(ב) \(1.5 \times 2.10 = 3.15\ \text{m}\) לפחות.</li>
+    <li>הפרש: \(10 - 4 = 6\ \text{m}\)<br>אופקי: \(1.5 \times 6 = 9\ \text{m}\)<br>מדרון: \(\sqrt{36 + 81} = \sqrt{117} \approx 10.82\ \text{m}\)<br>בדיקה: \(6 \div 9 = 0.667\) ✓</li>
+    <li>34° היא זווית <b>מעוגלת</b>. הגבול המדויק 33.69°, ואז \(4 \div \sin 33.69^\circ = 7.21\). לכן את התשובה מחשבים ביחס ובפיתגורס, ואת הזווית לבדיקה.</li>
+  </ol>
+
+  <h3>📖 מילון מונחים</h3>
+  <dl class="glossary">
+    <dt>מדרכת מעבר</dt><dd>משטח לעבור בין שני גבהים או מעל תעלה, ברגל או עם מריצה.</dd>
+    <dt>מדרכה פשוטה</dt><dd>פלטה חלקה בלי שלבים. עד יחס 1:4 (כ-14°).</dd>
+    <dt>מדרכה עם שלבים</dt><dd>"המדרכה המיוחדת". עד יחס 1:1.5 (כ-34°).</dd>
+    <dt>שלבים</dt><dd>פסי עץ רוחביים נגד החלקה. כל 30 עד 35 ס"מ, במרווח קבוע.</dd>
+    <dt>גשרון</dt><dd>מדרכת מעבר קטנה מעל תעלה. רוחב לפחות 60 ס"מ.</dd>
+    <dt>מריצה</dt><dd>עגלת יד עם גלגל אחד. בגללה הרווח של 10 ס"מ באמצע.</dd>
+    <dt>יחס שיפוע</dt><dd>אנכי : אופקי, למשל 1:4.</dd>
+    <dt>אנכי (a)</dt><dd>הפרש הגובה שהמדרכה מגשרת.</dd>
+    <dt>אופקי (b)</dt><dd>המרחק על הקרקע שהמדרכה תופסת.</dd>
+    <dt>אורך המדרון (c)</dt><dd>אורך המדרכה עצמה = היתר.</dd>
+    <dt>יתר</dt><dd>הצלע הארוכה במשולש ישר-זווית, מול הזווית הישרה.</dd>
+    <dt>צלע מול / צלע ליד</dt><dd>ביחס לזווית α בתחתית המדרכה: מול = אנכי, ליד = אופקי.</dd>
+    <dt>טנגנס (tan)</dt><dd>מול ÷ ליד = אנכי ÷ אופקי. Shift + tan נותן את הזווית.</dd>
+    <dt>סינוס, קוסינוס</dt><dd>sin = מול ÷ יתר; cos = ליד ÷ יתר.</dd>
+    <dt>משפט פיתגורס</dt><dd>\(a^2 + b^2 = c^2\): מוצאים את הצלע השלישית.</dd>
+    <dt>"על פי התקנות"</dt><dd>לקחת את הגבול המותר: למדרכה 1:1.5 ו-34°; לסולם 4:1 ו-76°.</dd>
+    <dt>מה"ט</dt><dd>המכון הממשלתי להכשרה בטכנולוגיה ובמדע; עורך את מבחני ההסמכה להנדסאים.</dd>
+    <dt>מבדק</dt><dd>בוחן ידע קצר בכיתה.</dd>
+    <dt>מעקה</dt><dd>גידור בצד משטח (תוספת: אזן יד, אזן תיכון ולוח רגל). בשיעור: בגשרון מעל תעלה עמוקה מ-2 מ'.</dd>
+    <dt>קמפוס IL</dt><dd>אתר לימוד מקוון ממשלתי וחינמי.</dd>
+  </dl>
+
+  <div class="box unclear"><div class="box-title">לא היה ברור בהקלטה</div>
+    <ul class="pts">
+      <li><span class="ltr">00:07:39</span> — ליד מבחן האמצע נאמר "יש גם <b>מבחן נוסף</b>". איזה מבחן? לא ברור.</li>
+      <li><span class="ltr">00:09:18</span> — "מי שמראה תעודה, נכנס <b>לרשימת הישגים</b>". איזו רשימה? לא ברור.</li>
+      <li><span class="ltr">00:13:27</span> — הקרשים <span class="ltr">5×10</span> ס"מ; נשמע גם "<b>4.3 על 10</b>" (מידה בפועל?).</li>
+      <li><span class="ltr">00:35:51</span> — "הגובה של ... בין 90 ס"מ ל-1.15 מ'": המילה לא ברורה. כנראה <b>אזן היד</b> של המעקה. לבדוק.</li>
+      <li><span class="ltr">00:37:29</span> — "כשנלמד עבודה ב..." (אולי <b>גגות</b>) "משתמשים שם באותה מידה". לא ברור.</li>
+      <li><span class="ltr">00:58:08</span> — 3.5 מ' ביחס 1:1.5: בכיתה נאמר <b>5.5</b>; הנכון 5.25. לא רואים מה נכתב בסוף.</li>
+      <li><span class="ltr">01:01:15</span> — מקום 1: בלוח <b>0.32</b>, אבל \(1.30 \div 4.30 = 0.30\). המסקנה זהה.</li>
+      <li><span class="ltr">01:02:39</span> — מקום 4: נשמע "<b>0.87</b>", אבל \(2.5 \div 3 = 0.83\). המסקנה זהה.</li>
+      <li><span class="ltr">01:45:05</span> — <b>הבונוס</b>: חצי הנקודה של המבדק, חלק מהנקודה או בנוסף? ועל אילו מבדקים מדובר?</li>
+      <li><span class="ltr">01:45:22</span> — הערה על "<b>לא לעבור את 90</b>" ועל בקשה מההנהלה ל-95 או 100. לא ברור (אולי בדיחה).</li>
+      <li><span class="ltr">01:40:57</span>, <span class="ltr">01:46:47</span> — הערות על <b>שמירת חומר מהידיעון</b> ועל <b>השם בתעודה</b>. לא ברורות.</li>
+    </ul>
+  </div>
+</section>
+
+</body>
+</html>

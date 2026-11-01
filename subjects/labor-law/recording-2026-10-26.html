@@ -1,0 +1,1262 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>דיני עבודה וניהול עובדים · ההתקשרות החוזית בעבודה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=block">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});document.documentElement.dataset.math='done'"></script>
+<style>
+/* Lecture summary design system: A4, RTL Hebrew, print-first. */
+
+@page {
+  size: A4;
+  margin: 18mm 16mm 17mm 16mm;
+  @bottom-center {
+    content: counter(page);
+    font-family: Heebo, "Arial Hebrew", sans-serif;
+    font-size: 9pt;
+    color: #7a8394;
+  }
+}
+@page :first {
+  margin: 0;
+  @top-right { content: none; }
+  @top-left { content: none; }
+  @bottom-center { content: none; }
+}
+
+:root {
+  --accent: #4f46e5;
+  --accent-dark: #3730a3;
+  --accent-soft: #eef0ff;
+  --accent-mid: #c7cbfb;
+  --ink: #1d2230;
+  --muted: #5d6676;
+  --line: #dfe3ea;
+  --paper: #ffffff;
+  --bg-soft: #f6f7f9;
+  --ok: #0f7b5f;
+  --ok-soft: #e2f5ee;
+  --warn: #b45309;
+  --warn-soft: #fdf1e2;
+  --bad: #b91c1c;
+  --bad-soft: #fdeaea;
+  --info: #0e6aa8;
+  --info-soft: #e5f2fb;
+}
+
+/* one accent colour per course */
+body.course-math { --accent: #4f46e5; --accent-dark: #3730a3; --accent-soft: #eef0ff; --accent-mid: #c7cbfb; }
+body.course-roads { --accent: #c2620a; --accent-dark: #8f4505; --accent-soft: #fdf0e3; --accent-mid: #f6cfa6; }
+body.course-safety { --accent: #c62828; --accent-dark: #8e1b1b; --accent-soft: #fdecea; --accent-mid: #f5bcbc; }
+body.course-geodesy { --accent: #0f766e; --accent-dark: #0b524c; --accent-soft: #e2f4f1; --accent-mid: #a7dcd5; }
+body.course-building-theory { --accent: #a5502a; --accent-dark: #74371c; --accent-soft: #f8ece5; --accent-mid: #e8c2ad; }
+body.course-drafting { --accent: #0369a1; --accent-dark: #024b74; --accent-soft: #e3f1fa; --accent-mid: #a9d3ee; }
+body.course-labor-law { --accent: #7c3aed; --accent-dark: #5521b5; --accent-soft: #f1eafe; --accent-mid: #d4c0fb; }
+body.course-statics { --accent: #2563eb; --accent-dark: #1e40af; --accent-soft: #e8f0fe; --accent-mid: #b8cdfa; }
+
+* { box-sizing: border-box; }
+html { direction: rtl; }
+body {
+  margin: 0;
+  font-family: Heebo, "Arial Hebrew", Arial, sans-serif;
+  font-size: 11.5pt;
+  line-height: 1.62;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+p { margin: 0 0 2.2mm; }
+b, strong {
+  font-weight: 700;
+  background: linear-gradient(transparent 60%, var(--accent-mid) 60%);
+  padding: 0 0.5mm;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.box b, .box strong, .bl b, .bl strong, th b { background: none; padding: 0; }
+.ltr, .num, code { direction: ltr; unicode-bidi: isolate; }
+code {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.88em;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 1.2mm;
+  padding: 0 1mm;
+}
+.katex { direction: ltr; unicode-bidi: isolate; font-size: 1.08em; }
+.katex-display { margin: 1mm 0 !important; }
+small, .muted { color: var(--muted); }
+
+/* ---------- cover ---------- */
+.cover {
+  height: 297mm;
+  width: 210mm;
+  display: flex;
+  flex-direction: column;
+  break-after: page;
+  overflow: hidden;
+}
+.cover-band {
+  background: var(--accent);
+  color: #fff;
+  padding: 22mm 18mm 14mm;
+  position: relative;
+}
+.cover-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 30%, rgba(255,255,255,.16) 0 18mm, transparent 18.2mm),
+    radial-gradient(circle at 4% 85%, rgba(255,255,255,.10) 0 28mm, transparent 28.2mm),
+    radial-gradient(circle at 30% 105%, rgba(255,255,255,.08) 0 20mm, transparent 20.2mm);
+  pointer-events: none;
+}
+.cover-kicker { font-size: 12pt; font-weight: 500; opacity: .9; margin-bottom: 3mm; }
+.cover h1 { font-size: 30pt; line-height: 1.15; font-weight: 900; margin: 0 0 3mm; }
+.cover-sub { font-size: 14pt; font-weight: 500; opacity: .95; }
+.cover-meta { display: flex; flex-wrap: wrap; gap: 2.5mm; margin-top: 7mm; position: relative; z-index: 1; }
+.chip {
+  display: inline-block;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 20mm;
+  padding: 1mm 4mm;
+  font-size: 10.5pt;
+  font-weight: 500;
+}
+.cover-body { padding: 10mm 18mm 12mm; flex: 1; display: flex; flex-direction: column; gap: 6mm; }
+.cover-body h3 { margin: 0 0 2mm; font-size: 13pt; color: var(--accent-dark); }
+.roadmap { list-style: none; margin: 0; padding: 0; display: grid; gap: 2mm; }
+.roadmap li {
+  display: grid;
+  grid-template-columns: 9mm 1fr auto;
+  align-items: center;
+  gap: 3mm;
+  background: var(--bg-soft);
+  border-radius: 2.5mm;
+  padding: 1.6mm 3mm;
+}
+.roadmap .n {
+  width: 8mm; height: 8mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 11pt;
+}
+.roadmap .t { font-weight: 600; }
+.roadmap .when { direction: ltr; font-size: 9.5pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 2mm 5mm; font-size: 9.5pt; color: var(--muted); }
+
+/* ---------- topic sections: each starts on a new page ---------- */
+section.topic { break-before: page; }
+section.topic.cont { break-before: auto; margin-top: 8mm; }
+.topic-head {
+  display: flex;
+  align-items: center;
+  gap: 3.5mm;
+  border-bottom: 2.5px solid var(--accent);
+  padding-bottom: 2.5mm;
+  margin-bottom: 4mm;
+}
+.topic-head .n {
+  flex: none;
+  width: 11mm; height: 11mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-size: 15pt; font-weight: 900;
+}
+.topic-head h2 { margin: 0; font-size: 19pt; line-height: 1.2; font-weight: 800; color: var(--ink); flex: 1; }
+.time {
+  flex: none;
+  direction: ltr;
+  font-size: 9pt;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 10mm;
+  padding: 0.6mm 2.6mm;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+h3 { font-size: 13.5pt; font-weight: 800; margin: 5mm 0 2mm; color: var(--accent-dark); break-after: avoid; }
+h4 { font-size: 11.5pt; font-weight: 700; margin: 3mm 0 1.5mm; break-after: avoid; }
+
+/* bottom line: first thing in every section */
+.bl {
+  background: var(--accent-soft);
+  border-inline-start: 5px solid var(--accent);
+  border-radius: 2.5mm;
+  padding: 2.5mm 4mm;
+  font-weight: 700;
+  font-size: 12pt;
+  margin: 0 0 4mm;
+  break-inside: avoid;
+}
+.bl::before { content: "⚡ "; }
+
+/* bullets */
+ul.pts { list-style: none; padding: 0; margin: 0 0 3mm; }
+ul.pts > li { position: relative; padding-inline-start: 6mm; margin-bottom: 1.6mm; }
+ul.pts > li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 1mm;
+  top: 2.6mm;
+  width: 2.2mm; height: 2.2mm;
+  border-radius: 50%;
+  background: var(--accent);
+}
+ul.pts ul { margin-top: 1mm; }
+
+/* generic callout box */
+.box {
+  border-radius: 3mm;
+  padding: 3mm 4mm;
+  margin: 3mm 0;
+  break-inside: avoid;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+.box > .box-title { font-weight: 800; margin-bottom: 1.2mm; display: flex; gap: 2mm; align-items: center; }
+.box > :last-child { margin-bottom: 0; }
+.box.life { background: #fffbea; border-color: #f3e3a3; }
+.box.life > .box-title::before { content: "🏠"; }
+.box.formula { background: var(--accent-soft); border-color: var(--accent-mid); text-align: center; }
+.box.formula > .box-title { justify-content: center; }
+.box.formula > .box-title::before { content: "🧮"; }
+.box.tip { background: var(--ok-soft); border-color: #b6e3d2; }
+.box.tip > .box-title::before { content: "💡"; }
+.box.warn { background: var(--warn-soft); border-color: #f2cf9f; }
+.box.warn > .box-title::before { content: "⚠️"; }
+.box.remember { background: var(--info-soft); border-color: #b9dbf2; }
+.box.remember > .box-title::before { content: "🧠"; }
+.box.optional { background: #fafafa; border: 1.5px dashed #c5cad3; }
+.box.optional > .box-title::before { content: "📎"; }
+.box.optional > .box-title::after { content: "רשות"; font-size: 8.5pt; font-weight: 700; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; }
+.box.announce { background: var(--bad-soft); border-color: #f2c2c2; }
+.box.announce > .box-title::before { content: "📢"; }
+.box.unclear { background: #f4f1fb; border-color: #d9cff3; }
+.box.unclear > .box-title::before { content: "❓"; }
+.box.lecturer { background: #fff; border-inline-start: 4px solid var(--accent-mid); }
+.box.lecturer > .box-title::before { content: "🎙️"; }
+
+/* numbered procedure */
+ol.steps { list-style: none; counter-reset: st; padding: 0; margin: 2mm 0 3mm; }
+ol.steps > li { counter-increment: st; position: relative; padding-inline-start: 9mm; margin-bottom: 2mm; min-height: 6.5mm; }
+ol.steps > li::before {
+  content: counter(st);
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.2mm;
+  width: 6.5mm; height: 6.5mm;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 9.5pt;
+  display: grid;
+  place-items: center;
+}
+
+/* worked example */
+.worked {
+  border: 1.5px solid var(--accent-mid);
+  border-radius: 3mm;
+  margin: 3.5mm 0;
+  break-inside: avoid;
+  overflow: hidden;
+}
+.worked > .w-title { background: var(--accent); color: #fff; font-weight: 800; padding: 1.6mm 4mm; }
+.worked > .w-title::before { content: "✏️ "; }
+.worked > .w-body { padding: 3mm 4mm; }
+.worked .given { background: var(--bg-soft); border-radius: 2mm; padding: 2mm 3mm; margin-bottom: 2.5mm; }
+.worked .given::before { content: "נתון: "; font-weight: 800; }
+.worked .ask::before { content: "מחפשים: "; font-weight: 800; }
+.worked ol.lines { counter-reset: ln; list-style: none; padding: 0; margin: 2mm 0; }
+.worked ol.lines > li { counter-increment: ln; padding: 1.2mm 0; padding-inline-start: 13mm; border-bottom: 1px dashed var(--line); position: relative; }
+.worked ol.lines > li::before { content: "שלב " counter(ln); position: absolute; inset-inline-start: 0; font-size: 8.5pt; color: var(--muted); top: 1.8mm; }
+.worked .answer { margin-top: 2mm; font-weight: 800; }
+.worked .answer::before { content: "✅ תשובה: "; }
+.worked .check { margin-top: 1.5mm; color: var(--ok); font-weight: 700; }
+.worked .check::before { content: "✓ בדיקה: "; }
+
+/* figures */
+figure.fig { margin: 3.5mm 0; text-align: center; break-inside: avoid; }
+figure.fig svg { max-width: 100%; height: auto; }
+figure.fig figcaption { font-size: 9.5pt; color: var(--muted); margin-top: 1.5mm; }
+figure.fig.half { width: 60%; margin-inline: auto; }
+
+/* SVG helper classes (inline SVG lives in the HTML DOM, so CSS vars work) */
+svg text { font-family: Heebo, "Arial Hebrew", sans-serif; }
+svg .acc { stroke: var(--accent); }
+svg .acc-f { fill: var(--accent); }
+svg .soft-f { fill: var(--accent-soft); }
+svg .mid-f { fill: var(--accent-mid); }
+svg .dark-f { fill: var(--accent-dark); }
+svg .ink { stroke: var(--ink); }
+svg .ink-f { fill: var(--ink); }
+svg .muted-f { fill: var(--muted); }
+svg .line { stroke: #b8bfcb; }
+svg .ok { stroke: var(--ok); }
+svg .ok-f { fill: var(--ok); }
+svg .bad { stroke: var(--bad); }
+svg .bad-f { fill: var(--bad); }
+svg .warn-f { fill: var(--warn); }
+svg .lbl { font-size: 15px; fill: var(--ink); }
+svg .lbl-s { font-size: 12.5px; fill: var(--muted); }
+svg .lbl-b { font-size: 16px; font-weight: 700; fill: var(--ink); }
+svg .he { direction: rtl; unicode-bidi: plaintext; }
+
+/* tables */
+table.t { width: 100%; border-collapse: separate; border-spacing: 0; margin: 3mm 0; font-size: 10.5pt; break-inside: avoid; border: 1px solid var(--line); border-radius: 2.5mm; overflow: hidden; }
+table.t th { background: var(--accent-soft); color: var(--accent-dark); font-weight: 800; text-align: start; padding: 1.8mm 3mm; border-bottom: 1px solid var(--accent-mid); }
+table.t td { padding: 1.6mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.t tr:last-child td { border-bottom: none; }
+table.t tr:nth-child(even) td { background: #fafbfc; }
+
+/* layout helpers */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; }
+.grid2 > .box, .grid3 > .box { margin: 0; }
+.card { border: 1px solid var(--line); border-radius: 3mm; padding: 2.5mm 3.5mm; break-inside: avoid; background: #fff; }
+.card > .c-title { font-weight: 800; color: var(--accent-dark); margin-bottom: 1mm; }
+.vs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 3mm; align-items: stretch; }
+.vs > .mid { align-self: center; font-weight: 900; color: var(--accent); font-size: 14pt; }
+.keep { break-inside: avoid; }
+.pagebreak { break-before: page; }
+
+/* end matter */
+ol.quiz { padding-inline-start: 7mm; margin: 0; }
+ol.quiz > li { margin-bottom: 3mm; padding-bottom: 2mm; border-bottom: 1px dashed var(--line); break-inside: avoid; }
+ol.quiz .lvl { font-size: 8.5pt; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; margin-inline-start: 2mm; }
+ol.answers { padding-inline-start: 7mm; margin: 0; }
+ol.answers > li { margin-bottom: 2.5mm; break-inside: avoid; }
+dl.glossary { display: grid; grid-template-columns: max-content 1fr; gap: 1.5mm 5mm; margin: 0; }
+dl.glossary dt { font-weight: 800; color: var(--accent-dark); }
+dl.glossary dd { margin: 0; }
+
+@page {
+  @top-right { content: "דיני עבודה וניהול עובדים"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+  @top-left { content: "26/10/2026"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+}
+</style>
+</head>
+<body class="course-labor-law">
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="cover-band">
+    <div class="cover-kicker">🎥 סיכום הקלטה · דיני עבודה וניהול עובדים (850143)</div>
+    <h1>ההתקשרות החוזית בעבודה</h1>
+    <div class="cover-sub">הקלטת השיעור · יום שני 26/10/2026</div>
+    <div class="cover-meta">
+      <span class="chip">👤 מקובר רבקה</span>
+      <span class="chip">⏱ 3:32 שעות הקלטה</span>
+      <span class="chip">📄 18 עמודים</span>
+    </div>
+  </div>
+  <div class="cover-body">
+    <div class="bl">השיעור בשורה אחת: חוזה נכרת <b>בהסכמה</b>, מתקיים <b>בתום לב</b>, ומשתנה רק <b>בהסכמה</b>.</div>
+    <div>
+      <h3>🗺️ מפת השיעור <small>· מ-<span class="ltr">01:55:19</span> עד הסוף: אותו שיעור לקבוצה השנייה, עם שקפים קריאים</small></h3>
+      <ol class="roadmap">
+        <li><span class="n">1</span><span class="t">מהו חוזה · תום לב, חובת הגילוי וטעות</span><span class="when">00:02:40</span></li>
+        <li><span class="n">2</span><span class="t">הפרת חוזה · ביטול ואכיפה</span><span class="when">00:25:33</span></li>
+        <li><span class="n">3</span><span class="t">חוזה לא חוקי · חוזה העבודה והודעה לעובד</span><span class="when">00:41:10</span></li>
+        <li><span class="n">4</span><span class="t">תום לב בחוזה העבודה: 3 תחנות ושימוע</span><span class="when">01:10:11</span></li>
+        <li><span class="n">5</span><span class="t">סוגי חוזי עבודה</span><span class="when">01:18:23</span></li>
+        <li><span class="n">6</span><span class="t">שינוי חד-צדדי · סיכול והפרה</span><span class="when">01:23:06</span></li>
+        <li><span class="n">7</span><span class="t">מבוא למשפט העבודה הקיבוצי</span><span class="when">01:37:46</span></li>
+      </ol>
+    </div>
+    <div class="box announce"><div class="box-title">הודעות מהשיעור</div>
+      <ul class="pts">
+        <li><b>המצגת</b>, חומר השבוע שעבר ו<b>הסילבוס</b> במידעון. לא כל הסילבוס יילמד. <span class="muted">⏱&nbsp;<span class="ltr">00:11:33</span>, <span class="ltr">01:06:15</span></span></li>
+        <li><b>המבחן</b>: כנראה <b>מבחן מכללה</b> (לא מה"ט). <b>חומר פתוח</b>? עוד לא ידוע. <span class="muted">⏱&nbsp;<span class="ltr">00:02:02</span>, <span class="ltr">00:13:39</span></span></li>
+        <li><b>נוכחות</b>: רשימה בכיתה, וקריאת שמות אחרי ההפסקה. <span class="muted">⏱&nbsp;<span class="ltr">00:22:03</span>, <span class="ltr">01:01:02</span></span></li>
+      </ul>
+    </div>
+    <div class="legend"><span>⚡ שורה תחתונה</span><span>🏠 דוגמה מהחיים</span><span>🎙️ הודגש בשיעור</span><span>⚖️ פסק דין</span><span>✏️ דוגמה פתורה</span><span>⚠️ טעות נפוצה</span><span>💡 טיפ</span><span>📎 רשות</span><span>⏱ זמן בהקלטה</span></div>
+  </div>
+</div>
+
+<!-- ============ 1א ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">1א</span><h2>מהו חוזה, ואיך הוא נכרת</h2><span class="time">⏱ 00:02:40</span></div>
+  <div class="bl">חוזה = <b>הצעה + קיבול</b>, עם <b>גמירות דעת</b> ו<b>מסוימות</b>. תקף גם בעל פה ובהתנהגות.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p>מוכר רוצה <b>3 מיליון ₪</b>, קונה מציע <b>2 מיליון</b> (אומד דעת). מסכימים על מחיר אחד ← <b>גמירות דעת</b>.</p>
+  </div>
+
+  <ul class="pts">
+    <li><b>חוזה</b> = מסמך משפטי שמבטא את <b>אומד הדעת</b> והמטרות המשותפות של 2 צדדים או יותר.</li>
+    <li><b>גמירות דעת</b> = רצון אמיתי וסופי להתחייב: "סיימנו לחשוב, חותמים".</li>
+    <li><b>מסוימות</b> = מספיק פרטים: מה, כמה, מתי, איך. לא "כל הבית", אלא שרטוט עם <b>מ"ר</b>. <span class="muted">⏱&nbsp;<span class="ltr">02:04:35</span></span></li>
+    <li>בודקים בעיני <b>האדם הסביר</b>. חסר פרט, אבל הייתה גמירות דעת מלאה? בית המשפט <b>משלים</b>.</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 0 680 156" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="dark-f"/></marker></defs>
+      <rect x="495" y="10" width="170" height="70" rx="14" class="soft-f acc" stroke-width="2.5"/>
+      <text x="580" y="40" class="lbl-b he" text-anchor="middle">הצעה</text>
+      <text x="580" y="64" class="lbl-s he" text-anchor="middle">פנייה להתקשר בחוזה</text>
+      <rect x="255" y="10" width="170" height="70" rx="14" class="soft-f acc" stroke-width="2.5"/>
+      <text x="340" y="40" class="lbl-b he" text-anchor="middle">קיבול</text>
+      <text x="340" y="64" class="lbl-s he" text-anchor="middle">מסכימים לתנאי ההצעה</text>
+      <rect x="15" y="10" width="170" height="70" rx="14" class="mid-f acc" stroke-width="3"/>
+      <text x="100" y="40" class="lbl-b he" text-anchor="middle">חוזה מחייב</text>
+      <text x="100" y="64" class="lbl-s he" text-anchor="middle">שני הצדדים קשורים</text>
+      <line x1="491" y1="45" x2="431" y2="45" class="acc" stroke-width="3" marker-end="url(#ar1)"/>
+      <line x1="251" y1="45" x2="191" y2="45" class="acc" stroke-width="3" marker-end="url(#ar1)"/>
+      <path d="M262,90 V100 H658 V90" fill="none" class="line" stroke-width="2"/>
+      <line x1="460" y1="100" x2="460" y2="110" class="line" stroke-width="2"/>
+      <rect x="482" y="114" width="160" height="36" rx="18" class="soft-f acc" stroke-width="2"/>
+      <text x="562" y="138" class="lbl-b he" text-anchor="middle">גמירות דעת</text>
+      <rect x="278" y="114" width="160" height="36" rx="18" class="soft-f acc" stroke-width="2"/>
+      <text x="358" y="138" class="lbl-b he" text-anchor="middle">מסוימות</text>
+      <line x1="100" y1="80" x2="100" y2="90" class="line" stroke-width="2"/>
+      <rect x="22" y="90" width="156" height="62" rx="10" fill="none" class="line" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <text x="100" y="107" class="lbl-s he" text-anchor="middle">חסר פרט?</text>
+      <text x="100" y="126" class="lbl-s he" text-anchor="middle">בית המשפט משלים</text>
+      <text x="100" y="145" class="lbl-s he" text-anchor="middle">לפי המקובל</text>
+    </svg>
+    <figcaption>הצעה ← קיבול ← חוזה (חוק החוזים (חלק כללי), סעיף 1). בשני השלבים צריך גמירות דעת וגם מסוימות.</figcaption>
+  </figure>
+
+  <div class="grid3">
+    <div class="card"><div class="c-title">✍️ בכתב</div>קל <b>להוכיח</b>. עדיף לחתום.</div>
+    <div class="card"><div class="c-title">🗣️ בעל פה</div><b>תקף</b>, אבל קשה להוכיח.</div>
+    <div class="card"><div class="c-title">🚶 בהתנהגות</div>עובדים ומקבלים שכר = <b>חוזה</b>. הוכחה אפשרית: רישומי החניון.</div>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): הורידו 10% מהשכר</div><div class="w-body">
+    <div class="given">השכר ירד ב-<b>10%</b>. עובד ממשיך <b>4 חודשים</b> בשקט, ואז מתפטר ודורש פיצויים.</div>
+    <div class="ask">האם מגיעים לו פיצויי פיטורים?</div>
+    <ol class="lines">
+      <li>10% פחות = <b>הרעה מוחשית</b> ← מי שמתפטר בגללה מקבל פיצויים ("<b>התפטרות בדין פיטורים</b>").</li>
+      <li>אבל 4 חודשים בשקט = <b>הסכמה בהתנהגות</b>: "בשתיקה שלך הסכמת".</li>
+    </ol>
+    <div class="answer">כנראה <b>לא</b>. (4 חודשים זו דוגמה של המרצה, לא מועד בחוק.)</div>
+    <div class="check">אילו התפטר <b>מיד</b> בגלל ההורדה ← כן פיצויים (שלב 1). ההבדל הוא <b>השתיקה</b>.</div>
+  </div></div>
+</section>
+
+<!-- ============ 1ב ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">1ב</span><h2>תום לב, חובת הגילוי וטעות</h2><span class="time">⏱ 00:15:37</span></div>
+  <div class="bl">תום לב = <b>יושר והגינות</b>. במשא ומתן חובה <b>לגלות</b> כל פרט רלוונטי.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p>המוכר מסתיר את הרטיבות: <b>צובע</b> את הקירות ו<b>תולה תמונות</b> על הכתמים, והקונה לא רואה כלום ← <b>הסתרה</b>. זה גרוע יותר מסתם לא לספר.</p>
+  </div>
+
+  <ul class="pts">
+    <li>תום לב <b>אינו תמימות</b>. זה "<b>עקרון על</b>" בכל המשפט, ב-2 שלבים: משא ומתן, וקיום החוזה.</li>
+    <li><b>סעיף 12 לחוק החוזים (חלק כללי)</b>: במשא ומתן "בדרך מקובלת ובתום לב". לא רק לא לשקר.</li>
+    <li><b>קיום החוזה</b>: לנהוג בדרך מקובלת, בהגינות וב<b>שיתוף פעולה</b>. "אחד נגד השני" ← החוזה לא יקוים.</li>
+    <li>בעבודה החוזה נמשך אולי <b>50 שנה</b> ← תום לב "מעל עשרת הדיברות".</li>
+  </ul>
+
+  <h3>טעות: לא גילו פרט חשוב <small>⏱&nbsp;<span class="ltr">00:23:10</span></small></h3>
+  <ul class="pts">
+    <li>הפרט היה משנה את ההחלטה לחתום ← אפשר <b>לבטל</b> בטענת טעות. המבחן: מה היה עושה <b>אדם סביר והגון</b>.</li>
+    <li>הוסתר פגם? <b>לבטל</b>, או תיקון על חשבון המוכר ופיצוי. לגופו של עניין.</li>
+    <li>טעות יכולה להיות בכוונה או <b>בתום לב</b> (למשל <b>טעות סופר</b>: נפלה מילה). בית המשפט בודק מה קרה.</li>
+    <li>בתי המשפט <b>נזהרים</b> מלבטל, ומעדיפים לתקן. <span class="muted">⏱&nbsp;<span class="ltr">02:40:38</span></span></li>
+  </ul>
+
+  <div class="box optional"><div class="box-title">דיון בכיתה: השכן המתופף (מהשיעור)</div>
+    <ul class="pts">
+      <li>חובה לספר לקונה שהשכן מלמעלה <b>מתופף</b>? <b>אין פסק דין</b>, רק דעת המרצה (לא נבדקה). <span class="muted">⏱&nbsp;<span class="ltr">00:27:54</span></span></li>
+      <li>רעש <b>בלילה</b> שמפריע לישון: כנראה כן. <b>נזילה בתוך הדירה</b>: ברור שכן. הריסה בשכונה <b>שנה אחרי</b> הקנייה: לא.</li>
+      <li>בהיריון, לעומת זאת, יש <b>תקדים</b> של בית הדין הארצי, ולכן שם התשובה ברורה (1ג). <span class="muted">⏱&nbsp;<span class="ltr">00:39:24</span></span></li>
+    </ul>
+  </div>
+
+  <div class="box optional"><div class="box-title">טעות כנה במשכורת (מהשיעור)</div>
+    <ul class="pts">
+      <li>משכורת אפשר לשלם עד <b>ה-9 בחודש</b>. אחר כך = <b>הלנת שכר</b>, "הרבה מאוד כסף". <span class="muted">⏱&nbsp;<span class="ltr">02:37:09</span></span></li>
+      <li><b>טעות כנה</b> יכולה להקטין את הפיצוי. מי שתלה תמונות על רטיבות לא טעה בתום לב. <span class="muted">⏱&nbsp;<span class="ltr">02:36:03</span></span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 1ג ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">1ג</span><h2>חובת הגילוי בראיון עבודה</h2><span class="time">⏱ 00:16:26</span></div>
+  <div class="bl">בראיון מגלים מה ש<b>רלוונטי לתפקיד</b>. גם <b>המעסיק</b> חייב לגלות.</div>
+
+  <figure class="fig" style="width:92%;margin-inline:auto">
+    <svg viewBox="0 0 680 168" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="dark-f"/></marker></defs>
+      <rect x="180" y="6" width="320" height="46" rx="23" class="soft-f acc" stroke-width="2.5"/>
+      <text x="340" y="35" class="lbl-b he" text-anchor="middle">הפרט רלוונטי לעסקה או לתפקיד?</text>
+      <path d="M420,52 L496,90" fill="none" class="acc" stroke-width="2.5" marker-end="url(#ar2)"/>
+      <text x="480" y="64" class="ok-f he" font-size="16" font-weight="700" text-anchor="middle">כן</text>
+      <rect x="400" y="96" width="260" height="42" rx="10" class="soft-f ok" stroke-width="2.5"/>
+      <text x="530" y="123" class="lbl-b he" text-anchor="middle">חובה לגלות</text>
+      <text x="530" y="160" class="lbl-s he" text-anchor="middle">רטיבות מוסתרת · רכבת קלה · רק עד ארבע</text>
+      <path d="M260,52 L184,90" fill="none" class="acc" stroke-width="2.5" marker-end="url(#ar2)"/>
+      <text x="200" y="64" class="bad-f he" font-size="16" font-weight="700" text-anchor="middle">לא</text>
+      <rect x="20" y="96" width="260" height="42" rx="10" class="soft-f bad" stroke-width="2.5"/>
+      <text x="150" y="123" class="lbl-b he" text-anchor="middle">לא חובה לגלות</text>
+      <text x="150" y="160" class="lbl-s he" text-anchor="middle">מידת נעליים · מספר ילדים · מצב משפחתי</text>
+    </svg>
+    <figcaption>המבחן הוא רלוונטיות: מה שמשפיע על העסקה או על העבודה, חובה לגלות. החובה חלה גם על המעסיק.</figcaption>
+  </figure>
+
+  <div class="box lecturer"><div class="box-title">הודגש בשיעור: מועמדת בהיריון</div>
+    <ul class="pts">
+      <li>חייבת לספר בראיון? <b>בית הדין הארצי: לא</b>. חובת הודעה רק <b>מהחודש החמישי</b>, בגלל ההגבלות בחוק (שעות נוספות, שבת). <span class="muted">⏱&nbsp;<span class="ltr">00:16:57</span></span></li>
+      <li>הנימוק: אחרת נשים בהיריון לא יוכלו "<b>לפלס את דרכן</b>" בשוק העבודה. <span class="muted">⏱&nbsp;<span class="ltr">02:24:02</span></span></li>
+      <li>לפי המרצה: אסור לדחות מועמדת <b>בגלל</b> היריון. <span class="muted">⏱&nbsp;<span class="ltr">02:30:10</span></span></li>
+    </ul>
+  </div>
+
+  <div class="box warn"><div class="box-title">טעות נפוצה</div><p>"מועמדת בהיריון חייבת לספר כבר בראיון." <b>לא</b>: רק מהחודש החמישי. בכיתה רבים ענו "כן".</p></div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): אם חד-הורית</div><div class="w-body">
+    <div class="given">רק המועמדת יכולה לאסוף את הילדה מהגן, כל יום.</div>
+    <div class="ask">מה חובה לספר למעסיק?</div>
+    <ol class="lines">
+      <li>"אם חד-הורית" = פרט <b>פרטי</b> ← לא רלוונטי לתפקיד.</li>
+      <li>"רק עד <span class="ltr">16:00</span>, בלי <b>שעות נוספות</b>" ← משפיע על העבודה.</li>
+    </ol>
+    <div class="answer">לספר על <b>השעות</b>, לא על המצב המשפחתי.</div>
+    <div class="check">אילו העבודה נגמרת ב-<span class="ltr">15:00</span>, בלי שעות נוספות ← אין מה לספר.</div>
+  </div></div>
+</section>
+
+<!-- ============ 2א ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">2א</span><h2>הפרת חוזה: יסודית או לא</h2><span class="time">⏱ 00:25:33</span></div>
+  <div class="bl"><b>הפרה יסודית</b> ← ביטול מיד. <b>הפרה לא יסודית</b> ← קודם הודעה וארכה.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p>לא סיפרו לקונה שבעוד <b>שבועיים</b> מתחילות ליד הבית <b>חפירות לרכבת הקלה</b> ← הפרה <b>יסודית</b>.</p>
+    <p>הדירה החדשה <b>לא פונתה</b> ב-1 לחודש, ואת הישנה כבר מכרו ← <b>יסודית</b>. <span class="muted">⏱&nbsp;<span class="ltr">02:41:49</span></span></p>
+  </div>
+
+  <div class="vs">
+    <div class="card"><div class="c-title">הפרה יסודית</div>
+      <ul class="pts">
+        <li>הוגדרה <b>בחוזה</b> כיסודית.</li>
+        <li>או: <b>אדם סביר</b> לא היה חותם אילו ידע.</li>
+        <li>← ביטול <b>לאלתר</b> בהודעת ביטול.</li>
+        <li>טיפ: לכתוב בחוזה מה יסודי, למשל <b>תשלום באיחור</b>.</li>
+      </ul></div>
+    <div class="mid">מול</div>
+    <div class="card"><div class="c-title">הפרה שאינה יסודית</div>
+      <ul class="pts">
+        <li>הפרה <b>שולית</b>. המטרה נשמרת.</li>
+        <li>← <b>פיצוי</b>, לא ביטול.</li>
+        <li>הודעה + <b>ארכה</b>, ולא תוקן ← <b>יסודית</b>.</li>
+        <li>הדירה לא פונתה, אבל אפשר לשכור עוד חודש ← הנזק <b>קטן</b>.</li>
+      </ul></div>
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 24 680 144" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+      <rect x="600" y="38" width="72" height="44" rx="12" class="soft-f acc" stroke-width="2.5"/>
+      <text x="636" y="66" class="lbl-b he" text-anchor="middle">הפרה</text>
+      <line x1="598" y1="60" x2="582" y2="60" class="ink" stroke-width="2" marker-end="url(#ar3)"/>
+      <polygon points="530,30 578,60 530,90 482,60" class="soft-f acc" stroke-width="2.5"/>
+      <text x="530" y="66" class="lbl-b he" text-anchor="middle">יסודית?</text>
+      <line x1="480" y1="60" x2="464" y2="60" class="ink" stroke-width="2" marker-end="url(#ar3)"/>
+      <text x="472" y="48" class="lbl-s he" text-anchor="middle">לא</text>
+      <rect x="330" y="36" width="130" height="48" rx="10" class="soft-f acc" stroke-width="2.5"/>
+      <text x="395" y="57" class="lbl-b he" text-anchor="middle">הודעה וארכה</text>
+      <text x="395" y="77" class="lbl-s he" text-anchor="middle">זמן סביר לתקן</text>
+      <line x1="328" y1="60" x2="306" y2="60" class="ink" stroke-width="2" marker-end="url(#ar3)"/>
+      <polygon points="260,32 302,60 260,88 218,60" class="soft-f acc" stroke-width="2.5"/>
+      <text x="260" y="66" class="lbl-b he" text-anchor="middle">תוקן?</text>
+      <line x1="216" y1="60" x2="176" y2="60" class="ink" stroke-width="2" marker-end="url(#ar3)"/>
+      <text x="196" y="50" class="lbl-s he" text-anchor="middle">כן</text>
+      <rect x="20" y="38" width="152" height="44" rx="10" class="soft-f ok" stroke-width="2.5"/>
+      <text x="96" y="58" class="lbl-b he" text-anchor="middle">ממשיכים</text>
+      <text x="96" y="76" class="lbl-s he" text-anchor="middle">אולי פיצוי</text>
+      <line x1="530" y1="92" x2="530" y2="113" class="ink" stroke-width="2" marker-end="url(#ar3)"/>
+      <text x="546" y="106" class="lbl-s he" text-anchor="middle">כן</text>
+      <line x1="260" y1="90" x2="260" y2="113" class="ink" stroke-width="2" marker-end="url(#ar3)"/>
+      <text x="276" y="106" class="lbl-s he" text-anchor="middle">לא</text>
+      <rect x="230" y="115" width="330" height="50" rx="12" class="soft-f bad" stroke-width="2.5"/>
+      <text x="395" y="137" class="lbl-b he" text-anchor="middle">ביטול בהודעת ביטול</text>
+      <text x="395" y="156" class="lbl-s he" text-anchor="middle">יסודית מההתחלה, או שהפכה ליסודית</text>
+    </svg>
+    <figcaption>הפרה לא יסודית: קודם הודעה וארכה. רק אם לא תוקן ← ביטול.</figcaption>
+  </figure>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): שילמו ב-3 במקום ב-1</div><div class="w-body">
+    <div class="given">התשלום היה צריך להגיע <b>ב-1 לחודש</b>, והגיע <b>ב-3</b>.</div>
+    <div class="ask">מותר לבטל את החוזה מיד?</div>
+    <ol class="lines">
+      <li>האיחור: <b>יומיים</b> בלבד, לא חודשיים.</li>
+      <li>הכסף <b>הגיע</b> ← המטרה לא נפגעה ← הפרה <b>שאינה יסודית</b>.</li>
+    </ol>
+    <div class="answer"><b>לא</b>. אפשר לתבוע <b>פיצוי</b> על נזק מוכח (למשל צ'קים שחזרו).</div>
+    <div class="check">אדם סביר היה מסרב לחתום בגלל יומיים? לא ← לא יסודית.</div>
+  </div></div>
+</section>
+
+<!-- ============ 2ב ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">2ב</span><h2>ביטול חוזה ואכיפה</h2><span class="time">⏱ 00:35:25</span></div>
+  <div class="bl">מבטלים ב<b>הודעה</b>, ב<b>זמן סביר</b>. חוזה עבודה כמעט <b>לא נאכף</b>.</div>
+
+  <ol class="steps">
+    <li>נודעה <b>עילה</b> ← <b>הודעת ביטול</b> עם הסיבה, בזמן סביר.</li>
+    <li>הצד השני מתנגד? תובע <b>אכיפה</b> בזמן סביר. מחכים חודשים ← <b>שיהוי</b>.</li>
+  </ol>
+  <ul class="pts">
+    <li>אפשר לבטל רק <b>חלק</b> מהסעיפים, ושאר החוזה נשאר.</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 0 680 156" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="dark-f"/></marker></defs>
+      <text x="340" y="14" class="lbl-s he" text-anchor="middle">כל שלב: בזמן סביר</text>
+      <rect x="545" y="24" width="130" height="60" rx="12" class="soft-f acc" stroke-width="2.5"/>
+      <text x="610" y="50" class="lbl-b he" text-anchor="middle">נודעה עילה</text>
+      <text x="610" y="72" class="lbl-s he" text-anchor="middle">סיבה לבטל</text>
+      <rect x="365" y="24" width="130" height="60" rx="12" class="soft-f acc" stroke-width="2.5"/>
+      <text x="430" y="50" class="lbl-b he" text-anchor="middle">הודעת ביטול</text>
+      <text x="430" y="72" class="lbl-s he" text-anchor="middle">עם הסיבה</text>
+      <rect x="185" y="24" width="130" height="60" rx="12" class="soft-f acc" stroke-width="2.5"/>
+      <text x="250" y="50" class="lbl-b he" text-anchor="middle">הצד השני</text>
+      <text x="250" y="72" class="lbl-s he" text-anchor="middle">מתנגד?</text>
+      <rect x="5" y="24" width="130" height="60" rx="12" class="mid-f acc" stroke-width="2.5"/>
+      <text x="70" y="50" class="lbl-b he" text-anchor="middle">תביעה לאכיפה</text>
+      <text x="70" y="72" class="lbl-s he" text-anchor="middle">בבית המשפט</text>
+      <line x1="541" y1="54" x2="501" y2="54" class="acc" stroke-width="2.5" marker-end="url(#ar4)"/>
+      <line x1="361" y1="54" x2="321" y2="54" class="acc" stroke-width="2.5" marker-end="url(#ar4)"/>
+      <line x1="181" y1="54" x2="141" y2="54" class="acc" stroke-width="2.5" marker-end="url(#ar4)"/>
+      <rect x="170" y="98" width="340" height="52" rx="14" class="soft-f bad" stroke-width="2" stroke-dasharray="6 5"/>
+      <text x="340" y="120" class="lbl-b he" text-anchor="middle">מחכים יותר מדי = שיהוי</text>
+      <text x="340" y="141" class="lbl-s he" text-anchor="middle">בית המשפט עלול לדחות רק בגלל העיכוב</text>
+    </svg>
+    <figcaption>כל שלב בזמן סביר. מי שמחכה חודשים עלול להפסיד רק בגלל השיהוי.</figcaption>
+  </figure>
+
+  <h3>אכיפה בדיני עבודה: כמעט אף פעם</h3>
+  <ul class="pts">
+    <li>עבודה היא "<b>מרצון ולא מאונס</b>": אי אפשר להכריח לעבוד או להעסיק. פיטורים בחוסר תום לב ← <b>פיצוי</b>, לא חזרה.</li>
+    <li><b>החריג</b>: כשהחוק <b>אוסר</b> לפטר, בית הדין יכול להחזיר לעבודה.</li>
+  </ul>
+
+  <table class="t">
+    <tr><th>מצב</th><th>כמה זמן אסור לפטר</th><th>מי יכול להתיר</th></tr>
+    <tr><td><b>היריון</b> (אחרי 6 חודשי עבודה)</td><td>כל ההיריון</td><td>הממונה על חוק עבודת נשים</td></tr>
+    <tr><td><b>אחרי חופשת לידה</b></td><td><b>60 ימים</b> מהחזרה</td><td>(לא נאמר בשיעור)</td></tr>
+    <tr><td><b>מילואים</b> (לפי המרצה)</td><td>מהצו ועד <b>60 ימים</b> אחרי</td><td><b>ועדת תעסוקה</b></td></tr>
+  </table>
+
+  <div class="box lecturer"><div class="box-title">הודגש בשיעור: היריון</div>
+    <ul class="pts">
+      <li>פיטורים בהיריון בלי היתר <b>בטלים</b>, גם אם המעסיק <b>לא ידע</b>. <span class="muted">⏱&nbsp;<span class="ltr">02:51:40</span></span></li>
+      <li>יש שמפטרים <b>לפני 6 חודשים</b>. בית הדין בודק אם הפיטורים "צצו" אחרי שנודע על ההיריון. <span class="muted">⏱&nbsp;<span class="ltr">03:22:51</span></span></li>
+    </ul>
+  </div>
+
+  <div class="box optional"><div class="box-title">שעת הנקה / שעת הורות (מהשיעור)</div><p>עובדת ב<b>משרה מלאה</b>: <b>שעה פחות</b> ביום, <b>4 חודשים</b> אחרי חופשת הלידה, בתשלום. גם <b>לגברים</b>. <span class="muted">⏱&nbsp;<span class="ltr">02:53:45</span></span></p></div>
+</section>
+
+<!-- ============ 3א ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">3א</span><h2>חוזה לא חוקי</h2><span class="time">⏱ 00:41:10</span></div>
+  <div class="bl">חוזה או סעיף <b>לא חוקי</b> = <b>בטל מעיקרו</b>. גם חתימה לא מצילה אותו.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p>חוזה למכירת <b>סמים</b>. בית המשפט <b>לא יאכוף</b> אותו, גם אם שני הצדדים חתמו.</p>
+  </div>
+
+  <ul class="pts">
+    <li>לפעמים גם חוזה "חוקי" שקשור לפעילות לא חוקית לא ייאכף (<b>מדיניות ציבורית</b>). דוגמה מהשקף: חברה לאביזרים לסמים.</li>
+    <li>חתמנו "<b>קראתי והבנתי</b>"? זה מחייב, חוץ מסעיף לא חוקי: הוא בטל מעצמו. <span class="muted">⏱&nbsp;<span class="ltr">03:08:56</span></span></li>
+    <li>זכויות מחוקי העבודה הן <b>קוגנטיות</b>: ויתור עליהן בטל "באותה שנייה". <span class="muted">⏱&nbsp;<span class="ltr">03:09:27</span></span></li>
+  </ul>
+
+  <h3>3 סעיפים לא חוקיים בחוזה עבודה (מהשיעור)</h3>
+  <div class="grid3">
+    <div class="card"><div class="c-title">✗ תלוש נמוך + מזומן</div>חלק מהשכר "בשחור", כדי לקבל הטבות. העובדת <b>ביקשה</b> את זה בעצמה, ובסוף <b>תבעה</b> את המעסיק. לא חוקי.</div>
+    <div class="card"><div class="c-title">✗ כסף במקום חופשה</div><b>אסור</b> בזמן העבודה. <b>פדיון חופשה</b> רק בסיום העבודה.</div>
+    <div class="card"><div class="c-title">✗ שעות נוספות ← בונוס</div>גם בונוס גדול יותר לא עוזר: אסור לסטות מ<b>חוק שעות עבודה ומנוחה</b>.</div>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): "הכשרה" בלי שכר, וקנס</div><div class="w-body">
+    <div class="given"><b>3 חודשים</b> ראשונים בלי שכר. מי שעוזב תוך שנתיים משלם <b>20,000 ₪</b>.</div>
+    <div class="ask">האם הסעיפים מחייבים את העובד?</div>
+    <ol class="lines">
+      <li>בישראל <b>אסור</b> להעסיק בלי שכר ← הסעיף לא חוקי ← <b>בטל מעיקרו</b>, גם עם חתימה.</li>
+      <li>חברה כזו יודעת שתפסיד, ולכן בדרך כלל <b>לא תתבע</b>.</li>
+    </ol>
+    <div class="answer">אין לסעיפים <b>תוקף</b>. "אפשר לישון בשקט".</div>
+    <div class="check">הסעיף <b>גורע</b> מזכות שבחוק (שכר), וחוזה אישי רק מוסיף ← בטל.</div>
+  </div></div>
+
+  <div class="grid2">
+    <div class="box warn"><div class="box-title">טעות נפוצה</div><p>"חתמנו, אז אנחנו חייבים." <b>לא</b>: סעיף שסותר את החוק לא מחייב.</p></div>
+    <div class="box optional"><div class="box-title">החזר הכשרה (לא נאמר בשיעור)</div><p>החזר הוצאות הכשרה <b>אמיתיות וסבירות</b> יכול לפעמים להיות תקף.</p></div>
+  </div>
+</section>
+
+<!-- ============ 3ב ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">3ב</span><h2>חוזה העבודה וחוק הודעה לעובד</h2><span class="time">⏱ 01:06:59</span></div>
+  <div class="bl">אין חובה <b>לחתום</b>, אבל חובה <b>הודעה בכתב</b> תוך <b>30 יום</b>. חוזה אישי רק <b>מוסיף</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p>מתחילים לעבוד <b>בלי לחתום</b> על כלום ← <b>יש</b> חוזה, וכל הזכויות חלות <b>מהשנייה הראשונה</b>. <span class="muted">⏱&nbsp;<span class="ltr">03:04:13</span></span></p>
+  </div>
+
+  <ul class="pts">
+    <li>חוזה העבודה = "<b>מפגש הכוחות</b>": זכויות וחובות לשני הצדדים.</li>
+    <li><b>אין חובה</b> לחתום. חריגים: קבלן כוח אדם, ו<b>עובד זר</b> (חוזה בשפה שהוא מבין). <span class="muted">⏱&nbsp;<span class="ltr">03:01:40</span></span></li>
+    <li><b>חוק הודעה לעובד (תנאי עבודה)</b>: שכר, תנאים ושעות, בכתב, תוך <b>30 יום</b>. לנוער: שבוע (לפי המרצה).</li>
+    <li>הודעה <b>אינה</b> חוזה, אבל חוזה עם כל הפרטים נחשב הודעה. אין הודעה ← <b>קנס</b>, גם אם העובד לא ביקש.</li>
+    <li>פסיקה חדשה (לפי המרצה): עובדת שלא קראה עברית ולא הבינה ← <b>כאילו לא ניתנה</b>. <span class="muted">⏱&nbsp;<span class="ltr">03:06:15</span></span></li>
+  </ul>
+
+  <figure class="fig half">
+    <svg viewBox="0 0 420 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="ar5ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ok-f"/></marker>
+        <marker id="ar5bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="bad-f"/></marker>
+      </defs>
+      <rect x="100" y="10" width="220" height="46" rx="8" class="soft-f acc" stroke-width="2"/>
+      <text x="210" y="31" class="lbl-b he" text-anchor="middle">חוזה אישי</text>
+      <text x="210" y="49" class="lbl-s he" text-anchor="middle">יכול רק להוסיף</text>
+      <rect x="100" y="60" width="220" height="46" rx="8" class="mid-f"/>
+      <text x="210" y="81" class="lbl-b he" text-anchor="middle">הסכם קיבוצי, צו הרחבה</text>
+      <text x="210" y="99" class="lbl-s he" text-anchor="middle">חלים אוטומטית</text>
+      <rect x="100" y="110" width="220" height="46" rx="8" class="dark-f"/>
+      <text x="210" y="131" class="soft-f he" font-size="16" font-weight="700" text-anchor="middle">החוק</text>
+      <text x="210" y="149" class="soft-f he" font-size="12.5" text-anchor="middle">הרצפה. קוגנטי</text>
+      <line x1="80" y1="162" x2="340" y2="162" class="ink" stroke-width="3"/>
+      <line x1="370" y1="140" x2="370" y2="18" class="ok" stroke-width="3" marker-end="url(#ar5ok)"/>
+      <text x="370" y="178" class="ok-f he" font-size="15" font-weight="700" text-anchor="middle">להוסיף</text>
+      <text x="370" y="195" class="lbl-s he" text-anchor="middle">מותר</text>
+      <line x1="50" y1="18" x2="50" y2="140" class="bad" stroke-width="3" marker-end="url(#ar5bad)"/>
+      <line x1="38" y1="67" x2="62" y2="91" class="bad" stroke-width="3"/>
+      <line x1="62" y1="67" x2="38" y2="91" class="bad" stroke-width="3"/>
+      <text x="50" y="178" class="bad-f he" font-size="15" font-weight="700" text-anchor="middle">לגרוע</text>
+      <text x="50" y="195" class="lbl-s he" text-anchor="middle">אסור</text>
+    </svg>
+    <figcaption>כל שכבה רק מוסיפה על מה שמתחתיה. סעיף שגורע ממנה בטל.</figcaption>
+  </figure>
+
+  <div class="worked"><div class="w-title">דוגמה נוספת: "בלי דמי הבראה"</div><div class="w-body">
+    <div class="given">בחוזה האישי כתוב: "העובד לא יקבל <b>דמי הבראה</b>".</div>
+    <div class="ask">האם הסעיף תקף?</div>
+    <ol class="lines">
+      <li>דמי הבראה באים מ<b>צו הרחבה</b> כללי, לכל המשק.</li>
+      <li>חוזה אישי לא יכול <b>לגרוע</b> מצו הרחבה ← הסעיף בטל.</li>
+    </ol>
+    <div class="answer">לא תקף. העובד עדיין <b>זכאי</b> לדמי הבראה.</div>
+    <div class="check">הפוך: "עוד 3 ימי חופשה" כן תקף, כי הוא <b>מוסיף</b>.</div>
+  </div></div>
+
+  <div class="box tip"><div class="box-title">טיפ מהשיעור</div><p>כדאי שהעובד <b>יחתום</b> שקיבל את ההודעה (המלצת בית הדין הארצי). <span class="muted">⏱&nbsp;<span class="ltr">03:08:19</span></span></p></div>
+</section>
+
+<!-- ============ 4א ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">4א</span><h2>תום לב בחוזה העבודה: 3 תחנות</h2><span class="time">⏱ 01:10:11</span></div>
+  <div class="bl">בעבודה תום הלב <b>חזק יותר</b>: בקבלה, במהלך ובסיום, ועל <b>שני הצדדים</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p>קניית דירה נגמרת ב<b>מפתח</b>. עבודה יכולה להימשך <b>50 שנה</b>, עם הרבה "<b>תחנות</b>".</p>
+  </div>
+
+  <ul class="pts">
+    <li>תום לב = <b>נאמנות, אמון, יושר והגינות</b>. חל גם על חוזה בעל פה או בהתנהגות.</li>
+    <li>למה חזק יותר? <b>ארוך טווח</b> · "חוסר שוויון אינהרנטי" · על שני הצדדים · ביותר <b>תחנות</b>.</li>
+    <li>חוסר תום לב יכול <b>למחוק</b> גם תביעה צודקת, "גם של מיליון דולר".</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 48 680 155" xmlns="http://www.w3.org/2000/svg">
+      <rect x="30" y="66" width="625" height="14" rx="7" class="mid-f"/>
+      <circle cx="570" cy="73" r="20" class="acc-f"/>
+      <circle cx="340" cy="73" r="20" class="acc-f"/>
+      <circle cx="110" cy="73" r="20" class="acc-f"/>
+      <text x="570" y="80" class="soft-f ltr" font-size="19" font-weight="800" text-anchor="middle">1</text>
+      <text x="340" y="80" class="soft-f ltr" font-size="19" font-weight="800" text-anchor="middle">2</text>
+      <text x="110" y="80" class="soft-f ltr" font-size="19" font-weight="800" text-anchor="middle">3</text>
+      <text x="570" y="118" class="lbl-b he" text-anchor="middle">קבלה לעבודה</text>
+      <text x="340" y="118" class="lbl-b he" text-anchor="middle">במהלך העבודה</text>
+      <text x="110" y="118" class="lbl-b he" text-anchor="middle">סיום העבודה</text>
+      <text x="570" y="140" class="lbl-s he" text-anchor="middle">חובת גילוי</text>
+      <text x="570" y="159" class="lbl-s he" text-anchor="middle">לקיים את מה שהובטח</text>
+      <text x="340" y="140" class="lbl-s he" text-anchor="middle">נאמנות, בלי ניגוד עניינים</text>
+      <text x="340" y="159" class="lbl-s he" text-anchor="middle">הגינות הדדית</text>
+      <text x="110" y="140" class="lbl-s he" text-anchor="middle">שיקולים ענייניים</text>
+      <text x="110" y="159" class="lbl-s he" text-anchor="middle">שימוע אמיתי</text>
+      <rect x="500" y="172" width="140" height="28" rx="14" fill="none" class="acc" stroke-width="1.5"/>
+      <text x="570" y="191" class="lbl-s he" text-anchor="middle">מנהלת החשבונות</text>
+      <rect x="345" y="172" width="120" height="28" rx="14" fill="none" class="acc" stroke-width="1.5"/>
+      <text x="405" y="191" class="lbl-s he" text-anchor="middle">גניבת לקוחות</text>
+      <rect x="215" y="172" width="120" height="28" rx="14" fill="none" class="acc" stroke-width="1.5"/>
+      <text x="275" y="191" class="lbl-s he" text-anchor="middle">ממלאת המקום</text>
+      <rect x="50" y="172" width="120" height="28" rx="14" fill="none" class="acc" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="110" y="191" class="lbl-s he" text-anchor="middle">האופציות</text>
+    </svg>
+    <figcaption>תום הלב מלווה את כל הדרך, ומחייב גם את העובד וגם את המעסיק. מתחת לכל תחנה: פסקי הדין מהשיעור (האופציות: ב-4ב).</figcaption>
+  </figure>
+
+  <ul class="pts">
+    <li><b>קבלה</b>: שני הצדדים <b>מגלים</b> מה שחשוב לתפקיד. המעסיק מקיים את מה שהבטיח.</li>
+    <li><b>במהלך</b>, העובד: שמירת אמונים, בלי לשון הרע, בלי <b>ניגוד עניינים</b>.</li>
+    <li><b>במהלך</b>, המעסיק: "לקדם ולהכשיר" (שקף) = <b>לא חובה</b> משפטית, לפי המרצה. <span class="muted">⏱&nbsp;<span class="ltr">03:20:39</span></span></li>
+    <li>אין חובה <b>להעלות שכר</b> מעל המינימום. חריג: הסכם קיבוצי עם דירוג (עובדי מדינה). <span class="muted">⏱&nbsp;<span class="ltr">03:16:47</span></span></li>
+  </ul>
+
+  <div class="grid3">
+    <div class="card"><div class="c-title">⚖️ מנהלת החשבונות</div>אמרה <b>מראש</b> שאין לה ניסיון. הובטחה חפיפה, אז עזבה עבודה קודמת. לא הייתה חפיפה, והיא פוטרה. בית הדין <b>האמין לה</b>.</div>
+    <div class="card"><div class="c-title">⚖️ גניבת לקוחות</div>עובד "גנב" לקוחות ופתח עסק משלו ← חוסר תום לב ← חויב <b>בפיצויים</b>.</div>
+    <div class="card"><div class="c-title">⚖️ ממלאת המקום</div>ב-<b>60 הימים</b> אחרי חופשת לידה המעסיק מירר את חיי העובדת. <b>הפסיד</b>.</div>
+  </div>
+
+  <div class="box optional"><div class="box-title">עוד מהשיעור</div>
+    <ul class="pts">
+      <li><b>ותק</b>: סניף אחר, או שם חדש עם אותם בעלים? הוותק לא מתאפס. <span class="muted">⏱&nbsp;<span class="ltr">03:16:01</span></span></li>
+      <li>קשר בעבודה: מותר, אבל לא ב<b>יחסי מרות</b> (מנהל והעובד שלו). <span class="muted">⏱&nbsp;<span class="ltr">03:24:04</span></span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 4ב ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">4ב</span><h2>תום לב בסיום: שימוע והודעה מוקדמת</h2><span class="time">⏱ 01:15:04</span></div>
+  <div class="bl">מפטרים רק משיקולים <b>ענייניים</b>, אחרי <b>שימוע אמיתי</b>. גם מתפטרים בתום לב.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p>מזמינים לשימוע, אבל <b>כבר הוציאו</b> את העובד מקבוצת הוואטסאפ ← ההחלטה כבר התקבלה.</p>
+  </div>
+
+  <h3>שימוע: איך עושים נכון</h3>
+  <ol class="steps">
+    <li><b>מזמינים</b> את העובד, ומסבירים למה שוקלים לפטר.</li>
+    <li>נותנים <b>זמן להתכונן</b> ולהגיב.</li>
+    <li><b>מקשיבים</b> "בלב פתוח ובנפש חפצה", לא כדי לסמן וי.</li>
+    <li><b>מחליטים</b>. אם מפטרים: נותנים <b>הודעה מוקדמת</b>.</li>
+  </ol>
+
+  <div class="grid3">
+    <div class="card"><div class="c-title">⚖️ לפני היום הראשון</div>פקיד בכיר התקבל, ולפני שהתחיל ההצעה <b>בוטלה</b>. בית הדין: <b>למה אין שימוע?</b></div>
+    <div class="card"><div class="c-title">⚖️ האופציות</div>הובטחו אופציות אחרי שנה. העובד פוטר <b>חודש לפני</b> ← <b>פיצוי</b>.</div>
+    <div class="card"><div class="c-title">⚖️ מאיר שגיא (שקף)</div>מהנדס בן <b>63</b> פוטר כדי לא לשלם <b>פנסיה מלאה</b> ← לא ענייני.</div>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): מתפטרים אחרי 6 חודשים · ⏱&nbsp;<span class="ltr">03:26:14</span></div><div class="w-body">
+    <div class="given">עובד <b>בשכר חודשי</b> מתפטר אחרי <b>6 חודשים</b>.</div>
+    <div class="ask">כמה ימי הודעה מוקדמת?</div>
+    <ol class="lines">
+      <li><b>חוק הודעה מוקדמת לפיטורים ולהתפטרות</b>: ב<b>ששת החודשים הראשונים</b>, יום לכל חודש (הכלל לא נאמר בשיעור).</li>
+      <li><span class="ltr">6 × 1 = 6</span> ימים.</li>
+    </ol>
+    <div class="answer"><b>6 ימים</b>, כמו שנאמר בשיעור.</div>
+    <div class="check">חישוב הפוך: 6 ימים ÷ יום לחודש = 6 חודשים, וזה עדיין בתוך ששת החודשים הראשונים.</div>
+  </div></div>
+
+  <div class="grid2">
+    <div class="box optional"><div class="box-title">ההמשך בחוק (לא נאמר בשיעור)</div><p>חודשים <b>7 עד 12</b>: 6 ימים + <b>2.5</b> לכל חודש נוסף. אחרי <b>שנה</b>: <b>חודש</b>.</p></div>
+    <div class="box warn"><div class="box-title">טעות נפוצה</div><p>"שימוע זה טקס." <b>לא</b>: מחליטים <b>אחרי</b> ההקשבה, לא לפני.</p></div>
+  </div>
+</section>
+
+<!-- ============ 5 ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">5</span><h2>סוגי חוזי עבודה</h2><span class="time">⏱ 01:18:23</span></div>
+  <div class="bl">3 סוגים: <b>בלתי קצוב</b> (פתוח), <b>קצוב</b> (נעול עד התאריך), <b>משימה מסוימת</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p><b>ממלאת מקום</b> לחופשת לידה, ל<b>חצי שנה</b> ← קצוב. ההעסקה של המרצה היא <b>לקורס הזה</b> ← משימה.</p>
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="dark-f"/></marker></defs>
+      <line x1="480" y1="22" x2="480" y2="196" class="line" stroke-width="2" stroke-dasharray="4 5"/>
+      <text x="480" y="14" class="lbl-s he" text-anchor="middle">תחילת העבודה</text>
+      <text x="590" y="50" class="lbl-b he" text-anchor="middle">בלתי קצובה</text>
+      <text x="590" y="112" class="lbl-b he" text-anchor="middle">קצובה</text>
+      <text x="590" y="174" class="lbl-b he" text-anchor="middle">משימה מסוימת</text>
+      <rect x="130" y="36" width="350" height="16" rx="4" class="mid-f"/>
+      <line x1="128" y1="44" x2="40" y2="44" class="acc" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#ar7)"/>
+      <text x="300" y="72" class="lbl-s he" text-anchor="middle">אין תאריך סיום. נגמר בפיטורים או בהתפטרות</text>
+      <rect x="200" y="98" width="280" height="16" rx="4" class="mid-f"/>
+      <line x1="200" y1="88" x2="200" y2="124" class="ink" stroke-width="4"/>
+      <text x="150" y="111" class="lbl-s he" text-anchor="middle">תאריך הסיום</text>
+      <text x="340" y="136" class="lbl-s he" text-anchor="middle">נגמר מעצמו. סיום מוקדם = הפרה</text>
+      <rect x="270" y="160" width="210" height="16" rx="4" class="soft-f acc" stroke-width="2"/>
+      <circle cx="250" cy="168" r="13" fill="none" class="ok" stroke-width="2.5"/>
+      <path d="M244,168 L249,174 L258,162" fill="none" class="ok" stroke-width="3"/>
+      <text x="375" y="194" class="lbl-s he" text-anchor="middle">נגמר כשהמשימה הושלמה</text>
+    </svg>
+    <figcaption>הזמן זורם מימין לשמאל. הקצוב והמשימה נגמרים מעצמם; הבלתי קצוב נמשך עד שמסיימים לפי הדין.</figcaption>
+  </figure>
+
+  <ul class="pts">
+    <li><b>קצובה</b>: נגמרת <b>מעצמה</b>, בלי מכתב פיטורים ובלי הודעה מוקדמת.</li>
+    <li>המרצה: "<b>חוזה נעול</b>": סיום מוקדם = הפרה ← פיצוי.</li>
+    <li>סוף חוזה קצוב "<b>כמוהו כפיטורים</b>" (חוק פיצויי פיטורים) ← פיצויים, אם עבדו שנה.</li>
+    <li><b>משימה מסוימת</b> (גם: מוגדרת): נגמר כשהמשימה <b>הושלמה</b>. למשל התמחות (שנה), הטמעת מערכת מחשוב.</li>
+  </ul>
+
+  <div class="card"><div class="c-title">⚖️ לב/3-43 יגאל הלפרין נ' הסתדרות מדיצינית "הדסה"</div>
+    בסוף התמחות <b>אין פיצויי פיטורים</b>: זה לא נכנס לסעיף 9 לחוק פיצויי פיטורים. אי אפשר "לחדש" התמחות שהסתיימה. מי שממשיך כבר רופא ← חוזה חדש.
+  </div>
+
+  <table class="t">
+    <tr><th>סוג</th><th>מתי נגמר</th><th>הודעה מוקדמת?</th><th>סיום לפני הזמן</th><th>פיצויים בסוף</th></tr>
+    <tr><td><b>בלתי קצובה</b></td><td>כשמחליטים לסיים</td><td>כן</td><td>(אין "לפני הזמן")</td><td>בפיטורים, אחרי שנה</td></tr>
+    <tr><td><b>קצובה</b></td><td>בתאריך שנקבע</td><td>לא</td><td>הפרת חוזה</td><td>כן, אחרי שנה</td></tr>
+    <tr><td><b>משימה מסוימת</b></td><td>בסוף המשימה</td><td>(לא נאמר)</td><td>(לא נאמר)</td><td>לא (הלפרין)</td></tr>
+  </table>
+
+  <div class="box warn"><div class="box-title">טעות נפוצה</div><p>"בסוף חוזה קצוב צריך מכתב פיטורים." <b>לא</b>: הוא נגמר <b>מעצמו</b> בתאריך.</p></div>
+</section>
+
+<!-- ============ 6א ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">6א</span><h2>אין שינוי חד-צדדי</h2><span class="time">⏱ 01:23:06</span></div>
+  <div class="bl"><b>אף צד</b> לא משנה חוזה עבודה <b>לבד</b>, גם לא מעסיק בקשיים. <b>הודעה אינה הסכמה</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (לא נאמר בשיעור)</div>
+    <p>בעל הדירה מודיע: "מהחודש הבא <b>שכר הדירה עולה</b>". בלי הסכמה זה <b>לא</b> מחייב.</p>
+  </div>
+
+  <ul class="pts">
+    <li><b>חל"ת</b> (חופשה ללא תשלום) רק <b>בהסכמת העובד</b>. אין הסכמה ← רק פיטורים, עם כל הזכויות.</li>
+    <li>ולהפך: עובד שרוצה חל"ת ונדחה ← רק <b>להתפטר</b>.</li>
+    <li>"<b>עובד אינו פיון על לוח שחמט</b>" (פסק דין על עובדי התעשייה האווירית): לא מזיזים עובד <b>בלי הסכמה</b>.</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 8 680 168" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+      <rect x="60" y="50" width="320" height="80" class="soft-f"/>
+      <line x1="640" y1="156" x2="36" y2="156" class="ink" stroke-width="2" marker-end="url(#ar8)"/>
+      <text x="58" y="174" class="lbl-s he" text-anchor="middle">הזמן</text>
+      <line x1="380" y1="28" x2="380" y2="156" class="line" stroke-width="2" stroke-dasharray="5 5"/>
+      <text x="414" y="22" class="lbl-s he" text-anchor="middle">ספטמבר</text>
+      <text x="352" y="22" class="lbl-s ltr" text-anchor="middle">2008</text>
+      <polyline points="620,50 380,50 380,130 60,130" fill="none" class="acc" stroke-width="4"/>
+      <line x1="380" y1="50" x2="60" y2="50" class="acc" stroke-width="2.5" stroke-dasharray="8 6"/>
+      <text x="220" y="42" class="lbl-s he" text-anchor="middle">מה שהיה צריך לשלם</text>
+      <text x="500" y="40" class="lbl-b he" text-anchor="middle">השכר שסוכם</text>
+      <text x="220" y="148" class="lbl he" text-anchor="middle">שולם רק שכר מינימום</text>
+      <text x="220" y="86" class="lbl-b he" text-anchor="middle">ההפרש = חוב לגננות</text>
+      <text x="220" y="108" class="lbl-s he" text-anchor="middle">בית הדין חייב לשלם את כולו</text>
+    </svg>
+    <figcaption>פסק דין קרמר בציור (סכמטי, בלי סכומים): השטח הצבוע הוא מה שהרשת חויבה לשלם.</figcaption>
+  </figure>
+
+  <div class="card"><div class="c-title">⚖️ קרמר ואח' נ' רשת גני הילדים של אגודת ישראל (תע"א 3491-08)</div>
+    <ul class="pts">
+      <li><b>29 גננות</b> ותיקות. מספטמבר 2008: רק שכר מינימום. הן <b>לא הסכימו</b>.</li>
+      <li>הרשת טענה: "השכר לפי נוהג הרשת", נשלחו <b>הודעות בכתב</b>, יש <b>קשיים כלכליים</b>.</li>
+      <li>נפסק: המודיע על שינוי בשכר הוא הצד המפר. "<b>הודעה אינה הסכמה</b>" ← <b>מלוא השכר</b>.</li>
+    </ul>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה נוספת: חל"ת בכפייה</div><div class="w-body">
+    <div class="given">מפעל מודיע לעובדת: "ממחר יוצאים לחל"ת לחודשיים". היא מסרבת.</div>
+    <div class="ask">מה המעסיק יכול לעשות?</div>
+    <ol class="lines">
+      <li>חל"ת = <b>שינוי</b> בחוזה ← צריך <b>הסכמה</b>. אין הסכמה ← אין חל"ת.</li>
+      <li>נשאר רק <b>לפטר</b> כחוק: שימוע, הודעה מוקדמת, פיצויים (אחרי שנת עבודה).</li>
+    </ol>
+    <div class="answer">או ממשיכים כרגיל, או <b>פיטורים</b> עם כל הזכויות.</div>
+    <div class="check">אותו עיקרון כמו בקרמר: אין שינוי <b>חד-צדדי</b>.</div>
+  </div></div>
+</section>
+
+<!-- ============ 6ב ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">6ב</span><h2>סיכול והפרה של חוזה העבודה</h2><span class="time">⏱ 01:27:55</span></div>
+  <div class="bl"><b>סיכול</b> = אירוע שבאמת <b>לא היה צפוי</b>. בתי המשפט מקבלים אותו <b>לעיתים רחוקות</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p>עובד חדש מקבל <b>שבץ</b> ולא יכול לעבוד ← סיכול: החוזה <b>מושעה</b>, ואף אחד לא פוטר.</p>
+  </div>
+
+  <ul class="pts">
+    <li><b>סיכול / כוח עליון</b>: מחלה, פשיטת רגל, משבר פוליטי או כלכלי. גם <b>מוות</b> של עובד.</li>
+    <li><b>קורונה</b>: בתי המשפט לא אוהבים סיכול (מגפות ומלחמות לא חדשות). צוות בין-משרדי: <b>משא ומתן מחדש</b> בתום לב.</li>
+    <li>ההגנה פוטרת מ<b>אכיפה</b> ומ<b>פיצויים</b>, גם בלי חוזה כתוב.</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 0 680 166" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+      <rect x="530" y="16" width="140" height="64" rx="12" class="soft-f acc" stroke-width="2.5"/>
+      <text x="600" y="44" class="lbl-b he" text-anchor="middle">לא צפוי?</text>
+      <text x="600" y="66" class="lbl-s he" text-anchor="middle">אף צד לא צפה</text>
+      <rect x="360" y="16" width="140" height="64" rx="12" class="soft-f acc" stroke-width="2.5"/>
+      <text x="430" y="44" class="lbl-b he" text-anchor="middle">בלתי אפשרי?</text>
+      <text x="430" y="66" class="lbl-s he" text-anchor="middle">או שונה מאוד</text>
+      <rect x="190" y="16" width="140" height="64" rx="12" class="soft-f acc" stroke-width="2.5"/>
+      <text x="260" y="44" class="lbl-b he" text-anchor="middle">לא אשם?</text>
+      <text x="260" y="66" class="lbl-s he" text-anchor="middle">הצד לא גרם לזה</text>
+      <rect x="10" y="16" width="150" height="64" rx="12" class="soft-f ok" stroke-width="2.5"/>
+      <text x="85" y="44" class="lbl-b he" text-anchor="middle">יש סיכול</text>
+      <text x="85" y="66" class="lbl-s he" text-anchor="middle">החוזה מושעה</text>
+      <line x1="528" y1="48" x2="504" y2="48" class="ink" stroke-width="2" marker-end="url(#ar9)"/>
+      <line x1="358" y1="48" x2="334" y2="48" class="ink" stroke-width="2" marker-end="url(#ar9)"/>
+      <line x1="188" y1="48" x2="164" y2="48" class="ink" stroke-width="2" marker-end="url(#ar9)"/>
+      <text x="515" y="36" class="lbl-s he" text-anchor="middle">כן</text>
+      <text x="345" y="36" class="lbl-s he" text-anchor="middle">כן</text>
+      <text x="175" y="36" class="lbl-s he" text-anchor="middle">כן</text>
+      <line x1="600" y1="80" x2="600" y2="110" class="ink" stroke-width="2" marker-end="url(#ar9)"/>
+      <line x1="430" y1="80" x2="430" y2="110" class="ink" stroke-width="2" marker-end="url(#ar9)"/>
+      <line x1="260" y1="80" x2="260" y2="110" class="ink" stroke-width="2" marker-end="url(#ar9)"/>
+      <text x="616" y="100" class="lbl-s he" text-anchor="middle">לא</text>
+      <text x="446" y="100" class="lbl-s he" text-anchor="middle">לא</text>
+      <text x="276" y="100" class="lbl-s he" text-anchor="middle">לא</text>
+      <rect x="190" y="112" width="480" height="46" rx="12" class="soft-f bad" stroke-width="2.5"/>
+      <text x="430" y="141" class="lbl-b he" text-anchor="middle">מספיק "לא" אחד ← אין סיכול, זו הפרה רגילה</text>
+      <text x="85" y="104" class="lbl-s he" text-anchor="middle">אין אכיפה ואין פיצוי</text>
+      <text x="85" y="126" class="lbl-s he" text-anchor="middle">נדיר בבתי המשפט</text>
+    </svg>
+    <figcaption>מבחן הסיכול: צריך "כן" בשלוש השאלות.</figcaption>
+  </figure>
+
+  <h3>הפרה של חוזה העבודה</h3>
+  <ul class="pts">
+    <li><b>אישור מחלה</b> + עבודה במקום אחר = רמאות. מחלה = נבצרות לעבוד.</li>
+    <li>גם <b>קללות על הבוס</b> בפייסבוק = הפרה.</li>
+    <li>לא כל שינוי = הפרה: המפעל עבר, ובמקום 10 ק"מ נוסעים 50 ק"מ. אם זו <b>הרעה מוחשית</b> ← מתפטרים עם פיצויים.</li>
+    <li>פיטורים בתום לב ולפי החוק = לא הפרה. <b>נטל ההוכחה</b> על מי שטוען להפרה.</li>
+  </ul>
+
+  <div class="vs">
+    <div class="card"><div class="c-title">המעסיק הפר</div>פיצוי לפי <b>הנזק</b> שנגרם לעובד.</div>
+    <div class="mid">מול</div>
+    <div class="card"><div class="c-title">העובד הפר</div>משלם רק אם ההפרה <b>לא סבירה</b>, וגם יש <b>קשר ישיר</b> לנזק.</div>
+  </div>
+
+  <div class="box optional"><div class="box-title">פשיטת רגל (מהשיעור; בסילבוס: נושא ט)</div><p>המעסיק פשט רגל? <b>ביטוח לאומי</b> משלם לעובדים (שכר, פנסיה), ואז תובע את המעסיק כ<b>נושה</b>, יחד עם שאר הנושים.</p></div>
+</section>
+
+<!-- ============ 7 ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">7</span><h2>מבוא למשפט העבודה הקיבוצי</h2><span class="time">⏱ 01:37:46</span></div>
+  <div class="bl">הסכם קיבוצי: <b>ארגון עובדים יציג</b>, <b>בכתב</b>, <b>רשום</b>. רק הסכם <b>כללי</b> אפשר להרחיב.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p>מבקשים העלאה לבד ← "יזרקו אותנו במדרגות". <b>הוועד</b> מבקש בשם כולם ← סיפור אחר.</p>
+  </div>
+
+  <ul class="pts">
+    <li><b>קיבוצי</b> = ארגון עובדים (למשל ההסתדרות, שפועלת במקום העבודה דרך ועד העובדים) מול מעסיק או ארגון מעסיקים. חל גם בלי שחתמתי.</li>
+    <li><b>לא קשור לקיבוץ</b>: "קיבוצי" = לא אחד מול אחד. <span class="muted">⏱&nbsp;<span class="ltr">03:10:16</span></span></li>
+    <li><b>כללי</b> = מול ארגון מעסיקים (המלונות). <b>מיוחד</b> = מול מעסיק אחד (חברת החשמל).</li>
+    <li><b>צו הרחבה</b>: רק להסכם כללי. לענף (ניקיון, בנייה) או לכל המשק (פנסיה, הבראה).</li>
+    <li><b>חוק הסכמים קיבוציים</b> דורש: בכתב · רישום אצל רשם ההסכמים הקיבוציים · ארגון יציג.</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 0 680 208" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar10" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="dark-f"/></marker></defs>
+      <line x1="410" y1="8" x2="410" y2="200" class="line" stroke-width="2" stroke-dasharray="4 6"/>
+      <text x="545" y="22" class="lbl-b he" text-anchor="middle">משפט העבודה האישי</text>
+      <rect x="480" y="36" width="130" height="40" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="545" y="62" class="lbl-b he" text-anchor="middle">עובד</text>
+      <rect x="480" y="126" width="130" height="40" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="545" y="152" class="lbl-b he" text-anchor="middle">מעסיק</text>
+      <line x1="545" y1="80" x2="545" y2="122" class="acc" stroke-width="2.5" marker-start="url(#ar10)" marker-end="url(#ar10)"/>
+      <text x="618" y="106" class="lbl-s he" text-anchor="middle">חוזה אישי</text>
+      <text x="545" y="190" class="lbl-s he" text-anchor="middle">אחד מול אחד</text>
+      <text x="200" y="22" class="lbl-b he" text-anchor="middle">משפט העבודה הקיבוצי</text>
+      <rect x="95" y="34" width="210" height="40" rx="10" class="mid-f acc" stroke-width="2"/>
+      <text x="200" y="60" class="lbl-b he" text-anchor="middle">ארגון עובדים יציג</text>
+      <line x1="250" y1="78" x2="290" y2="110" class="acc" stroke-width="2.5" marker-start="url(#ar10)" marker-end="url(#ar10)"/>
+      <line x1="150" y1="78" x2="110" y2="110" class="acc" stroke-width="2.5" marker-start="url(#ar10)" marker-end="url(#ar10)"/>
+      <text x="334" y="94" class="lbl-s he" text-anchor="middle">הסכם מיוחד</text>
+      <text x="64" y="94" class="lbl-s he" text-anchor="middle">הסכם כללי</text>
+      <rect x="225" y="114" width="150" height="40" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="300" y="140" class="lbl-b he" text-anchor="middle">מעסיק אחד</text>
+      <rect x="25" y="114" width="150" height="40" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="100" y="140" class="lbl-b he" text-anchor="middle">ארגון מעסיקים</text>
+      <text x="300" y="172" class="bad-f he" font-size="12.5" text-anchor="middle">אי אפשר להרחיב</text>
+      <line x1="100" y1="154" x2="100" y2="169" class="acc" stroke-width="2.5" stroke-dasharray="6 4" marker-end="url(#ar10)"/>
+      <text x="160" y="166" class="lbl-s he" text-anchor="middle">צו הרחבה</text>
+      <ellipse cx="100" cy="187" rx="95" ry="17" fill="none" class="acc" stroke-width="2" stroke-dasharray="6 4"/>
+      <text x="100" y="192" class="lbl-s he" text-anchor="middle">ענף שלם או כל המשק</text>
+    </svg>
+    <figcaption>בקיבוצי צד העובדים הוא תמיד ארגון יציג. רק הסכם כללי אפשר להרחיב בצו הרחבה.</figcaption>
+  </figure>
+
+  <div class="grid2">
+    <div class="box warn"><div class="box-title">טעות נפוצה</div><p>"הוועד חתם, אז זה הסכם קיבוצי." <b>לא</b>: חותם <b>ארגון יציג</b>. ועד שחתם לבד = רק <b>הסדר קיבוצי</b> (פתק 4ב במחברת, לא נאמר בשיעור).</p></div>
+    <div class="box lecturer"><div class="box-title">הודגש בשיעור: למה מעסיק חותם?</div><p><b>שקט תעשייתי</b>: אי אפשר לשבות "בין לילה". קודם מכריזים <b>סכסוך עבודה</b> ומחכים <b>14 ימים</b>. <span class="muted">⏱&nbsp;<span class="ltr">03:12:32</span></span></p></div>
+  </div>
+
+  <h3>מהו ארגון עובדים?</h3>
+  <p>אין הגדרה בחוק. 7 סימנים (בשיעור: בית הדין הארצי; בפתק 4א במחברת: בג"ץ "עמית"):</p>
+  <div class="grid3">
+    <ul class="pts"><li><b>קביעות</b></li><li><b>תקנון</b></li><li>חברות <b>אישית ורצונית</b></li></ul>
+    <ul class="pts"><li>בעיקר <b>שכירים</b></li><li><b>מטרות הולמות</b></li></ul>
+    <ul class="pts"><li><b>דמוקרטיה</b></li><li><b>עצמאות</b> מהמעסיק</li></ul>
+  </div>
+</section>
+
+<!-- ============ END MATTER ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">🧠</span><h2>לזכור</h2></div>
+  <div class="bl">12 משפטים מהשיעור שכדאי לדעת בעל פה.</div>
+  <ul class="pts">
+    <li>חוזה = <b>הצעה + קיבול</b>, עם גמירות דעת ומסוימות. תקף גם בעל פה וגם בהתנהגות.</li>
+    <li><b>תום לב</b> = יושר, לא תמימות. סעיף 12: במשא ומתן חובה <b>לגלות</b> כל פרט רלוונטי. להסתיר = גרוע יותר.</li>
+    <li><b>הפרה יסודית</b> ← ביטול לאלתר. <b>לא יסודית</b> ← הודעה + ארכה, ורק אז ביטול.</li>
+    <li>ביטול, התנגדות ותביעה: <b>בזמן סביר</b>. אחרת <b>שיהוי</b>.</li>
+    <li>חוזה עבודה כמעט <b>לא נאכף</b>. חריגים: היריון, 60 ימים אחרי חופשת לידה, מילואים.</li>
+    <li>סעיף <b>לא חוקי</b> = בטל, גם עם חתימה. אסור <b>כסף במקום חופשה</b> בזמן העבודה.</li>
+    <li>אין חובה לחתום (חוץ מקבלן כוח אדם ועובד זר), אבל <b>הודעה בכתב תוך 30 יום</b> = חובה.</li>
+    <li>חוזה אישי רק <b>מוסיף</b>. זכויות מהחוק <b>קוגנטיות</b>.</li>
+    <li>תום לב בעבודה ב-<b>3 תחנות</b>: קבלה, במהלך, סיום (<b>שימוע אמיתי</b>).</li>
+    <li><b>קצוב</b> = נעול עד התאריך, והסוף כמוהו כפיטורים. <b>משימה</b> (התמחות) = בלי פיצויים (הלפרין).</li>
+    <li><b>אין שינוי חד-צדדי</b> (קרמר). גם <b>חל"ת</b> רק בהסכמה.</li>
+    <li>הסכם קיבוצי: <b>בכתב</b>, <b>רשום</b>, עם ארגון יציג.</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar11" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="dark-f"/></marker></defs>
+      <path d="M20,40 V30 H660 V40" fill="none" class="acc" stroke-width="2"/>
+      <text x="340" y="20" class="lbl-b he" text-anchor="middle">תום לב לאורך כל הדרך</text>
+      <rect x="515" y="48" width="140" height="44" rx="12" class="soft-f acc" stroke-width="2.5"/>
+      <text x="585" y="76" class="lbl-b he" text-anchor="middle">משא ומתן</text>
+      <rect x="345" y="48" width="140" height="44" rx="12" class="soft-f acc" stroke-width="2.5"/>
+      <text x="415" y="76" class="lbl-b he" text-anchor="middle">כריתה</text>
+      <rect x="175" y="48" width="140" height="44" rx="12" class="soft-f acc" stroke-width="2.5"/>
+      <text x="245" y="76" class="lbl-b he" text-anchor="middle">במהלך העבודה</text>
+      <rect x="5" y="48" width="140" height="44" rx="12" class="mid-f acc" stroke-width="2.5"/>
+      <text x="75" y="76" class="lbl-b he" text-anchor="middle">סיום</text>
+      <line x1="512" y1="70" x2="489" y2="70" class="acc" stroke-width="2.5" marker-end="url(#ar11)"/>
+      <line x1="342" y1="70" x2="319" y2="70" class="acc" stroke-width="2.5" marker-end="url(#ar11)"/>
+      <line x1="172" y1="70" x2="149" y2="70" class="acc" stroke-width="2.5" marker-end="url(#ar11)"/>
+      <text x="585" y="113" class="lbl-s he" text-anchor="middle">חובת גילוי</text>
+      <text x="585" y="132" class="lbl-s he" text-anchor="middle">להסתיר = גרוע יותר</text>
+      <text x="585" y="151" class="lbl-s he" text-anchor="middle">היריון: מהחודש החמישי</text>
+      <text x="415" y="113" class="lbl-s he" text-anchor="middle">הצעה וקיבול</text>
+      <text x="415" y="132" class="lbl-s he" text-anchor="middle">גמירות דעת, מסוימות</text>
+      <text x="415" y="151" class="lbl-s he" text-anchor="middle">הודעה בכתב לעובד</text>
+      <text x="245" y="113" class="lbl-s he" text-anchor="middle">חוזה אישי רק מוסיף</text>
+      <text x="245" y="132" class="lbl-s he" text-anchor="middle">אין שינוי חד-צדדי</text>
+      <text x="245" y="151" class="lbl-s he" text-anchor="middle">נאמנות, בלי ניגוד עניינים</text>
+      <text x="75" y="113" class="lbl-s he" text-anchor="middle">שימוע אמיתי</text>
+      <text x="75" y="132" class="lbl-s he" text-anchor="middle">הודעה מוקדמת</text>
+      <text x="75" y="151" class="lbl-s he" text-anchor="middle">קצוב: נגמר מעצמו</text>
+      <rect x="20" y="162" width="640" height="34" rx="12" fill="none" class="bad" stroke-width="2" stroke-dasharray="6 5"/>
+      <text x="340" y="184" class="lbl he" text-anchor="middle">משהו משתבש? לא יסודית: הודעה וארכה · יסודית: ביטול · סיכול: נדיר</text>
+    </svg>
+    <figcaption>כל החוזה במבט אחד: מה חשוב בכל שלב, מימין לשמאל.</figcaption>
+  </figure>
+
+  <div class="box optional"><div class="box-title">מה ההקלטה מוסיפה על פתקים 3א עד 3ג ו-4א במחברת</div>
+    <div class="grid2">
+      <ul class="pts">
+        <li>חוזה <b>בהתנהגות</b>: 10% ו-4 חודשי שתיקה.</li>
+        <li><b>גילוי</b>: אם חד-הורית, רטיבות, רכבת קלה.</li>
+        <li><b>היריון</b>: לגלות רק מהחודש החמישי.</li>
+        <li><b>אכיפה</b>: היריון, 60 ימים, מילואים.</li>
+      </ul>
+      <ul class="pts">
+        <li>4 <b>סעיפים לא חוקיים</b> בחוזה עבודה.</li>
+        <li><b>הודעה לעובד</b>: חריגים, נוער, שפה, חתימה.</li>
+        <li><b>פסקי דין</b>: מנהלת החשבונות, ממלאת המקום, לפני היום הראשון, האופציות, הפיון.</li>
+        <li><b>חל"ת</b>, פשיטת רגל, קיבוצי ≠ קיבוץ, שקט תעשייתי.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="topic">
+  <div class="topic-head"><span class="n">❓</span><h2>שאלות חזרה</h2></div>
+  <div class="bl">לענות בלי להציץ. התשובות בעמוד הבא.</div>
+  <ol class="quiz">
+    <li>מה 4 הדברים שצריך כדי שייווצר <b>חוזה</b>? <span class="lvl">קל</span></li>
+    <li>איזה משפט יוצר <b>חוזה</b>? <span class="lvl">בינוני</span><br>(א) "אולי פעם נמכור את האופנוע."<br>(ב) "מוכרים את האופנוע ב-12,000 ₪, מסירה ב-1 בדצמבר", והתשובה: "מסכימים".<br>(ג) "נעשה עסק."</li>
+    <li>מועמדת לעבודה בחודש <b>השלישי</b> להיריונה. חייבת לספר בראיון? למה? <span class="lvl">בינוני</span></li>
+    <li>מועמד לעבודת <b>נהג</b>, והרישיון שלו נשלל ל-3 חודשים. חייב לספר? ואם הוא מנגן בלהקה בסופי שבוע? <span class="lvl">קל</span></li>
+    <li>שכר הדירה היה צריך להגיע ב-1.11 ולא הגיע. ב-5.11 נשלחה הודעה על ההפרה עם ארכה של <b>14 ימים</b>, ולא קרה כלום. מאיזה תאריך אפשר לבטל? <span class="lvl">בינוני</span></li>
+    <li>למה בית הדין כמעט לא יאכוף <b>חוזה עבודה</b>? ומתי כן יחזיר עובד לעבודה? <span class="lvl">בינוני</span></li>
+    <li><b>חופשת הלידה</b> של עובדת הסתיימה ב-<span class="ltr">10.1.2027</span>, והיא חזרה לעבודה. עד איזה תאריך (כולל) אסור לפטר אותה? <span class="lvl">מאתגר</span></li>
+    <li>בחוזה כתוב: "העובד מוותר על תשלום <b>שעות נוספות</b> תמורת בונוס שנתי". מה הדין? <span class="lvl">קל</span></li>
+    <li>עובד בשכר חודשי מתפטר אחרי <b>8 חודשים</b>. כמה ימי הודעה מוקדמת? <span class="lvl">מאתגר</span></li>
+    <li>מה נפסק בעניין <b>הלפרין</b> ("הדסה"), ולמה? <span class="lvl">מאתגר</span></li>
+    <li>מה נפסק בעניין <b>קרמר</b>, ומה למדנו על "הודעה" לעובדים? <span class="lvl">בינוני</span></li>
+    <li>מה ההבדל בין הסכם קיבוצי <b>כללי</b> ל<b>מיוחד</b>? איזה מהם אפשר להרחיב? <span class="lvl">קל</span></li>
+  </ol>
+</section>
+
+<section class="topic">
+  <div class="topic-head"><span class="n">✅</span><h2>תשובות</h2></div>
+  <ol class="answers">
+    <li><b>הצעה</b>, <b>קיבול</b>, <b>גמירות דעת</b>, <b>מסוימות</b>.</li>
+    <li>רק <b>(ב)</b>: הצעה מסוימת (פריט, מחיר, תאריך) + קיבול. (א) "אולי" ← אין גמירות דעת. (ג) אין פרטים ← אין מסוימות.</li>
+    <li><b>לא</b>. לפי בית הדין הארצי לעבודה, חובת ההודעה רק <b>מהחודש החמישי</b> (בגלל ההגבלות בחוק). השלישי לפני החמישי.</li>
+    <li>הרישיון: <b>כן</b>, הוא רלוונטי ישירות לתפקיד ← חובת גילוי. הלהקה: <b>לא</b>, לא רלוונטית לעבודה.</li>
+    <li>היום האחרון לתקן: <span class="ltr">5 + 14 = 19</span> ← <span class="ltr">19.11</span>. מ-<b><span class="ltr">20.11</span></b> ההפרה יסודית, ואפשר לשלוח הודעת ביטול.</li>
+    <li>עבודה היא "<b>מרצון ולא מאונס</b>": אי אפשר להכריח לעבוד או להעסיק. בית הדין מחזיר לעבודה כשהחוק <b>אוסר לפטר</b>: היריון, 60 ימים אחרי חופשת לידה, מילואים.</li>
+    <li>ינואר: 11 עד 31 = 21 ימים. פברואר 2027: 28 ימים (לא שנה מעוברת) ← 49. מרץ: עוד 11 ← 60. התשובה: <b><span class="ltr">11.3.2027</span></b>. בדיקה: <span class="ltr">21 + 28 + 11 = 60</span>.</li>
+    <li><b>לא חוקי</b>. אי אפשר לסטות מחוק שעות עבודה ומנוחה, גם תמורת בונוס גדול יותר. הסעיף בטל.</li>
+    <li>6 החודשים הראשונים: 6 ימים. עוד 2 חודשים: <span class="ltr">2 × 2.5 = 5</span> ← <b>11 ימים</b>.</li>
+    <li>בסוף <b>התמחות</b> (חוזה למשימה מסוימת) <b>אין פיצויי פיטורים</b>. זה לא נכנס לסעיף 9 לחוק פיצויי פיטורים: אי אפשר לחדש התמחות שנגמרה, והמשך עבודה = חוזה חדש.</li>
+    <li><b>29 גננות</b> הועברו לשכר מינימום בלי הסכמה. נפסק: אין שינוי חד-צדדי, גם בקשיים. "<b>הודעה אינה הסכמה</b>". חובה לשלם מלוא השכר לכל התקופה.</li>
+    <li><b>כללי</b> = מול ארגון מעסיקים. <b>מיוחד</b> = מול מעסיק אחד. רק את הכללי אפשר להרחיב בצו הרחבה.</li>
+  </ol>
+
+  <h3>📖 מילון מונחים</h3>
+  <dl class="glossary">
+    <dt>אומד דעת</dt><dd>מה שכל צד רוצה בתחילת הדרך, לפני ההסכמה.</dd>
+    <dt>גמירות דעת</dt><dd>רצון אמיתי וסופי להתחייב בהסכם מחייב.</dd>
+    <dt>מסוימות</dt><dd>מספיק פרטים על העסקה: מה, כמה, מתי, איך.</dd>
+    <dt>הצעה / קיבול</dt><dd>פנייה להתקשר בחוזה / הודעה שמסכימים לתנאי ההצעה.</dd>
+    <dt>האדם הסביר</dt><dd>אמת המידה של בית המשפט: אדם רגיל, "כל אחד מאיתנו".</dd>
+    <dt>תום לב</dt><dd>יושר והגינות. "עקרון על": במשא ומתן, בקיום ובסיום.</dd>
+    <dt>חובת הגילוי</dt><dd>לספר מראש כל פרט רלוונטי לעסקה או לתפקיד.</dd>
+    <dt>טעות</dt><dd>התקשרות לפי תמונה לא נכונה של פרט חשוב ← אפשר לבטל.</dd>
+    <dt>הפרה יסודית</dt><dd>הוגדרה כך בחוזה, או שאדם סביר לא היה חותם אילו צפה אותה.</dd>
+    <dt>ארכה</dt><dd>זמן סביר שנותנים לצד המפר לתקן.</dd>
+    <dt>אכיפת חוזה</dt><dd>בית המשפט מחייב לקיים את החוזה.</dd>
+    <dt>שיהוי</dt><dd>חיכו יותר מדי ← בית המשפט עלול לדחות את התביעה.</dd>
+    <dt>הודעה לעובד</dt><dd>מסמך בכתב על תנאי העבודה, תוך 30 יום.</dd>
+    <dt>קוגנטי</dt><dd>זכות שאי אפשר לוותר עליה. ויתור בטל.</dd>
+    <dt>הרעה מוחשית</dt><dd>פגיעה משמעותית בתנאים ← מתפטרים ומקבלים פיצויים.</dd>
+    <dt>שימוע</dt><dd>הזדמנות אמיתית להגיב, לפני החלטה על פיטורים.</dd>
+    <dt>חוזה קצוב / משימה</dt><dd>עם תאריך סיום / עד סוף משימה מסוימת.</dd>
+    <dt>חל"ת</dt><dd>חופשה ללא תשלום. רק בהסכמת העובד.</dd>
+    <dt>סיכול / כוח עליון</dt><dd>אירוע לא צפוי שהופך את הביצוע לבלתי אפשרי. החוזה מושעה.</dd>
+    <dt>צו הרחבה</dt><dd>צו שמחיל הסכם קיבוצי כללי על ענף שלם או על כל המשק.</dd>
+  </dl>
+
+  <div class="box unclear"><div class="box-title">לא היה ברור בהקלטה</div>
+    <ul class="pts">
+      <li><span class="ltr">00:02:02</span>, <span class="ltr">00:13:39</span>: <b>המבחן</b>. נשמע "ספרים טובים" (כנראה "ספרים פתוחים"). "מבחן מכללה, לא מה"ט" הוא הפירוש הסביר ← לברר.</li>
+      <li><span class="ltr">00:30:03</span>: בדוגמת <b>"שילמו ב-3"</b> נשמע "הפרה יסודית". לפי ההקשר והשקף זו הפרה <b>שאינה</b> יסודית.</li>
+      <li><span class="ltr">00:38:25</span>: <b>מילואים</b>. לפי המרצה 60 ימים אחרי השירות ("פעם היו 30"). הכלל שונה בזמן המלחמה ← לבדוק מה בתוקף.</li>
+      <li><span class="ltr">00:41:57</span>: <b>תלוש נמוך</b> והשאר במזומן. העובדת תבעה את המעסיק, אבל התוצאה לא נאמרה.</li>
+      <li><span class="ltr">01:08:47</span>: <b>הודעה לנוער</b> "תוך שבוע" נאמרה בעל פה, לא בשקף ← לבדוק בחוק.</li>
+      <li><span class="ltr">01:24:01</span>: "<b>פיון</b> על לוח שחמט" (התעשייה האווירית). מה שונה לעובדים, ושם התיק, לא ברורים.</li>
+      <li><span class="ltr">01:27:55</span>: אחרי קרמר נשמע "ועוד <b>25%</b> פיצוי". לא ברור מה זה (בפתק 3ג במחברת: פיצויי הלנת שכר).</li>
+      <li><span class="ltr">01:32:40</span>: <b>פשיטת רגל</b>: ביטוח לאומי משלם לעובדים ותובע את המעסיק כנושה. לא ברור אם גם פיצויי פיטורים.</li>
+      <li><span class="ltr">01:45:34</span>: <b>עובדים מאורגנים</b>: כ-800,000 בשקף (2022), מול כ-1.3 מיליון בבדיקה מהירה בכיתה. לא מאומת.</li>
+      <li><span class="ltr">01:55:19</span>: מכאן אותו שיעור חוזר לקבוצה השנייה. שם השקפים <b>קריאים במסך</b> (למשל <span class="ltr">01:58:00</span>, <span class="ltr">02:41:10</span>, <span class="ltr">03:25:20</span>).</li>
+      <li><span class="ltr">03:09:34</span>: "כל חוקי העבודה <b>קוגנטיים</b> חוץ משניים" (פיצויי פיטורים, דמי מחלה). הסיבה לא הוסברה ← לשאול.</li>
+    </ul>
+  </div>
+</section>
+
+</body>
+</html>

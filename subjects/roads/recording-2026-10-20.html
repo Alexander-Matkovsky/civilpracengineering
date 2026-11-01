@@ -1,0 +1,1305 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>כבישים, תשתיות, עבודות פיתוח וציוד · מבוא לכבישים ותשתיות וחזרה על מתמטיקה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=block">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});document.documentElement.dataset.math='done'"></script>
+<style>
+/* Lecture summary design system: A4, RTL Hebrew, print-first. */
+
+@page {
+  size: A4;
+  margin: 18mm 16mm 17mm 16mm;
+  @bottom-center {
+    content: counter(page);
+    font-family: Heebo, "Arial Hebrew", sans-serif;
+    font-size: 9pt;
+    color: #7a8394;
+  }
+}
+@page :first {
+  margin: 0;
+  @top-right { content: none; }
+  @top-left { content: none; }
+  @bottom-center { content: none; }
+}
+
+:root {
+  --accent: #4f46e5;
+  --accent-dark: #3730a3;
+  --accent-soft: #eef0ff;
+  --accent-mid: #c7cbfb;
+  --ink: #1d2230;
+  --muted: #5d6676;
+  --line: #dfe3ea;
+  --paper: #ffffff;
+  --bg-soft: #f6f7f9;
+  --ok: #0f7b5f;
+  --ok-soft: #e2f5ee;
+  --warn: #b45309;
+  --warn-soft: #fdf1e2;
+  --bad: #b91c1c;
+  --bad-soft: #fdeaea;
+  --info: #0e6aa8;
+  --info-soft: #e5f2fb;
+}
+
+/* one accent colour per course */
+body.course-math { --accent: #4f46e5; --accent-dark: #3730a3; --accent-soft: #eef0ff; --accent-mid: #c7cbfb; }
+body.course-roads { --accent: #c2620a; --accent-dark: #8f4505; --accent-soft: #fdf0e3; --accent-mid: #f6cfa6; }
+body.course-safety { --accent: #c62828; --accent-dark: #8e1b1b; --accent-soft: #fdecea; --accent-mid: #f5bcbc; }
+body.course-geodesy { --accent: #0f766e; --accent-dark: #0b524c; --accent-soft: #e2f4f1; --accent-mid: #a7dcd5; }
+body.course-building-theory { --accent: #a5502a; --accent-dark: #74371c; --accent-soft: #f8ece5; --accent-mid: #e8c2ad; }
+body.course-drafting { --accent: #0369a1; --accent-dark: #024b74; --accent-soft: #e3f1fa; --accent-mid: #a9d3ee; }
+body.course-labor-law { --accent: #7c3aed; --accent-dark: #5521b5; --accent-soft: #f1eafe; --accent-mid: #d4c0fb; }
+body.course-statics { --accent: #2563eb; --accent-dark: #1e40af; --accent-soft: #e8f0fe; --accent-mid: #b8cdfa; }
+
+* { box-sizing: border-box; }
+html { direction: rtl; }
+body {
+  margin: 0;
+  font-family: Heebo, "Arial Hebrew", Arial, sans-serif;
+  font-size: 11.5pt;
+  line-height: 1.62;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+p { margin: 0 0 2.2mm; }
+b, strong {
+  font-weight: 700;
+  background: linear-gradient(transparent 60%, var(--accent-mid) 60%);
+  padding: 0 0.5mm;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.box b, .box strong, .bl b, .bl strong, th b { background: none; padding: 0; }
+.ltr, .num, code { direction: ltr; unicode-bidi: isolate; }
+code {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.88em;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 1.2mm;
+  padding: 0 1mm;
+}
+.katex { direction: ltr; unicode-bidi: isolate; font-size: 1.08em; }
+.katex-display { margin: 1mm 0 !important; }
+small, .muted { color: var(--muted); }
+
+/* ---------- cover ---------- */
+.cover {
+  height: 297mm;
+  width: 210mm;
+  display: flex;
+  flex-direction: column;
+  break-after: page;
+  overflow: hidden;
+}
+.cover-band {
+  background: var(--accent);
+  color: #fff;
+  padding: 22mm 18mm 14mm;
+  position: relative;
+}
+.cover-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 30%, rgba(255,255,255,.16) 0 18mm, transparent 18.2mm),
+    radial-gradient(circle at 4% 85%, rgba(255,255,255,.10) 0 28mm, transparent 28.2mm),
+    radial-gradient(circle at 30% 105%, rgba(255,255,255,.08) 0 20mm, transparent 20.2mm);
+  pointer-events: none;
+}
+.cover-kicker { font-size: 12pt; font-weight: 500; opacity: .9; margin-bottom: 3mm; }
+.cover h1 { font-size: 30pt; line-height: 1.15; font-weight: 900; margin: 0 0 3mm; }
+.cover-sub { font-size: 14pt; font-weight: 500; opacity: .95; }
+.cover-meta { display: flex; flex-wrap: wrap; gap: 2.5mm; margin-top: 7mm; position: relative; z-index: 1; }
+.chip {
+  display: inline-block;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 20mm;
+  padding: 1mm 4mm;
+  font-size: 10.5pt;
+  font-weight: 500;
+}
+.cover-body { padding: 10mm 18mm 12mm; flex: 1; display: flex; flex-direction: column; gap: 6mm; }
+.cover-body h3 { margin: 0 0 2mm; font-size: 13pt; color: var(--accent-dark); }
+.roadmap { list-style: none; margin: 0; padding: 0; display: grid; gap: 2mm; }
+.roadmap li {
+  display: grid;
+  grid-template-columns: 9mm 1fr auto;
+  align-items: center;
+  gap: 3mm;
+  background: var(--bg-soft);
+  border-radius: 2.5mm;
+  padding: 1.6mm 3mm;
+}
+.roadmap .n {
+  width: 8mm; height: 8mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 11pt;
+}
+.roadmap .t { font-weight: 600; }
+.roadmap .when { direction: ltr; font-size: 9.5pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 2mm 5mm; font-size: 9.5pt; color: var(--muted); }
+
+/* ---------- topic sections: each starts on a new page ---------- */
+section.topic { break-before: page; }
+section.topic.cont { break-before: auto; margin-top: 8mm; }
+.topic-head {
+  display: flex;
+  align-items: center;
+  gap: 3.5mm;
+  border-bottom: 2.5px solid var(--accent);
+  padding-bottom: 2.5mm;
+  margin-bottom: 4mm;
+}
+.topic-head .n {
+  flex: none;
+  width: 11mm; height: 11mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-size: 15pt; font-weight: 900;
+}
+.topic-head h2 { margin: 0; font-size: 19pt; line-height: 1.2; font-weight: 800; color: var(--ink); flex: 1; }
+.time {
+  flex: none;
+  direction: ltr;
+  font-size: 9pt;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 10mm;
+  padding: 0.6mm 2.6mm;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+h3 { font-size: 13.5pt; font-weight: 800; margin: 5mm 0 2mm; color: var(--accent-dark); break-after: avoid; }
+h4 { font-size: 11.5pt; font-weight: 700; margin: 3mm 0 1.5mm; break-after: avoid; }
+
+/* bottom line: first thing in every section */
+.bl {
+  background: var(--accent-soft);
+  border-inline-start: 5px solid var(--accent);
+  border-radius: 2.5mm;
+  padding: 2.5mm 4mm;
+  font-weight: 700;
+  font-size: 12pt;
+  margin: 0 0 4mm;
+  break-inside: avoid;
+}
+.bl::before { content: "⚡ "; }
+
+/* bullets */
+ul.pts { list-style: none; padding: 0; margin: 0 0 3mm; }
+ul.pts > li { position: relative; padding-inline-start: 6mm; margin-bottom: 1.6mm; }
+ul.pts > li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 1mm;
+  top: 2.6mm;
+  width: 2.2mm; height: 2.2mm;
+  border-radius: 50%;
+  background: var(--accent);
+}
+ul.pts ul { margin-top: 1mm; }
+
+/* generic callout box */
+.box {
+  border-radius: 3mm;
+  padding: 3mm 4mm;
+  margin: 3mm 0;
+  break-inside: avoid;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+.box > .box-title { font-weight: 800; margin-bottom: 1.2mm; display: flex; gap: 2mm; align-items: center; }
+.box > :last-child { margin-bottom: 0; }
+.box.life { background: #fffbea; border-color: #f3e3a3; }
+.box.life > .box-title::before { content: "🏠"; }
+.box.formula { background: var(--accent-soft); border-color: var(--accent-mid); text-align: center; }
+.box.formula > .box-title { justify-content: center; }
+.box.formula > .box-title::before { content: "🧮"; }
+.box.tip { background: var(--ok-soft); border-color: #b6e3d2; }
+.box.tip > .box-title::before { content: "💡"; }
+.box.warn { background: var(--warn-soft); border-color: #f2cf9f; }
+.box.warn > .box-title::before { content: "⚠️"; }
+.box.remember { background: var(--info-soft); border-color: #b9dbf2; }
+.box.remember > .box-title::before { content: "🧠"; }
+.box.optional { background: #fafafa; border: 1.5px dashed #c5cad3; }
+.box.optional > .box-title::before { content: "📎"; }
+.box.optional > .box-title::after { content: "רשות"; font-size: 8.5pt; font-weight: 700; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; }
+.box.announce { background: var(--bad-soft); border-color: #f2c2c2; }
+.box.announce > .box-title::before { content: "📢"; }
+.box.unclear { background: #f4f1fb; border-color: #d9cff3; }
+.box.unclear > .box-title::before { content: "❓"; }
+.box.lecturer { background: #fff; border-inline-start: 4px solid var(--accent-mid); }
+.box.lecturer > .box-title::before { content: "🎙️"; }
+
+/* numbered procedure */
+ol.steps { list-style: none; counter-reset: st; padding: 0; margin: 2mm 0 3mm; }
+ol.steps > li { counter-increment: st; position: relative; padding-inline-start: 9mm; margin-bottom: 2mm; min-height: 6.5mm; }
+ol.steps > li::before {
+  content: counter(st);
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.2mm;
+  width: 6.5mm; height: 6.5mm;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 9.5pt;
+  display: grid;
+  place-items: center;
+}
+
+/* worked example */
+.worked {
+  border: 1.5px solid var(--accent-mid);
+  border-radius: 3mm;
+  margin: 3.5mm 0;
+  break-inside: avoid;
+  overflow: hidden;
+}
+.worked > .w-title { background: var(--accent); color: #fff; font-weight: 800; padding: 1.6mm 4mm; }
+.worked > .w-title::before { content: "✏️ "; }
+.worked > .w-body { padding: 3mm 4mm; }
+.worked .given { background: var(--bg-soft); border-radius: 2mm; padding: 2mm 3mm; margin-bottom: 2.5mm; }
+.worked .given::before { content: "נתון: "; font-weight: 800; }
+.worked .ask::before { content: "מחפשים: "; font-weight: 800; }
+.worked ol.lines { counter-reset: ln; list-style: none; padding: 0; margin: 2mm 0; }
+.worked ol.lines > li { counter-increment: ln; padding: 1.2mm 0; padding-inline-start: 13mm; border-bottom: 1px dashed var(--line); position: relative; }
+.worked ol.lines > li::before { content: "שלב " counter(ln); position: absolute; inset-inline-start: 0; font-size: 8.5pt; color: var(--muted); top: 1.8mm; }
+.worked .answer { margin-top: 2mm; font-weight: 800; }
+.worked .answer::before { content: "✅ תשובה: "; }
+.worked .check { margin-top: 1.5mm; color: var(--ok); font-weight: 700; }
+.worked .check::before { content: "✓ בדיקה: "; }
+
+/* figures */
+figure.fig { margin: 3.5mm 0; text-align: center; break-inside: avoid; }
+figure.fig svg { max-width: 100%; height: auto; }
+figure.fig figcaption { font-size: 9.5pt; color: var(--muted); margin-top: 1.5mm; }
+figure.fig.half { width: 60%; margin-inline: auto; }
+
+/* SVG helper classes (inline SVG lives in the HTML DOM, so CSS vars work) */
+svg text { font-family: Heebo, "Arial Hebrew", sans-serif; }
+svg .acc { stroke: var(--accent); }
+svg .acc-f { fill: var(--accent); }
+svg .soft-f { fill: var(--accent-soft); }
+svg .mid-f { fill: var(--accent-mid); }
+svg .dark-f { fill: var(--accent-dark); }
+svg .ink { stroke: var(--ink); }
+svg .ink-f { fill: var(--ink); }
+svg .muted-f { fill: var(--muted); }
+svg .line { stroke: #b8bfcb; }
+svg .ok { stroke: var(--ok); }
+svg .ok-f { fill: var(--ok); }
+svg .bad { stroke: var(--bad); }
+svg .bad-f { fill: var(--bad); }
+svg .warn-f { fill: var(--warn); }
+svg .lbl { font-size: 15px; fill: var(--ink); }
+svg .lbl-s { font-size: 12.5px; fill: var(--muted); }
+svg .lbl-b { font-size: 16px; font-weight: 700; fill: var(--ink); }
+svg .he { direction: rtl; unicode-bidi: plaintext; }
+
+/* tables */
+table.t { width: 100%; border-collapse: separate; border-spacing: 0; margin: 3mm 0; font-size: 10.5pt; break-inside: avoid; border: 1px solid var(--line); border-radius: 2.5mm; overflow: hidden; }
+table.t th { background: var(--accent-soft); color: var(--accent-dark); font-weight: 800; text-align: start; padding: 1.8mm 3mm; border-bottom: 1px solid var(--accent-mid); }
+table.t td { padding: 1.6mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.t tr:last-child td { border-bottom: none; }
+table.t tr:nth-child(even) td { background: #fafbfc; }
+
+/* layout helpers */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; }
+.grid2 > .box, .grid3 > .box { margin: 0; }
+.card { border: 1px solid var(--line); border-radius: 3mm; padding: 2.5mm 3.5mm; break-inside: avoid; background: #fff; }
+.card > .c-title { font-weight: 800; color: var(--accent-dark); margin-bottom: 1mm; }
+.vs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 3mm; align-items: stretch; }
+.vs > .mid { align-self: center; font-weight: 900; color: var(--accent); font-size: 14pt; }
+.keep { break-inside: avoid; }
+.pagebreak { break-before: page; }
+
+/* end matter */
+ol.quiz { padding-inline-start: 7mm; margin: 0; }
+ol.quiz > li { margin-bottom: 3mm; padding-bottom: 2mm; border-bottom: 1px dashed var(--line); break-inside: avoid; }
+ol.quiz .lvl { font-size: 8.5pt; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; margin-inline-start: 2mm; }
+ol.answers { padding-inline-start: 7mm; margin: 0; }
+ol.answers > li { margin-bottom: 2.5mm; break-inside: avoid; }
+dl.glossary { display: grid; grid-template-columns: max-content 1fr; gap: 1.5mm 5mm; margin: 0; }
+dl.glossary dt { font-weight: 800; color: var(--accent-dark); }
+dl.glossary dd { margin: 0; }
+
+@page {
+  @top-right { content: "כבישים, תשתיות, עבודות פיתוח וציוד"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+  @top-left { content: "20/10/2026"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+}
+</style>
+</head>
+<body class="course-roads">
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="cover-band">
+    <div class="cover-kicker">🎥 סיכום הקלטה · כבישים, תשתיות, עבודות פיתוח וציוד (850144)</div>
+    <h1>מבוא לכבישים ותשתיות<br>וחזרה על מתמטיקה</h1>
+    <div class="cover-sub">הקלטת השיעור · יום שלישי 20/10/2026</div>
+    <div class="cover-meta">
+      <span class="chip">👤 אינג' דוקלר דן</span>
+      <span class="chip">⏱ 2:03 שעות הקלטה</span>
+      <span class="chip">📄 17 עמודים</span>
+    </div>
+  </div>
+  <div class="cover-body">
+    <div class="bl">בשורה אחת: כביש מתכננים לפי <b>המהירות</b>, ובכל חישוב <b>היחידות מובילות לתשובה</b>.</div>
+    <div>
+      <h3>🗺️ מפת השיעור</h3>
+      <div class="grid2">
+        <ol class="roadmap">
+          <li><span class="n">1</span><span class="t">הקורס: ציון ובחינה</span><span class="when">00:01:56</span></li>
+          <li><span class="n">2</span><span class="t">תחבורה, ומה בודקים</span><span class="when">00:13:39</span></li>
+          <li><span class="n">3</span><span class="t">המהירות קובעת: כביש 6</span><span class="when">00:20:07</span></li>
+          <li><span class="n">4</span><span class="t">השטח הוא הנכס</span><span class="when">00:23:54</span></li>
+          <li><span class="n">5</span><span class="t">שותפות ציבורית-פרטית</span><span class="when">00:28:17</span></li>
+        </ol>
+        <ol class="roadmap">
+          <li><span class="n">6</span><span class="t">שברים וחזקות</span><span class="when">00:38:39</span></li>
+          <li><span class="n">7</span><span class="t">ממדים ויחידות: בריכה</span><span class="when">01:01:18</span></li>
+          <li><span class="n">8</span><span class="t">עלות למטר של פועל</span><span class="when">01:21:59</span></li>
+          <li><span class="n">9</span><span class="t">משקל תקרה על עמודים</span><span class="when">01:43:14</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="box announce"><div class="box-title">הודעות מהשיעור</div>
+      <ul class="pts">
+        <li><b>ציון:</b> 90% בחינה + 10% נוכחות, או 80/10/10 עם שאלוני כיתה. <small class="ltr">00:07:17</small></li>
+        <li><b>בחינה:</b> רק שאלות <b>חישוביות</b>, עם <b>חומר פתוח</b>. <small class="ltr">00:08:16</small></li>
+        <li><b>נוכחות:</b> חובה <b>80%</b>, בכיתה ולא בזום. <small class="ltr">00:08:52</small></li>
+        <li><b>להביא:</b> מחברת משבצות, סרגל (לגרפים), עט ועיפרון. <small class="ltr">00:39:26</small> <small class="ltr">00:40:29</small></li>
+        <li><b>לבית:</b> 3 המשוואות + דף האחוזים, כחצי שעה. בתרגיל 6: <b>יום ה'</b> ולא ג'. <small class="ltr">01:59:39</small> <small class="ltr">02:01:35</small></li>
+        <li><b>הבא:</b> בשבוע הבא תרגילים עם מתמטיקה; בעוד שבועיים אחוזים. <small class="ltr">00:40:57</small> <small class="ltr">02:02:11</small></li>
+      </ul>
+    </div>
+    <div class="legend"><span>⚡ שורה תחתונה</span><span>🏠 דוגמה מהחיים</span><span>🧮 נוסחה</span><span>✏️ דוגמה פתורה</span><span>⚠️ טעות נפוצה</span><span>💡 טיפ</span><span>📎 רשות</span><span>🎙️ הודגש בשיעור</span><span>⏱ זמן בהקלטה</span></div>
+  </div>
+</div>
+
+<!-- ============ 1. THE COURSE ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">1</span><h2>הקורס: ציון, בחינה ונוכחות</h2><span class="time">⏱ 00:01:56</span></div>
+  <div class="bl">קורס <b>חישובי</b>: בחינה עם <b>חומר פתוח</b>, רק שאלות חישוב, ו-<b>80% נוכחות</b> חובה.</div>
+
+  <figure class="fig" style="width:76%;margin-inline:auto">
+    <svg viewBox="0 0 580 210" xmlns="http://www.w3.org/2000/svg">
+      <text x="495" y="72" class="lbl-b he" text-anchor="middle">מסלול רגיל</text>
+      <rect x="60" y="50" width="340" height="32" class="acc-f"/>
+      <rect x="20" y="50" width="38" height="32" class="ok-f"/>
+      <text x="230" y="42" class="lbl-b ltr" text-anchor="middle">90%</text>
+      <text x="39" y="42" class="lbl ltr" text-anchor="middle">10%</text>
+      <text x="495" y="144" class="lbl-b he" text-anchor="middle">עם שאלוני כיתה</text>
+      <rect x="98" y="122" width="302" height="32" class="acc-f"/>
+      <rect x="60" y="122" width="36" height="32" class="mid-f acc" stroke-width="2"/>
+      <rect x="20" y="122" width="38" height="32" class="ok-f"/>
+      <text x="249" y="114" class="lbl-b ltr" text-anchor="middle">80%</text>
+      <text x="78" y="114" class="lbl ltr" text-anchor="middle">10%</text>
+      <text x="39" y="114" class="lbl ltr" text-anchor="middle">10%</text>
+      <rect x="520" y="181" width="14" height="14" class="acc-f"/>
+      <text x="468" y="193" class="lbl he" text-anchor="middle">בחינה סופית</text>
+      <rect x="380" y="181" width="14" height="14" class="mid-f acc" stroke-width="2"/>
+      <text x="326" y="193" class="lbl he" text-anchor="middle">שאלוני כיתה</text>
+      <rect x="232" y="181" width="14" height="14" class="ok-f"/>
+      <text x="198" y="193" class="lbl he" text-anchor="middle">נוכחות</text>
+    </svg>
+    <figcaption>שני מסלולי ציון (שקף בשיעור, כמו בסילבוס). התוספת של 10% נספרת <b>רק אם עוברים את הבחינה</b>.</figcaption>
+  </figure>
+
+  <ul class="pts">
+    <li><b>מה לומדים:</b> איך <b>בונים ומבצעים</b> כבישים ותשתיות: חומרים, שלבים וציוד.</li>
+    <li><b>הבחינה:</b> רק שאלות <b>חישוביות</b>, עם <b>חומר פתוח</b>, בעוד <b>כשלושה חודשים</b>. יש <b>תרגילי חזרה</b> לבית.</li>
+    <li><b>שאלוני כיתה</b> ("שאלוני הרצאה"): קישור בשיעור, <b>לא בוחן פתע</b>. עוד לא הוחלט אם יהיו.</li>
+    <li><b>נוכחות:</b> חובה <b>80%</b> בכל קורס (דרישת מה"ט). פחות מזה ← <b>אין זכות לגשת</b> לבחינה.</li>
+    <li><b>הקלטות:</b> עולות תוך <b>יום</b> בערך, למי שב<b>מילואים</b> ולחזרה. לא במקום להגיע: לימוד בזום "לא הולך".</li>
+    <li><b>אתר הקורס:</b> כל החומר כבר עלה. רואים אותו <b>רק דרך המחשב</b>, לא באפליקציה.</li>
+    <li><b>הדפסה:</b> להדפיס את <b>דפי התרגול</b>. תמיד תגיע <b>הודעה</b> איזה תרגול להדפיס. <small class="ltr">00:06:22</small></li>
+    <li><b>שאלות:</b> דרך <b>אתר הקורס</b>, ולציין את <b>מספר הכיתה</b>. <small class="ltr">00:09:31</small></li>
+    <li><b>שעות:</b> מתחילים ב-<span class="ltr">10:25</span> <b>בדיוק</b>; <b>20 דקות</b> הפסקה, בזמן גמיש. <small class="ltr">00:11:20</small></li>
+    <li><b>אופק תעסוקתי:</b> בערך <b>שליש</b> מהכיתה יגיעו לכבישים ותשתיות בעבודה הראשונה או השנייה. המדינה משקיעה בהם <b>המון כסף</b>, ותשתית נמשכת <b>הרבה יותר</b> ממבנה (כ-2 שנים; ראו ❓). <small class="ltr">00:03:42</small></li>
+    <li><b>בסמסטר הבא:</b> <b>קרקע וביסוס</b>, עם המרצה של הקורס הזה. יש בו סטטיקה, לכן הוא אחרי.</li>
+  </ul>
+
+  <div class="vs">
+    <div class="card"><div class="c-title">בחינה פנימית</div><p>הקורס הזה: <b>כבישים ותשתיות</b>.</p></div>
+    <div class="mid">מול</div>
+    <div class="card"><div class="c-title">בחינה חיצונית (מה"ט)</div><p>בטיחות · סטטיקה · ניהול וארגון אתר</p></div>
+  </div>
+
+  <div class="box lecturer"><div class="box-title">בשיעור הודגש</div>
+    <p>נושאים מהקורס גם בבחינת מה"ט של <b>ניהול וארגון אתר</b> ובפרויקט הגמר ← <b>הכול חשוב</b>. <small class="ltr">00:09:38</small></p>
+    <p>בבחינה: להראות את <b>הדרך</b>, לא רק תשובה. ומספר <b>בלי יחידות</b> ← השאלה נפסלת. <small class="ltr">00:48:21</small> <small class="ltr">01:03:40</small></p>
+    <p>כל דרך <b>נכונה ומנומקת</b> מתקבלת: בהנדסה יש <b>יותר מדרך אחת</b> (\(10 = 5\times2 = 7+3\)). <small class="ltr">01:36:28</small></p>
+  </div>
+</section>
+
+<!-- ============ 2. TRANSPORT AND ROAD FACTORS ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">2</span><h2>למה תחבורה, ומה בודקים לפני כביש</h2><span class="time">⏱ 00:13:39</span></div>
+  <div class="bl">תחבורה <b>משנעת</b> אנשים וסחורות. לפני כביש בודקים <b>גורמים רבים</b>; הראשון – <b>מהירות</b>.</div>
+
+  <div class="grid2">
+    <figure class="fig">
+      <svg viewBox="0 0 360 150" xmlns="http://www.w3.org/2000/svg">
+        <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+        <rect x="262" y="52" width="92" height="46" rx="10" class="mid-f acc" stroke-width="2"/>
+        <text x="308" y="81" class="lbl-b he" text-anchor="middle">תחבורה</text>
+        <rect x="140" y="6" width="98" height="52" rx="10" class="soft-f acc" stroke-width="2"/>
+        <text x="189" y="29" class="lbl-b he" text-anchor="middle">אנשים</text>
+        <text x="189" y="49" class="lbl-s he" text-anchor="middle">לעבודה ולפנאי</text>
+        <rect x="140" y="92" width="98" height="52" rx="10" class="soft-f acc" stroke-width="2"/>
+        <text x="189" y="115" class="lbl-b he" text-anchor="middle">סחורות</text>
+        <text x="189" y="135" class="lbl-s he" text-anchor="middle">מנקודה לנקודה</text>
+        <rect x="6" y="52" width="100" height="46" rx="10" class="mid-f acc" stroke-width="2"/>
+        <text x="56" y="81" class="lbl-b he" text-anchor="middle">כלכלה חזקה</text>
+        <line x1="262" y1="66" x2="242" y2="44" class="ink" stroke-width="2" marker-end="url(#ar2)"/>
+        <line x1="262" y1="84" x2="242" y2="106" class="ink" stroke-width="2" marker-end="url(#ar2)"/>
+        <line x1="140" y1="36" x2="110" y2="64" class="ink" stroke-width="2" marker-end="url(#ar2)"/>
+        <line x1="140" y1="114" x2="110" y2="88" class="ink" stroke-width="2" marker-end="url(#ar2)"/>
+      </svg>
+      <figcaption>תחבורה ← אנשים וסחורות זזים ← כלכלה חזקה.</figcaption>
+    </figure>
+    <div>
+      <ul class="pts">
+        <li><b>אנשים:</b> לעבודה ולפנאי (<b>ניידות</b>). <b>סחורות:</b> מנקודה לנקודה.</li>
+        <li>בלי תחבורה טובה ← <b>כלכלה חלשה</b>. האוכלוסייה גדלה ← צריך <b>להוסיף ולשפר</b>.</li>
+        <li><b>כביש 16</b> לירושלים (תמונה מהשיעור): <b>מנהרות</b>, <b>ביסוס</b> ו<b>תמיכת מדרונות</b>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box remember"><div class="box-title">הגדרה לזכור (מהשיעור)</div>
+    <p>תחבורה משמשת ל<b>מעבר בטוח</b> של אנשים וסחורות, תוך שמירה על <b>מהירות, יעילות, נוחות, כלכליות</b> ו<b>שמירה על הסביבה</b>. <small class="ltr">00:16:28</small></p>
+  </div>
+
+  <h3>מה בודקים לפני שסוללים כביש</h3>
+  <figure class="fig">
+    <div class="grid3">
+      <div class="card"><div class="c-title">⏱️ מהירות</div><p><b>השאלה הראשונה!</b> (נושא 3)</p></div>
+      <div class="card"><div class="c-title">🗺️ תוואי</div><p>עדיף <b>שטח מדינה</b>. קרקע פרטית ← פיצויים ועיכובים.</p></div>
+      <div class="card"><div class="c-title">⛰️ שיפוע</div><p>לא תלול מדי: <b>משאית</b> שזוחלת בעלייה <b>מעכבת את כל התנועה</b>.</p></div>
+      <div class="card"><div class="c-title">🌊 סביבה</div><p><b>נחלים</b> ו<b>מעברי מים</b> בדרך.</p></div>
+      <div class="box remember"><div class="box-title">ייזום כביש</div><p>בשיעור עלו <b>8</b> גורמים. קודם כול: <b>מהירות</b>.</p></div>
+      <div class="card"><div class="c-title">🪨 סוג הקרקע</div><p><b>סלע</b> (ירושלים) או <b>חול</b> (תל אביב) ← <b>ביסוס</b> אחר.</p></div>
+      <div class="card"><div class="c-title">☀️ אקלים</div><p><b>חום וקור</b> משפיעים על חומרי הכביש.</p></div>
+      <div class="card"><div class="c-title">💰 תקציב</div><p><b>כמה</b> זה יעלה.</p></div>
+      <div class="card"><div class="c-title">🚚 נפח תנועה</div><p><b>כמה נתיבים</b>? פרטיים או <b>משאיות</b> ← כביש חזק יותר.</p></div>
+    </div>
+    <figcaption>הגורמים שעלו בשיעור (רובם הוצעו בכיתה). הראשון – <b>המהירות</b>.</figcaption>
+  </figure>
+</section>
+
+<!-- ============ 3. DESIGN SPEED: HIGHWAY 6 ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">3</span><h2>המהירות קובעת את הכביש: כביש 6</h2><span class="time">⏱ 00:20:07</span></div>
+  <div class="bl">השאלה הראשונה: <b>באיזו מהירות ייסעו?</b> ממנה נגזרים <b>כל מתקני הכביש</b>.</div>
+
+  <ul class="pts">
+    <li><b>אין רמזורים</b> ← בונים <b>מחלפים</b>. רמזור היה מוריד את התנועה ל-80 ול-60 קמ"ש. מחלפים = <b>הרבה כסף</b>.</li>
+    <li><b>רוחב נתיב:</b> <b>3.6 עד 3.7 מ'</b>. ב-120, בין משאית מימין לעוקף משמאל, צריך <b>להרגיש בטוח</b>.</li>
+    <li><b>שוליים</b> מימין ומשמאל: ל<b>בלימת חירום</b> ולתמרון.</li>
+    <li><b>מרחק ראות:</b> יש מכשול? צריך זמן להחליט – לבלום או לעקוף ← <b>רדיוסים גדולים מאוד</b> בעיקולים.</li>
+    <li><b>כביש מישורי</b> בשביל המשאיות: בהר ← <b>חפירה</b> ("חוצבים את ההר"), בעמק ← <b>מילוי</b>.</li>
+  </ul>
+
+  <div class="grid2">
+    <figure class="fig">
+      <svg viewBox="0 0 360 230" xmlns="http://www.w3.org/2000/svg">
+        <defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+        <rect x="30" y="14" width="300" height="164" class="soft-f"/>
+        <rect x="30" y="14" width="30" height="164" class="mid-f"/>
+        <rect x="300" y="14" width="30" height="164" class="mid-f"/>
+        <line x1="30" y1="14" x2="30" y2="178" class="ink" stroke-width="3"/>
+        <line x1="330" y1="14" x2="330" y2="178" class="ink" stroke-width="3"/>
+        <line x1="60" y1="14" x2="60" y2="178" class="ink" stroke-width="2"/>
+        <line x1="300" y1="14" x2="300" y2="178" class="ink" stroke-width="2"/>
+        <line x1="140" y1="14" x2="140" y2="178" class="line" stroke-width="2.5" stroke-dasharray="14 10"/>
+        <line x1="220" y1="14" x2="220" y2="178" class="line" stroke-width="2.5" stroke-dasharray="14 10"/>
+        <text x="100" y="92" class="lbl-b ltr" text-anchor="middle">150</text>
+        <rect x="83" y="100" width="34" height="52" rx="8" class="bad-f"/>
+        <text x="100" y="170" class="lbl-s he" text-anchor="middle">עוקף</text>
+        <text x="180" y="54" class="lbl-b ltr" text-anchor="middle">120</text>
+        <rect x="163" y="62" width="34" height="52" rx="8" class="acc-f"/>
+        <text x="180" y="132" class="lbl-s he" text-anchor="middle">אני</text>
+        <text x="260" y="34" class="lbl-b ltr" text-anchor="middle">90–100</text>
+        <rect x="242" y="42" width="36" height="22" rx="5" class="dark-f"/>
+        <rect x="240" y="67" width="40" height="90" rx="3" class="dark-f"/>
+        <text x="260" y="172" class="lbl-s he" text-anchor="middle">משאית</text>
+        <line x1="347" y1="160" x2="347" y2="30" class="ink" stroke-width="2.5" marker-end="url(#ar3)"/>
+        <line x1="143" y1="194" x2="217" y2="194" class="ink" stroke-width="1.5" marker-start="url(#ar3)" marker-end="url(#ar3)"/>
+        <text x="180" y="214" class="lbl-s ltr" text-anchor="middle">3.6–3.7 m</text>
+        <text x="45" y="198" class="lbl-s he" text-anchor="middle">שוליים</text>
+        <text x="315" y="198" class="lbl-s he" text-anchor="middle">שוליים</text>
+      </svg>
+      <figcaption>מבט מלמעלה: נתיב של <b>3.6 עד 3.7 מ'</b> ← מרווח בטוח בין משאית לעוקף (מהירויות בקמ"ש).</figcaption>
+    </figure>
+    <figure class="fig">
+      <svg viewBox="0 0 360 230" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20,120 C50,120 70,45 110,45 C150,45 160,120 180,120 Z" class="bad-f" fill-opacity="0.22"/>
+        <path d="M180,120 C200,120 215,195 255,195 C295,195 310,120 340,120 Z" class="ok-f" fill-opacity="0.28"/>
+        <path d="M20,120 C50,120 70,45 110,45 C150,45 160,120 180,120 C200,120 215,195 255,195 C295,195 310,120 340,120" fill="none" class="ink" stroke-width="2.5"/>
+        <line x1="20" y1="120" x2="340" y2="120" class="acc" stroke-width="5" stroke-linecap="round"/>
+        <rect x="196" y="97" width="32" height="15" rx="2" class="dark-f"/>
+        <rect x="229" y="101" width="12" height="11" rx="2" class="dark-f"/>
+        <circle cx="204" cy="114" r="3.5" class="ink-f"/>
+        <circle cx="220" cy="114" r="3.5" class="ink-f"/>
+        <circle cx="236" cy="114" r="3.5" class="ink-f"/>
+        <text x="110" y="34" class="lbl-s he" text-anchor="middle">פני הקרקע</text>
+        <text x="108" y="98" class="lbl-b he" text-anchor="middle">חפירה</text>
+        <text x="255" y="164" class="lbl-b he" text-anchor="middle">מילוי</text>
+        <text x="298" y="106" class="lbl-s he" text-anchor="middle">כביש מישורי</text>
+      </svg>
+      <figcaption>חתך אורך: מעל הכביש ← <b>חפירה</b>, מתחת ← <b>מילוי</b>.</figcaption>
+    </figure>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה נוספת (לא נאמר בשיעור): כמה עוברים עוד לפני שבולמים?</div><div class="w-body">
+    <div class="given">\(120\ \text{km/h}\). זמן תגובה של נהג: <b>2 שניות</b> (הנחה לתרגול).</div>
+    <ol class="lines">
+      <li>למטר לשנייה: \(120\,\tfrac{\text{km}}{\text{h}} = \tfrac{120\,000\ \text{m}}{3600\ \text{s}} \approx 33.3\,\tfrac{\text{m}}{\text{s}}\)</li>
+      <li>דרך = מהירות × זמן: \(33.3\,\tfrac{\text{m}}{\text{s}} \times 2\ \text{s} \approx 67\ \text{m}\)</li>
+    </ol>
+    <div class="answer">בערך \(67\ \text{m}\) – עוד לפני שהבלימה מתחילה. לכן צריך מרחק ראות ארוך.</div>
+    <div class="check">בדרך אחרת, בק"מ ובשעות: \(120 \times \tfrac{2}{3600} \approx 0.067\ \text{km} = 67\ \text{m}\) ✓</div>
+  </div></div>
+
+  <div class="box lecturer"><div class="box-title">בשיעור הודגש</div>
+    <p>שאלה מהכיתה: כמה רוחבי נתיב יש? הרוחב תלוי ב<b>מהירות</b>: כביש איטי ← נתיב <b>צר</b> יותר. אבל זה <b>לא למבחן</b>: מה שצריך לרשום – ייאמר במפורש. <small class="ltr">00:23:09</small></p>
+  </div>
+</section>
+
+<!-- ============ 4. THE LAND IS THE ASSET ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">4</span><h2>השטח הוא הנכס: תכנון תשתיות ארצי</h2><span class="time">⏱ 00:23:54</span></div>
+  <div class="bl"><b>השטח</b> הוא הנכס של המדינה, וכל התשתיות <b>חולקות אותו</b>.</div>
+
+  <ul class="pts">
+    <li><b>מי מחליט</b> אם בונים כביש? <b>ועדת תכנון</b> של המדינה (שאלה מהכיתה).</li>
+    <li>על הלוח: מפת הארץ, ועליה <b>שכבה על שכבה</b> – לפי הסדר באיור.</li>
+    <li><b>מים:</b> בשנות ה-60 <b>המוביל הארצי</b>. אחר כך הארץ "התייבשה" ← <b>מתקני התפלה</b> על החוף.</li>
+    <li><b>גז:</b> נמצא בים לא מזמן ← צינור לחוף, וצנרת לכל הארץ.</li>
+    <li><b>שמורות טבע:</b> לפנאי – וגם הן צריכות שטח.</li>
+    <li>מהשקף: ההתפתחות הכלכלית של מדינה <b>תלויה ישירות בתחבורה</b>.</li>
+  </ul>
+
+  <figure class="fig" style="width:80%;margin-inline:auto">
+    <svg viewBox="0 0 620 256" xmlns="http://www.w3.org/2000/svg">
+      <g class="line" stroke-width="1.5" stroke-dasharray="4 5">
+        <line x1="110" y1="14" x2="110" y2="218"/>
+        <line x1="410" y1="14" x2="410" y2="218"/>
+        <line x1="70" y1="40" x2="70" y2="244"/>
+        <line x1="370" y1="40" x2="370" y2="244"/>
+      </g>
+      <polygon points="110,218 410,218 370,244 70,244" class="acc-f"/>
+      <polygon points="110,184 410,184 370,210 70,210" class="mid-f acc" stroke-width="1.5"/>
+      <polygon points="110,150 410,150 370,176 70,176" class="soft-f acc" stroke-width="1.5"/>
+      <polygon points="110,116 410,116 370,142 70,142" class="mid-f acc" stroke-width="1.5"/>
+      <polygon points="110,82 410,82 370,108 70,108" class="soft-f acc" stroke-width="1.5"/>
+      <polygon points="110,48 410,48 370,74 70,74" class="mid-f acc" stroke-width="1.5"/>
+      <polygon points="110,14 410,14 370,40 70,40" class="soft-f acc" stroke-width="1.5"/>
+      <text x="240" y="35" text-anchor="middle" font-size="22">🌿</text>
+      <text x="240" y="69" text-anchor="middle" font-size="22">🔥</text>
+      <text x="240" y="103" text-anchor="middle" font-size="22">⚡</text>
+      <text x="240" y="137" text-anchor="middle" font-size="22">💧</text>
+      <text x="240" y="171" text-anchor="middle" font-size="22">🛣️</text>
+      <text x="240" y="205" text-anchor="middle" font-size="22">🏙️</text>
+      <text x="240" y="239" text-anchor="middle" font-size="22">🗺️</text>
+      <text x="515" y="32" class="lbl he" text-anchor="middle">שמורות טבע</text>
+      <text x="515" y="66" class="lbl he" text-anchor="middle">גז</text>
+      <text x="515" y="100" class="lbl he" text-anchor="middle">חשמל</text>
+      <text x="515" y="134" class="lbl he" text-anchor="middle">מים: המוביל הארצי ← התפלה</text>
+      <text x="515" y="168" class="lbl he" text-anchor="middle">כבישים ורכבת</text>
+      <text x="515" y="202" class="lbl he" text-anchor="middle">ריכוזי אוכלוסייה</text>
+      <text x="515" y="236" class="lbl-b he" text-anchor="middle">השטח – הנכס של המדינה</text>
+    </svg>
+    <figcaption>שכבה על שכבה, כמו על הלוח. כולן על <b>אותו שטח מוגבל</b> ← מתכננים אותן יחד.</figcaption>
+  </figure>
+
+  <div class="box life"><div class="box-title">למה צריך את כביש 6? (מהשיעור)</div>
+    <p>קודם כול: פחות <b>פקקים</b> בין המרכז לצפון ולדרום.</p>
+    <p>ו<b>משבר הדיור</b>: העבודה והדירות היקרות – <b>במרכז</b>. דירה במחיר סביר – <b>בצפון או בדרום</b>. המדינה: "גרו שם, ונביא אתכם לעבודה" ← <b>כביש 6</b> ו<b>הרכבת</b> (כבר עד <b>כרמיאל</b>).</p>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה נוספת (לא נאמר בשיעור): כמה שטח "אוכל" כביש?</div><div class="w-body">
+    <div class="given">קטע באורך <b>10 ק"מ</b>, ברוחב <b>40 מ'</b> (נתיבים, שוליים ומדרונות – הנחה). דונם = 1,000 מ"ר.</div>
+    <ol class="lines">
+      <li>שטח: \(10\,000\ \text{m} \times 40\ \text{m} = 400\,000\ \text{m}^2\)</li>
+      <li>לדונמים: \(400\,000 \div 1000 = 400\)</li>
+    </ol>
+    <div class="answer">400 דונם – לכן עדיף תוואי על שטחי מדינה.</div>
+    <div class="check">ק"מ אחד: \(1000 \times 40 = 40\,000\ \text{m}^2\) = 40 דונם, ו-\(40 \times 10 = 400\) ✓</div>
+  </div></div>
+</section>
+
+<!-- ============ 5. PPP ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">5</span><h2>שותפות ציבורית-פרטית (PPP)</h2><span class="time">⏱ 00:28:17</span></div>
+  <div class="bl">ב-<b>PPP</b> היזם <b>מממן, בונה וגובה</b>, ובסוף <b>מעביר למדינה</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p><b>כביש 6</b> הוא כביש <b>פרטי</b>. נוסעים בו ← משלמים: <b>מנוי</b>, או תשלום חד-פעמי למי שנוסע לעיתים רחוקות. מי שלא נוסע – <b>לא משלם</b>.</p>
+  </div>
+
+  <h3>למה שהמדינה לא תבנה לבד?</h3>
+  <ul class="pts">
+    <li>הבעיה הגדולה: <b>חריגה בתקציב</b>. דוגמה של המרצה: תקציב של <b>מיליארד&nbsp;₪</b> ← עלות סופית <b>3&nbsp;מיליארד&nbsp;₪</b> (חישוב שלנו: חריגה של 200%, פי 3).</li>
+    <li>הכסף של המדינה = <b>המיסים שלנו</b>. 2 המיליארדים הנוספים לא הלכו לביטחון, לחינוך ולבריאות.</li>
+  </ul>
+
+  <div class="vs">
+    <div class="box warn"><div class="box-title">המדינה בונה לבד</div><p>כסף <b>מהמיסים</b> · <b>חריגות</b> · <b>עיכובים</b> (בירוקרטיה)</p></div>
+    <div class="mid">מול</div>
+    <div class="box tip"><div class="box-title">PPP</div><p>כסף <b>של היזם</b> · רוצה <b>לסיים מהר</b> · המדינה <b>מפקחת</b></p></div>
+  </div>
+
+  <h3>איך זה עובד: BOT ו-DBOT (מהשקף)</h3>
+  <figure class="fig" style="width:92%;margin-inline:auto">
+    <svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+      <text x="320" y="19" class="lbl he" text-anchor="middle">המדינה מפקחת לאורך כל הדרך</text>
+      <path d="M22,36 L22,28 L618,28 L618,36" fill="none" class="acc" stroke-width="2"/>
+      <rect x="518" y="44" width="100" height="80" rx="10" class="mid-f acc" stroke-width="2"/>
+      <text x="568" y="78" class="lbl-b he" text-anchor="middle">המדינה</text>
+      <text x="568" y="102" class="lbl-s he" text-anchor="middle">נותנת שטח</text>
+      <rect x="394" y="44" width="100" height="80" rx="10" fill="none" class="acc" stroke-width="2" stroke-dasharray="7 5"/>
+      <text x="444" y="72" class="ink-f ltr" font-size="24" font-weight="800" text-anchor="middle">D</text>
+      <text x="444" y="96" class="lbl-b he" text-anchor="middle">תכנון</text>
+      <text x="444" y="115" class="lbl-s he" text-anchor="middle">גם אצל היזם</text>
+      <rect x="270" y="44" width="100" height="80" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="320" y="72" class="ink-f ltr" font-size="24" font-weight="800" text-anchor="middle">B</text>
+      <text x="320" y="96" class="lbl-b he" text-anchor="middle">בנייה</text>
+      <text x="320" y="115" class="lbl-s he" text-anchor="middle">בכסף של היזם</text>
+      <rect x="146" y="44" width="100" height="80" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="196" y="72" class="ink-f ltr" font-size="24" font-weight="800" text-anchor="middle">O</text>
+      <text x="196" y="96" class="lbl-b he" text-anchor="middle">הפעלה</text>
+      <text x="196" y="115" class="lbl-s he" text-anchor="middle">גבייה מהנהגים</text>
+      <rect x="22" y="44" width="100" height="80" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="72" y="72" class="ink-f ltr" font-size="24" font-weight="800" text-anchor="middle">T</text>
+      <text x="72" y="96" class="lbl-b he" text-anchor="middle">העברה</text>
+      <text x="72" y="115" class="lbl-s he" text-anchor="middle">חזרה למדינה</text>
+      <line x1="516" y1="84" x2="497" y2="84" class="ink" stroke-width="2.5" marker-end="url(#ar6)"/>
+      <line x1="392" y1="84" x2="373" y2="84" class="ink" stroke-width="2.5" marker-end="url(#ar6)"/>
+      <line x1="268" y1="84" x2="249" y2="84" class="ink" stroke-width="2.5" marker-end="url(#ar6)"/>
+      <line x1="144" y1="84" x2="125" y2="84" class="ink" stroke-width="2.5" marker-end="url(#ar6)"/>
+      <path d="M22,134 L22,142 L370,142 L370,134" fill="none" class="ink" stroke-width="2"/>
+      <text x="196" y="160" class="lbl-b ltr" text-anchor="middle">BOT</text>
+      <path d="M22,168 L22,176 L494,176 L494,168" fill="none" class="ink" stroke-width="2"/>
+      <text x="258" y="194" class="lbl-b ltr" text-anchor="middle">DBOT</text>
+    </svg>
+    <figcaption>קוראים <b>מימין לשמאל</b>, לפי החצים. BOT = בנה-הפעל-העבר · DBOT = תכנן-בנה-הפעל-העבר (גם <b>התכנון</b> אצל היזם).</figcaption>
+  </figure>
+
+  <ol class="steps">
+    <li>המדינה נותנת <b>שטח</b> – הנכס שלה.</li>
+    <li>היזם <b>בונה בכסף שלו</b> (ב-DBOT הוא גם <b>מתכנן</b>).</li>
+    <li>היזם <b>מפעיל וגובה תשלום</b> מהנהגים: מנוי או חד-פעמי.</li>
+    <li>בסוף התקופה הכביש <b>חוזר למדינה</b> (הוזכרו בערך 30 שנה – לא ודאי).</li>
+  </ol>
+
+  <div class="box warn"><div class="box-title">טעות נפוצה</div>
+    <p>BOT מול DBOT: ההבדל היחיד הוא ה-<b>D</b> = <b>תכנון</b>. ו-PPP הוא <b>לא</b> "המדינה משלמת לקבלן": <b>היזם</b> מממן.</p>
+  </div>
+
+  <h3>מנגנונים בחוזה של כביש 6</h3>
+  <ul class="pts">
+    <li><b>האינטרס של היזם:</b> רווח ← רוצה <b>לפתוח מהר</b> ← המדינה מקבלת כביש מהיר ואיכותי.</li>
+    <li><b>רצפה:</b> לפני 30 עד 35 שנה הציבור אמר "לא אשלם על כביש". לכן סופרים רכבים <b>כל חודש</b>; מתחת למינימום ← <b>המדינה משלימה</b>.</li>
+    <li><b>תקרה (גבול עליון):</b> מעל מספר מסוים של רכבים בחודש ← הרווח העודף <b>חוזר למדינה</b>. את הגבולות קובעים לפי <b>תחזית התנועה</b> ו<b>היתכנות כלכלית</b>.</li>
+    <li><b>חובת הרחבה:</b> בהתחלה <b>2 נתיבים</b> לכל כיוון. התנועה עלתה ב<b>מקטע</b> ← היזם <b>חייב להרחיב</b>. במרכז כבר הורחב, בצפון עכשיו.</li>
+  </ul>
+
+  <figure class="fig" style="width:85%;margin-inline:auto">
+    <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg">
+      <line x1="60" y1="210" x2="525" y2="210" class="ink" stroke-width="2"/>
+      <line x1="60" y1="210" x2="60" y2="22" class="ink" stroke-width="2"/>
+      <text x="60" y="12" class="lbl-s he" text-anchor="middle">אלפי רכבים</text>
+      <text x="50" y="214" class="lbl-s ltr" text-anchor="end">0</text>
+      <text x="50" y="169" class="lbl-s ltr" text-anchor="end">5</text>
+      <text x="50" y="124" class="lbl-s ltr" text-anchor="end">10</text>
+      <text x="50" y="79" class="lbl-s ltr" text-anchor="end">15</text>
+      <text x="50" y="34" class="lbl-s ltr" text-anchor="end">20</text>
+      <rect x="82" y="102" width="46" height="108" class="mid-f"/>
+      <rect x="152" y="138" width="46" height="72" class="mid-f"/>
+      <rect x="152" y="120" width="46" height="18" class="ok-f" fill-opacity="0.35"/>
+      <rect x="152" y="120" width="46" height="18" fill="none" class="ok" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="222" y="84" width="46" height="126" class="mid-f"/>
+      <rect x="292" y="75" width="46" height="135" class="mid-f"/>
+      <rect x="292" y="57" width="46" height="18" class="bad-f"/>
+      <rect x="362" y="111" width="46" height="99" class="mid-f"/>
+      <rect x="432" y="93" width="46" height="117" class="mid-f"/>
+      <line x1="60" y1="120" x2="525" y2="120" class="ok" stroke-width="2.5" stroke-dasharray="9 6"/>
+      <line x1="60" y1="75" x2="525" y2="75" class="bad" stroke-width="2.5" stroke-dasharray="9 6"/>
+      <text x="562" y="125" class="lbl-b he" text-anchor="middle">רצפה</text>
+      <text x="562" y="80" class="lbl-b he" text-anchor="middle">תקרה</text>
+      <text x="105" y="229" class="lbl-s ltr" text-anchor="middle">1</text>
+      <text x="175" y="229" class="lbl-s ltr" text-anchor="middle">2</text>
+      <text x="245" y="229" class="lbl-s ltr" text-anchor="middle">3</text>
+      <text x="315" y="229" class="lbl-s ltr" text-anchor="middle">4</text>
+      <text x="385" y="229" class="lbl-s ltr" text-anchor="middle">5</text>
+      <text x="455" y="229" class="lbl-s ltr" text-anchor="middle">6</text>
+      <text x="562" y="229" class="lbl-s he" text-anchor="middle">חודש</text>
+      <text x="175" y="94" class="lbl he" text-anchor="middle">המדינה</text>
+      <text x="175" y="112" class="lbl he" text-anchor="middle">משלימה</text>
+      <text x="315" y="47" class="lbl he" text-anchor="middle">חוזר למדינה</text>
+    </svg>
+    <figcaption>להמחשה בלבד (מספרים מומצאים: <b>אלפי רכבים בחודש</b>): היזם מוגן מלמטה, והמדינה מרוויחה מלמעלה.</figcaption>
+  </figure>
+
+  <h3>עוד שני סיפורים מהשיעור (כפי שסופרו)</h3>
+  <div class="grid2">
+    <div class="card"><div class="c-title">💧 מתקני התפלה</div><p>לפי המרצה: מתוך <b>4</b> מתקנים, <b>3</b> נבנו ב-PPP – היזם <b>מוכר את המים</b> למדינה. האחד שהמדינה בנתה לבד: <b>איחור</b>, <b>חריגה</b> ו<b>תקלות</b>.</p></div>
+    <div class="card"><div class="c-title">🚇 הרכבת התחתית בתל אביב</div><p>לפי המרצה: היזם <b>תמחר לא נכון</b>, המדינה סירבה לשנות את החוזה, והיזם <b>יצא ושילם קנס</b>. התוצאה: רכבת שיכלה להיות מוכנה לפני כ-10 שנים <b>לא נבנתה אז</b>. אף יזם לא רצה להתקרב, ועכשיו <b>המדינה בונה בעצמה</b> – באיחורים ובחריגות תקציב.</p></div>
+  </div>
+  <div class="box lecturer"><div class="box-title">המסר</div>
+    <p>"לפעמים לא צריך ראש בקיר": המדינה צריכה <b>לדחוף ליזמים</b> את מה שאפשר, ו<b>לפקח</b>. ובונוס לקבלנים? לא נהוג – אצל יזם הרצון לסיים מהר <b>כבר מובנה</b>.</p>
+  </div>
+</section>
+
+<!-- ============ 6. MATH: FRACTIONS AND EXPONENTS ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">6</span><h2>חזרה על מתמטיקה: שברים וחזקות</h2><span class="time">⏱ 00:38:39</span></div>
+  <div class="bl">שברים: מצמצמים <b>רק בכפל</b>, ובחילוק <b>הופכים את התחתון</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (לא נאמר בשיעור)</div>
+    <p>3 פיצות – כמה <b>חצאים</b>? \(3 \div \tfrac{1}{2} = 3 \times 2 = 6\). לחלק בחצי = <b>לכפול ב-2</b> ← "הופכים את התחתון".</p>
+  </div>
+
+  <ul class="pts">
+    <li><b>יישור קו:</b> הנדסה יושבת על <b>פיזיקה</b>, ופיזיקה על <b>מתמטיקה</b> (פירמידה על הלוח).</li>
+    <li><b>מחשבון</b> עונה גם על פעולה <b>לא חוקית</b> ← חייבים לדעת את החוקים.</li>
+    <li><b>בבחינה:</b> להראות את <b>הדרך</b> – הטכניקה חשובה מהתשובה. ואין "<b>תמיד</b>": כל תרגיל לפי הנתונים שלו.</li>
+  </ul>
+
+  <h3>צמצום: שני כללים</h3>
+  <ol class="steps">
+    <li>מצמצמים רק כשיש <b>כפל</b>. בחיבור או בחיסור – <b>אי אפשר</b>.</li>
+    <li>מצמצמים מספר <b>למעלה</b> עם מספר <b>למטה</b>. שני מספרים שניהם למעלה – <b>אי אפשר</b>.</li>
+  </ol>
+
+  <figure class="fig" style="width:64%;margin-inline:auto">
+    <svg viewBox="0 0 540 228" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="90" cy="77" r="25" fill="none" class="ok" stroke-width="2.5"/>
+      <circle cx="90" cy="135" r="20" fill="none" class="ok" stroke-width="2.5"/>
+      <circle cx="210" cy="77" r="20" fill="none" class="bad" stroke-width="2.5"/>
+      <circle cx="330" cy="135" r="20" fill="none" class="bad" stroke-width="2.5"/>
+      <circle cx="330" cy="77" r="20" fill="none" class="ink" stroke-width="2.5"/>
+      <circle cx="210" cy="135" r="20" fill="none" class="ink" stroke-width="2.5"/>
+      <text x="90" y="88" class="ink-f ltr" font-size="30" font-weight="700" text-anchor="middle">10</text>
+      <text x="90" y="146" class="ink-f ltr" font-size="30" font-weight="700" text-anchor="middle">5</text>
+      <text x="210" y="88" class="ink-f ltr" font-size="30" font-weight="700" text-anchor="middle">4</text>
+      <text x="210" y="146" class="ink-f ltr" font-size="30" font-weight="700" text-anchor="middle">3</text>
+      <text x="330" y="88" class="ink-f ltr" font-size="30" font-weight="700" text-anchor="middle">9</text>
+      <text x="330" y="146" class="ink-f ltr" font-size="30" font-weight="700" text-anchor="middle">8</text>
+      <line x1="58" y1="106" x2="122" y2="106" class="ink" stroke-width="3"/>
+      <line x1="182" y1="106" x2="238" y2="106" class="ink" stroke-width="3"/>
+      <line x1="302" y1="106" x2="358" y2="106" class="ink" stroke-width="3"/>
+      <circle cx="150" cy="106" r="4" class="ink-f"/>
+      <circle cx="270" cy="106" r="4" class="ink-f"/>
+      <text x="405" y="117" class="ink-f ltr" font-size="30" font-weight="700" text-anchor="middle">=</text>
+      <text x="455" y="118" class="acc-f ltr" font-size="36" font-weight="800" text-anchor="middle">3</text>
+      <line x1="72" y1="88" x2="108" y2="64" class="ink" stroke-width="2" stroke-opacity="0.55"/>
+      <line x1="82" y1="146" x2="98" y2="124" class="ink" stroke-width="2" stroke-opacity="0.55"/>
+      <line x1="202" y1="88" x2="218" y2="66" class="ink" stroke-width="2" stroke-opacity="0.55"/>
+      <line x1="202" y1="146" x2="218" y2="124" class="ink" stroke-width="2" stroke-opacity="0.55"/>
+      <line x1="322" y1="88" x2="338" y2="66" class="ink" stroke-width="2" stroke-opacity="0.55"/>
+      <line x1="322" y1="146" x2="338" y2="124" class="ink" stroke-width="2" stroke-opacity="0.55"/>
+      <circle cx="78" cy="34" r="11" fill="none" class="ink" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="78" y="40" class="dark-f ltr" font-size="18" font-weight="700" text-anchor="middle">2</text>
+      <line x1="72" y1="42" x2="84" y2="26" class="ink" stroke-width="2" stroke-opacity="0.55"/>
+      <text x="102" y="40" class="dark-f ltr" font-size="18" font-weight="700" text-anchor="middle">1</text>
+      <text x="210" y="40" class="dark-f ltr" font-size="18" font-weight="700" text-anchor="middle">1</text>
+      <text x="330" y="40" class="dark-f ltr" font-size="18" font-weight="700" text-anchor="middle">3</text>
+      <text x="90" y="182" class="dark-f ltr" font-size="18" font-weight="700" text-anchor="middle">1</text>
+      <text x="210" y="182" class="dark-f ltr" font-size="18" font-weight="700" text-anchor="middle">1</text>
+      <circle cx="318" cy="176" r="11" fill="none" class="ink" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="318" y="182" class="dark-f ltr" font-size="18" font-weight="700" text-anchor="middle">2</text>
+      <line x1="312" y1="184" x2="324" y2="168" class="ink" stroke-width="2" stroke-opacity="0.55"/>
+      <text x="342" y="182" class="dark-f ltr" font-size="18" font-weight="700" text-anchor="middle">1</text>
+      <circle cx="30" cy="213" r="7" fill="none" class="ok" stroke-width="2.5"/>
+      <text x="44" y="219" class="lbl ltr" text-anchor="start">10 ↔ 5 (÷5)</text>
+      <circle cx="164" cy="213" r="7" fill="none" class="ink" stroke-width="2.5"/>
+      <text x="178" y="219" class="lbl ltr" text-anchor="start">9 ↔ 3 (÷3)</text>
+      <circle cx="292" cy="213" r="7" fill="none" class="bad" stroke-width="2.5"/>
+      <text x="306" y="219" class="lbl ltr" text-anchor="start">4 ↔ 8 (÷4)</text>
+      <circle cx="420" cy="213" r="7" fill="none" class="ink" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="434" y="219" class="lbl ltr" text-anchor="start">2 ↔ 2 (÷2)</text>
+    </svg>
+    <figcaption>טבעות באותו צבע = זוג לצמצום: אחד <b>למעלה</b> ואחד <b>למטה</b>. קטנים = מה שנשאר.</figcaption>
+  </figure>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה 1 (מהשיעור): צמצום</div><div class="w-body">
+    <div class="given">\(\dfrac{10}{5}\cdot\dfrac{4}{3}\cdot\dfrac{9}{8}\)</div>
+    <ol class="lines">
+      <li>10 עם 5 (חלקי 5) ← <b>2</b> ו-<b>1</b> · 9 עם 3 (חלקי 3) ← <b>3</b> ו-<b>1</b></li>
+      <li>4 עם 8 (חלקי 4) ← <b>1</b> ו-<b>2</b></li>
+      <li>ה-2 שנשאר למעלה (מה-10) עם ה-2 למטה (מה-8) ← <b>1</b> ו-<b>1</b></li>
+    </ol>
+    <div class="answer">\(\dfrac{1\cdot1\cdot3}{1\cdot1\cdot1} = 3\)</div>
+    <div class="check">בלי צמצום: \(\dfrac{10\cdot4\cdot9}{5\cdot3\cdot8} = \dfrac{360}{120} = 3\) ✓</div>
+  </div></div>
+
+  <h3>חילוק שברים: "אסור לחלק שבר בשבר"</h3>
+  <div class="grid3">
+    <div class="card"><div class="c-title">1. משאירים</div><p>את השבר <b>העליון</b> כמו שהוא.</p></div>
+    <div class="card"><div class="c-title">2. מחליפים</div><p>את הסימן <b>÷</b> ל-<b>×</b>.</p></div>
+    <div class="card"><div class="c-title">3. הופכים</div><p>את השבר <b>התחתון</b>:<br>\(\tfrac{a}{b}\div\tfrac{c}{d}=\tfrac{a}{b}\cdot\tfrac{d}{c}\)</p></div>
+  </div>
+
+  <div class="grid2">
+    <div class="worked"><div class="w-title">דוגמה פתורה 2 (מהשיעור)</div><div class="w-body">
+      <div class="given">\(\dfrac{7}{4}\div\dfrac{5}{3}\)</div>
+      <ol class="lines">
+        <li>\(\tfrac{7}{4}\cdot\tfrac{3}{5}\) (הפכנו את התחתון)</li>
+        <li>אין זוג לצמצם.</li>
+        <li>\(\tfrac{7\cdot3}{4\cdot5} = \tfrac{21}{20}\)</li>
+      </ol>
+      <div class="answer">\(\tfrac{21}{20} = 1.05\)</div>
+      <div class="check">\(\tfrac{21}{20}\cdot\tfrac{5}{3} = \tfrac{105}{60} = \tfrac{7}{4}\) ✓</div>
+    </div></div>
+    <div class="worked"><div class="w-title">דוגמה פתורה 3 (מהשיעור)</div><div class="w-body">
+      <div class="given">\(\dfrac{4}{3}\div\dfrac{1}{6}\)</div>
+      <ol class="lines">
+        <li>\(\tfrac{4}{3}\cdot\tfrac{6}{1}\) (הפכנו את התחתון)</li>
+        <li>6 עם 3 (חלקי 3) ← <b>2</b> ו-<b>1</b></li>
+        <li>\(\tfrac{4\cdot2}{1\cdot1} = 8\)</li>
+      </ol>
+      <div class="answer">\(8\)</div>
+      <div class="check">\(8\cdot\tfrac{1}{6} = \tfrac{8}{6} = \tfrac{4}{3}\) ✓</div>
+    </div></div>
+  </div>
+
+  <h3>חוקי חזקות <span class="time">⏱ 00:56:40</span></h3>
+  <ul class="pts">
+    <li>מעריך שלא כתוב = <b>1</b>: \(x = x^1\).</li>
+    <li><b>כפל</b> (אותו בסיס) ← <b>מחברים</b> מעריכים.</li>
+    <li><b>חילוק</b> ← <b>מחסרים</b> מעריכים.</li>
+    <li>מעריך קטן יותר למעלה ← מעריך <b>שלילי</b> (שאלה מהכיתה).</li>
+    <li>אותו חוק <b>ליחידות</b>: \(\text{m}\cdot\text{m} = \text{m}^2\) ← נושא 7.</li>
+  </ul>
+  <table class="t">
+    <tr><th>כפל: \(x^{a}\cdot x^{b}=x^{a+b}\)</th><th>תוצאה</th><th>חילוק: \(\tfrac{x^{a}}{x^{b}}=x^{a-b}\)</th><th>תוצאה</th></tr>
+    <tr><td>\(x\cdot x = x^{1+1}\)</td><td>\(x^2\)</td><td>\(x^7 / x^4 = x^{7-4}\)</td><td>\(x^3\)</td></tr>
+    <tr><td>\(x\cdot x\cdot x = x^{1+1+1}\)</td><td>\(x^3\)</td><td>\(x^3 / x = x^{3-1}\)</td><td>\(x^2\)</td></tr>
+    <tr><td>\(x^2\cdot x^3 = x^{2+3}\)</td><td>\(x^5\)</td><td>\(x^4 / x^6 = x^{4-6}\)</td><td>\(x^{-2}\)</td></tr>
+  </table>
+
+  <div class="box warn"><div class="box-title">טעויות נפוצות</div>
+    <ul class="pts">
+      <li>לצמצם ב<b>חיבור או בחיסור</b>, או שני מספרים <b>באותו צד</b>.</li>
+      <li>לחבר מעריכים של <b>בסיסים שונים</b>: \(x^2\cdot y^3\) נשאר כך.</li>
+      <li>לחלק שברים <b>בלי להפוך</b>, או להפוך את <b>העליון</b> במקום התחתון.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 7. DIMENSIONS AND UNITS: THE POOL ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">7</span><h2>ממדים ויחידות: היקף, שטח ונפח</h2><span class="time">⏱ 01:01:18</span></div>
+  <div class="bl">בלי יחידות ← <b>השאלה נפסלת</b>. אורך <b>m</b>, שטח <b>m²</b>, נפח <b>m³</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p>בשוק: "ארבע, בבקשה." – "ארבע <b>מה</b>? תפוחים? אגסים?" מספר בלי יחידה לא אומר כלום.</p>
+  </div>
+
+  <table class="t">
+    <tr><th>ממד פיזיקלי</th><th>סימון</th><th>יחידות (מהדף)</th></tr>
+    <tr><td><b>אורך</b></td><td>\(L\)</td><td>מטר (m) · ס"מ (cm) · ק"מ (km)</td></tr>
+    <tr><td><b>שטח</b></td><td>\(L^2\)</td><td>מ"ר \((\text{m}^2)\) · סמ"ר \((\text{cm}^2)\) · קמ"ר \((\text{km}^2)\) · דונם</td></tr>
+    <tr><td><b>נפח</b></td><td>\(L^3\)</td><td>מ"ק = קוב \((\text{m}^3)\) · סמ"ק \((\text{cm}^3)\) · ליטר</td></tr>
+    <tr><td><b>זמן</b></td><td>\(T\)</td><td>שנייה (s) · שעה (hr)</td></tr>
+    <tr><td><b>מסה</b></td><td>\(M\)</td><td>גרם (gr) · ק"ג (kg) · ובשיעור גם טון</td></tr>
+    <tr><td><b>מטבע</b></td><td>לא ממד פיזיקלי</td><td>₪ · $ · ובשיעור גם €</td></tr>
+  </table>
+
+  <div class="grid2">
+    <figure class="fig" style="width:84%;margin-inline:auto">
+      <svg viewBox="0 0 320 236" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="40,90 100,30 220,30 160,90" class="mid-f"/>
+        <polygon points="160,90 220,30 220,150 160,210" class="mid-f"/>
+        <rect x="40" y="90" width="120" height="120" class="soft-f"/>
+        <g class="ink" stroke-width="1.5" stroke-dasharray="5 4">
+          <line x1="40" y1="210" x2="100" y2="150"/>
+          <line x1="100" y1="150" x2="220" y2="150"/>
+          <line x1="100" y1="150" x2="100" y2="30"/>
+        </g>
+        <polygon points="40,90 100,30 220,30 160,90" fill="none" class="ink" stroke-width="2.5"/>
+        <polygon points="160,90 220,30 220,150 160,210" fill="none" class="ink" stroke-width="2.5"/>
+        <rect x="40" y="90" width="120" height="120" fill="none" class="ink" stroke-width="2.5"/>
+        <text x="128" y="190" class="lbl-b he" text-anchor="middle">קוב</text>
+        <text x="100" y="230" class="lbl-s ltr" text-anchor="middle">1 m</text>
+        <text x="32" y="155" class="lbl-s ltr" text-anchor="end">1 m</text>
+        <text x="198" y="196" class="lbl-s ltr" text-anchor="start">1 m</text>
+        <text x="274" y="96" class="lbl-b ltr" text-anchor="middle">1 m³</text>
+        <text x="274" y="122" class="lbl ltr" text-anchor="middle">= 1000 L</text>
+      </svg>
+      <figcaption>מהלוח: \(1\,\text{m}\cdot1\,\text{m}\cdot1\,\text{m} = 1\ \text{m}^3\).<br>כלומר: 1 מ"ק = קוב = 1000 ליטר.</figcaption>
+    </figure>
+    <div>
+      <ul class="pts">
+        <li>\(4\ \text{m}^2\) = 4 מ"ר: <b>אותו דבר</b>. אפשר לכתוב כך או כך.</li>
+        <li>קובייה מלאה <b>בטון, מים או נוצות</b>: <b>אותו נפח</b>, <b>משקל אחר</b>.</li>
+        <li><b>זמן = כסף:</b> שכר שומר, מנוף באתר (השכרה + מפעיל), משך הפרויקט.</li>
+        <li><b>מסה:</b> משקל התקרה יורד לעמודים ← נושא 9.</li>
+        <li><b>המרה מהדף:</b> \(0.5\ \text{m} = 0.5 \times 100 = 50\ \text{cm}\).</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>תרגיל הבריכה (מהשיעור) <span class="time">⏱ 01:08:12</span></h3>
+  <div class="box"><div class="box-title">📋 השאלה (מהשקף)</div>
+    <p>בונים בריכה: אורך <b>4 מ'</b>, רוחב <b>5 מ'</b>, עומק <b>3 מ'</b>. למצוא: (1) <b>אבן שפת בריכה</b> = ההיקף; (2) <b>ריצוף</b> התחתית; (3) <b>נפח המים</b>. ההקשר: להגיד למוכר בחנות חומרי בניין, בשפה שלו, מה להביא.</p>
+  </div>
+
+  <h4>💡 קודם משרטטים (טיפ מהשיעור)</h4>
+  <ol class="steps">
+    <li>מציירים <b>מלבן</b>. מכל פינה – <b>קו אלכסוני</b> מקביל, וסוגרים <b>מלבן אחורי</b>.</li>
+    <li>מורידים <b>קווים אנכיים</b> ← קופסה. כותבים עליה את <b>המידות</b>.</li>
+  </ol>
+    <figure class="fig" style="width:64%;margin-inline:auto">
+      <svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="70,270 320,270 390,200 140,200" class="mid-f" fill-opacity="0.7"/>
+        <g class="line" stroke-width="1.5">
+          <line x1="120" y1="270" x2="190" y2="200"/>
+          <line x1="170" y1="270" x2="240" y2="200"/>
+          <line x1="220" y1="270" x2="290" y2="200"/>
+          <line x1="270" y1="270" x2="340" y2="200"/>
+          <line x1="87.5" y1="252.5" x2="337.5" y2="252.5"/>
+          <line x1="105" y1="235" x2="355" y2="235"/>
+          <line x1="122.5" y1="217.5" x2="372.5" y2="217.5"/>
+        </g>
+        <g class="ink" stroke-width="1.5" stroke-dasharray="5 4">
+          <line x1="70" y1="270" x2="140" y2="200"/>
+          <line x1="140" y1="200" x2="390" y2="200"/>
+          <line x1="140" y1="200" x2="140" y2="50"/>
+        </g>
+        <polygon points="70,135 320,135 390,65 140,65" class="ok-f" fill-opacity="0.22"/>
+        <polygon points="70,135 320,135 320,270 70,270" class="ok-f" fill-opacity="0.13"/>
+        <polygon points="320,135 390,65 390,200 320,270" class="ok-f" fill-opacity="0.13"/>
+        <line x1="70" y1="135" x2="320" y2="135" class="ok" stroke-width="1.5"/>
+        <line x1="320" y1="135" x2="390" y2="65" class="ok" stroke-width="1.5"/>
+        <g class="ink" stroke-width="2.5">
+          <line x1="70" y1="120" x2="70" y2="270"/>
+          <line x1="320" y1="120" x2="320" y2="270"/>
+          <line x1="390" y1="50" x2="390" y2="200"/>
+          <line x1="70" y1="270" x2="320" y2="270"/>
+          <line x1="320" y1="270" x2="390" y2="200"/>
+        </g>
+        <polygon points="70,120 320,120 390,50 140,50" fill="none" class="acc" stroke-width="5" stroke-linejoin="round"/>
+        <text x="195" y="293" class="lbl-b ltr" text-anchor="middle">5 m</text>
+        <text x="60" y="200" class="lbl-b ltr" text-anchor="end">3 m</text>
+        <text x="366" y="254" class="lbl-b ltr" text-anchor="start">4 m</text>
+        <text x="462" y="44" class="lbl-b he" text-anchor="middle">אבן שפת בריכה</text>
+        <text x="462" y="64" class="lbl ltr" text-anchor="middle">18 m</text>
+        <line x1="420" y1="50" x2="396" y2="50" class="acc" stroke-width="2"/>
+        <text x="462" y="124" class="lbl-b he" text-anchor="middle">מים</text>
+        <text x="462" y="144" class="lbl ltr" text-anchor="middle">60 m³</text>
+        <line x1="438" y1="130" x2="378" y2="130" class="ok" stroke-width="2"/>
+        <text x="462" y="206" class="lbl-b he" text-anchor="middle">ריצוף</text>
+        <text x="462" y="226" class="lbl ltr" text-anchor="middle">20 m²</text>
+        <line x1="428" y1="212" x2="360" y2="226" class="ink" stroke-width="1.5"/>
+      </svg>
+      <figcaption>שלוש שאלות, שלוש יחידות: <b>היקף</b> במטר, <b>ריצוף</b> במ"ר, <b>מים</b> במ"ק.</figcaption>
+    </figure>
+
+  <div class="box formula"><div class="box-title">הנוסחאות (מלבן וקופסה)</div>
+    \[ P = 2(a+b)\;[\text{m}] \qquad A = a\cdot b\;[\text{m}^2] \qquad V = a\cdot b\cdot h\;[\text{m}^3] \]
+    <p class="muted">P = היקף · A = שטח · V = נפח · a, b = אורך ורוחב · h = עומק</p>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): הבריכה</div><div class="w-body">
+    <div class="given">\(4\ \text{m} \times 5\ \text{m}\), עומק \(3\ \text{m}\)</div>
+    <ol class="lines">
+      <li><b>היקף</b> (אבן שפת בריכה, כמו הפנלים סביב הכיתה): \(4 + 5 + 4 + 5 = 18\ \text{m}\)</li>
+      <li><b>שטח</b> (ריצוף): \(4\ \text{m} \times 5\ \text{m} = 20\ \text{m}^2\), כי \(\text{m}^1\cdot\text{m}^1 = \text{m}^{1+1}\)</li>
+      <li><b>נפח</b> (מים): \(4\ \text{m} \times 5\ \text{m} \times 3\ \text{m} = 60\ \text{m}^3\) = 60 קוב</li>
+    </ol>
+    <div class="answer">\(18\ \text{m}\) אבן שפת בריכה · \(20\ \text{m}^2\) ריצוף · \(60\ \text{m}^3\) מים</div>
+    <div class="check">\(2\cdot(4+5) = 18\) ✓ · נפח = שטח × עומק: \(20 \times 3 = 60\) ✓ · וזה \(60\,000\) ליטר</div>
+  </div></div>
+
+  <div class="box warn"><div class="box-title">טעויות נפוצות</div>
+    <ul class="pts">
+      <li>היקף ב-<b>m²</b>: טעות. היקף הוא <b>אורך</b> ← m.</li>
+      <li>בסכום <b>לא מחברים חזקות</b>: \(4\ \text{m} + 5\ \text{m} = 9\ \text{m}\), לא \(\text{m}^2\).</li>
+      <li>לערבב <b>ס"מ ומטרים</b> באותו חישוב.</li>
+      <li>מלכודת (תוספת, לא נאמר בשיעור): \(1\ \text{m}^2 = 10\,000\ \text{cm}^2\) – <b>לא&nbsp;100</b>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 8. UNIT ANALYSIS: COST PER METRE ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">8</span><h2>ניתוח יחידות: עלות למטר של פועל</h2><span class="time">⏱ 01:21:59</span></div>
+  <div class="bl">קודם כותבים את <b>יחידות התשובה</b>, ואז בוחרים <b>כפל או חילוק</b> – כך שהיחידות יסתדרו.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p>אי אפשר לחבר <b>4 תפוחים + 4 אגסים</b> – רק <b>כפל או חילוק</b>. ו"3 ₪ למטר" זה כמו "<b>₪ לקילו</b>" אצל הירקן.</p>
+  </div>
+
+  <div class="box"><div class="box-title">📋 השאלה (מהשקף)</div>
+    <p>פועל עולה <b>60 ₪ לשעה</b> ומתקדם <b>20 מ' בשעה</b>. (א) עלות <b>למטר</b>? (ב) עלות <b>100 מ'</b>?</p>
+  </div>
+
+  <ol class="steps">
+    <li>כותבים את הנתונים <b>עם יחידות</b>, ואת <b>יחידות היעד</b> מתוך השאלה (? ₪ למטר).</li>
+    <li>מנסים <b>כפל</b>, ואז <b>חילוק</b> – ובכל פעם בודקים את היחידות.</li>
+    <li>בוחרים את הפעולה שנותנת <b>בדיוק את יחידות היעד</b>.</li>
+  </ol>
+
+  <figure class="fig">
+    <div class="vs">
+      <div class="box warn"><div class="box-title">כפל ✗ \(60 \times 20 = 1200\)</div>
+        <p>\(\dfrac{\text{₪}}{\text{h}}\cdot\dfrac{\text{m}}{\text{h}} = \dfrac{\text{₪}\cdot\text{m}}{\text{h}^2}\) – לא מה שביקשו</p>
+      </div>
+      <div class="mid">מול</div>
+      <div class="box tip"><div class="box-title">חילוק ✓ \(60 \div 20 = 3\)</div>
+        <p>\(\dfrac{\text{₪}}{\cancel{\text{h}}}\cdot\dfrac{\cancel{\text{h}}}{\text{m}} = \dfrac{\text{₪}}{\text{m}}\) – בדיוק ₪ למטר</p>
+      </div>
+    </div>
+    <figcaption>מהלוח: היחידות אומרות איזו פעולה נכונה. בחילוק השעות מצטמצמות – אותו כלל כמו בחילוק שברים.</figcaption>
+  </figure>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): הפועל</div><div class="w-body">
+    <div class="given">60 ₪ לשעה · 20 מ' לשעה</div>
+    <ol class="lines">
+      <li>(א) מחלקים: \(60 \div 20 = 3\) ← 3 ₪ למטר</li>
+      <li>(ב) \(3\ \tfrac{\text{₪}}{\text{m}} \times 100\ \text{m} = 300\ \text{₪}\) – המטרים מצטמצמים</li>
+    </ol>
+    <div class="answer">(א) 3 ₪ למטר · (ב) 300 ₪</div>
+    <div class="check">\(100 \div 20 = 5\) שעות, ו-\(5 \times 60 = 300\) ₪ ✓</div>
+  </div></div>
+
+  <div class="grid2">
+    <div class="box lecturer"><div class="box-title">בשיעור הודגש</div>
+      <p>"תרגיל של <b>שנה ב'</b>", שפותרים <b>רק עם היחידות</b>. <b>הדרך</b> חשובה יותר מטעות חשבון קטנה.</p>
+      <p>תהליך היחידות <b>בכל שאלה</b> ← יודעים שהדרך נכונה, בלי לשאול בבחינה. <small class="ltr">01:22:28</small></p>
+    </div>
+    <div class="box warn"><div class="box-title">טעות נפוצה</div><p>\(20 \div 60\) נותן <b>מטר לשקל</b> – יחידות <b>הפוכות</b>. יצא&nbsp;\(\text{h}^2\)? <b>סימן לטעות</b>.</p></div>
+  </div>
+</section>
+
+<!-- ============ 9. SLAB ON COLUMNS ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">9</span><h2>משקל תקרה על עמודים: חלון לסטטיקה</h2><span class="time">⏱ 01:43:14</span></div>
+  <div class="bl"><b>משקל = נפח × משקל מרחבי</b>: \(16 \times 2.5 = 40\) טון, חלקי 4 ← <b>10 טון לעמוד</b>.</div>
+
+  <div class="grid2">
+    <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+      <p>ליטר מים = <b>1 ק"ג</b> ← 3 ליטר על הגב = <b>3 ק"ג</b>. וקוב בטון = <b>2.5 טון</b>.</p>
+    </div>
+    <div class="box formula"><div class="box-title">הנוסחה</div>
+      \[ W = V \cdot \gamma \qquad \left[\ \text{m}^3 \cdot \frac{\text{t}}{\text{m}^3} = \text{t}\ \right] \]
+      <p class="muted">W = משקל · V = נפח · γ = משקל מרחבי</p>
+    </div>
+  </div>
+
+  <h4>משקל מרחבי ויחידות</h4>
+  <ul class="pts">
+    <li><b>משקל מרחבי (γ):</b> כמה שוקל החומר <b>ביחידת נפח</b>. בטון <b>2.5 טון למ"ק</b>, מים <b>1 טון למ"ק</b>.</li>
+    <li>קודם <b>יחידות היעד</b>: משקל ← רק <b>טון</b>. ו<b>כל היחידות זהות</b>: 20 ס"מ = <b>0.2 מ'</b>.</li>
+    <li><b>למה \(\text{m}^3\) נעלם?</b> הוא גם למעלה וגם למטה ← מצטמצם. חזקה 3 = נפח, חזקה 2 = שטח.</li>
+  </ul>
+
+  <figure class="fig" style="width:85%;margin-inline:auto">
+    <svg viewBox="0 0 660 272" xmlns="http://www.w3.org/2000/svg">
+      <text x="510" y="22" class="lbl he" text-anchor="middle">מבט במרחב</text>
+      <text x="170" y="22" class="lbl he" text-anchor="middle">מבט מלמעלה</text>
+      <line x1="322" y1="30" x2="322" y2="262" class="line" stroke-width="1.5" stroke-dasharray="4 5"/>
+      <rect x="446" y="126" width="14" height="46" class="soft-f ink" stroke-width="2"/>
+      <rect x="620" y="86" width="14" height="86" class="soft-f ink" stroke-width="2"/>
+      <polygon points="380,110 580,110 640,60 440,60" class="mid-f ink" stroke-width="2"/>
+      <polygon points="380,110 580,110 580,126 380,126" class="soft-f ink" stroke-width="2"/>
+      <polygon points="580,110 640,60 640,76 580,126" class="soft-f ink" stroke-width="2"/>
+      <rect x="388" y="126" width="14" height="96" class="soft-f ink" stroke-width="2"/>
+      <rect x="556" y="126" width="14" height="96" class="soft-f ink" stroke-width="2"/>
+      <text x="540" y="50" class="lbl-b ltr" text-anchor="middle">10 m</text>
+      <text x="400" y="80" class="lbl-b ltr" text-anchor="end">8 m</text>
+      <text x="374" y="124" class="lbl ltr" text-anchor="end">20 cm</text>
+      <text x="480" y="254" class="lbl ltr" text-anchor="middle">γ = 2.5 t/m³</text>
+      <rect x="45" y="40" width="125" height="100" class="soft-f"/>
+      <rect x="170" y="40" width="125" height="100" class="mid-f"/>
+      <rect x="45" y="140" width="125" height="100" class="mid-f"/>
+      <rect x="170" y="140" width="125" height="100" class="soft-f"/>
+      <rect x="45" y="40" width="250" height="200" fill="none" class="ink" stroke-width="2.5"/>
+      <line x1="170" y1="40" x2="170" y2="240" class="acc" stroke-width="2" stroke-dasharray="8 6"/>
+      <line x1="45" y1="140" x2="295" y2="140" class="acc" stroke-width="2" stroke-dasharray="8 6"/>
+      <rect x="52" y="47" width="14" height="14" class="dark-f"/>
+      <rect x="274" y="47" width="14" height="14" class="dark-f"/>
+      <rect x="52" y="219" width="14" height="14" class="dark-f"/>
+      <rect x="274" y="219" width="14" height="14" class="dark-f"/>
+      <text x="107" y="96" class="lbl-b ltr" text-anchor="middle">10 t</text>
+      <text x="232" y="96" class="lbl-b ltr" text-anchor="middle">10 t</text>
+      <text x="107" y="196" class="lbl-b ltr" text-anchor="middle">10 t</text>
+      <text x="232" y="196" class="lbl-b ltr" text-anchor="middle">10 t</text>
+      <text x="170" y="262" class="lbl ltr" text-anchor="middle">10 m</text>
+      <text x="38" y="145" class="lbl ltr" text-anchor="end">8 m</text>
+    </svg>
+    <figcaption>התקרה מהלוח. סימטריה ← כל עמוד נושא <b>רבע</b> תקרה (\(4 \times 5\) מ').</figcaption>
+  </figure>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור, מהלוח – לא בדף): תקרה על 4 עמודים</div><div class="w-body">
+    <div class="given">תקרה \(8\ \text{m} \times 10\ \text{m}\), בעובי \(20\ \text{cm}\), על 4 עמודים. בטון: \(\gamma = 2.5\ \text{t/m}^3\).</div>
+    <ol class="lines">
+      <li>ממירים: \(20\ \text{cm} = 20 \div 100 = 0.2\ \text{m}\). יעד: <b>טון</b> לכל עמוד.</li>
+      <li><b>נפח:</b> \(8\ \text{m}\cdot 10\ \text{m}\cdot 0.2\ \text{m} = 16\ \text{m}^3\) (16 קוב בטון – לא נוצות)</li>
+      <li><b>משקל:</b> \(16\ \text{m}^3 \cdot 2.5\ \tfrac{\text{t}}{\text{m}^3} = 40\ \text{t}\)</li>
+      <li><b>לכל עמוד</b> (מלבן סימטרי, עמודים זהים): \(40\ \text{t} \div 4 = 10\ \text{t}\)</li>
+    </ol>
+    <div class="answer">\(10\ \text{t}\) על כל עמוד</div>
+    <div class="check">כל עמוד נושא <b>רבע</b> תקרה: \(4\cdot5\cdot0.2 = 4\ \text{m}^3\), ו-\(4 \times 2.5 = 10\ \text{t}\) ✓</div>
+  </div></div>
+
+  <div class="box warn"><div class="box-title">טעויות נפוצות</div>
+    <ul class="pts">
+      <li>שוכחים להמיר: \(8\cdot10\cdot20 = 1600\ \text{m}^3\) ← <b>1,000 טון לעמוד</b>. מספר מופרך = סימן לטעות.</li>
+      <li>חלוקה שווה רק אם העמודים <b>זהים</b> והפריסה <b>סימטרית</b>. אחרת – סטטיקה (לא בשיעור הזה).</li>
+    </ul>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה נוספת (לא נאמר בשיעור): כמה שוקל מכל מים?</div><div class="w-body">
+    <div class="given">מכל מלא מים על גג: \(2\ \text{m} \times 1.5\ \text{m} \times 1\ \text{m}\) (בלי משקל המכל עצמו). מים: \(\gamma = 1\ \text{t/m}^3\).</div>
+    <ol class="lines">
+      <li>נפח: \(2\ \text{m}\cdot 1.5\ \text{m}\cdot 1\ \text{m} = 3\ \text{m}^3\)</li>
+      <li>משקל: \(3\ \text{m}^3 \cdot 1\ \tfrac{\text{t}}{\text{m}^3} = 3\ \text{t}\)</li>
+    </ol>
+    <div class="answer">\(3\ \text{t}\) על הגג</div>
+    <div class="check">בליטרים: 3 קוב = 3,000 ליטר = 3,000 ק"ג = 3 טון ✓</div>
+  </div></div>
+
+  <div class="box optional"><div class="box-title">הכנה לשיעורי הבית: אחוזים (לא נלמד בשיעור)</div>
+    <ul class="pts">
+      <li>אחוז ← <b>שבר עשרוני</b> (\(5\% = 0.05\)).</li>
+      <li><b>עלייה</b> ← כופלים ב-\((1 + p)\); <b>ירידה</b> ← ב-\((1 - p)\).</li>
+      <li>"<b>כמה היה לפני?</b>" ← <b>מחלקים</b>: \(220 \div 1.10 = 200\) ₪.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ REMEMBER ============ -->
+<section class="topic cont">
+  <div class="topic-head"><span class="n">🧠</span><h2>לזכור</h2></div>
+  <ul class="pts">
+    <li><b>תחבורה</b> = מעבר <b>בטוח</b> של אנשים וסחורות: מהירות, יעילות, נוחות, כלכליות, סביבה.</li>
+    <li>השאלה <b>הראשונה</b>: <b>באיזו מהירות ייסעו?</b> בכביש 6: <b>אין רמזורים</b> (מחלפים), נתיב <b>3.6 עד 3.7 מ'</b>, <b>שוליים</b>, <b>מרחק ראות</b>.</li>
+    <li><b>לפני ביצוע</b> בודקים גם: תוואי, שיפוע, סביבה, קרקע, אקלים, תקציב, נפח תנועה.</li>
+    <li><b>השטח</b> הוא הנכס של המדינה. כל התשתיות חולקות אותו.</li>
+    <li><b>PPP:</b> היזם מממן, בונה, מפעיל וגובה – ובסוף מעביר למדינה. <b>BOT</b>, ו-<b>DBOT</b> = גם תכנון.</li>
+    <li>צמצום: <b>רק בכפל</b>, <b>מונה עם מכנה</b>. חילוק שברים: <b>÷ הופך ל-×</b>, <b>הופכים את התחתון</b>.</li>
+    <li>חזקות: בכפל <b>מחברים</b> מעריכים, בחילוק <b>מחסרים</b>.</li>
+    <li>אורך ב-<b>m</b>, שטח ב-<b>m²</b>, נפח ב-<b>m³</b> (קוב = 1000 ליטר). קודם <b>יחידות היעד</b>, ואז כפל או חילוק.</li>
+    <li><b>משקל = נפח × משקל מרחבי</b>. בטון <b>2.5 טון למ"ק</b>, מים <b>1 טון למ"ק</b>.</li>
+    <li><b>בבחינה:</b> רק שאלות <b>חישוביות</b>, עם <b>חומר פתוח</b>. להראות את <b>הדרך</b>, ולכתוב <b>יחידות</b> – בלי יחידות ← <b>השאלה נפסלת</b>.</li>
+  </ul>
+</section>
+
+<!-- ============ QUESTIONS ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">❓</span><h2>שאלות חזרה</h2></div>
+  <div class="bl">לענות בלי להציץ. התשובות בעמוד הבא.</div>
+  <ol class="quiz">
+    <li>למה משמשת תחבורה, ומה 5 הדרישות ממנה? <span class="lvl">קל</span></li>
+    <li>מה השאלה הראשונה ששואלים את המדינה לפני שמתכננים כביש? <span class="lvl">קל</span></li>
+    <li>למה אין רמזורים בכביש 6, ומה יש במקומם? <span class="lvl">בינוני</span></li>
+    <li>לציין 4 גורמים שבודקים לפני ביצוע כביש, ולכל אחד – סיבה. <span class="lvl">בינוני</span></li>
+    <li>מה ההבדל בין BOT ל-DBOT, ואיך היזם מחזיר את הכסף? <span class="lvl">בינוני</span></li>
+    <li>למה עדיף שהתוואי יעבור בשטחי מדינה? <span class="lvl">קל</span></li>
+    <li>לחשב עם צמצום: \(\dfrac{9}{6}\div\dfrac{3}{4}\) <span class="lvl">קל</span></li>
+    <li>לפשט: \(x^5\cdot x^2\) ו-\(\dfrac{x^3}{x^7}\) <span class="lvl">קל</span></li>
+    <li>בריכה \(5\ \text{m}\times 8\ \text{m}\), עומק \(1.5\ \text{m}\): מה ההיקף, שטח הריצוף והנפח? <span class="lvl">בינוני</span></li>
+    <li>פועל עולה 75 ₪ לשעה ומתקדם 15 מ' לשעה. מה העלות למטר, ומה העלות ל-240 מ'? <span class="lvl">בינוני</span></li>
+    <li>תקרה \(5\ \text{m}\times 6\ \text{m}\), עובי \(15\ \text{cm}\), על 4 עמודים זהים וסימטריים, \(\gamma = 2.5\ \text{t/m}^3\). כמה טון על כל עמוד? <span class="lvl">מאתגר</span></li>
+    <li>בתרגיל הפועל (60 ₪ ו-20 מ' לשעה): מה יוצא אם מחלקים 20 ב-60, ולמה זה לא נכון? <span class="lvl">מאתגר</span></li>
+  </ol>
+
+  <div class="box optional"><div class="box-title">ועוד תרגול: שיעורי הבית (לא נפתרו בשיעור; כחצי שעה)</div>
+    <ul class="pts">
+      <li><b>3 המשוואות</b> בראש דף החזרה. המתכון כמו בפתק "תרגול 1": ה-x לצד אחד, המספרים לצד השני. \(W_w\) = <b>משקל המים</b> – סתם נעלם, כמו x.</li>
+      <li><b>דף האחוזים:</b> לכתוב 50%, 4% ו-0.2% כ<b>שבר עשרוני</b>, עם כל הדרך. ואז <b>6 תרגילים</b>: ב-1 וב-2 – <b>שתי דרכים</b>; בתרגיל 6 – יום ה' ולא ג'. הכנה קצרה – בסוף נושא 9.</li>
+      <li>לפי המרצה: ChatGPT = <b>מורה פרטי</b>. לבקש עוד תרגילים מאותו סוג, והסבר למה.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ ANSWERS ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">✅</span><h2>תשובות</h2></div>
+  <ol class="answers">
+    <li><b>אנשים</b> (עבודה, פנאי) ו<b>סחורות</b>. מעבר <b>בטוח</b>: מהירות, יעילות, נוחות, כלכליות, סביבה.</li>
+    <li><b>באיזו מהירות</b> המדינה רוצה שייסעו בכביש.</li>
+    <li>לשמור על <b>120 קמ"ש</b> בלי עצירות (רמזור מוריד ל-80 ול-60). במקומם – <b>מחלפים</b>.</li>
+    <li>למשל: <b>תוואי</b> (פיצויים ← עיכובים) · <b>שיפוע</b> (משאיות מאטות) · <b>קרקע</b> (סלע או חול ← ביסוס) · <b>נפח תנועה</b> (נתיבים, משאיות).</li>
+    <li>ב-DBOT היזם גם <b>מתכנן</b>. הכסף חוזר מ<b>תשלום על שימוש</b> (מנוי או חד-פעמי), ובסוף הכביש עובר למדינה.</li>
+    <li>בעלי קרקע פרטית ירצו <b>פיצוי</b> ← <b>עיכובים</b>, והמדינה לא רוצה עיכובים.</li>
+    <li>הופכים את התחתון: \(\tfrac{9}{6}\cdot\tfrac{4}{3}\). מצמצמים 9 עם 3, 4 עם 6, ואז 3 עם 3 ← <b>2</b>. בדיקה: \(2\cdot\tfrac{3}{4} = \tfrac{6}{4} = \tfrac{9}{6}\) ✓</li>
+    <li>כפל: \(x^{5+2} = x^7\). חילוק: \(x^{3-7} = x^{-4}\).</li>
+    <li>היקף: \(2\cdot(5+8) = 26\ \text{m}\). ריצוף: \(5\cdot8 = 40\ \text{m}^2\). נפח: \(40\cdot1.5 = 60\ \text{m}^3\).</li>
+    <li>\(75 \div 15 = 5\) ₪ למטר · \(5 \times 240 = 1200\) ₪. בדיקה: \(240 \div 15 = 16\) שעות, \(16 \times 75 = 1200\) ✓</li>
+    <li>15 ס"מ = 0.15 מ'. נפח: \(5\cdot6\cdot0.15 = 4.5\ \text{m}^3\). משקל: \(4.5\cdot2.5 = 11.25\ \text{t}\).<br>לעמוד: \(11.25 \div 4 \approx 2.81\ \text{t}\).</li>
+    <li>\(20 \div 60 = \tfrac{1}{3}\): יוצא <b>מטר לשקל</b> – יחידות <b>הפוכות</b> (ביקשו ₪ למטר).</li>
+  </ol>
+
+  <div class="box optional"><div class="box-title">בדיקה עצמית לשיעורי הבית – רק אחרי שפותרים לבד</div>
+    <p><b>משוואות:</b> (1) \(x = 3\); (2) \(W_w = 2\); (3) \(x = -3\).</p>
+    <p><b>אחוזים:</b> \(50\% = 0.5\); \(4\% = 0.04\); \(0.2\% = 0.002\).</p>
+    <p><b>תרגילים:</b> (1) 3 מ'; (2) 60 ס"מ; (3) 115 ₪; (4) בערך 114.29 ₪; (5) 143 ₪; (6) 112.5 ₪.</p>
+  </div>
+
+  <div class="box optional"><div class="box-title">איפה זה במחברת</div>
+    <ul class="pts">
+      <li><b>תרגול 1 · חזרה על מתמטיקה</b> ← נושאים 6 עד 9: אותו דף. ההקלטה מוסיפה את <b>דרך הפתרון</b>, מעריך <b>שלילי</b>, <b>כפל מול חילוק</b> ביחידות ותרגיל <b>התקרה</b>. בפתק דוגמה אחרת לעלות למטר (80 ₪ ו-16 מ'); בדף ובשיעור: <b>60 ₪ ו-20 מ'</b>.</li>
+      <li><b>מצגת 2</b> ו<b>תרגול 7</b> ← נושא 3: <b>חפירה</b> ו<b>מילוי</b>.</li>
+      <li><b>מצגת 3א</b> ו<b>תרגול 3</b> ← נושא 9: <b>משקל מרחבי γ</b>, ו-\(W_w\) = משקל המים.</li>
+      <li>המצגת "הרצאה מס' 1 – מבוא לכבישים ותשתיות" <b>לא במחברת</b> ← נושאים 2 עד 5 כאן <b>מההקלטה בלבד</b>.</li>
+    </ul>
+  </div>
+
+  <h3>📖 מילון מונחים</h3>
+  <dl class="glossary">
+    <dt>תוואי</dt><dd>המסלול שבו עובר הכביש. עדיף על שטחי מדינה.</dd>
+    <dt>מהירות תכן</dt><dd>המהירות שהמדינה רוצה שייסעו בכביש (בשיעור: "באיזו מהירות המדינה רוצה שמשתמשי הדרך ייסעו"; המונח עצמו לא נאמר).</dd>
+    <dt>מחלף</dt><dd>צומת בלי רמזור: הדרכים בגבהים שונים, והתנועה לא נעצרת.</dd>
+    <dt>שוליים</dt><dd>רצועה בצד הנתיב, לבלימת חירום ולתמרון.</dd>
+    <dt>מרחק ראות</dt><dd>כמה רחוק הנהג רואה קדימה, כדי להספיק לבלום או לעקוף.</dd>
+    <dt>חפירה / מילוי</dt><dd>מעל קו הכביש מורידים קרקע / מתחת מוסיפים. בשיעור: "חוצבים את ההר".</dd>
+    <dt>PPP · יזם</dt><dd>שותפות ציבורית-פרטית: המדינה נותנת שטח ומפקחת; היזם (גוף פרטי) מממן, בונה ומפעיל.</dd>
+    <dt>BOT / DBOT</dt><dd>בנה-הפעל-העבר / תכנן-בנה-הפעל-העבר.</dd>
+    <dt>צמצום</dt><dd>חלוקת מונה ומכנה באותו מספר. מותר רק בכפל.</dd>
+    <dt>מעריך</dt><dd>המספר הקטן למעלה. בכפל מחברים, בחילוק מחסרים.</dd>
+    <dt>קוב (מ"ק)</dt><dd>מטר מעוקב, יחידת נפח. קוב אחד = 1000 ליטר.</dd>
+    <dt>משקל מרחבי (γ)</dt><dd>משקל ביחידת נפח: בטון 2.5, מים 1 (טון למ"ק).</dd>
+    <dt>ניתוח יחידות</dt><dd>לבדוק שהיחידות של התוצאה הן היחידות שמבקשים.</dd>
+  </dl>
+
+  <div class="box unclear"><div class="box-title">לא היה ברור בהקלטה</div>
+    <ul class="pts">
+      <li><span class="ltr">00:04:00</span> – <b>משך פרויקט תשתית:</b> נשמע "חמש עשר שנים" (אולי 5 עד 10).</li>
+      <li><span class="ltr">00:16:48</span> <span class="ltr">00:17:47</span> – <b>עוד גורמים?</b> חצי דקה כל פעם לא נשמעה, בזמן שהכיתה מנתה גורמים.</li>
+      <li><span class="ltr">00:32:13</span> <span class="ltr">00:34:20</span> – <b>כביש 6 חוזר למדינה</b> מתי ("בערך 30 שנה"?), ו"4 נתיבים במרכז" – לכל כיוון או בסך הכול?</li>
+      <li><span class="ltr">00:35:40</span> <span class="ltr">00:36:43</span> – <b>מתקני התפלה</b> והרכבת: המספרים וסיפור הקנס כפי שנשמעו, לא נבדקו.</li>
+      <li><span class="ltr">00:41:01</span> – <b>מתי תרגילים קשים:</b> נאמר "בשבוע הבא" וגם "עוד שבועיים".</li>
+      <li><span class="ltr">00:59:20</span> – <b>קטע לא נשמע:</b> בערך 2 דקות.</li>
+      <li><span class="ltr">01:55:25</span> – <b>עמודים לא זהים:</b> התשובה ל"מה אז?" לא ברורה.</li>
+      <li><span class="ltr">02:01:30</span> – <b>דף האחוזים:</b> בתרגילים 3 ו-5 שם המניה בשאלה ("השולחן", "דף") שונה מהשם בסוגריים ("טבע").</li>
+    </ul>
+  </div>
+</section>
+
+</body>
+</html>

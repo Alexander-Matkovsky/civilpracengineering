@@ -1,0 +1,1222 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>בטיחות · חפירות: דיפון, גידור ויציאות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=block">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});document.documentElement.dataset.math='done'"></script>
+<style>
+/* Lecture summary design system: A4, RTL Hebrew, print-first. */
+
+@page {
+  size: A4;
+  margin: 18mm 16mm 17mm 16mm;
+  @bottom-center {
+    content: counter(page);
+    font-family: Heebo, "Arial Hebrew", sans-serif;
+    font-size: 9pt;
+    color: #7a8394;
+  }
+}
+@page :first {
+  margin: 0;
+  @top-right { content: none; }
+  @top-left { content: none; }
+  @bottom-center { content: none; }
+}
+
+:root {
+  --accent: #4f46e5;
+  --accent-dark: #3730a3;
+  --accent-soft: #eef0ff;
+  --accent-mid: #c7cbfb;
+  --ink: #1d2230;
+  --muted: #5d6676;
+  --line: #dfe3ea;
+  --paper: #ffffff;
+  --bg-soft: #f6f7f9;
+  --ok: #0f7b5f;
+  --ok-soft: #e2f5ee;
+  --warn: #b45309;
+  --warn-soft: #fdf1e2;
+  --bad: #b91c1c;
+  --bad-soft: #fdeaea;
+  --info: #0e6aa8;
+  --info-soft: #e5f2fb;
+}
+
+/* one accent colour per course */
+body.course-math { --accent: #4f46e5; --accent-dark: #3730a3; --accent-soft: #eef0ff; --accent-mid: #c7cbfb; }
+body.course-roads { --accent: #c2620a; --accent-dark: #8f4505; --accent-soft: #fdf0e3; --accent-mid: #f6cfa6; }
+body.course-safety { --accent: #c62828; --accent-dark: #8e1b1b; --accent-soft: #fdecea; --accent-mid: #f5bcbc; }
+body.course-geodesy { --accent: #0f766e; --accent-dark: #0b524c; --accent-soft: #e2f4f1; --accent-mid: #a7dcd5; }
+body.course-building-theory { --accent: #a5502a; --accent-dark: #74371c; --accent-soft: #f8ece5; --accent-mid: #e8c2ad; }
+body.course-drafting { --accent: #0369a1; --accent-dark: #024b74; --accent-soft: #e3f1fa; --accent-mid: #a9d3ee; }
+body.course-labor-law { --accent: #7c3aed; --accent-dark: #5521b5; --accent-soft: #f1eafe; --accent-mid: #d4c0fb; }
+body.course-statics { --accent: #2563eb; --accent-dark: #1e40af; --accent-soft: #e8f0fe; --accent-mid: #b8cdfa; }
+
+* { box-sizing: border-box; }
+html { direction: rtl; }
+body {
+  margin: 0;
+  font-family: Heebo, "Arial Hebrew", Arial, sans-serif;
+  font-size: 11.5pt;
+  line-height: 1.62;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+p { margin: 0 0 2.2mm; }
+b, strong {
+  font-weight: 700;
+  background: linear-gradient(transparent 60%, var(--accent-mid) 60%);
+  padding: 0 0.5mm;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.box b, .box strong, .bl b, .bl strong, th b { background: none; padding: 0; }
+.ltr, .num, code { direction: ltr; unicode-bidi: isolate; }
+code {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.88em;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 1.2mm;
+  padding: 0 1mm;
+}
+.katex { direction: ltr; unicode-bidi: isolate; font-size: 1.08em; }
+.katex-display { margin: 1mm 0 !important; }
+small, .muted { color: var(--muted); }
+
+/* ---------- cover ---------- */
+.cover {
+  height: 297mm;
+  width: 210mm;
+  display: flex;
+  flex-direction: column;
+  break-after: page;
+  overflow: hidden;
+}
+.cover-band {
+  background: var(--accent);
+  color: #fff;
+  padding: 22mm 18mm 14mm;
+  position: relative;
+}
+.cover-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 30%, rgba(255,255,255,.16) 0 18mm, transparent 18.2mm),
+    radial-gradient(circle at 4% 85%, rgba(255,255,255,.10) 0 28mm, transparent 28.2mm),
+    radial-gradient(circle at 30% 105%, rgba(255,255,255,.08) 0 20mm, transparent 20.2mm);
+  pointer-events: none;
+}
+.cover-kicker { font-size: 12pt; font-weight: 500; opacity: .9; margin-bottom: 3mm; }
+.cover h1 { font-size: 30pt; line-height: 1.15; font-weight: 900; margin: 0 0 3mm; }
+.cover-sub { font-size: 14pt; font-weight: 500; opacity: .95; }
+.cover-meta { display: flex; flex-wrap: wrap; gap: 2.5mm; margin-top: 7mm; position: relative; z-index: 1; }
+.chip {
+  display: inline-block;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 20mm;
+  padding: 1mm 4mm;
+  font-size: 10.5pt;
+  font-weight: 500;
+}
+.cover-body { padding: 10mm 18mm 12mm; flex: 1; display: flex; flex-direction: column; gap: 6mm; }
+.cover-body h3 { margin: 0 0 2mm; font-size: 13pt; color: var(--accent-dark); }
+.roadmap { list-style: none; margin: 0; padding: 0; display: grid; gap: 2mm; }
+.roadmap li {
+  display: grid;
+  grid-template-columns: 9mm 1fr auto;
+  align-items: center;
+  gap: 3mm;
+  background: var(--bg-soft);
+  border-radius: 2.5mm;
+  padding: 1.6mm 3mm;
+}
+.roadmap .n {
+  width: 8mm; height: 8mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 11pt;
+}
+.roadmap .t { font-weight: 600; }
+.roadmap .when { direction: ltr; font-size: 9.5pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 2mm 5mm; font-size: 9.5pt; color: var(--muted); }
+
+/* ---------- topic sections: each starts on a new page ---------- */
+section.topic { break-before: page; }
+section.topic.cont { break-before: auto; margin-top: 8mm; }
+.topic-head {
+  display: flex;
+  align-items: center;
+  gap: 3.5mm;
+  border-bottom: 2.5px solid var(--accent);
+  padding-bottom: 2.5mm;
+  margin-bottom: 4mm;
+}
+.topic-head .n {
+  flex: none;
+  width: 11mm; height: 11mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-size: 15pt; font-weight: 900;
+}
+.topic-head h2 { margin: 0; font-size: 19pt; line-height: 1.2; font-weight: 800; color: var(--ink); flex: 1; }
+.time {
+  flex: none;
+  direction: ltr;
+  font-size: 9pt;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 10mm;
+  padding: 0.6mm 2.6mm;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+h3 { font-size: 13.5pt; font-weight: 800; margin: 5mm 0 2mm; color: var(--accent-dark); break-after: avoid; }
+h4 { font-size: 11.5pt; font-weight: 700; margin: 3mm 0 1.5mm; break-after: avoid; }
+
+/* bottom line: first thing in every section */
+.bl {
+  background: var(--accent-soft);
+  border-inline-start: 5px solid var(--accent);
+  border-radius: 2.5mm;
+  padding: 2.5mm 4mm;
+  font-weight: 700;
+  font-size: 12pt;
+  margin: 0 0 4mm;
+  break-inside: avoid;
+}
+.bl::before { content: "⚡ "; }
+
+/* bullets */
+ul.pts { list-style: none; padding: 0; margin: 0 0 3mm; }
+ul.pts > li { position: relative; padding-inline-start: 6mm; margin-bottom: 1.6mm; }
+ul.pts > li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 1mm;
+  top: 2.6mm;
+  width: 2.2mm; height: 2.2mm;
+  border-radius: 50%;
+  background: var(--accent);
+}
+ul.pts ul { margin-top: 1mm; }
+
+/* generic callout box */
+.box {
+  border-radius: 3mm;
+  padding: 3mm 4mm;
+  margin: 3mm 0;
+  break-inside: avoid;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+.box > .box-title { font-weight: 800; margin-bottom: 1.2mm; display: flex; gap: 2mm; align-items: center; }
+.box > :last-child { margin-bottom: 0; }
+.box.life { background: #fffbea; border-color: #f3e3a3; }
+.box.life > .box-title::before { content: "🏠"; }
+.box.formula { background: var(--accent-soft); border-color: var(--accent-mid); text-align: center; }
+.box.formula > .box-title { justify-content: center; }
+.box.formula > .box-title::before { content: "🧮"; }
+.box.tip { background: var(--ok-soft); border-color: #b6e3d2; }
+.box.tip > .box-title::before { content: "💡"; }
+.box.warn { background: var(--warn-soft); border-color: #f2cf9f; }
+.box.warn > .box-title::before { content: "⚠️"; }
+.box.remember { background: var(--info-soft); border-color: #b9dbf2; }
+.box.remember > .box-title::before { content: "🧠"; }
+.box.optional { background: #fafafa; border: 1.5px dashed #c5cad3; }
+.box.optional > .box-title::before { content: "📎"; }
+.box.optional > .box-title::after { content: "רשות"; font-size: 8.5pt; font-weight: 700; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; }
+.box.announce { background: var(--bad-soft); border-color: #f2c2c2; }
+.box.announce > .box-title::before { content: "📢"; }
+.box.unclear { background: #f4f1fb; border-color: #d9cff3; }
+.box.unclear > .box-title::before { content: "❓"; }
+.box.lecturer { background: #fff; border-inline-start: 4px solid var(--accent-mid); }
+.box.lecturer > .box-title::before { content: "🎙️"; }
+
+/* numbered procedure */
+ol.steps { list-style: none; counter-reset: st; padding: 0; margin: 2mm 0 3mm; }
+ol.steps > li { counter-increment: st; position: relative; padding-inline-start: 9mm; margin-bottom: 2mm; min-height: 6.5mm; }
+ol.steps > li::before {
+  content: counter(st);
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.2mm;
+  width: 6.5mm; height: 6.5mm;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 9.5pt;
+  display: grid;
+  place-items: center;
+}
+
+/* worked example */
+.worked {
+  border: 1.5px solid var(--accent-mid);
+  border-radius: 3mm;
+  margin: 3.5mm 0;
+  break-inside: avoid;
+  overflow: hidden;
+}
+.worked > .w-title { background: var(--accent); color: #fff; font-weight: 800; padding: 1.6mm 4mm; }
+.worked > .w-title::before { content: "✏️ "; }
+.worked > .w-body { padding: 3mm 4mm; }
+.worked .given { background: var(--bg-soft); border-radius: 2mm; padding: 2mm 3mm; margin-bottom: 2.5mm; }
+.worked .given::before { content: "נתון: "; font-weight: 800; }
+.worked .ask::before { content: "מחפשים: "; font-weight: 800; }
+.worked ol.lines { counter-reset: ln; list-style: none; padding: 0; margin: 2mm 0; }
+.worked ol.lines > li { counter-increment: ln; padding: 1.2mm 0; padding-inline-start: 13mm; border-bottom: 1px dashed var(--line); position: relative; }
+.worked ol.lines > li::before { content: "שלב " counter(ln); position: absolute; inset-inline-start: 0; font-size: 8.5pt; color: var(--muted); top: 1.8mm; }
+.worked .answer { margin-top: 2mm; font-weight: 800; }
+.worked .answer::before { content: "✅ תשובה: "; }
+.worked .check { margin-top: 1.5mm; color: var(--ok); font-weight: 700; }
+.worked .check::before { content: "✓ בדיקה: "; }
+
+/* figures */
+figure.fig { margin: 3.5mm 0; text-align: center; break-inside: avoid; }
+figure.fig svg { max-width: 100%; height: auto; }
+figure.fig figcaption { font-size: 9.5pt; color: var(--muted); margin-top: 1.5mm; }
+figure.fig.half { width: 60%; margin-inline: auto; }
+
+/* SVG helper classes (inline SVG lives in the HTML DOM, so CSS vars work) */
+svg text { font-family: Heebo, "Arial Hebrew", sans-serif; }
+svg .acc { stroke: var(--accent); }
+svg .acc-f { fill: var(--accent); }
+svg .soft-f { fill: var(--accent-soft); }
+svg .mid-f { fill: var(--accent-mid); }
+svg .dark-f { fill: var(--accent-dark); }
+svg .ink { stroke: var(--ink); }
+svg .ink-f { fill: var(--ink); }
+svg .muted-f { fill: var(--muted); }
+svg .line { stroke: #b8bfcb; }
+svg .ok { stroke: var(--ok); }
+svg .ok-f { fill: var(--ok); }
+svg .bad { stroke: var(--bad); }
+svg .bad-f { fill: var(--bad); }
+svg .warn-f { fill: var(--warn); }
+svg .lbl { font-size: 15px; fill: var(--ink); }
+svg .lbl-s { font-size: 12.5px; fill: var(--muted); }
+svg .lbl-b { font-size: 16px; font-weight: 700; fill: var(--ink); }
+svg .he { direction: rtl; unicode-bidi: plaintext; }
+
+/* tables */
+table.t { width: 100%; border-collapse: separate; border-spacing: 0; margin: 3mm 0; font-size: 10.5pt; break-inside: avoid; border: 1px solid var(--line); border-radius: 2.5mm; overflow: hidden; }
+table.t th { background: var(--accent-soft); color: var(--accent-dark); font-weight: 800; text-align: start; padding: 1.8mm 3mm; border-bottom: 1px solid var(--accent-mid); }
+table.t td { padding: 1.6mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.t tr:last-child td { border-bottom: none; }
+table.t tr:nth-child(even) td { background: #fafbfc; }
+
+/* layout helpers */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; }
+.grid2 > .box, .grid3 > .box { margin: 0; }
+.card { border: 1px solid var(--line); border-radius: 3mm; padding: 2.5mm 3.5mm; break-inside: avoid; background: #fff; }
+.card > .c-title { font-weight: 800; color: var(--accent-dark); margin-bottom: 1mm; }
+.vs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 3mm; align-items: stretch; }
+.vs > .mid { align-self: center; font-weight: 900; color: var(--accent); font-size: 14pt; }
+.keep { break-inside: avoid; }
+.pagebreak { break-before: page; }
+
+/* end matter */
+ol.quiz { padding-inline-start: 7mm; margin: 0; }
+ol.quiz > li { margin-bottom: 3mm; padding-bottom: 2mm; border-bottom: 1px dashed var(--line); break-inside: avoid; }
+ol.quiz .lvl { font-size: 8.5pt; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; margin-inline-start: 2mm; }
+ol.answers { padding-inline-start: 7mm; margin: 0; }
+ol.answers > li { margin-bottom: 2.5mm; break-inside: avoid; }
+dl.glossary { display: grid; grid-template-columns: max-content 1fr; gap: 1.5mm 5mm; margin: 0; }
+dl.glossary dt { font-weight: 800; color: var(--accent-dark); }
+dl.glossary dd { margin: 0; }
+
+@page {
+  @top-right { content: "בטיחות"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+  @top-left { content: "18/10/2026"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+}
+</style>
+</head>
+<body class="course-safety">
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="cover-band">
+    <div class="cover-kicker">🎥 סיכום הקלטה · בטיחות (850138)</div>
+    <h1>חפירות: דיפון, גידור ויציאות</h1>
+    <div class="cover-sub">הקלטת השיעור · יום ראשון 18/10/2026</div>
+    <div class="cover-meta">
+      <span class="chip">👤 בהומי הרצל</span>
+      <span class="chip">⏱ 2:01 שעות הקלטה</span>
+      <span class="chip">📄 16 עמודים</span>
+    </div>
+  </div>
+  <div class="cover-body">
+    <div class="bl">השיעור בשורה אחת: <b>כל מדרגת עומק מוסיפה הגנה</b>, ו<b>כל עובד – עד 20 מ' מיציאה</b>.</div>
+    <div>
+      <h3>🗺️ מפת השיעור</h3>
+      <ol class="roadmap grid2">
+        <li><span class="n">1</span><span class="t">איך לומדים, מבחן, שבלונה</span><span class="when">00:00:55</span></li>
+        <li><span class="n">2</span><span class="t">עד 1.20 מ': מפגע</span><span class="when">00:20:53</span></li>
+        <li><span class="n">3</span><span class="t">מעל 1.20 מ': דיפון ויציאות</span><span class="when">00:26:25</span></li>
+        <li><span class="n">4</span><span class="t">מעל 2 מ' ומעל 4 מ'</span><span class="when">00:35:37</span></li>
+        <li><span class="n">5</span><span class="t">מעבר מעל תעלה: גשרון</span><span class="when">00:44:05</span></li>
+        <li><span class="n">6</span><span class="t">עבודה בלילה</span><span class="when">00:47:40</span></li>
+        <li><span class="n">7</span><span class="t">כמה יציאות? שיטת הסרגל</span><span class="when">00:50:22</span></li>
+        <li><span class="n">8</span><span class="t">נוסחאות למספר היציאות</span><span class="when">01:06:14</span></li>
+        <li><span class="n">9</span><span class="t">בנק השאלות: מוקשים</span><span class="when">01:29:50</span></li>
+      </ol>
+    </div>
+    <div class="box announce"><div class="box-title">הודעות מהשיעור</div>
+      <ul class="pts">
+        <li>במבחנים מותר להכניס <b>2 דפים בכתב יד</b>. <span class="ltr">00:08:18</span></li>
+        <li>לשיעור הבא (<b>סולמות</b>): לדעת <b>היטב</b> את חישובי החפירה של היום. <span class="ltr">00:15:37</span> <span class="ltr">01:19:34</span></li>
+        <li><b>נוכחות</b> בכל שיעור; טעות ברישום ← לומר בשבוע הבא. <span class="ltr">01:21:02</span></li>
+        <li>לתרגול: <b>מבחנים ב-Google Forms</b> (5 מבחנים של 100 שאלות), בלי ציון. <span class="ltr">01:36:53</span></li>
+        <li>קישור ל<b>דרייב</b> של הקורס: בימים הקרובים, לכל המאוחר <b>ביום ראשון הבא</b>. <span class="ltr">01:42:25</span></li>
+        <li>שאלות: בטלפון או בוואטסאפ; <b>בכתב</b> עדיף — נשמר במסמך "מענה לשאלות סטודנטים". <span class="ltr">01:45:05</span></li>
+      </ul>
+    </div>
+    <div class="legend"><span>⚡ שורה תחתונה</span><span>🏠 דוגמה מהחיים</span><span>🧮 נוסחה</span><span>✏️ דוגמה פתורה</span><span>⚠️ טעות נפוצה</span><span>💡 טיפ</span><span>📎 רשות</span><span>⏱ זמן בהקלטה</span></div>
+  </div>
+</div>
+
+<!-- ============ 1. HOW THE COURSE WORKS ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">1</span><h2>איך לומדים בקורס ומה יש במבחן</h2><span class="time">⏱ 00:00:55</span></div>
+  <div class="bl">קודם <b>כל החישובים</b>, מתרגלים "<b>דרך האצבעות</b>", ובמבחן — <b>2 דפים</b> בכתב יד.</div>
+
+  <ul class="pts">
+    <li><b>חודש וחצי עד חודשיים</b> ראשונים: כמעט רק <b>חישובים</b>, וקצת מלל.</li>
+    <li>כל חישוב לבד <b>פשוט</b>. הרבה סוגים יחד ← "<b>סלט בראש</b>". לכן נושא אחד בכל פעם, עם <b>חזרות</b>.</li>
+    <li><b>מבדק ידע</b> כמעט בכל שיעור = <b>מראה</b> למה שעוד לא יודעים. מותר להתייעץ. שווה בערך <b>חצי נקודה</b>.</li>
+    <li><b>טבלת הישגים</b> (אצלנו על פני 2 סמסטרים) עוזרת לקבוע את <b>ציון המגן</b>. <span class="ltr">01:56:52</span></li>
+    <li>מבחן ה<b>מגן</b>: <b>אותה בחינה</b> במועד א' ובמועד ב' (רק התאריך משתנה). כל השאלות שלה כבר <b>בדרייב עם פתרון</b>; הבחינה הפתורה עולה <b>באותו לילה</b>. <span class="ltr">00:02:00</span></li>
+    <li>בדפי העזר כותבים <b>רק מה שלא יודעים</b>: בערך <b><span class="ltr">20–25</span> שאלות מלל</b> (סביר ש-2 עד 3 מהן יופיעו). לחישובים — רק <b>נוסחאות</b>.</li>
+    <li>בשאלת חישוב <b>לרשום את הדרך</b>. מספר בלי דרך עלול להיחשב טעות.</li>
+  </ul>
+
+  <h3>שבלונה לדוגמה (שאלה של 10 נק'): מהחזית עד התעלה <span class="time">⏱ 00:10:48</span></h3>
+  <figure class="fig">
+    <svg viewBox="0 0 720 196" xmlns="http://www.w3.org/2000/svg" direction="ltr">
+      <defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs>
+      <line x1="30" y1="118" x2="270" y2="118" class="ink" stroke-width="3"/>
+      <line x1="380" y1="118" x2="712" y2="118" class="ink" stroke-width="3"/>
+      <rect x="270" y="118" width="110" height="50" class="soft-f"/>
+      <path d="M270,118 V168 H380 V118" fill="none" class="ink" stroke-width="3"/>
+      <text x="325" y="150" class="lbl-b he" text-anchor="middle">תעלה</text>
+      <rect x="680" y="8" width="32" height="110" class="mid-f"/>
+      <line x1="680" y1="8" x2="680" y2="118" class="ink" stroke-width="3"/>
+      <text x="650" y="26" class="lbl-b he" text-anchor="middle">חזית</text>
+      <line x1="620" y1="110" x2="620" y2="34" class="acc" stroke-width="4"/>
+      <line x1="500" y1="110" x2="500" y2="34" class="acc" stroke-width="4"/>
+      <line x1="496" y1="72" x2="624" y2="72" class="acc" stroke-width="6"/>
+      <line x1="496" y1="36" x2="624" y2="36" class="acc" stroke-width="6"/>
+      <line x1="500" y1="108" x2="620" y2="74" class="acc" stroke-width="2"/>
+      <text x="560" y="24" class="lbl-b he" text-anchor="middle">פיגום</text>
+      <rect x="480" y="110" width="150" height="8" class="warn-f"/>
+      <text x="436" y="92" class="lbl he" text-anchor="middle">אדן</text>
+      <line x1="450" y1="96" x2="482" y2="112" class="ink" stroke-width="1.5"/>
+      <g class="ink" stroke-width="1.5">
+        <line x1="380" y1="128" x2="380" y2="144"/>
+        <line x1="480" y1="128" x2="480" y2="144"/>
+        <line x1="500" y1="128" x2="500" y2="144"/>
+        <line x1="620" y1="128" x2="620" y2="144"/>
+        <line x1="680" y1="128" x2="680" y2="144"/>
+        <line x1="380" y1="136" x2="680" y2="136"/>
+      </g>
+      <text x="430" y="160" class="lbl" text-anchor="middle">0.50</text>
+      <text x="490" y="160" class="lbl-s" text-anchor="middle">0.10</text>
+      <text x="560" y="160" class="lbl" text-anchor="middle">0.60</text>
+      <text x="650" y="160" class="lbl" text-anchor="middle">0.30</text>
+      <line x1="384" y1="172" x2="676" y2="172" class="acc" stroke-width="2.5" marker-start="url(#ar1)" marker-end="url(#ar1)"/>
+      <text x="530" y="193" class="lbl-b" text-anchor="middle">1.50</text>
+    </svg>
+    <figcaption>במטרים, מהחזית אל התעלה: 0.30 מרווח (לא נאמר; יוצא מהסכומים) ← 0.60 פיגום צר ← 0.10 אדן ← 0.50 עד התעלה = 1.50.</figcaption>
+  </figure>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): כמה מהחזית עד התעלה?</div><div class="w-body">
+    <div class="given">מדביקים <b>אבני חיפוי</b> על החזית. כמה לפחות מהחזית עד שפת התעלה?</div>
+    <ol class="lines">
+      <li>סוג העבודה ← רוחב הפיגום: צר <b>0.60</b> · עם חומרים (חיפוי) <b>0.80</b> · שבירת אבנים <b>1.30</b>.</li>
+      <li>מרווח (0.30 — לא נאמר בשיעור) + פיגום + אדן + עד התעלה: \({0.30 + 0.80 + 0.10 + 0.50 = 1.70}\) מ'</li>
+    </ol>
+    <div class="answer">1.70 מ' לפחות.</div>
+    <div class="check">מהשבלונה (1.50) מחליפים פיגום צר בפיגום חומרים: \({1.50 - 0.60 + 0.80 = 1.70}\) ✓</div>
+  </div></div>
+</section>
+
+<!-- ============ 2. UP TO 1.20 M ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">2</span><h2>עד 1.20 מ': מפגע שצריך לסלק</h2><span class="time">⏱ 00:20:53</span></div>
+  <div class="bl">חפירה עד <b>1.20 מ'</b> היא <b>מפגע</b> ← חובה לסלק אותו. החוק לא אומר איך.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהשיעור</div>
+    <p><b>מכסה שבור</b> על מתג חשמל בכיתה: לוחצים בלי להסתכל ← <b>מתחשמלים</b>. לסלק = <b>לנעול</b> את החדר, או לקבע מכסה <b>בברגים</b>.</p>
+  </div>
+
+  <ul class="pts">
+    <li>עד <b>1.20 מ'</b> אין חובת דיפון ויציאות. אבל אפשר ליפול ו<b>לשבור רגל</b> ← להשאיר כך = <b>רשלנות</b>.</li>
+    <li>החוק אומר רק <b>"לסלק את המפגע"</b>. הדרך — לבחירתנו (למשל לכסות או לגדר — לא נאמר בשיעור).</li>
+    <li>הגבול <b>חד</b>: 1.20 בדיוק = עוד "עד". <b>מעל 1.20</b>, גם במילימטרים ← הכללים של הנושא הבא.</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 204" xmlns="http://www.w3.org/2000/svg" direction="ltr">
+      <line x1="362" y1="6" x2="362" y2="198" class="line" stroke-width="1.5" stroke-dasharray="6 6"/>
+      <text x="545" y="22" class="he bad-f" font-size="18" font-weight="800" text-anchor="middle">מפגע</text>
+      <text x="545" y="42" class="lbl-s he" text-anchor="middle">לסלק אותו</text>
+      <line x1="400" y1="62" x2="495" y2="62" class="ink" stroke-width="3"/>
+      <line x1="595" y1="62" x2="690" y2="62" class="ink" stroke-width="3"/>
+      <rect x="495" y="62" width="100" height="120" class="soft-f"/>
+      <path d="M495,62 V182 H595 V62" fill="none" class="ink" stroke-width="3"/>
+      <g class="ink" stroke-width="1.5"><line x1="622" y1="62" x2="622" y2="182"/><line x1="614" y1="182" x2="630" y2="182"/></g>
+      <text x="658" y="128" class="lbl-b" text-anchor="middle">1.20</text>
+      <text x="545" y="200" class="lbl-s he" text-anchor="middle">בדיוק על הגבול</text>
+      <text x="178" y="22" class="he acc-f" font-size="18" font-weight="800" text-anchor="middle">כבר מעל הגבול</text>
+      <text x="178" y="42" class="lbl-s he" text-anchor="middle">דיפון · עפר · יציאות</text>
+      <line x1="35" y1="62" x2="128" y2="62" class="ink" stroke-width="3"/>
+      <line x1="228" y1="62" x2="322" y2="62" class="ink" stroke-width="3"/>
+      <rect x="128" y="62" width="100" height="121" class="soft-f"/>
+      <path d="M128,62 V183 H228 V62" fill="none" class="ink" stroke-width="3"/>
+      <rect x="128" y="48" width="8" height="135" class="acc-f"/>
+      <rect x="220" y="48" width="8" height="135" class="acc-f"/>
+      <g class="ink" stroke-width="1.5"><line x1="104" y1="62" x2="104" y2="183"/><line x1="96" y1="183" x2="112" y2="183"/></g>
+      <text x="68" y="128" class="acc-f" font-size="16" font-weight="800" text-anchor="middle">1.21</text>
+      <text x="178" y="200" class="lbl-s he" text-anchor="middle">סנטימטר אחד יותר</text>
+    </svg>
+    <figcaption>1.20 מ' בדיוק = רק מפגע. 1.21 מ' = "מעל 1.20" ← עפר רחוק מהשפה, ואם נכנסים — דיפון (באדום) ויציאות.</figcaption>
+  </figure>
+
+  <div class="box lecturer"><div class="box-title">מניסיון המרצה בחקירת תאונות</div>
+    <ul class="pts">
+      <li>אחרי תאונה משנים את המקום = <b>זיהום זירה</b>. בור של 1.10 מ' "נמדד" אחר כך 1.30 או 1.45.</li>
+      <li>ליד מעקה תקני הניחו <b>אבני טוף</b> ← המשטח עלה <span class="ltr">10–15</span> ס"מ ← המעקה <b>כבר לא תקני</b>. חודש אחר כך האבנים <b>נעלמו</b> = שינו את הזירה לפני מדידה.</li>
+    </ul>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה נוספת: 1.15 מ' — מפגע או יותר?</div><div class="w-body">
+    <div class="given">(א) בור בעומק <b>1.15 מ'</b>. (ב) חפרו באותו בור עוד <b>10 ס"מ</b>, ועובדים ייכנסו.</div>
+    <ol class="lines">
+      <li>(א) \({1.15 \le 1.20}\) ← רק <b>מפגע</b> ← לסלק אותו.</li>
+      <li>(ב) \({1.15 + 0.10 = 1.25 &gt; 1.20}\) ← כללי "מעל 1.20" (נושא 3).</li>
+    </ol>
+    <div class="answer">(א) רק מפגע. (ב) עפר 0.5 מ' מהשפה; ובגלל שנכנסים — גם דיפון ויציאות.</div>
+    <div class="check">\({1.25 - 1.20 = 0.05}\) מ' = 5 ס"מ מעל. הגבול חד ← גם 5 ס"מ מספיקים ✓</div>
+  </div></div>
+</section>
+
+<!-- ============ 3. ABOVE 1.20 M ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">3</span><h2>מעל 1.20 מ': דיפון, עפר, יציאות ותא הגנה</h2><span class="time">⏱ 00:26:25</span></div>
+  <div class="bl">מעל 1.20 מ'? <b>עפר</b> 0.5 מ' מהשפה. ונכנסים? <b>דיפון</b> (בולט 15 ס"מ) ו<b>יציאה</b> עד 20 מ'.</div>
+
+  <div class="grid3">
+    <div class="card"><div class="c-title">🧱 דיפון</div>לוחות <b>עץ</b> או פחי <b>פלדה</b> לאורך הדופן. בולט <b>15 ס"מ</b> לפחות.</div>
+    <div class="card"><div class="c-title">⛰️ עפר</div><b>0.5 מ'</b> לפחות מהשפה. קרוב יותר ← <b>נוסף לעומק</b>.</div>
+    <div class="card"><div class="c-title">🪜 יציאות</div>העובד הולך <b>עד 20 מ'</b> ליציאה בטוחה.</div>
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 238" xmlns="http://www.w3.org/2000/svg" direction="ltr">
+      <line x1="20" y1="72" x2="290" y2="72" class="ink" stroke-width="3"/>
+      <line x1="430" y1="72" x2="700" y2="72" class="ink" stroke-width="3"/>
+      <rect x="300" y="72" width="120" height="158" class="soft-f"/>
+      <path d="M290,72 V230 H430 V72" fill="none" class="ink" stroke-width="3"/>
+      <rect x="290" y="54" width="10" height="176" class="acc-f"/>
+      <rect x="420" y="54" width="10" height="176" class="acc-f"/>
+      <g class="ink" stroke-width="3"><line x1="312" y1="230" x2="312" y2="30"/><line x1="336" y1="230" x2="336" y2="30"/></g>
+      <g class="ink" stroke-width="2">
+        <line x1="312" y1="42" x2="336" y2="42"/><line x1="312" y1="63" x2="336" y2="63"/>
+        <line x1="312" y1="84" x2="336" y2="84"/><line x1="312" y1="105" x2="336" y2="105"/>
+        <line x1="312" y1="126" x2="336" y2="126"/><line x1="312" y1="147" x2="336" y2="147"/>
+        <line x1="312" y1="168" x2="336" y2="168"/><line x1="312" y1="189" x2="336" y2="189"/>
+        <line x1="312" y1="210" x2="336" y2="210"/>
+      </g>
+      <text x="324" y="21" class="lbl-b he" text-anchor="middle">יציאה</text>
+      <circle cx="385" cy="161" r="9" fill="none" class="ink" stroke-width="2.5"/>
+      <g class="ink" stroke-width="2.5">
+        <line x1="385" y1="170" x2="385" y2="201"/>
+        <line x1="385" y1="201" x2="375" y2="228"/><line x1="385" y1="201" x2="395" y2="228"/>
+        <line x1="385" y1="180" x2="370" y2="195"/><line x1="385" y1="180" x2="400" y2="193"/>
+      </g>
+      <path d="M490,72 C508,38 534,26 562,26 C590,26 616,42 636,72 Z" class="warn-f" fill-opacity="0.35"/>
+      <path d="M490,72 C508,38 534,26 562,26 C590,26 616,42 636,72" fill="none" class="ink" stroke-width="2"/>
+      <text x="563" y="58" class="lbl-b he" text-anchor="middle">עודפי עפר</text>
+      <g class="ink" stroke-width="1.5"><line x1="430" y1="82" x2="430" y2="98"/><line x1="490" y1="82" x2="490" y2="98"/><line x1="430" y1="90" x2="490" y2="90"/></g>
+      <text x="460" y="114" class="lbl-s he" text-anchor="middle">חצי מטר</text>
+      <text x="460" y="130" class="lbl-s he" text-anchor="middle">לפחות</text>
+      <g class="ink" stroke-width="1.5"><line x1="276" y1="54" x2="286" y2="54"/><line x1="276" y1="72" x2="286" y2="72"/><line x1="281" y1="54" x2="281" y2="72"/></g>
+      <text x="262" y="66" class="lbl-b" text-anchor="middle">15</text>
+      <text x="236" y="66" class="lbl-s he" text-anchor="middle">ס"מ</text>
+      <g class="ink" stroke-width="1.5"><line x1="262" y1="72" x2="262" y2="230"/><line x1="255" y1="72" x2="269" y2="72"/><line x1="255" y1="230" x2="269" y2="230"/></g>
+      <text x="215" y="150" class="lbl he" text-anchor="middle">עומק מעל</text>
+      <text x="215" y="170" class="lbl-b" text-anchor="middle">1.20</text>
+      <text x="494" y="178" class="lbl-b he" text-anchor="middle">דיפון</text>
+      <line x1="470" y1="173" x2="432" y2="162" class="ink" stroke-width="1.5"/>
+    </svg>
+    <figcaption>חתך: דיפון בולט 15 ס"מ · עפר חצי מטר לפחות מהשפה · יציאה (סולם שבולט מעל השפה) עד 20 מ' הליכה.</figcaption>
+  </figure>
+
+  <ul class="pts">
+    <li><b>דיפון</b> (מ"<b>דופן</b>"): דופן שקורסת <b>לא קוברת</b> עובד רכון. פחי פלדה שננעצים באדמה = <b>שיגום</b>.</li>
+    <li>ה-<b>15 ס"מ</b>: אבן שנבעטה בטעות <b>לא נופלת</b> למטה. <b>חוק מרפי</b> (מהשיעור): מה שזורקים בכוונה מפספס; מה שנופל בטעות — פוגע.</li>
+    <li>יציאה = <b>סולם</b>, <b>מדרגות</b> (פלדה, עץ, אלומיניום), <b>סוללת עפר</b> משופעת או <b>טרסות</b>.</li>
+    <li><b>תא הגנה</b> (כמו כלוב צלילה מול כרישים) ← <b>במקום דיפון</b>. לפי המרצה — גם <b>בלי יציאות</b>.</li>
+    <li><b>לא נכנסים</b> לחפירה ← לא צריך דיפון ולא יציאות. המטרה: להגן על <b>אנשים</b>.</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 196" xmlns="http://www.w3.org/2000/svg" direction="ltr">
+      <line x1="372" y1="6" x2="372" y2="190" class="line" stroke-width="1.5" stroke-dasharray="6 6"/>
+      <text x="692" y="26" class="bad-f" font-size="24" font-weight="800" text-anchor="middle">✗</text>
+      <text x="566" y="22" class="lbl-b he" text-anchor="middle">עפר צמוד לשפה</text>
+      <line x1="392" y1="76" x2="470" y2="76" class="ink" stroke-width="3"/>
+      <line x1="560" y1="76" x2="705" y2="76" class="ink" stroke-width="3"/>
+      <rect x="470" y="76" width="90" height="90" class="soft-f"/>
+      <path d="M470,76 V166 H560 V76" fill="none" class="ink" stroke-width="3"/>
+      <path d="M560,76 C573,58 588,49 605,49 C622,49 637,58 650,76 Z" class="warn-f" fill-opacity="0.35"/>
+      <path d="M560,76 C573,58 588,49 605,49 C622,49 637,58 650,76" fill="none" class="ink" stroke-width="2"/>
+      <line x1="605" y1="49" x2="442" y2="49" class="line" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <g class="ink" stroke-width="1.5"><line x1="668" y1="49" x2="668" y2="76"/><line x1="662" y1="49" x2="674" y2="49"/></g>
+      <text x="694" y="68" class="lbl-s" text-anchor="middle">0.30</text>
+      <g class="ink" stroke-width="1.5"><line x1="490" y1="76" x2="490" y2="166"/><line x1="484" y1="76" x2="496" y2="76"/><line x1="484" y1="166" x2="496" y2="166"/></g>
+      <text x="524" y="128" class="lbl" text-anchor="middle">1.00</text>
+      <g class="bad" stroke-width="2.5"><line x1="450" y1="49" x2="450" y2="166"/><line x1="443" y1="49" x2="457" y2="49"/><line x1="443" y1="166" x2="457" y2="166"/></g>
+      <text x="413" y="116" class="bad-f" font-size="17" font-weight="800" text-anchor="middle">1.30</text>
+      <text x="515" y="190" class="he bad-f" font-size="15" font-weight="700" text-anchor="middle">צריך דיפון</text>
+      <text x="345" y="26" class="ok-f" font-size="24" font-weight="800" text-anchor="middle">✓</text>
+      <text x="196" y="22" class="lbl-b he" text-anchor="middle">עפר במרחק חצי מטר</text>
+      <line x1="18" y1="76" x2="110" y2="76" class="ink" stroke-width="3"/>
+      <line x1="200" y1="76" x2="356" y2="76" class="ink" stroke-width="3"/>
+      <rect x="110" y="76" width="90" height="90" class="soft-f"/>
+      <path d="M110,76 V166 H200 V76" fill="none" class="ink" stroke-width="3"/>
+      <path d="M245,76 C258,58 273,49 290,49 C307,49 322,58 335,76 Z" class="warn-f" fill-opacity="0.35"/>
+      <path d="M245,76 C258,58 273,49 290,49 C307,49 322,58 335,76" fill="none" class="ink" stroke-width="2"/>
+      <g class="ok" stroke-width="2.5"><line x1="200" y1="90" x2="245" y2="90"/><line x1="200" y1="83" x2="200" y2="97"/><line x1="245" y1="83" x2="245" y2="97"/></g>
+      <text x="222" y="116" class="ok-f" font-size="16" font-weight="800" text-anchor="middle">0.5</text>
+      <g class="ink" stroke-width="1.5"><line x1="130" y1="76" x2="130" y2="166"/><line x1="124" y1="76" x2="136" y2="76"/><line x1="124" y1="166" x2="136" y2="166"/></g>
+      <text x="164" y="128" class="lbl" text-anchor="middle">1.00</text>
+      <text x="155" y="190" class="he ok-f" font-size="15" font-weight="700" text-anchor="middle">לא צריך דיפון</text>
+    </svg>
+    <figcaption>אותה תעלה של 1.00 מ'. מימין: ערמה של 0.30 צמודה לשפה ← מודדים מראש הערמה: 1.30. משמאל: עפר חצי מטר מהשפה ← 1.00.</figcaption>
+  </figure>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): "תעלה של מטר"</div><div class="w-body">
+    <div class="given">קבלן חפר תעלה "של <b>1.00 מ'</b>" לצינור, בלי דיפון. העפר נערם <b>צמוד לשפה</b>, ועובדים בפנים.</div>
+    <div class="ask">צריך דיפון? ואיך אפשר בלי?</div>
+    <ol class="lines">
+      <li>עפר צמוד לשפה ← מודדים <b>מראש הערמה</b>: לפחות \(1.30\) מ' (ערמה של כ-\(0.30\)).</li>
+      <li>\({1.30 &gt; 1.20}\) ← צריך דיפון ויציאות.</li>
+      <li>הפתרון שנעשה: <b>להרחיק את העפר 0.5 מ'</b> ← העומק \(1.00\) מ'.</li>
+    </ol>
+    <div class="answer">אחרי הרחקת העפר — לא צריך דיפון (הבור עדיין מפגע שצריך לטפל בו).</div>
+    <div class="check">\({1.00 + 0.30 = 1.30 &gt; 1.20}\) ✗ לפני; \({1.00 \le 1.20}\) ✓ אחרי</div>
+  </div></div>
+</section>
+
+<!-- ============ 4. ABOVE 2 M AND 4 M ============ -->
+<section class="topic cont">
+  <div class="topic-head"><span class="n">4</span><h2>מעל 2 מ' ומעל 4 מ': גידור, מעקה ותכנית</h2><span class="time">⏱ 00:35:37</span></div>
+  <div class="bl">כל מדרגה = <b>הקודמת + תוספת</b>. מעל 2 מ' ← <b>גידור</b>. מעל 4 מ' ← <b>תכנית</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהשיעור</div>
+    <p><b>רישיונות חשמל</b>: כל דרגה מתירה <b>כל מה שבדרגה הקודמת</b>, ועוד תוספת. בחפירה בדיוק כך: יורדים מדרגה ← <b>מוסיפים</b> דרישה, וכל מה שהיה — נשאר.</p>
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 226" xmlns="http://www.w3.org/2000/svg" direction="ltr">
+      <rect x="20" y="24" width="590" height="50" class="acc-f" fill-opacity="0.06"/>
+      <rect x="20" y="74" width="590" height="50" class="acc-f" fill-opacity="0.14"/>
+      <rect x="20" y="124" width="590" height="50" class="acc-f" fill-opacity="0.24"/>
+      <rect x="20" y="174" width="590" height="50" class="acc-f" fill-opacity="0.36"/>
+      <line x1="20" y1="24" x2="610" y2="24" class="ink" stroke-width="4"/>
+      <line x1="20" y1="74" x2="610" y2="74" class="line" stroke-width="1.5" stroke-dasharray="6 5"/>
+      <line x1="20" y1="124" x2="610" y2="124" class="line" stroke-width="1.5" stroke-dasharray="6 5"/>
+      <line x1="20" y1="174" x2="610" y2="174" class="line" stroke-width="1.5" stroke-dasharray="6 5"/>
+      <line x1="626" y1="24" x2="626" y2="224" class="ink" stroke-width="2.5"/>
+      <line x1="618" y1="24" x2="634" y2="24" class="ink" stroke-width="2.5"/>
+      <line x1="618" y1="74" x2="634" y2="74" class="ink" stroke-width="2.5"/>
+      <line x1="618" y1="124" x2="634" y2="124" class="ink" stroke-width="2.5"/>
+      <line x1="618" y1="174" x2="634" y2="174" class="ink" stroke-width="2.5"/>
+      <text x="674" y="13" class="lbl-s he" text-anchor="middle">עומק (מ')</text>
+      <text x="674" y="30" class="lbl" text-anchor="middle">0</text>
+      <text x="674" y="80" class="lbl-b" text-anchor="middle">1.20</text>
+      <text x="674" y="130" class="lbl-b" text-anchor="middle">2.00</text>
+      <text x="674" y="180" class="lbl-b" text-anchor="middle">4.00</text>
+      <circle cx="582" cy="49" r="13" class="acc-f"/><text x="582" y="55" class="soft-f" font-size="15" font-weight="800" text-anchor="middle">1</text>
+      <circle cx="582" cy="99" r="13" class="acc-f"/><text x="582" y="105" class="soft-f" font-size="15" font-weight="800" text-anchor="middle">2</text>
+      <circle cx="582" cy="149" r="13" class="acc-f"/><text x="582" y="155" class="soft-f" font-size="15" font-weight="800" text-anchor="middle">3</text>
+      <circle cx="582" cy="199" r="13" class="acc-f"/><text x="582" y="205" class="soft-f" font-size="15" font-weight="800" text-anchor="middle">4</text>
+      <text x="290" y="45" class="lbl-b he" text-anchor="middle">מפגע ← לסלק אותו</text>
+      <text x="290" y="65" class="lbl-s he" text-anchor="middle">העיקר שאיש לא ייפגע</text>
+      <text x="290" y="95" class="lbl-b he" text-anchor="middle">דיפון · עפר רחוק מהשפה · יציאות</text>
+      <text x="290" y="115" class="lbl-s he" text-anchor="middle">דיפון ויציאות — רק כשנכנסים · במקום דיפון אפשר תא הגנה</text>
+      <text x="290" y="145" class="lbl-b he" text-anchor="middle">כל מה שלמעלה, ועוד גידור</text>
+      <text x="290" y="165" class="lbl-s he" text-anchor="middle">מעקה: אזן יד ואזן תיכון — שלא ייפלו פנימה</text>
+      <text x="290" y="195" class="lbl-b he" text-anchor="middle">כל מה שלמעלה, ועוד תכנית של מהנדס</text>
+      <text x="290" y="215" class="lbl-s he" text-anchor="middle">רק לקטע העמוק · חיזוקים לפי התכנון</text>
+    </svg>
+    <figcaption>יורדים במדרגות: כל מה שלמעלה נשאר, ובכל מדרגה מתווספת שורה אחת (לא בקנה מידה).</figcaption>
+  </figure>
+
+  <h3>הגידור: מעקה תקני <span class="time">⏱ 00:36:55</span></h3>
+  <ul class="pts">
+    <li>גידור = <b>מעקה</b>: עמודים ו-2 מאוזנים. מודדים מ<b>המשטח שעומדים עליו</b>.</li>
+    <li><b>אזן יד</b> (על הלוח: "אוזן יד") — העליון: <b><span class="ltr">0.90–1.15</span> מ'</b>. <b>אזן תיכון</b> — האמצעי: <b><span class="ltr">0.45–0.50</span> מ'</b>.</li>
+    <li>אותם גבהים ב<b>פיגום</b> וב<b>מדרכת מעבר</b>. בתוך הטווח — <b>שיקול דעת</b> (עובדים נמוכים ← קרוב ל-0.90).</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 234" xmlns="http://www.w3.org/2000/svg" direction="ltr">
+      <text x="585" y="24" class="lbl-b he" text-anchor="middle">מדרכת מעבר או פיגום</text>
+      <rect x="474" y="43" width="222" height="35" class="acc-f" fill-opacity="0.13"/>
+      <rect x="474" y="134" width="222" height="7" class="acc-f" fill-opacity="0.13"/>
+      <rect x="462" y="204" width="243" height="10" class="mid-f"/>
+      <line x1="462" y1="204" x2="705" y2="204" class="ink" stroke-width="3"/>
+      <line x1="480" y1="204" x2="480" y2="44" class="ink" stroke-width="5"/>
+      <line x1="690" y1="204" x2="690" y2="44" class="ink" stroke-width="5"/>
+      <line x1="474" y1="64" x2="696" y2="64" class="acc" stroke-width="6"/>
+      <line x1="474" y1="137" x2="696" y2="137" class="acc" stroke-width="5"/>
+      <rect x="480" y="183" width="210" height="21" class="warn-f"/>
+      <text x="410" y="60" class="lbl-b he" text-anchor="middle">אזן יד</text>
+      <text x="410" y="78" class="lbl" text-anchor="middle">0.90–1.15</text>
+      <text x="410" y="131" class="lbl-b he" text-anchor="middle">אזן תיכון</text>
+      <text x="410" y="149" class="lbl" text-anchor="middle">0.45–0.50</text>
+      <text x="410" y="185" class="lbl-b he" text-anchor="middle">לוח רגל</text>
+      <text x="410" y="203" class="lbl" text-anchor="middle">≥ 0.15</text>
+      <g class="line" stroke-width="1.5" stroke-dasharray="3 3">
+        <line x1="448" y1="64" x2="472" y2="64"/>
+        <line x1="456" y1="137" x2="472" y2="137"/>
+        <line x1="444" y1="193" x2="478" y2="193"/>
+      </g>
+      <text x="265" y="24" class="lbl-b he" text-anchor="middle">גידור חפירה</text>
+      <rect x="164" y="43" width="202" height="35" class="acc-f" fill-opacity="0.13"/>
+      <rect x="164" y="134" width="202" height="7" class="acc-f" fill-opacity="0.13"/>
+      <rect x="164" y="206" width="202" height="26" class="soft-f"/>
+      <text x="265" y="226" class="lbl-s he" text-anchor="middle">חפירה</text>
+      <line x1="20" y1="204" x2="372" y2="204" class="ink" stroke-width="3"/>
+      <line x1="170" y1="204" x2="170" y2="44" class="ink" stroke-width="5"/>
+      <line x1="360" y1="204" x2="360" y2="44" class="ink" stroke-width="5"/>
+      <line x1="164" y1="64" x2="366" y2="64" class="acc" stroke-width="6"/>
+      <line x1="164" y1="137" x2="366" y2="137" class="acc" stroke-width="5"/>
+      <rect x="170" y="183" width="190" height="21" class="acc-f"/>
+      <text x="86" y="150" class="lbl-b he" text-anchor="middle">הדיפון הבולט</text>
+      <text x="86" y="169" class="lbl-b he" text-anchor="middle">הוא לוח הרגל</text>
+      <line x1="120" y1="178" x2="170" y2="192" class="ink" stroke-width="1.5"/>
+    </svg>
+    <figcaption>מימין: מעקה מלא בפיגום או במדרכת מעבר. משמאל: בחפירה הדיפון שבולט 15 ס"מ (באדום) משמש לוח רגל (לפי המרצה). גבהים במטרים.</figcaption>
+  </figure>
+
+  <div class="grid2">
+    <div class="box tip"><div class="box-title">דיפון בולט מול לוח רגל</div>
+      <p>הדיפון עוצר נפילה <b>לתוך</b> התעלה; לוח רגל — נפילה <b>מהמשטח</b>. (שהדיפון מחליף לוח רגל — פרשנות המרצה.)</p>
+    </div>
+    <div class="box lecturer"><div class="box-title">מעל 4 מ': תכנית <span class="time">⏱ 00:42:36</span></div>
+      <p>הכול כמו מעל 2 מ', ועוד <b>תכנית</b> לקטע שעמוק מ-4 מ': רק <b>מהנדס</b> מתכנן, ומוסיף <b>חיזוקים</b>.</p>
+    </div>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה נוספת: חפירה של 3.0 מ', ואחר כך 4.5 מ'</div><div class="w-body">
+    <div class="given">חפירה בעומק <b>3.0 מ'</b>, ועובדים נכנסים. מה הדרישות? ומה משתנה ב-<b>4.5 מ'</b>?</div>
+    <ol class="lines">
+      <li>\({3.0 &gt; 1.20}\) ← דיפון (בולט 15 ס"מ), עפר 0.5 מ' מהשפה, יציאות (עד 20 מ').</li>
+      <li>\({3.0 &gt; 2}\) ← ועוד <b>גידור</b>: אזן יד <span class="ltr">0.90–1.15</span>, אזן תיכון <span class="ltr">0.45–0.50</span>.</li>
+      <li>\({3.0 \le 4}\) ← בלי תכנית. ב-4.5 מ': \({4.5 &gt; 4}\) ← הכול + <b>תכנית של מהנדס</b>.</li>
+    </ol>
+    <div class="answer">3.0 מ': דיפון + עפר + יציאות + גידור. 4.5 מ': כל אלה + תכנית.</div>
+    <div class="check">3.0 עובר את 1.20 ואת 2, אבל לא את 4 ← בדיוק 2 תוספות ✓</div>
+  </div></div>
+</section>
+
+<!-- ============ 5. FOOTBRIDGE ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">5</span><h2>מעבר מעל תעלה: גשרון</h2><span class="time">⏱ 00:44:05</span></div>
+  <div class="bl">תעלה רחבה מ-<b>60 ס"מ</b> ועמוקה מ-<b>1.20 מ'</b>? <b>לא קופצים</b> — עוברים על <b>גשרון</b>.</div>
+
+  <ol class="steps">
+    <li>רוחב <b>מעל 60 ס"מ</b> <b>וגם</b> עומק <b>מעל 1.20 מ'</b>? ← <b>אסור לקפוץ</b>.</li>
+    <li>עוברים על <b>גשרון</b> ברוחב <b>60 ס"מ לפחות</b> (לפי המרצה: 70 — עוד יותר טוב).</li>
+    <li>עומק <b>מעל 2 מ'</b>? ← לגשרון <b>מעקה מלא</b>: אזן יד, אזן תיכון <b>ולוח רגל</b>. לא לשכוח את לוח הרגל: פטיש שנופל מהגשרון נופל <b>ישר לתעלה</b>.</li>
+    <li>תעלה צרה (למשל 50 ס"מ) ← מותר לקפוץ. שמים בכל זאת גשרון? ← גם הוא <b>60 ס"מ לפחות</b>.</li>
+  </ol>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 206" xmlns="http://www.w3.org/2000/svg" direction="ltr">
+      <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+      <g class="line" stroke-width="2">
+        <line x1="268" y1="38" x2="290" y2="20"/><line x1="268" y1="66" x2="290" y2="48"/>
+        <line x1="268" y1="172" x2="290" y2="154"/><line x1="268" y1="200" x2="290" y2="182"/>
+        <line x1="430" y1="38" x2="452" y2="20"/><line x1="430" y1="66" x2="452" y2="48"/>
+        <line x1="430" y1="172" x2="452" y2="154"/><line x1="430" y1="200" x2="452" y2="182"/>
+      </g>
+      <rect x="300" y="8" width="120" height="196" class="soft-f"/>
+      <line x1="300" y1="8" x2="300" y2="204" class="ink" stroke-width="3"/>
+      <line x1="420" y1="8" x2="420" y2="204" class="ink" stroke-width="3"/>
+      <text x="360" y="192" class="lbl-b he" text-anchor="middle">תעלה</text>
+      <path d="M262,64 Q360,-6 458,64" fill="none" class="bad" stroke-width="3" stroke-dasharray="7 5"/>
+      <line x1="349" y1="20" x2="371" y2="42" class="bad" stroke-width="5"/>
+      <line x1="371" y1="20" x2="349" y2="42" class="bad" stroke-width="5"/>
+      <text x="560" y="46" class="he bad-f" font-size="18" font-weight="800" text-anchor="middle">לא קופצים!</text>
+      <line x1="300" y1="82" x2="420" y2="82" class="ink" stroke-width="1.5" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+      <text x="360" y="74" class="lbl" text-anchor="middle">&gt; 0.60</text>
+      <rect x="236" y="100" width="248" height="48" class="mid-f"/>
+      <rect x="236" y="100" width="248" height="48" fill="none" class="ink" stroke-width="2.5"/>
+      <text x="360" y="130" class="lbl-b he" text-anchor="middle">גשרון</text>
+      <line x1="236" y1="94" x2="484" y2="94" class="acc" stroke-width="3" stroke-dasharray="10 6"/>
+      <line x1="236" y1="154" x2="484" y2="154" class="acc" stroke-width="3" stroke-dasharray="10 6"/>
+      <g class="acc-f">
+        <circle cx="240" cy="94" r="4.5"/><circle cx="300" cy="94" r="4.5"/><circle cx="360" cy="94" r="4.5"/><circle cx="420" cy="94" r="4.5"/><circle cx="480" cy="94" r="4.5"/>
+        <circle cx="240" cy="154" r="4.5"/><circle cx="300" cy="154" r="4.5"/><circle cx="360" cy="154" r="4.5"/><circle cx="420" cy="154" r="4.5"/><circle cx="480" cy="154" r="4.5"/>
+      </g>
+      <text x="190" y="99" class="lbl he" text-anchor="middle">מעקה</text>
+      <text x="190" y="117" class="lbl-s he" text-anchor="middle">רק בעומק מעל</text>
+      <text x="190" y="134" class="lbl-s" text-anchor="middle">2.00</text>
+      <line x1="512" y1="100" x2="512" y2="148" class="ink" stroke-width="1.5" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+      <text x="560" y="129" class="lbl-b" text-anchor="middle">≥ 0.60</text>
+    </svg>
+    <figcaption>מבט מלמעלה (במטרים): רחבה מ-0.60 ועמוקה מ-1.20 ← לא קופצים; גשרון ברוחב 0.60 לפחות. מעל 2 מ' — מעקה בשני הצדדים (מקווקו).</figcaption>
+  </figure>
+</section>
+
+<!-- ============ 6. NIGHT WORK ============ -->
+<section class="topic cont">
+  <div class="topic-head"><span class="n">6</span><h2>עבודה בלילה: תאורה נאותה ואורות אדומים</h2><span class="time">⏱ 00:47:40</span></div>
+  <div class="bl">בלילה: <b>תאורה נאותה</b> בכל החפירה, ו<b>אורות אדומים</b> בפתחים.</div>
+
+  <div class="grid2">
+    <ul class="pts">
+      <li><b>תאורה נאותה</b> = כמו האור ה<b>לבן</b> בכיתה בערב. זה המונח שכתוב בתקנות.</li>
+      <li><b>אורות אדומים</b> בפתחים: (1) <b>מסמנים סכנה</b>; (2) עוזרים לעיניים <b>להסתגל לחושך</b>.</li>
+      <li>מאור לבן לחושך גמור ← <b><span class="ltr">10–15</span> שניות</b> לא רואים. דרך אור אדום ← בערך <b>5 שניות</b>.</li>
+      <li>מהשיעור: ב<b>צוללת</b> ובגשר של <b>אונייה</b> מאירים באדום בלילה ← מי שיוצא החוצה <b>רואה כמעט מיד</b>.</li>
+    </ul>
+    <figure class="fig">
+      <svg viewBox="0 0 360 196" xmlns="http://www.w3.org/2000/svg" direction="ltr">
+        <line x1="40" y1="160" x2="330" y2="160" class="ink" stroke-width="2.5"/>
+        <rect x="215" y="25" width="70" height="45" class="muted-f" fill-opacity="0.35"/>
+        <rect x="215" y="70" width="70" height="90" class="muted-f"/>
+        <text x="250" y="16" class="lbl-b" text-anchor="middle">10–15</text>
+        <rect x="85" y="115" width="70" height="45" class="bad-f"/>
+        <text x="120" y="106" class="lbl-b" text-anchor="middle">≈ 5</text>
+        <text x="250" y="182" class="lbl he" text-anchor="middle">מאור לבן</text>
+        <text x="120" y="182" class="lbl he" text-anchor="middle">דרך אדום</text>
+      </svg>
+      <figcaption>אור אדום מקצר את ה"עיוורון" מ-<span class="ltr">10–15</span> שניות לכ-5 (לפי המרצה).</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ 7. EXITS: THE RULER ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">7</span><h2>כמה יציאות? שיטת הסרגל</h2><span class="time">⏱ 00:50:22</span></div>
+  <div class="bl">כל יציאה משרתת <b>20 מ' לכל כיוון</b>: הראשונה אחרי <b>20 מ'</b>, ואחר כך <b>כל 40 מ'</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (לא נאמר בשיעור)</div>
+    <p>כמו <b>יציאות חירום</b> באולם: מפזרים אותן כך שמכל מקום הולכים <b>מעט</b> עד יציאה.</p>
+  </div>
+
+  <div class="grid2">
+    <ul class="pts">
+      <li>בתקנות כתוב: העובד הולך <b>עד 20 מ'</b> ליציאה בטוחה. מודדים <b>עד היציאה</b> (בדרך כלל עד המרכז שלה).</li>
+      <li>יציאה באמצע מכסה <b>20 מ' לכל צד</b> ← \({20 + 20 = 40}\) מ'.</li>
+      <li>המספר <b>40</b> לא כתוב בתקנות — אבל <b>שואלים עליו</b> במבחן.</li>
+    </ul>
+    <figure class="fig">
+      <svg viewBox="0 0 360 150" xmlns="http://www.w3.org/2000/svg" direction="ltr">
+        <defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs>
+        <line x1="20" y1="20" x2="340" y2="20" class="ink" stroke-width="1.5"/>
+        <line x1="20" y1="13" x2="20" y2="27" class="ink" stroke-width="1.5"/>
+        <line x1="340" y1="13" x2="340" y2="27" class="ink" stroke-width="1.5"/>
+        <text x="100" y="14" class="lbl-b" text-anchor="middle">40</text>
+        <rect x="20" y="62" width="320" height="34" class="soft-f"/>
+        <rect x="20" y="62" width="320" height="34" fill="none" class="ink" stroke-width="2.5"/>
+        <g class="acc" stroke-width="3"><line x1="172" y1="50" x2="172" y2="98"/><line x1="188" y1="50" x2="188" y2="98"/></g>
+        <g class="acc" stroke-width="2"><line x1="172" y1="58" x2="188" y2="58"/><line x1="172" y1="70" x2="188" y2="70"/><line x1="172" y1="82" x2="188" y2="82"/><line x1="172" y1="94" x2="188" y2="94"/></g>
+        <text x="180" y="42" class="lbl-b he" text-anchor="middle">יציאה</text>
+        <circle cx="36" cy="72" r="5" fill="none" class="ink" stroke-width="2.5"/>
+        <line x1="36" y1="77" x2="36" y2="91" class="ink" stroke-width="2.5"/>
+        <circle cx="324" cy="72" r="5" fill="none" class="ink" stroke-width="2.5"/>
+        <line x1="324" y1="77" x2="324" y2="91" class="ink" stroke-width="2.5"/>
+        <line x1="44" y1="114" x2="164" y2="114" class="acc" stroke-width="3" marker-end="url(#ar3)"/>
+        <line x1="316" y1="114" x2="196" y2="114" class="acc" stroke-width="3" marker-end="url(#ar3)"/>
+        <text x="104" y="140" class="lbl-b" text-anchor="middle">20</text>
+        <text x="256" y="140" class="lbl-b" text-anchor="middle">20</text>
+        <text x="36" y="140" class="lbl-s he" text-anchor="middle">עובד</text>
+        <text x="324" y="140" class="lbl-s he" text-anchor="middle">עובד</text>
+      </svg>
+      <figcaption>תעלה של 40 מ' ויציאה אחת באמצע: גם מהקצה — רק 20 מ'.</figcaption>
+    </figure>
+  </div>
+
+  <div class="box lecturer"><div class="box-title">שאלת מבחן</div>
+    <p><b>"מה המרחק המרבי בין שתי יציאות?"</b> ← <b>40 מ'</b> (לא 20). ולא לחסוך מטר: אחרי תאונה ימדדו <b>עד 10 ס"מ</b>.</p>
+  </div>
+
+  <h3>שיטת הסרגל (עד בערך 250 מ'): סופרים, בלי נוסחה <span class="time">⏱ 00:53:11</span></h3>
+  <ol class="steps">
+    <li>החפירה עמוקה מ-1.20 כבר מההתחלה ← יציאה ראשונה <b>אחרי 20 מ'</b> (לא אחרי 40!).</li>
+    <li>משם — יציאה <b>כל 40 מ'</b>: 20, 60, 100, 140, 180, 220…</li>
+    <li>כל יציאה "מגבה" <b>20 מ' קדימה</b>. מהשיעור: היציאה ב-140 מכסה עד 160 ← חפירה של <b>155 מ'</b> = 4 יציאות, של <b>161 מ'</b> = 5.</li>
+    <li>נשאר קטע? ← עוד <b>יציאה אחת</b>. מותר להזיז יציאות — <b>העיקר</b>: אף אחד לא הולך יותר מ-20 מ'.</li>
+  </ol>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 168" xmlns="http://www.w3.org/2000/svg" direction="ltr">
+      <rect x="40" y="82" width="104" height="12" class="soft-f"/>
+      <rect x="144" y="82" width="104" height="12" class="mid-f"/>
+      <rect x="248" y="82" width="104" height="12" class="soft-f"/>
+      <rect x="352" y="82" width="104" height="12" class="mid-f"/>
+      <rect x="456" y="82" width="104" height="12" class="soft-f"/>
+      <rect x="560" y="82" width="104" height="12" class="mid-f"/>
+      <rect x="664" y="82" width="26" height="12" class="warn-f"/>
+      <line x1="40" y1="76" x2="690" y2="76" class="ink" stroke-width="3"/>
+      <line x1="40" y1="60" x2="40" y2="98" class="ink" stroke-width="3"/>
+      <line x1="690" y1="62" x2="690" y2="98" class="ink" stroke-width="3"/>
+      <g class="acc" stroke-width="2.5">
+        <line x1="92" y1="59" x2="92" y2="76"/><line x1="196" y1="59" x2="196" y2="76"/>
+        <line x1="300" y1="59" x2="300" y2="76"/><line x1="404" y1="59" x2="404" y2="76"/>
+        <line x1="508" y1="59" x2="508" y2="76"/><line x1="612" y1="59" x2="612" y2="76"/>
+      </g>
+      <line x1="677" y1="59" x2="677" y2="76" class="ink" stroke-width="2.5"/>
+      <circle cx="92" cy="46" r="13" class="acc-f"/><text x="92" y="51" class="soft-f" font-size="14" font-weight="800" text-anchor="middle">1</text>
+      <circle cx="196" cy="46" r="13" class="acc-f"/><text x="196" y="51" class="soft-f" font-size="14" font-weight="800" text-anchor="middle">2</text>
+      <circle cx="300" cy="46" r="13" class="acc-f"/><text x="300" y="51" class="soft-f" font-size="14" font-weight="800" text-anchor="middle">3</text>
+      <circle cx="404" cy="46" r="13" class="acc-f"/><text x="404" y="51" class="soft-f" font-size="14" font-weight="800" text-anchor="middle">4</text>
+      <circle cx="508" cy="46" r="13" class="acc-f"/><text x="508" y="51" class="soft-f" font-size="14" font-weight="800" text-anchor="middle">5</text>
+      <circle cx="612" cy="46" r="13" class="acc-f"/><text x="612" y="51" class="soft-f" font-size="14" font-weight="800" text-anchor="middle">6</text>
+      <circle cx="677" cy="46" r="13" class="warn-f"/><text x="677" y="51" class="soft-f" font-size="14" font-weight="800" text-anchor="middle">7</text>
+      <text x="40" y="118" class="lbl-b" text-anchor="middle">0</text>
+      <text x="92" y="118" class="lbl-s" text-anchor="middle">20</text>
+      <text x="196" y="118" class="lbl-s" text-anchor="middle">60</text>
+      <text x="300" y="118" class="lbl-s" text-anchor="middle">100</text>
+      <text x="404" y="118" class="lbl-s" text-anchor="middle">140</text>
+      <text x="508" y="118" class="lbl-s" text-anchor="middle">180</text>
+      <text x="612" y="118" class="lbl-s" text-anchor="middle">220</text>
+      <text x="690" y="118" class="lbl-b" text-anchor="middle">250</text>
+      <g class="ink" stroke-width="1.5"><line x1="144" y1="130" x2="248" y2="130"/><line x1="144" y1="124" x2="144" y2="136"/><line x1="248" y1="124" x2="248" y2="136"/></g>
+      <text x="196" y="148" class="lbl-s" text-anchor="middle">40</text>
+      <line x1="664" y1="96" x2="664" y2="128" class="line" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="664" y="143" class="warn-f" font-size="13" font-weight="700" text-anchor="middle">240</text>
+      <text x="62" y="164" class="lbl-s he" text-anchor="middle">תחילת החפירה</text>
+      <text x="690" y="164" class="lbl-s he" text-anchor="middle">סוף</text>
+    </svg>
+    <figcaption>כמו על הלוח (במטרים): כל פס צבעוני = 40 מ' שיציאה אחת מכסה. 6 יציאות מכסות עד 240 ← ל-250 מ' צריך יציאה שביעית (בכתום).</figcaption>
+  </figure>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): חפירה של 250 מ'</div><div class="w-body">
+    <div class="given">חפירה באורך <b>250 מ'</b>, בעומק 1.30 מ'. נכנסים עובדים. כמה יציאות?</div>
+    <ol class="lines">
+      <li>יציאות ב-20, 60, 100, 140, 180, 220 ← <b>6</b> יציאות. האחרונה מכסה עד \({220 + 20 = 240}\) מ'.</li>
+      <li>\({250 &gt; 240}\) ← חסרים 10 מ' ← יציאה <b>שביעית</b> (למשל ב-245).</li>
+    </ol>
+    <div class="answer">7 יציאות.</div>
+    <div class="check">\({240 = 6 \times 40 &lt; 250 \le 7 \times 40 = 280}\) ✓</div>
+  </div></div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): חפירה של 82 מ'</div><div class="w-body">
+    <div class="given">חפירה באורך <b>82 מ'</b>. נכנסים עובדים. כמה יציאות?</div>
+    <ol class="lines">
+      <li>יציאות ב-20 וב-60 ← מכסות עד 80 מ'. \({82 &gt; 80}\) ← חסרים 2 מ' ← עוד יציאה.</li>
+    </ol>
+    <div class="answer">3 יציאות (מותר לפזר אחרת, למשל 15, 45, 75 ← הליכה מרבית 15 מ').</div>
+    <div class="check">\({80 = 2 \times 40 &lt; 82 \le 3 \times 40 = 120}\) ✓</div>
+  </div></div>
+
+  <div class="box optional"><div class="box-title">הצצה לשיעור הבא: סולמות <span class="time">⏱ 01:01:53</span></div>
+    <p>סולם לגג בולט <b>1 מ'</b> מעל המשטח. גלריה בגובה 7 מ': מרחק מהקיר \({7 \div 4 = 1.75}\) ← פיתגורס \({\sqrt{7^2 + 1.75^2} \approx 7.22}\) ← ועוד 1 מ' ← <b>בערך 8.22 מ'</b>.</p>
+  </div>
+</section>
+
+<!-- ============ 8. FORMULAS ============ -->
+<section class="topic cont">
+  <div class="topic-head"><span class="n">8</span><h2>נוסחאות למספר היציאות</h2><span class="time">⏱ 01:06:14</span></div>
+  <div class="bl">בחפירה ארוכה <b>מחלקים ב-40</b>. מותר כל נוסחה — העיקר <b>לרשום את הדרך</b>.</div>
+
+  <div class="grid2">
+    <div class="box formula"><div class="box-title">נוסחת "מכללות ישראל" (על הלוח)</div>
+      \[ N = \left\lceil \frac{L}{40} \right\rceil + 1 \]
+      <p class="muted">\(N\) = מספר היציאות · \(L\) = אורך החפירה (מ')<br>\(\lceil\ \rceil\) = עיגול <b>למעלה</b></p>
+      <p>ה-1 = היציאה של 20 המטרים הראשונים. לפי המרצה: לפעמים יוצאת יציאה <b>רזרבית</b> (בבדיקה מול הסרגל — <b>תמיד</b> אחת יותר; ראו הטבלה).</p>
+    </div>
+    <div class="box formula"><div class="box-title"><span>נוסחת המרצה (<span class="ltr">X.5</span>)</span></div>
+      \[ \frac{L}{40} = X.d \]
+      <p class="muted">\(X\) = המספר השלם · \(d\) = מה שאחרי הנקודה<br>המטרה: לא "לבזבז" יציאה בחפירה ארוכה</p>
+      <p>\(d\) <b>מעל 0.5</b> ← \(X + 1\) (20.51 ← 21)<br>\(d\) <b>מתחת ל-0.5</b> ← \(X\) (20.49 ← 20)<br>\(d\) <b>בדיוק 0.5</b> ← שיקול דעת (20.5)</p>
+    </div>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): 7,325 מ'</div><div class="w-body">
+    <div class="given">חפירה באורך <b>7,325 מ'</b>. מספר היציאות בשתי הנוסחאות?</div>
+    <ol class="lines">
+      <li>\({7325 \div 40 = 183.125}\)</li>
+      <li>מכללות ישראל: \({\lceil 183.125 \rceil + 1 = 184 + 1 = \mathbf{185}}\)</li>
+      <li>נוסחת המרצה: \({d = 0.125 &lt; 0.5}\) ← לא מוסיפים ← <b>183</b> (התשובה בכיתה)</li>
+    </ol>
+    <div class="answer">מכללות ישראל: 185 · נוסחת המרצה: 183.</div>
+    <div class="check">\({7320 = 183 \times 40 &lt; 7325 \le 184 \times 40 = 7360}\) ← צריך לפחות 184 ← 185 מכסה ✓</div>
+  </div></div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): 832 מ'</div><div class="w-body">
+    <div class="given">חפירה באורך <b>832 מ'</b>. מספר היציאות בשתי הנוסחאות?</div>
+    <ol class="lines">
+      <li>\({832 \div 40 = 20.8}\) (כך נכתב על הלוח)</li>
+      <li>מכללות ישראל: \({\lceil 20.8 \rceil + 1 = 21 + 1 = \mathbf{22}}\)</li>
+      <li>נוסחת המרצה: \({d = 0.8 &gt; 0.5}\) ← \({20 + 1 = \mathbf{21}}\)</li>
+    </ol>
+    <div class="answer">מכללות ישראל: 22 · נוסחת המרצה: 21.</div>
+    <div class="check">\({800 = 20 \times 40 &lt; 832 \le 21 \times 40 = 840}\) ← המינימום 21 ✓</div>
+  </div></div>
+
+  <div class="box warn"><div class="box-title">בדיקה מול הסרגל (לא נאמר בשיעור)</div>
+    <table class="t">
+      <tr><th>אורך (מ')</th><th>\(L \div 40\)</th><th>סרגל = מינימום</th><th>מכללות ישראל</th><th>נוסחת המרצה</th></tr>
+      <tr><td>82</td><td>2.05</td><td><b>3</b></td><td>4</td><td>2 ✗</td></tr>
+      <tr><td>155</td><td>3.875</td><td><b>4</b></td><td>5</td><td>4</td></tr>
+      <tr><td>161</td><td>4.025</td><td><b>5</b></td><td>6</td><td>4 ✗</td></tr>
+      <tr><td>250</td><td>6.25</td><td><b>7</b></td><td>8</td><td>6 ✗</td></tr>
+      <tr><td>832</td><td>20.8</td><td><b>21</b></td><td>22</td><td>21</td></tr>
+      <tr><td>7,325</td><td>183.125</td><td><b>184</b></td><td>185</td><td>183 ✗</td></tr>
+    </table>
+    <p>סרגל = \(\lceil L/40 \rceil\). מכללות ישראל ← תמיד <b>אחת יותר</b> (רזרבה). נוסחת המרצה ← לפעמים <b>אחת פחות</b> (✗) ← כדאי <b>לשאול את המרצה</b> מה מצופה במבחן.</p>
+  </div>
+</section>
+
+<!-- ============ 9. QUESTION BANK: TRAPS ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">9</span><h2>בנק השאלות: מוקשים ומספרים למבחן</h2><span class="time">⏱ 01:29:50</span></div>
+  <div class="bl">יש <b>שאלות "מוקש"</b> שחוזרות כמעט בכל מבחן ← לזכור את <b>המספר המדויק</b> ואת <b>היחידה</b>.</div>
+
+  <h3>4 מוקשים שכדאי להכיר <span class="time">⏱ 01:31:09</span></h3>
+  <table class="t">
+    <tr><th>נושא</th><th>התשובה הנכונה</th><th>המלכודת</th></tr>
+    <tr><td>מרחק בין שלבים בסולם עץ לפי ת"י 1847 (למעבר בין מפלסים)</td><td><b><span class="ltr">25–30</span> ס"מ</b></td><td><span class="ltr">30–35</span> ס"מ — סולם שמכינים באתר (מנהל עבודה או תפסן)</td></tr>
+    <tr><td>"מתח נמוך מאוד" במתקן חשמל ארעי באתר בנייה (תקנות החשמל)</td><td><b><span class="ltr">24&nbsp;V</span></b></td><td><span class="ltr">50&nbsp;V</span> — המספר מתקנות הבנייה</td></tr>
+    <tr><td>חור לצינור של 4 אינץ' ברצפה (פתח = מעל 10 ס"מ)</td><td><b>פתח ברצפה</b></td><td>לחשוב ש-4 אינץ' קטן מ-10 ס"מ (לא נאמר בשיעור)</td></tr>
+    <tr><td>ממסר פחת (מפסק מגן לזרם דלף) — <b>לפחות ב-2 מכל 3 מבחנים</b> <span class="ltr">01:42:47</span></td><td>קופץ ב-<b><span class="ltr">30&nbsp;mA</span></b>, כלומר <span class="ltr">0.03&nbsp;A</span></td><td><span class="ltr">30&nbsp;A</span> — פי 1,000; זרם של <b>רתכת</b></td></tr>
+  </table>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור, <span class="ltr">01:41:21</span>): צינור של 4 אינץ'</div><div class="w-body">
+    <div class="given">פתח ברצפה = חלל שהמידה <b>הקטנה</b> שלו <b>מעל 10 ס"מ</b>. 1 אינץ' = 2.54 ס"מ.</div>
+    <div class="ask">האם חור לצינור של 4 אינץ' הוא "פתח ברצפה"?</div>
+    <ol class="lines">
+      <li>\({4 \times 2.54 = 10.16}\) ס"מ</li>
+      <li>\({10.16 &gt; 10}\) ← מעל הגבול ← <b>פתח</b>, וצריך לסגור אותו.</li>
+    </ol>
+    <div class="answer">כן — זה פתח ברצפה.</div>
+    <div class="check">בדרך של המרצה: \({4 \times 2.5 = 10}\), ועוד \({4 \times 0.04 = 0.16}\) ← 10.16 ✓</div>
+  </div></div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 158" xmlns="http://www.w3.org/2000/svg" direction="ltr">
+      <rect x="60" y="52" width="300" height="28" class="ok-f" fill-opacity="0.16"/>
+      <rect x="360" y="52" width="300" height="28" class="bad-f" fill-opacity="0.16"/>
+      <line x1="60" y1="80" x2="660" y2="80" class="ink" stroke-width="2.5"/>
+      <g class="ink" stroke-width="2">
+        <line x1="60" y1="80" x2="60" y2="88"/><line x1="160" y1="80" x2="160" y2="88"/>
+        <line x1="260" y1="80" x2="260" y2="88"/><line x1="460" y1="80" x2="460" y2="88"/>
+        <line x1="560" y1="80" x2="560" y2="88"/><line x1="660" y1="80" x2="660" y2="88"/>
+      </g>
+      <text x="60" y="104" class="lbl-s" text-anchor="middle">7</text>
+      <text x="160" y="104" class="lbl-s" text-anchor="middle">8</text>
+      <text x="260" y="104" class="lbl-s" text-anchor="middle">9</text>
+      <text x="460" y="104" class="lbl-s" text-anchor="middle">11</text>
+      <text x="560" y="104" class="lbl-s" text-anchor="middle">12</text>
+      <text x="660" y="104" class="lbl-s" text-anchor="middle">13</text>
+      <text x="700" y="104" class="lbl-s he" text-anchor="middle">ס"מ</text>
+      <line x1="360" y1="34" x2="360" y2="94" class="ink" stroke-width="3" stroke-dasharray="6 4"/>
+      <text x="360" y="26" class="lbl-b" text-anchor="middle">10</text>
+      <circle cx="122" cy="66" r="8" class="ok-f"/>
+      <circle cx="376" cy="66" r="8" class="bad-f"/>
+      <circle cx="630" cy="66" r="8" class="bad-f"/>
+      <text x="122" y="44" class="lbl-b" text-anchor="middle">3"</text>
+      <text x="394" y="44" class="lbl-b" text-anchor="middle">4"</text>
+      <text x="630" y="44" class="lbl-b" text-anchor="middle">5"</text>
+      <text x="122" y="126" class="lbl" text-anchor="middle">7.62</text>
+      <text x="386" y="126" class="lbl-b" text-anchor="middle">10.16</text>
+      <text x="630" y="126" class="lbl" text-anchor="middle">12.70</text>
+      <text x="210" y="152" class="he ok-f" font-size="15" font-weight="700" text-anchor="middle">לא פתח</text>
+      <text x="510" y="152" class="he bad-f" font-size="15" font-weight="700" text-anchor="middle">פתח ברצפה ← לסגור</text>
+    </svg>
+    <figcaption>הקוטר של חור עגול = המידה הקטנה שלו. מעל 10 ס"מ ← פתח ברצפה. 4 אינץ' (מהשיעור) עובר את הגבול ב-0.16 ס"מ בלבד. 3 ו-5 אינץ' — דוגמה נוספת.</figcaption>
+  </figure>
+
+  <h3>המבחן במספרים <span class="time">⏱ 01:34:04</span></h3>
+  <figure class="fig">
+    <svg viewBox="0 0 720 150" xmlns="http://www.w3.org/2000/svg" direction="ltr">
+      <text x="672" y="36" class="lbl-b he" text-anchor="middle">חמש</text>
+      <text x="672" y="53" class="lbl-s he" text-anchor="middle">פתוחות</text>
+      <rect x="313" y="18" width="306" height="38" class="soft-f"/>
+      <text x="466" y="35" class="lbl-b" text-anchor="middle">55</text>
+      <text x="466" y="51" class="lbl-s he" text-anchor="middle">סגורות</text>
+      <rect x="257" y="18" width="54" height="38" class="mid-f"/><text x="284" y="43" class="lbl-b" text-anchor="middle">10</text>
+      <rect x="201" y="18" width="54" height="38" class="mid-f"/><text x="228" y="43" class="lbl-b" text-anchor="middle">10</text>
+      <rect x="145" y="18" width="54" height="38" class="mid-f"/><text x="172" y="43" class="lbl-b" text-anchor="middle">10</text>
+      <rect x="89" y="18" width="54" height="38" class="mid-f"/><text x="116" y="43" class="lbl-b" text-anchor="middle">10</text>
+      <rect x="61" y="18" width="26" height="38" class="acc-f" fill-opacity="0.45"/><text x="74" y="43" class="lbl-b" text-anchor="middle">5</text>
+      <text x="672" y="90" class="lbl-b he" text-anchor="middle">שש</text>
+      <text x="672" y="107" class="lbl-s he" text-anchor="middle">פתוחות</text>
+      <rect x="313" y="72" width="306" height="38" class="soft-f"/>
+      <text x="466" y="89" class="lbl-b" text-anchor="middle">55</text>
+      <text x="466" y="105" class="lbl-s he" text-anchor="middle">סגורות</text>
+      <rect x="257" y="72" width="54" height="38" class="mid-f"/><text x="284" y="97" class="lbl-b" text-anchor="middle">10</text>
+      <rect x="201" y="72" width="54" height="38" class="mid-f"/><text x="228" y="97" class="lbl-b" text-anchor="middle">10</text>
+      <rect x="145" y="72" width="54" height="38" class="mid-f"/><text x="172" y="97" class="lbl-b" text-anchor="middle">10</text>
+      <rect x="117" y="72" width="26" height="38" class="acc-f" fill-opacity="0.45"/><text x="130" y="97" class="lbl-b" text-anchor="middle">5</text>
+      <rect x="89" y="72" width="26" height="38" class="acc-f" fill-opacity="0.45"/><text x="102" y="97" class="lbl-b" text-anchor="middle">5</text>
+      <rect x="61" y="72" width="26" height="38" class="acc-f" fill-opacity="0.45"/><text x="74" y="97" class="lbl-b" text-anchor="middle">5</text>
+      <g class="ink" stroke-width="1.5"><line x1="61" y1="122" x2="311" y2="122"/><line x1="61" y1="116" x2="61" y2="128"/><line x1="311" y1="116" x2="311" y2="128"/></g>
+      <text x="186" y="145" class="lbl-b" text-anchor="middle">45</text>
+    </svg>
+    <figcaption>בדרך כלל: כל שורה = מבחן מה"ט של 100 נקודות: 55 שאלות סגורות (נקודה לכל אחת) + 45 נקודות לשאלות פתוחות. 5 פתוחות ← ארבע של 10 ואחת של 5. 6 פתוחות ← שלוש של 10 ושלוש של 5. לפעמים מה"ט מוריד סעיף (10 ← 5).</figcaption>
+  </figure>
+  <ul class="pts">
+    <li>המבחן <b>4 שעות</b> — והזמן "טס". ציון המגן: <b>עד 90</b> (ואולי אף 88, לפי המרצה), גם למי שמקבל 100.</li>
+    <li>לתרגול: <b>מבחנים ב-Google Forms</b> (5 מבחנים של 100 שאלות, וגם לפי נושאים), בלי ציון.</li>
+  </ul>
+
+  <div class="grid2">
+    <div class="box lecturer"><div class="box-title">בשיעור הודגש</div>
+      <ul class="pts">
+        <li>לפי המרצה: <b>5</b> פתוחות במה"ט ← לפחות <b>4</b> מסוג שמתרגלים בכיתה.</li>
+        <li><b>6</b> פתוחות ← לפחות <b>5</b>.</li>
+        <li>ב-2018: 4 מתוך 5 פתוחות היו <b>חישובים</b>.</li>
+        <li>ב-2025: הפתוחות במה"ט הופיעו <b>במבחני המגן</b>, חוץ מאחת.</li>
+      </ul>
+    </div>
+    <div class="box warn"><div class="box-title">טעות נפוצה: דפי העזר</div>
+      <p>דפים <b>מודפסים</b> (או "כתב יד" מהמחשב) ← עלולים <b>לאסוף</b> אותם. דפים <b>שמישהו אחר הכין</b> ← פוגשים אותם לראשונה במבחן.</p>
+    </div>
+  </div>
+
+  <div class="box optional"><div class="box-title">מפת "תמצית החומר" — לא לשנן עכשיו <span class="time">⏱ 01:46:51</span></div>
+    <table class="t">
+      <tr><th>נושא במבחן</th><th>מה לזכור</th></tr>
+      <tr><td>צריכים <b>תכנית</b> (2024)</td><td>דיפון חפירה מעל 4 מ' · הריסה מעל 4 מ' · פיגום מיוחד · פיגום זיזי מיוחד · מבנה מתכת מעל 6 מ'</td></tr>
+      <tr><td>המושג <b>"2 מ'"</b> (2024)</td><td>פיגום חמורי לא מעל 2 מ' · גידור בור או חפירה (נפילה מעל 2 מ') · גידור מדרכת מעבר מעל 2 מ'</td></tr>
+      <tr><td><b>שלט</b> באתר</td><td>בדיוק 3: מבצע הבנייה ומענו · מנהל העבודה ומענו · מהות הבנייה</td></tr>
+      <tr><td><b>פקודה</b> מול <b>חוק</b></td><td>פקודת הבטיחות בעבודה = "חוק המה" · חוק ארגון הפיקוח על העבודה (1954) = "חוק המי"</td></tr>
+      <tr><td><b>העלאת אדם</b> (2019)</td><td>סולם ✓ · מלגזה עם סל הרמה ✓ · במת הרמה ✓ · כף של שופל ✗ · מעמיס טלסקופי ✗</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ REMEMBER ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">🧠</span><h2>לזכור</h2></div>
+  <div class="bl">11 הדברים החשובים מהשיעור — וטבלת מספרים לדפי העזר.</div>
+  <ul class="pts">
+    <li>עד <b>1.20 מ'</b> = <b>מפגע</b> ← לסלק אותו. הגבול <b>חד</b>.</li>
+    <li>מעל 1.20 מ': עפר <b>0.5 מ'</b> מהשפה; וכשנכנסים — <b>דיפון</b> שבולט <b>15 ס"מ</b> ו<b>יציאות</b>.</li>
+    <li>עפר במרחק של פחות מ-0.5 מ' מהשפה ← הגובה שלו <b>נוסף לעומק</b>.</li>
+    <li><b>תא הגנה</b> = במקום דיפון. <b>לא נכנסים</b> ← לא צריך דיפון ויציאות.</li>
+    <li>מעל <b>2 מ'</b>: הכול + <b>גידור</b> (שלא ייפלו פנימה). מעל <b>4 מ'</b>: הכול + <b>תכנית של מהנדס</b>.</li>
+    <li>מעקה: <b>אזן יד</b> בין 0.90 ל-1.15 מ' · <b>אזן תיכון</b> בין 0.45 ל-0.50 מ' · <b>לוח רגל</b> 15 ס"מ לפחות.</li>
+    <li>בחפירה <b>הדיפון הבולט = לוח הרגל</b> (לפי המרצה). בגשרון ובמדרכת מעבר — לוח רגל נפרד.</li>
+    <li>רוחב מעל <b>60 ס"מ</b> ועומק מעל <b>1.20 מ'</b> ← לא קופצים: <b>גשרון</b> 60 ס"מ לפחות (מעל 2 מ' — מעקה מלא).</li>
+    <li>לילה: <b>תאורה נאותה</b> + <b>אורות אדומים</b> בפתחים.</li>
+    <li>עובד הולך <b>עד 20 מ'</b> ליציאה ← בין יציאות <b>40 מ'</b> לכל היותר. הראשונה אחרי <b>20 מ'</b>.</li>
+    <li>מספר יציאות (תמיד <b>לרשום את הדרך</b>): <b>סרגל</b> \(\lceil L/40 \rceil\) (מינימום) · <b>מכללות ישראל</b> \(\lceil L/40 \rceil + 1\).<br><b>נוסחת המרצה</b> \(L/40 = X.d\): \(d\) מעל 0.5 ← \(X+1\); מתחת ל-0.5 ← \(X\); בדיוק 0.5 ← שיקול דעת.</li>
+  </ul>
+
+  <table class="t">
+    <tr><th>מספר</th><th>מה זה</th></tr>
+    <tr><td><b>1.20 מ'</b></td><td>עד = מפגע. מעל = עפר רחוק; וכשנכנסים — דיפון ויציאות</td></tr>
+    <tr><td><b>15 ס"מ</b></td><td>כמה הדיפון בולט מעל הקרקע; גובה מינימלי ללוח רגל</td></tr>
+    <tr><td><b>0.5 מ'</b></td><td>מרחק מינימלי של העפר מהשפה</td></tr>
+    <tr><td><b>20 מ' / 40 מ'</b></td><td>הליכה מרבית ליציאה / מרחק מרבי בין יציאות</td></tr>
+    <tr><td><b>2 מ'</b></td><td>מעל: גידור סביב החפירה; מעקה מלא לגשרון</td></tr>
+    <tr><td><b>4 מ'</b></td><td>מעל: תכנית של מהנדס</td></tr>
+    <tr><td><b><span class="ltr">0.90–1.15</span> מ'</b></td><td>אזן יד</td></tr>
+    <tr><td><b><span class="ltr">0.45–0.50</span> מ'</b></td><td>אזן תיכון</td></tr>
+    <tr><td><b>0.60 מ'</b></td><td>מעליו אסור לקפוץ (בעומק מעל 1.20 מ'); רוחב מינימלי לגשרון</td></tr>
+    <tr><td><b>10 ס"מ</b></td><td>חלל ברצפה שהמידה הקטנה שלו מעל זה = פתח</td></tr>
+    <tr><td><b><span class="ltr">25–30</span> ס"מ</b></td><td>שלבים בסולם עץ (ת"י 1847)</td></tr>
+    <tr><td><b><span class="ltr">30&nbsp;mA</span></b></td><td>ממסר פחת קופץ (לא <span class="ltr">30&nbsp;A</span>)</td></tr>
+  </table>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">?</span><h2>שאלות חזרה</h2></div>
+  <div class="bl">לענות בלי להציץ. התשובות בעמוד הבא.</div>
+  <ol class="quiz">
+    <li>חפירה בעומק <b>1.10 מ'</b>. מה חובה לעשות? <span class="lvl">קל</span></li>
+    <li>בכמה הדיפון צריך לבלוט מעל הקרקע, ולמה? <span class="lvl">קל</span></li>
+    <li>מה המרחק המרבי בין שתי יציאות? וכמה עובד הולך עד יציאה? <span class="lvl">קל</span></li>
+    <li>תעלה בעומק <b>0.90 מ'</b>. ערמת עפר של <b>0.35 מ'</b> צמודה לשפה. עובדים ייכנסו. מה צריך? <span class="lvl">בינוני</span></li>
+    <li>מה מוסיפים בחפירה מעל <b>2 מ'</b>? לציין את הגבהים. ומה מוסיפים מעל <b>4 מ'</b>? <span class="lvl">בינוני</span></li>
+    <li>למה בגידור חפירה אין לוח רגל נפרד, אבל בגשרון מעל תעלה עמוקה מ-2 מ' יש? <span class="lvl">בינוני</span></li>
+    <li>תעלה ברוחב <b>0.90 מ'</b> ובעומק <b>2.20 מ'</b>. צריך לעבור מצד לצד. מה הדרישות? <span class="lvl">מאתגר</span></li>
+    <li>שתי סיבות לאורות אדומים בפתחים בלילה. <span class="lvl">קל</span></li>
+    <li>בשיטת הסרגל: כמה יציאות בחפירה של <b>130 מ'</b>? <span class="lvl">בינוני</span></li>
+    <li>חפירה של <b>610 מ'</b>: כמה יציאות לפי מכללות ישראל, ומה המינימום לפי הסרגל? <span class="lvl">בינוני</span></li>
+    <li>חפירה של <b>500 מ'</b>: לחשב בשלוש הדרכים (מכללות ישראל, נוסחת המרצה, סרגל). <span class="lvl">מאתגר</span></li>
+    <li>שני מוקשים: (א) חור לצינור של <b>6 אינץ'</b> ברצפה — פתח? (ב) באיזה זרם קופץ ממסר פחת? <span class="lvl">קל</span></li>
+  </ol>
+</section>
+
+<!-- ============ ANSWERS ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">✅</span><h2>תשובות</h2></div>
+  <ol class="answers">
+    <li>\({1.10 \le 1.20}\) ← <b>מפגע</b> ← חובה לסלק אותו (הדרך — לבחירתנו). אין חובת דיפון.</li>
+    <li><b>15 ס"מ לפחות</b>, כדי שאבן או חפץ שנבעטו בטעות <b>לא ייפלו</b> על העובדים בחפירה.</li>
+    <li><b>40 מ'</b> בין יציאות. העובד הולך <b>עד 20 מ'</b>.</li>
+    <li>עפר צמוד ← נוסף לעומק: \({0.90 + 0.35 = 1.25 &gt; 1.20}\) ← <b>דיפון</b> (בולט 15 ס"מ) ו<b>יציאות</b>. או: להרחיק את העפר 0.5 מ' ← \({0.90 \le 1.20}\) ← רק מפגע.</li>
+    <li>מעל 2 מ': <b>גידור</b> — אזן יד בין 0.90 ל-1.15 מ', אזן תיכון בין 0.45 ל-0.50 מ' (וכל מה שמעל 1.20). מעל 4 מ': גם <b>תכנית של מהנדס</b> לקטע העמוק.</li>
+    <li>בחפירה הדיפון שבולט 15 ס"מ <b>הוא</b> לוח הרגל (לפי המרצה): עוצר נפילה לתוך התעלה. מהגשרון חפץ נופל <b>ישר לתעלה</b> ← צריך לוח רגל.</li>
+    <li>(א) לעבור: \({0.90 &gt; 0.60}\) וגם \({2.20 &gt; 1.20}\) ← אסור לקפוץ ← <b>גשרון</b> ברוחב 0.60 מ' לפחות.<br>(ב) על הגשרון: \({2.20 &gt; 2}\) ← <b>מעקה מלא</b>: אזן יד, אזן תיכון ולוח רגל.<br>(ג) סביב התעלה: \({2.20 &gt; 2}\) ← <b>גידור</b> (אזן יד ואזן תיכון) — בכל מקרה.<br>(ד) ועוד: עפר 0.5 מ' מהשפה; ואם נכנסים לתעלה — גם <b>דיפון</b> (בולט 15 ס"מ) ו<b>יציאות</b>.</li>
+    <li>(1) <b>מסמנים סכנה</b>. (2) העיניים <b>מסתגלות</b> לחושך בערך ב-5 שניות, במקום <span class="ltr">10–15</span>.</li>
+    <li>יציאות ב-20, 60, 100 ← מכסות עד 120. \({130 &gt; 120}\) ← עוד אחת ← <b>4 יציאות</b>. בדיקה: \({120 = 3 \times 40 &lt; 130 \le 4 \times 40 = 160}\) ✓</li>
+    <li>\({610 \div 40 = 15.25}\). מכללות ישראל: \({16 + 1 = \mathbf{17}}\). סרגל: <b>16</b>. בדיקה: \({600 = 15 \times 40 &lt; 610 \le 16 \times 40 = 640}\) ✓</li>
+    <li>\({500 \div 40 = 12.5}\). מכללות ישראל: \({13 + 1 = \mathbf{14}}\). נוסחת המרצה: בדיוק 0.5 ← שיקול דעת (12 או 13). סרגל: \({480 = 12 \times 40 &lt; 500 \le 13 \times 40 = 520}\) ← <b>13</b> ✓</li>
+    <li>(א) \({6 \times 2.54 = 15.24 &gt; 10}\) ס"מ ← <b>פתח ברצפה</b>. (ב) <b><span class="ltr">30&nbsp;mA</span></b> (לא <span class="ltr">30&nbsp;A</span>).</li>
+  </ol>
+
+  <h3>📖 מילון מונחים</h3>
+  <dl class="glossary">
+    <dt>מפגע</dt><dd>מצב מסוכן שחובה לסלק. חפירה עד 1.20 מ' היא מפגע.</dd>
+    <dt>זיהום זירה</dt><dd>שינוי מקום התאונה לפני שחוקרים אותו.</dd>
+    <dt>דיפון</dt><dd>לוחות עץ או פחי פלדה (שיגום) שמחזיקים את דופן החפירה. בולט 15 ס"מ.</dd>
+    <dt>תא הגנה</dt><dd>"כלוב" מפח מלא או מעץ צפוף שעובדים בתוכו. חלופה לדיפון.</dd>
+    <dt>עודפי עפר</dt><dd>העפר שהוצא מהחפירה. נערם 0.5 מ' לפחות מהשפה.</dd>
+    <dt>גידור (מעקה)</dt><dd>עמודים + אזן יד + אזן תיכון, ולפעמים לוח רגל.</dd>
+    <dt>אזן יד</dt><dd>המאוזן העליון במעקה: בין 0.90 ל-1.15 מ'.</dd>
+    <dt>אזן תיכון</dt><dd>המאוזן האמצעי: בין 0.45 ל-0.50 מ'.</dd>
+    <dt>לוח רגל</dt><dd>לוח בתחתית המעקה, 15 ס"מ לפחות. עוצר חפצים.</dd>
+    <dt>מדרכת מעבר</dt><dd>משטח הליכה בגובה, למשל בין שני גגות.</dd>
+    <dt>גשרון</dt><dd>גשר קטן מעל תעלה. רוחב 0.60 מ' לפחות.</dd>
+    <dt>תכנית</dt><dd>תכנון של מהנדס. בחפירה — מעל 4 מ'.</dd>
+    <dt>תאורה נאותה</dt><dd>תאורה מספיקה לעבודה בלילה, כמו האור הלבן בכיתה.</dd>
+    <dt>שיטת הסרגל</dt><dd>סופרים יציאות: הראשונה ב-20 מ', ואז כל 40 מ'.</dd>
+    <dt>פתח ברצפה</dt><dd>חלל שהמידה הקטנה שלו מעל 10 ס"מ.</dd>
+    <dt>ממסר פחת</dt><dd>מפסק מגן לזרם דלף. קופץ ב-<span class="ltr">30&nbsp;mA</span>.</dd>
+    <dt>מה"ט</dt><dd>הגוף שעורך את המבחן החיצוני להנדסאים.</dd>
+    <dt>ציון מגן</dt><dd>הציון של המכללה לפני מבחן מה"ט. אצל המרצה — עד 90.</dd>
+    <dt>מבדק ידע</dt><dd>בוחן קצר בכיתה = "מראה" למה שעוד לא יודעים. משקל קטן (בערך חצי נקודה).</dd>
+  </dl>
+
+  <div class="box unclear"><div class="box-title">לא היה ברור בהקלטה</div>
+    <ul class="pts">
+      <li><span class="ltr">00:09:53</span>: כלל "הפרש מעל 20" בין ציון המגן לציון מה"ט (הסיבה ל<b>תקרה של 90</b>) — לא נשמע ברור.</li>
+      <li><span class="ltr">00:10:48</span>: בשבלונה חזית–תעלה לא נאמר <b>המרווח</b> חזית–פיגום. מהסכומים יוצא <b>0.30 מ'</b>. לבדוק בשבלונה בדרייב.</li>
+      <li><span class="ltr">00:36:38</span>: עם <b>תא הגנה</b> לא צריך גם יציאות — נאמר פעם אחת (ומתאים להערה על הלוח). לוודא.</li>
+      <li><span class="ltr">00:41:35</span>: "הדיפון הבולט = <b>לוח הרגל</b>" בגידור חפירה — לפי המרצה זה לא כתוב בתקנות.</li>
+      <li><span class="ltr">01:08:43</span>: נוסחת המרצה נותנת לפעמים <b>אחת פחות</b> מהסרגל (82, 161, 250, 7,325 מ'). לשאול איזו תשובה מצופה במבחן המגן.</li>
+      <li><span class="ltr">01:32:05</span>: "<b>מתח נמוך מאוד</b>" — <span class="ltr">50&nbsp;V</span> בתקנות הבנייה מול <span class="ltr">24&nbsp;V</span> בתקנות החשמל. לבדוק את הנוסח בבנק השאלות.</li>
+    </ul>
+  </div>
+</section>
+
+</body>
+</html>
