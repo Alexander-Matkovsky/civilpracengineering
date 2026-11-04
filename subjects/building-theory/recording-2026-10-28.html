@@ -1,0 +1,1536 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>תורת הבניה והמבנים - מבוא · תכנון ורישוי: מהקרקע להיתר</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=block">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});document.documentElement.dataset.math='done'"></script>
+<style>
+/* Lecture summary design system: A4, RTL Hebrew, print-first. */
+
+@page {
+  size: A4;
+  margin: 18mm 16mm 17mm 16mm;
+  @bottom-center {
+    content: counter(page);
+    font-family: Heebo, "Arial Hebrew", sans-serif;
+    font-size: 9pt;
+    color: #7a8394;
+  }
+}
+@page :first {
+  margin: 0;
+  @top-right { content: none; }
+  @top-left { content: none; }
+  @bottom-center { content: none; }
+}
+
+:root {
+  --accent: #4f46e5;
+  --accent-dark: #3730a3;
+  --accent-soft: #eef0ff;
+  --accent-mid: #c7cbfb;
+  --ink: #1d2230;
+  --muted: #5d6676;
+  --line: #dfe3ea;
+  --paper: #ffffff;
+  --bg-soft: #f6f7f9;
+  --ok: #0f7b5f;
+  --ok-soft: #e2f5ee;
+  --warn: #b45309;
+  --warn-soft: #fdf1e2;
+  --bad: #b91c1c;
+  --bad-soft: #fdeaea;
+  --info: #0e6aa8;
+  --info-soft: #e5f2fb;
+}
+
+/* one accent colour per course */
+body.course-math { --accent: #4f46e5; --accent-dark: #3730a3; --accent-soft: #eef0ff; --accent-mid: #c7cbfb; }
+body.course-roads { --accent: #c2620a; --accent-dark: #8f4505; --accent-soft: #fdf0e3; --accent-mid: #f6cfa6; }
+body.course-safety { --accent: #c62828; --accent-dark: #8e1b1b; --accent-soft: #fdecea; --accent-mid: #f5bcbc; }
+body.course-geodesy { --accent: #0f766e; --accent-dark: #0b524c; --accent-soft: #e2f4f1; --accent-mid: #a7dcd5; }
+body.course-building-theory { --accent: #a5502a; --accent-dark: #74371c; --accent-soft: #f8ece5; --accent-mid: #e8c2ad; }
+body.course-drafting { --accent: #0369a1; --accent-dark: #024b74; --accent-soft: #e3f1fa; --accent-mid: #a9d3ee; }
+body.course-labor-law { --accent: #7c3aed; --accent-dark: #5521b5; --accent-soft: #f1eafe; --accent-mid: #d4c0fb; }
+body.course-statics { --accent: #2563eb; --accent-dark: #1e40af; --accent-soft: #e8f0fe; --accent-mid: #b8cdfa; }
+
+* { box-sizing: border-box; }
+html { direction: rtl; }
+body {
+  margin: 0;
+  font-family: Heebo, "Arial Hebrew", Arial, sans-serif;
+  font-size: 11.5pt;
+  line-height: 1.62;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+p { margin: 0 0 2.2mm; }
+b, strong {
+  font-weight: 700;
+  background: linear-gradient(transparent 60%, var(--accent-mid) 60%);
+  padding: 0 0.5mm;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.box b, .box strong, .bl b, .bl strong, th b { background: none; padding: 0; }
+.ltr, .num, code { direction: ltr; unicode-bidi: isolate; }
+code {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.88em;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 1.2mm;
+  padding: 0 1mm;
+}
+.katex { direction: ltr; unicode-bidi: isolate; font-size: 1.08em; }
+.katex-display { margin: 1mm 0 !important; }
+small, .muted { color: var(--muted); }
+
+/* ---------- cover ---------- */
+.cover {
+  height: 297mm;
+  width: 210mm;
+  display: flex;
+  flex-direction: column;
+  break-after: page;
+  overflow: hidden;
+}
+.cover-band {
+  background: var(--accent);
+  color: #fff;
+  padding: 22mm 18mm 14mm;
+  position: relative;
+}
+.cover-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 30%, rgba(255,255,255,.16) 0 18mm, transparent 18.2mm),
+    radial-gradient(circle at 4% 85%, rgba(255,255,255,.10) 0 28mm, transparent 28.2mm),
+    radial-gradient(circle at 30% 105%, rgba(255,255,255,.08) 0 20mm, transparent 20.2mm);
+  pointer-events: none;
+}
+.cover-kicker { font-size: 12pt; font-weight: 500; opacity: .9; margin-bottom: 3mm; }
+.cover h1 { font-size: 30pt; line-height: 1.15; font-weight: 900; margin: 0 0 3mm; }
+.cover-sub { font-size: 14pt; font-weight: 500; opacity: .95; }
+.cover-meta { display: flex; flex-wrap: wrap; gap: 2.5mm; margin-top: 7mm; position: relative; z-index: 1; }
+.chip {
+  display: inline-block;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 20mm;
+  padding: 1mm 4mm;
+  font-size: 10.5pt;
+  font-weight: 500;
+}
+.cover-body { padding: 10mm 18mm 12mm; flex: 1; display: flex; flex-direction: column; gap: 6mm; }
+.cover-body h3 { margin: 0 0 2mm; font-size: 13pt; color: var(--accent-dark); }
+.roadmap { list-style: none; margin: 0; padding: 0; display: grid; gap: 2mm; }
+.roadmap li {
+  display: grid;
+  grid-template-columns: 9mm 1fr auto;
+  align-items: center;
+  gap: 3mm;
+  background: var(--bg-soft);
+  border-radius: 2.5mm;
+  padding: 1.6mm 3mm;
+}
+.roadmap .n {
+  width: 8mm; height: 8mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 11pt;
+}
+.roadmap .t { font-weight: 600; }
+.roadmap .when { direction: ltr; font-size: 9.5pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 2mm 5mm; font-size: 9.5pt; color: var(--muted); }
+
+/* ---------- topic sections: each starts on a new page ---------- */
+section.topic { break-before: page; }
+section.topic.cont { break-before: auto; margin-top: 8mm; }
+.topic-head {
+  display: flex;
+  align-items: center;
+  gap: 3.5mm;
+  border-bottom: 2.5px solid var(--accent);
+  padding-bottom: 2.5mm;
+  margin-bottom: 4mm;
+}
+.topic-head .n {
+  flex: none;
+  width: 11mm; height: 11mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-size: 15pt; font-weight: 900;
+}
+.topic-head h2 { margin: 0; font-size: 19pt; line-height: 1.2; font-weight: 800; color: var(--ink); flex: 1; }
+.time {
+  flex: none;
+  direction: ltr;
+  font-size: 9pt;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 10mm;
+  padding: 0.6mm 2.6mm;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+h3 { font-size: 13.5pt; font-weight: 800; margin: 5mm 0 2mm; color: var(--accent-dark); break-after: avoid; }
+h4 { font-size: 11.5pt; font-weight: 700; margin: 3mm 0 1.5mm; break-after: avoid; }
+
+/* bottom line: first thing in every section */
+.bl {
+  background: var(--accent-soft);
+  border-inline-start: 5px solid var(--accent);
+  border-radius: 2.5mm;
+  padding: 2.5mm 4mm;
+  font-weight: 700;
+  font-size: 12pt;
+  margin: 0 0 4mm;
+  break-inside: avoid;
+}
+.bl::before { content: "⚡ "; }
+
+/* bullets */
+ul.pts { list-style: none; padding: 0; margin: 0 0 3mm; }
+ul.pts > li { position: relative; padding-inline-start: 6mm; margin-bottom: 1.6mm; }
+ul.pts > li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 1mm;
+  top: 2.6mm;
+  width: 2.2mm; height: 2.2mm;
+  border-radius: 50%;
+  background: var(--accent);
+}
+ul.pts ul { margin-top: 1mm; }
+
+/* generic callout box */
+.box {
+  border-radius: 3mm;
+  padding: 3mm 4mm;
+  margin: 3mm 0;
+  break-inside: avoid;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+.box > .box-title { font-weight: 800; margin-bottom: 1.2mm; display: flex; gap: 2mm; align-items: center; }
+.box > :last-child { margin-bottom: 0; }
+.box.life { background: #fffbea; border-color: #f3e3a3; }
+.box.life > .box-title::before { content: "🏠"; }
+.box.formula { background: var(--accent-soft); border-color: var(--accent-mid); text-align: center; }
+.box.formula > .box-title { justify-content: center; }
+.box.formula > .box-title::before { content: "🧮"; }
+.box.tip { background: var(--ok-soft); border-color: #b6e3d2; }
+.box.tip > .box-title::before { content: "💡"; }
+.box.warn { background: var(--warn-soft); border-color: #f2cf9f; }
+.box.warn > .box-title::before { content: "⚠️"; }
+.box.remember { background: var(--info-soft); border-color: #b9dbf2; }
+.box.remember > .box-title::before { content: "🧠"; }
+.box.optional { background: #fafafa; border: 1.5px dashed #c5cad3; }
+.box.optional > .box-title::before { content: "📎"; }
+.box.optional > .box-title::after { content: "רשות"; font-size: 8.5pt; font-weight: 700; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; }
+.box.announce { background: var(--bad-soft); border-color: #f2c2c2; }
+.box.announce > .box-title::before { content: "📢"; }
+.box.unclear { background: #f4f1fb; border-color: #d9cff3; }
+.box.unclear > .box-title::before { content: "❓"; }
+.box.lecturer { background: #fff; border-inline-start: 4px solid var(--accent-mid); }
+.box.lecturer > .box-title::before { content: "🎙️"; }
+
+/* numbered procedure */
+ol.steps { list-style: none; counter-reset: st; padding: 0; margin: 2mm 0 3mm; }
+ol.steps > li { counter-increment: st; position: relative; padding-inline-start: 9mm; margin-bottom: 2mm; min-height: 6.5mm; }
+ol.steps > li::before {
+  content: counter(st);
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.2mm;
+  width: 6.5mm; height: 6.5mm;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 9.5pt;
+  display: grid;
+  place-items: center;
+}
+
+/* worked example */
+.worked {
+  border: 1.5px solid var(--accent-mid);
+  border-radius: 3mm;
+  margin: 3.5mm 0;
+  break-inside: avoid;
+  overflow: hidden;
+}
+.worked > .w-title { background: var(--accent); color: #fff; font-weight: 800; padding: 1.6mm 4mm; }
+.worked > .w-title::before { content: "✏️ "; }
+.worked > .w-body { padding: 3mm 4mm; }
+.worked .given { background: var(--bg-soft); border-radius: 2mm; padding: 2mm 3mm; margin-bottom: 2.5mm; }
+.worked .given::before { content: "נתון: "; font-weight: 800; }
+.worked .ask::before { content: "מחפשים: "; font-weight: 800; }
+.worked ol.lines { counter-reset: ln; list-style: none; padding: 0; margin: 2mm 0; }
+.worked ol.lines > li { counter-increment: ln; padding: 1.2mm 0; padding-inline-start: 13mm; border-bottom: 1px dashed var(--line); position: relative; }
+.worked ol.lines > li::before { content: "שלב " counter(ln); position: absolute; inset-inline-start: 0; font-size: 8.5pt; color: var(--muted); top: 1.8mm; }
+.worked .answer { margin-top: 2mm; font-weight: 800; }
+.worked .answer::before { content: "✅ תשובה: "; }
+.worked .check { margin-top: 1.5mm; color: var(--ok); font-weight: 700; }
+.worked .check::before { content: "✓ בדיקה: "; }
+
+/* figures */
+figure.fig { margin: 3.5mm 0; text-align: center; break-inside: avoid; }
+figure.fig svg { max-width: 100%; height: auto; }
+figure.fig figcaption { font-size: 9.5pt; color: var(--muted); margin-top: 1.5mm; }
+figure.fig.half { width: 60%; margin-inline: auto; }
+
+/* SVG helper classes (inline SVG lives in the HTML DOM, so CSS vars work) */
+svg text { font-family: Heebo, "Arial Hebrew", sans-serif; }
+svg .acc { stroke: var(--accent); }
+svg .acc-f { fill: var(--accent); }
+svg .soft-f { fill: var(--accent-soft); }
+svg .mid-f { fill: var(--accent-mid); }
+svg .dark-f { fill: var(--accent-dark); }
+svg .ink { stroke: var(--ink); }
+svg .ink-f { fill: var(--ink); }
+svg .muted-f { fill: var(--muted); }
+svg .line { stroke: #b8bfcb; }
+svg .ok { stroke: var(--ok); }
+svg .ok-f { fill: var(--ok); }
+svg .bad { stroke: var(--bad); }
+svg .bad-f { fill: var(--bad); }
+svg .warn-f { fill: var(--warn); }
+svg .lbl { font-size: 15px; fill: var(--ink); }
+svg .lbl-s { font-size: 12.5px; fill: var(--muted); }
+svg .lbl-b { font-size: 16px; font-weight: 700; fill: var(--ink); }
+svg .he { direction: rtl; unicode-bidi: plaintext; }
+
+/* tables */
+table.t { width: 100%; border-collapse: separate; border-spacing: 0; margin: 3mm 0; font-size: 10.5pt; break-inside: avoid; border: 1px solid var(--line); border-radius: 2.5mm; overflow: hidden; }
+table.t th { background: var(--accent-soft); color: var(--accent-dark); font-weight: 800; text-align: start; padding: 1.8mm 3mm; border-bottom: 1px solid var(--accent-mid); }
+table.t td { padding: 1.6mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.t tr:last-child td { border-bottom: none; }
+table.t tr:nth-child(even) td { background: #fafbfc; }
+
+/* layout helpers */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; }
+.grid2 > .box, .grid3 > .box { margin: 0; }
+.card { border: 1px solid var(--line); border-radius: 3mm; padding: 2.5mm 3.5mm; break-inside: avoid; background: #fff; }
+.card > .c-title { font-weight: 800; color: var(--accent-dark); margin-bottom: 1mm; }
+.vs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 3mm; align-items: stretch; }
+.vs > .mid { align-self: center; font-weight: 900; color: var(--accent); font-size: 14pt; }
+.keep { break-inside: avoid; }
+.pagebreak { break-before: page; }
+
+/* end matter */
+ol.quiz { padding-inline-start: 7mm; margin: 0; }
+ol.quiz > li { margin-bottom: 3mm; padding-bottom: 2mm; border-bottom: 1px dashed var(--line); break-inside: avoid; }
+ol.quiz .lvl { font-size: 8.5pt; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; margin-inline-start: 2mm; }
+ol.answers { padding-inline-start: 7mm; margin: 0; }
+ol.answers > li { margin-bottom: 2.5mm; break-inside: avoid; }
+dl.glossary { display: grid; grid-template-columns: max-content 1fr; gap: 1.5mm 5mm; margin: 0; }
+dl.glossary dt { font-weight: 800; color: var(--accent-dark); }
+dl.glossary dd { margin: 0; }
+
+@page {
+  @top-right { content: "תורת הבניה והמבנים - מבוא"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+  @top-left { content: "28/10/2026"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+}
+</style>
+</head>
+<body class="course-building-theory">
+<!-- ============ COVER (page 1) ============ -->
+<div class="cover">
+  <div class="cover-band">
+    <div class="cover-kicker">🎥 סיכום הקלטה · תורת הבניה והמבנים - מבוא (850140)</div>
+    <h1>תכנון ורישוי: מהקרקע להיתר</h1>
+    <div class="cover-sub">הקלטת השיעור · יום רביעי 28/10/2026</div>
+    <div class="cover-meta">
+      <span class="chip">👤 מור גדעון</span>
+      <span class="chip">⏱ 3:15 שעות הקלטה</span>
+      <span class="chip">📄 18 עמודים</span>
+    </div>
+  </div>
+  <div class="cover-body" style="gap:4.5mm">
+    <div class="bl">השיעור בשורה אחת: בונים לפי <b>מדרג תוכניות</b>, ועם <b>היתר</b> שעבר אישורים ופרסום.</div>
+    <div>
+      <h3>🗺️ מפת השיעור</h3>
+      <ol class="roadmap" style="gap:1.2mm">
+        <li><span class="n">1</span><span class="t">ענף הבנייה ומי בתוכו <small class="muted">(עמ' 2)</small></span><span class="when">00:10:17</span></li>
+        <li><span class="n">2</span><span class="t">הקרקע: רמ"י, חכירה, גוש וחלקה <small class="muted">(עמ' 3 ו-4)</small></span><span class="when">00:27:08</span></li>
+        <li><span class="n">3</span><span class="t">מדרג התוכניות: מתמ"א עד תב"ע <small class="muted">(עמ' 5 ו-6)</small></span><span class="when">01:14:25</span></li>
+        <li><span class="n">4</span><span class="t">התב"ע: תשריט, תקנון ואחוזי בנייה <small class="muted">(עמ' 7 עד 10)</small></span><span class="when">01:37:30</span></li>
+        <li><span class="n">5</span><span class="t">בקשה להיתר: הגרמושקה <small class="muted">(עמ' 11 ו-12)</small></span><span class="when">02:23:44</span></li>
+        <li><span class="n">6</span><span class="t">מי אחראי ומי מאשר <small class="muted">(עמ' 13)</small></span><span class="when">02:44:36</span></li>
+        <li><span class="n">7</span><span class="t">פרסום, התנגדויות ומכרז <small class="muted">(עמ' 14)</small></span><span class="when">02:52:45</span></li>
+      </ol>
+    </div>
+    <div class="box announce"><div class="box-title">הודעות מהשיעור</div>
+      <div class="grid2">
+        <ul class="pts">
+          <li>השיעור <b>בזום</b>, לא בכיתה <span class="ltr muted">⏱&nbsp;00:05:31</span></li>
+          <li>לשאול <b>חופשי</b>, בלי יד <span class="ltr muted">⏱&nbsp;00:07:53</span></li>
+          <li>הפסקות: <b><span class="ltr">12:28</span></b> <span class="ltr muted">⏱&nbsp;00:56:26</span> ו-<b><span class="ltr">13:46</span></b> <span class="ltr muted">⏱&nbsp;02:14:10</span></li>
+          <li><b>מצגת</b> ושאלון <b>בערב</b> <span class="ltr muted">⏱&nbsp;03:10:06</span></li>
+        </ul>
+        <ul class="pts">
+          <li><b>משימה שבועית</b> <span class="ltr muted">⏱&nbsp;03:10:24</span>: <b>גוש וחלקה</b> של המכללה · <b>שנת היתר</b> הבנייה · <b>מספר בקשה</b> ושמות מהנדס, אדריכל ויזם</li>
+          <li>מילוי בשאלון בידיעון (או בפתק), <b>בלי ChatGPT</b> <span class="ltr muted">⏱&nbsp;03:14:14</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legend"><span>⚡ שורה תחתונה</span><span>🏠 דוגמה מהחיים</span><span>🧮 נוסחה</span><span>✏️ דוגמה פתורה</span><span>⚠️ טעות נפוצה</span><span>💡 טיפ</span><span>🎙️ הודגש בשיעור</span><span>📎 רשות</span><span>⏱ זמן בהקלטה</span></div>
+  </div>
+</div>
+
+<!-- ============ 1. ענף הבנייה ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">1</span><h2>ענף הבנייה ומי בתוכו</h2><span class="time">⏱&nbsp;00:10:17</span></div>
+  <div class="bl">בענף הבנייה כל פרויקט נשען על <b>שישה סוגי גורמים</b>, ולכל אחד אחריות אחרת.</div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 136" xmlns="http://www.w3.org/2000/svg">
+      <g class="acc" stroke-width="2.5" fill="none">
+        <line x1="360" y1="68" x2="500" y2="24"/>
+        <line x1="360" y1="68" x2="500" y2="68"/>
+        <line x1="360" y1="68" x2="500" y2="112"/>
+        <line x1="360" y1="68" x2="220" y2="24"/>
+        <line x1="360" y1="68" x2="220" y2="68"/>
+        <line x1="360" y1="68" x2="220" y2="112"/>
+      </g>
+      <rect x="500" y="4" width="200" height="40" rx="11" class="soft-f acc" stroke-width="2"/>
+      <text x="600" y="21" class="lbl-b he" text-anchor="middle">יזמים</text>
+      <text x="600" y="37" class="lbl-s he" text-anchor="middle">פרטי או מוסדי</text>
+      <rect x="500" y="48" width="200" height="40" rx="11" class="soft-f acc" stroke-width="2"/>
+      <text x="600" y="65" class="lbl-b he" text-anchor="middle">מתכננים</text>
+      <text x="600" y="81" class="lbl-s he" text-anchor="middle">אדריכל, קונסטרוקטור, יועצים</text>
+      <rect x="500" y="92" width="200" height="40" rx="11" class="soft-f acc" stroke-width="2"/>
+      <text x="600" y="109" class="lbl-b he" text-anchor="middle">מבצעים</text>
+      <text x="600" y="125" class="lbl-s he" text-anchor="middle">קבלן, קבלני משנה, פועלים</text>
+      <rect x="20" y="4" width="200" height="40" rx="11" class="soft-f acc" stroke-width="2"/>
+      <text x="120" y="21" class="lbl-b he" text-anchor="middle">בקרה ושירות</text>
+      <text x="120" y="37" class="lbl-s he" text-anchor="middle">מעבדה, מודד, מתקינים</text>
+      <rect x="20" y="48" width="200" height="40" rx="11" class="soft-f acc" stroke-width="2"/>
+      <text x="120" y="65" class="lbl-b he" text-anchor="middle">ספקים</text>
+      <text x="120" y="81" class="lbl-s he" text-anchor="middle">בטון, פלדה, חצץ</text>
+      <rect x="20" y="92" width="200" height="40" rx="11" class="soft-f acc" stroke-width="2"/>
+      <text x="120" y="109" class="lbl-b he" text-anchor="middle">מינוף</text>
+      <text x="120" y="125" class="lbl-s he" text-anchor="middle">בנק, ביטוח, קרנות, משקיעים</text>
+      <circle cx="360" cy="68" r="50" class="mid-f"/>
+      <circle cx="360" cy="68" r="39" class="acc-f"/>
+      <text x="360" y="75" class="he" fill="#fff" font-size="19" font-weight="800" text-anchor="middle">פרויקט</text>
+    </svg>
+    <figcaption>שישה גורמים סביב כל פרויקט. בענף: מעל <b>50 מיליארד שקל</b> בשנה, כ-<b>200,000</b> עובדים (חסרים 80 עד 120 אלף), כ-<b>50,000</b> יחידות דיור חדשות. פעילות: מגורים וציבורי, תשתיות, מסחר ותעשייה, תחזוקה. קבלן שונה מפועל ב<b>גודל האחריות</b>.</figcaption>
+  </figure>
+
+  <div class="vs">
+    <div class="card"><div class="c-title">🏡 יזם פרטי</div>
+      <p>בונה לשוק הפרטי. הדגש: <b>כלכלי</b> (ריצוף זול, 3 חדרים במקום 4).</p></div>
+    <div class="mid">מול</div>
+    <div class="card"><div class="c-title">🏛️ יזם מוסדי (לפי המרצה)</div>
+      <p>מוסדות המדינה. הדגש: <b>תפקוד</b> (אולם ל-5,000 לא יהפוך ל-3,000).</p></div>
+  </div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים: מינוף <span class="ltr muted">⏱&nbsp;00:24:36</span></div>
+    <p>מנוף מרים משקל למעלה. כך <b>מינוף כספי</b>: היזם מביא 10% או 15% או 50%, והבנק משלים.</p>
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 150" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar11" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs>
+      <rect x="490" y="0" width="220" height="38" rx="10" class="soft-f acc" stroke-width="2"/>
+      <circle cx="690" cy="19" r="11" class="acc-f"/>
+      <text x="690" y="24" class="ltr" fill="#fff" font-size="13" font-weight="800" text-anchor="middle">1</text>
+      <text x="585" y="16" class="he ink-f" font-size="14.5" font-weight="800" text-anchor="middle">דגימה ביציקה</text>
+      <text x="585" y="31" class="he muted-f" font-size="12" text-anchor="middle">מעבדה שהיזם הסמיך</text>
+      <rect x="250" y="0" width="220" height="38" rx="10" class="soft-f acc" stroke-width="2"/>
+      <circle cx="450" cy="19" r="11" class="acc-f"/>
+      <text x="450" y="24" class="ltr" fill="#fff" font-size="13" font-weight="800" text-anchor="middle">2</text>
+      <text x="345" y="16" class="he ink-f" font-size="14.5" font-weight="800" text-anchor="middle">התקשות</text>
+      <text x="345" y="31" class="he muted-f" font-size="12" text-anchor="middle">כמו בתנאי האתר</text>
+      <rect x="10" y="0" width="220" height="38" rx="10" class="soft-f acc" stroke-width="2"/>
+      <circle cx="210" cy="19" r="11" class="acc-f"/>
+      <text x="210" y="24" class="ltr" fill="#fff" font-size="13" font-weight="800" text-anchor="middle">3</text>
+      <text x="105" y="16" class="he ink-f" font-size="14.5" font-weight="800" text-anchor="middle">העמסה עד שבירה</text>
+      <text x="105" y="31" class="he muted-f" font-size="12" text-anchor="middle">גורם בקרה מאשר</text>
+      <line x1="488" y1="19" x2="472" y2="19" class="acc" stroke-width="3" marker-end="url(#ar11)"/>
+      <line x1="248" y1="19" x2="232" y2="19" class="acc" stroke-width="3" marker-end="url(#ar11)"/>
+      <g transform="translate(0,44)">
+      <rect x="40" y="34" width="450" height="28" class="bad-f" fill-opacity="0.15"/>
+      <rect x="490" y="34" width="150" height="28" class="ok-f" fill-opacity="0.2"/>
+      <rect x="40" y="34" width="600" height="28" fill="none" class="ink" stroke-width="2"/>
+      <text x="170" y="53" class="he bad-f" font-size="14" font-weight="700" text-anchor="middle">לא עומד</text>
+      <text x="590" y="53" class="he ok-f" font-size="14" font-weight="700" text-anchor="middle">עומד</text>
+      <line x1="490" y1="22" x2="490" y2="74" class="ink" stroke-width="3"/>
+      <text x="528" y="16" class="lbl-b he" text-anchor="middle">נדרש</text>
+      <text x="488" y="16" class="lbl-b ltr" text-anchor="middle">300</text>
+      <text x="40" y="86" class="lbl-s ltr" text-anchor="middle">0</text>
+      <text x="640" y="86" class="lbl-s ltr" text-anchor="middle">400</text>
+      <text x="684" y="53" class="lbl-s he" text-anchor="middle">ק"ג/סמ"ר</text>
+      <line x1="535" y1="58" x2="535" y2="84" class="ok" stroke-width="1.5"/>
+      <circle cx="535" cy="48" r="10" class="ok-f"/>
+      <path d="M530 48 l4 4 l8 -9" fill="none" stroke="#fff" stroke-width="2.5"/>
+      <text x="535" y="102" class="ltr ok-f" font-size="17" font-weight="800" text-anchor="middle">330</text>
+      <line x1="445" y1="58" x2="445" y2="84" class="bad" stroke-width="1.5"/>
+      <circle cx="445" cy="48" r="10" class="bad-f"/>
+      <path d="M440 43 l10 10 M450 43 l-10 10" fill="none" stroke="#fff" stroke-width="2.5"/>
+      <text x="445" y="102" class="ltr bad-f" font-size="17" font-weight="800" text-anchor="middle">270</text>
+      </g>
+    </svg>
+    <figcaption><b>בדיקת בטון</b> <span class="ltr muted">⏱&nbsp;00:22:15</span>: בטון ב-30 צריך לעמוד בכ-300. 330 עומד, 270 (לא נאמר בשיעור) נכשל. בלי בדיקה: קומות על בטון חלש.</figcaption>
+  </figure>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): דגימת בטון ב-30</div><div class="w-body">
+    <div class="given">נדרש כ-300 ק"ג/סמ"ר. נשברה ב-330. האם עומדת, ובכמה?</div>
+    <ol class="lines">
+      <li>\(330 \ge 300\) ← <b>עומדת</b>.</li>
+      <li>מרווח: \(330 - 300 = 30\), כלומר \(30 / 300 = 10\%\) מעל הסף.</li>
+    </ol>
+    <div class="answer">עומדת בדרישה, ב-10% מעל הסף ← גורם בקרה מוסמך מאשר.</div>
+    <div class="check">\(330 / 300 = 1.10\) ✓ (המספר 330 משוחזר מההקלטה)</div>
+  </div></div>
+</section>
+<!-- ============ 2א. של מי הקרקע ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">2א</span><h2>של מי הקרקע: רמ"י וחכירה</h2><span class="time">⏱&nbsp;00:27:08</span></div>
+  <div class="bl">כ-<b>93%</b> מהקרקע בישראל בבעלות המדינה ובניהול <b>רמ"י</b>. בונים עליה בחכירה.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים: ליסינג <span class="ltr muted">⏱&nbsp;00:28:40</span></div>
+    <p>חכירה היא כמו <b>ליסינג</b> לרכב, רק לטווח ארוך מאוד: משלמים, משתמשים, ובסוף מחדשים את החוזה.</p>
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 222" xmlns="http://www.w3.org/2000/svg">
+      <rect x="68" y="12" width="632" height="44" class="acc-f"/>
+      <rect x="34" y="12" width="34" height="44" class="mid-f"/>
+      <rect x="20" y="12" width="14" height="44" class="muted-f" fill-opacity="0.45"/>
+      <rect x="20" y="12" width="680" height="44" fill="none" class="ink" stroke-width="2"/>
+      <text x="654" y="42" class="ltr" fill="#fff" font-size="24" font-weight="800" text-anchor="middle">93%</text>
+      <text x="548" y="41" class="he" fill="#fff" font-size="17" font-weight="700" text-anchor="middle">קרקע מנוהלת</text>
+      <text x="300" y="41" class="he" fill="#fff" font-size="14" text-anchor="middle">בבעלות המדינה, בניהול רשות מקרקעי ישראל (רמ"י)</text>
+      <rect x="684" y="70" width="14" height="14" class="acc-f"/>
+      <text x="650" y="82" class="lbl he" text-anchor="middle">מנוהלת</text>
+      <text x="608" y="82" class="lbl-b ltr" text-anchor="middle">93%</text>
+      <rect x="470" y="70" width="14" height="14" class="mid-f"/>
+      <text x="436" y="82" class="lbl he" text-anchor="middle">פרטית</text>
+      <text x="400" y="82" class="lbl-b ltr" text-anchor="middle">5%</text>
+      <rect x="256" y="70" width="14" height="14" class="muted-f" fill-opacity="0.45"/>
+      <text x="218" y="82" class="lbl he" text-anchor="middle">לא הוסבר</text>
+      <text x="170" y="82" class="lbl-b ltr" text-anchor="middle">2%</text>
+      <g transform="translate(0,-14)">
+      <text x="700" y="122" class="lbl-b he" text-anchor="start">אורך חכירה (לפי קנה מידה)</text>
+      <rect x="220" y="134" width="480" height="36" rx="6" class="mid-f acc" stroke-width="2"/>
+      <text x="664" y="158" class="lbl-b he" text-anchor="middle">חכירה</text>
+      <text x="620" y="158" class="lbl-b ltr" font-size="20" text-anchor="middle">99</text>
+      <text x="586" y="158" class="lbl-b he" text-anchor="middle">שנה</text>
+      <circle cx="198" cy="152" r="14" fill="none" class="acc" stroke-width="3"/>
+      <text x="116" y="157" class="lbl he" text-anchor="middle">חידוש חוזה</text>
+      <rect x="462" y="188" width="238" height="36" rx="6" class="mid-f acc" stroke-width="2"/>
+      <text x="664" y="212" class="lbl-b he" text-anchor="middle">חכירה</text>
+      <text x="620" y="212" class="lbl-b ltr" font-size="20" text-anchor="middle">49</text>
+      <text x="586" y="212" class="lbl-b he" text-anchor="middle">שנה</text>
+      <circle cx="440" cy="206" r="14" fill="none" class="acc" stroke-width="3"/>
+      <text x="358" y="211" class="lbl he" text-anchor="middle">חידוש חוזה</text>
+      <rect x="30" y="184" width="140" height="44" rx="8" fill="none" class="bad" stroke-width="2" stroke-dasharray="6 4"/>
+      <text x="100" y="202" class="he bad-f" font-size="14" font-weight="700" text-anchor="middle">לא</text>
+      <text x="100" y="222" class="ltr bad-f" font-size="20" font-weight="800" text-anchor="middle">999</text>
+      </g>
+    </svg>
+    <figcaption>למעלה: בעלות על הקרקע. פרטית (5%): למשל רכישות מלפני קום המדינה <span class="ltr muted">⏱&nbsp;00:33:39</span>; 2% לא הוסברו. למטה: המעגל = חידוש חוזה.</figcaption>
+  </figure>
+
+  <h3>למה הקרקע בבעלות המדינה? <span class="time"><span class="ltr">⏱&nbsp;00:29:42</span></span></h3>
+  <div class="grid3">
+    <div class="card"><div class="c-title">🧭 ניהול מרכזי</div><p>לטובת הכלל: שלא ייקנו קרקע מתחת לתושבים.</p></div>
+    <div class="card"><div class="c-title">🛣️ צרכי כולם</div><p>כביש, בית ספר, נמל. בעל קרקע לא יכול לסרב.</p></div>
+    <div class="card"><div class="c-title">🔮 תכנון עתיד</div><p><b>עתודות</b> והפשרה: קרקע שמורה לגידול העיר.</p></div>
+  </div>
+
+  <table class="t">
+    <tr><th>נושא</th><th>מה חשוב</th></tr>
+    <tr><td><b>עתודות והפשרה</b></td><td>כשהעיר גדלה, <b>מפשירים</b> עתודה ← שכונה חדשה (למשל חולות דרום-מערב ראשון לציון).</td></tr>
+    <tr><td><b>שכירות חקלאית</b></td><td>שנה עד שלוש, בתשלום. <b>אסור לבנות</b> (רק מבנה חקלאי בהיתר).</td></tr>
+    <tr><td><b>חכירה</b></td><td><b>49 או 99 שנה</b> (לא 999: "חכירה לדורות" בעייתית, גם הלכתית), ובסוף <b>חידוש חוזה</b>. לפי המרצה: לא שמעו על מכתב מראש; מגלים בהעברה או בירושה כמה שנים נשארו. <span class="ltr muted">⏱&nbsp;00:40:06</span></td></tr>
+    <tr><td><b>מכרזי רמ"י</b></td><td>(א) מציעים סכום לקרקע. (ב) מחיר בסיס ידוע, ומתחייבים לשירות לציבור (גן, פארק).</td></tr>
+  </table>
+
+  <div class="box warn"><div class="box-title">טעות נפוצה</div><p>"בבעלות המדינה" <b>לא</b> אומר "אסור לבנות": מקבלים זכויות בחכירה.</p></div>
+</section>
+<!-- ============ 2ב. טאבו, גוש, חלקה ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">2ב</span><h2>טאבו, גוש, חלקה ותת-חלקה</h2><span class="time">⏱&nbsp;00:45:43</span></div>
+  <div class="bl">כל נכס מזוהה בשלושה מספרים: <b>גוש, חלקה, תת-חלקה</b>. הבעלות רשומה ב<b>טאבו</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים: כמו כתובת <span class="ltr muted">⏱&nbsp;00:51:19</span></div>
+    <p><b>שכונה ← רחוב ← מספר בית</b>. גוש הוא האזור הגדול, חלקה היא החלק הקטן בבעלות אחת, ותת-חלקה היא דירה.</p>
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 272" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar21" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs>
+      <text x="535" y="34" class="lbl-b he" text-anchor="middle">גוש</text>
+      <rect x="380" y="50" width="100" height="50" class="soft-f line" stroke-width="1.5"/>
+      <text x="430" y="80" class="lbl-s ltr" text-anchor="middle">114</text>
+      <rect x="380" y="100" width="100" height="80" class="mid-f acc" stroke-width="3.5"/>
+      <text x="430" y="136" class="lbl-b he" text-anchor="middle">חלקה</text>
+      <text x="430" y="158" class="lbl-b ltr" text-anchor="middle">115</text>
+      <rect x="380" y="180" width="100" height="70" class="soft-f line" stroke-width="1.5"/>
+      <text x="430" y="219" class="lbl-s ltr" text-anchor="middle">116</text>
+      <rect x="480" y="50" width="110" height="80" class="soft-f line" stroke-width="1.5"/>
+      <text x="535" y="95" class="lbl-s ltr" text-anchor="middle">118</text>
+      <rect x="480" y="130" width="110" height="50" class="soft-f line" stroke-width="1.5"/>
+      <text x="535" y="160" class="lbl-s ltr" text-anchor="middle">119</text>
+      <rect x="480" y="180" width="110" height="70" class="soft-f line" stroke-width="1.5"/>
+      <text x="535" y="219" class="lbl-s ltr" text-anchor="middle">120</text>
+      <rect x="590" y="50" width="100" height="60" class="soft-f line" stroke-width="1.5"/>
+      <text x="640" y="84" class="lbl-s ltr" text-anchor="middle">121</text>
+      <rect x="590" y="110" width="100" height="60" class="soft-f line" stroke-width="1.5"/>
+      <text x="640" y="144" class="lbl-s ltr" text-anchor="middle">122</text>
+      <rect x="590" y="170" width="100" height="80" class="soft-f line" stroke-width="1.5"/>
+      <text x="640" y="214" class="lbl-s ltr" text-anchor="middle">123</text>
+      <rect x="380" y="50" width="310" height="200" fill="none" class="acc" stroke-width="3" stroke-dasharray="9 5"/>
+      <line x1="376" y1="140" x2="308" y2="140" class="acc" stroke-width="3.5" marker-end="url(#ar21)"/>
+      <text x="180" y="42" class="lbl-b he" text-anchor="middle">בית משותף</text>
+      <rect x="50" y="62" width="260" height="8" class="acc-f"/>
+      <rect x="60" y="70" width="240" height="40" class="soft-f acc" stroke-width="1.5"/>
+      <rect x="60" y="110" width="240" height="40" class="soft-f acc" stroke-width="1.5"/>
+      <rect x="60" y="150" width="240" height="40" class="soft-f acc" stroke-width="1.5"/>
+      <rect x="60" y="190" width="240" height="40" class="soft-f acc" stroke-width="1.5"/>
+      <line x1="180" y1="70" x2="180" y2="230" class="acc" stroke-width="1.5"/>
+      <rect x="181" y="191" width="118" height="38" class="mid-f"/>
+      <text x="240" y="216" class="lbl-b ltr" text-anchor="middle">1</text>
+      <text x="120" y="216" class="lbl-b ltr" text-anchor="middle">2</text>
+      <text x="240" y="176" class="lbl-b ltr" text-anchor="middle">3</text>
+      <text x="120" y="176" class="lbl-b ltr" text-anchor="middle">4</text>
+      <text x="240" y="136" class="lbl-b ltr" text-anchor="middle">5</text>
+      <text x="120" y="136" class="lbl-b ltr" text-anchor="middle">6</text>
+      <text x="240" y="96" class="lbl-b ltr" text-anchor="middle">7</text>
+      <text x="120" y="96" class="lbl-b ltr" text-anchor="middle">8</text>
+      <line x1="30" y1="230" x2="330" y2="230" class="ink" stroke-width="2.5"/>
+      <text x="180" y="256" class="lbl he" text-anchor="middle">כל דירה = תת-חלקה</text>
+    </svg>
+    <figcaption>מימין: גוש עם חלקות (חלקה 115 מודגשת). משמאל: בית משותף על החלקה, וכל דירה היא תת-חלקה (בבניין של 40 דירות: 1 עד 40).</figcaption>
+  </figure>
+
+  <h3>איך מוצאים גוש וחלקה (הדגמה בשיעור) <span class="time"><span class="ltr">⏱&nbsp;00:48:51</span></span></h3>
+  <ol class="steps">
+    <li>לפתוח <span class="ltr">govmap.gov.il</span>.</li>
+    <li>לחפש <b>כתובת</b> (בהדגמה: רחוב בראשון לציון).</li>
+    <li>בשכבות המידע להדליק <b>"גושים"</b> ו<b>"חלקות"</b>.</li>
+    <li>להגדיל: <b>קווים כחולים</b> = חלקות, <b>קו שחור עבה</b> = גוש. מספר הגוש גדול, ומספרי החלקות קטנים.</li>
+  </ol>
+
+  <ul class="pts">
+    <li><b>טאבו</b> = פנקס הבעלות על נדל"ן. זוג נשוי רשום שניהם (50% ו-50%).</li>
+    <li><b>בית משותף</b>: לכל דייר דירה + <b>אחוז</b> מהשטחים המשותפים (לובי, חדר אשפה, חניון). גם האחוז רשום בטאבו.</li>
+    <li>בתוכניות הבנייה רשום לכל <b>גוש וחלקה</b> מה מותר לבנות (<b>ייעוד</b>). <span class="ltr muted">⏱&nbsp;00:55:37</span></li>
+  </ul>
+
+  <div class="grid2">
+    <div class="box warn"><div class="box-title">טעות נפוצה</div><p>"גוש = עיר". לא: בעיר גדולה יש בדרך כלל <b>הרבה גושים</b> (לוד חריגה: בערך אחד). משמר השבעה: שניים. <span class="ltr muted">⏱&nbsp;00:53:09</span></p></div>
+    <div class="box tip"><div class="box-title">לשאלה השבועית</div><p>כתובת מדויקת ← <b>גוש וחלקה</b> ← אתר העירייה או <b>תוכניות הבניין</b>. <span class="ltr muted">⏱&nbsp;03:10:24</span></p></div>
+  </div>
+</section>
+<!-- ============ 3א. תמ"א ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">3א</span><h2>תמ"א: תוכניות לכל המדינה</h2><span class="time">⏱&nbsp;01:14:25</span></div>
+  <div class="bl"><b>תמ"א</b> היא תוכנית לכל המדינה, והיא משפיעה גם על בניין בודד: <b>גובה, רעש, חיזוק</b>.</div>
+
+  <ul class="pts">
+    <li><b>תמ"א = תוכנית מתאר ארצית</b>: חלה על כל מדינת ישראל, וקובעת פרטים ברמה עקרונית וכללית (חופים, תחבורה ועוד). <span class="ltr muted">⏱&nbsp;01:15:13</span></li>
+    <li>כל תמ"א עוסקת <b>בנושא אחד</b>, והיא חלה רק איפה שהנושא קיים (שדה תעופה: רק ליד שדה תעופה).</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 236" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar31" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs>
+      <g transform="translate(484,0)">
+        <rect x="0" y="6" width="226" height="224" rx="10" class="soft-f line" stroke-width="1.5"/>
+        <circle cx="204" cy="26" r="15" class="acc-f"/>
+        <text x="204" y="31" class="ltr" fill="#fff" font-size="14" font-weight="800" text-anchor="middle">15</text>
+        <text x="104" y="31" class="lbl-b he" text-anchor="middle">שדות תעופה</text>
+        <line x1="12" y1="190" x2="214" y2="190" class="ink" stroke-width="2"/>
+        <rect x="14" y="190" width="58" height="6" class="muted-f"/>
+        <text x="43" y="214" class="lbl-s he" text-anchor="middle">מסלול</text>
+        <line x1="210" y1="66" x2="50" y2="182" class="acc" stroke-width="3" stroke-dasharray="8 5" marker-end="url(#ar31)"/>
+        <rect x="84" y="172" width="20" height="18" class="mid-f ink" stroke-width="1.5"/>
+        <rect x="130" y="146" width="22" height="44" class="mid-f ink" stroke-width="1.5"/>
+        <rect x="176" y="118" width="24" height="72" class="mid-f ink" stroke-width="1.5"/>
+        <text x="106" y="106" class="lbl-s he" text-anchor="middle">גובה מוגבל</text>
+      </g>
+      <g transform="translate(246,0)">
+        <rect x="0" y="6" width="226" height="224" rx="10" class="soft-f line" stroke-width="1.5"/>
+        <circle cx="204" cy="26" r="15" class="acc-f"/>
+        <text x="204" y="31" class="ltr" fill="#fff" font-size="14" font-weight="800" text-anchor="middle">23</text>
+        <text x="104" y="31" class="lbl-b he" text-anchor="middle">מסילות ברזל</text>
+        <line x1="12" y1="190" x2="214" y2="190" class="ink" stroke-width="2"/>
+        <rect x="24" y="84" width="60" height="106" class="mid-f ink" stroke-width="2"/>
+        <rect x="36" y="100" width="12" height="14" class="ok-f ok" fill-opacity="0.35" stroke-width="1.5"/>
+        <rect x="60" y="100" width="12" height="14" class="ok-f ok" fill-opacity="0.35" stroke-width="1.5"/>
+        <rect x="36" y="126" width="12" height="14" class="ok-f ok" fill-opacity="0.35" stroke-width="1.5"/>
+        <rect x="60" y="126" width="12" height="14" class="ok-f ok" fill-opacity="0.35" stroke-width="1.5"/>
+        <rect x="36" y="152" width="12" height="14" class="ok-f ok" fill-opacity="0.35" stroke-width="1.5"/>
+        <rect x="60" y="152" width="12" height="14" class="ok-f ok" fill-opacity="0.35" stroke-width="1.5"/>
+        <text x="54" y="72" class="he ok-f" font-size="13" font-weight="700" text-anchor="middle">זיגוג</text>
+        <path d="M96 150 q-8 -12 0 -24" fill="none" class="line" stroke-width="2.5"/>
+        <path d="M106 154 q-10 -16 0 -32" fill="none" class="line" stroke-width="2.5"/>
+        <path d="M116 158 q-12 -20 0 -40" fill="none" class="line" stroke-width="2.5"/>
+        <text x="106" y="108" class="lbl-s he" text-anchor="middle">רעש</text>
+        <rect x="132" y="148" width="82" height="44" rx="4" fill="none" class="acc" stroke-width="2.5" stroke-dasharray="6 4"/>
+        <line x1="138" y1="168" x2="208" y2="168" class="ink" stroke-width="2"/>
+        <line x1="138" y1="180" x2="208" y2="180" class="ink" stroke-width="2"/>
+        <line x1="146" y1="165" x2="146" y2="183" class="ink" stroke-width="1.5"/>
+        <line x1="162" y1="165" x2="162" y2="183" class="ink" stroke-width="1.5"/>
+        <line x1="178" y1="165" x2="178" y2="183" class="ink" stroke-width="1.5"/>
+        <line x1="194" y1="165" x2="194" y2="183" class="ink" stroke-width="1.5"/>
+        <text x="173" y="138" class="lbl-s he" text-anchor="middle">תוואי פנוי</text>
+      </g>
+      <g transform="translate(10,0)">
+        <rect x="0" y="6" width="226" height="224" rx="10" class="soft-f line" stroke-width="1.5"/>
+        <circle cx="204" cy="26" r="15" class="acc-f"/>
+        <text x="204" y="31" class="ltr" fill="#fff" font-size="14" font-weight="800" text-anchor="middle">70</text>
+        <text x="104" y="31" class="lbl-b he" text-anchor="middle">הסעת המונים</text>
+        <line x1="12" y1="96" x2="214" y2="96" class="ink" stroke-width="2"/>
+        <rect x="30" y="46" width="166" height="50" class="mid-f acc" stroke-width="2"/>
+        <text x="113" y="76" class="lbl-s he" text-anchor="middle">בניין חדש</text>
+        <line x1="62" y1="96" x2="62" y2="138" class="ok" stroke-width="6"/>
+        <line x1="160" y1="96" x2="160" y2="168" class="bad" stroke-width="6"/>
+        <rect x="14" y="148" width="198" height="38" rx="19" class="muted-f ink" fill-opacity="0.3" stroke-width="2"/>
+        <text x="106" y="172" class="lbl-b he" text-anchor="middle">מטרו</text>
+        <circle cx="160" cy="168" r="11" class="bad-f"/>
+        <path d="M155 163 l10 10 M165 163 l-10 10" fill="none" stroke="#fff" stroke-width="2.5"/>
+        <text x="62" y="208" class="he ok-f" font-size="13" font-weight="700" text-anchor="middle">יסוד מתואם</text>
+        <text x="160" y="208" class="he bad-f" font-size="13" font-weight="700" text-anchor="middle">בלי תיאום</text>
+      </g>
+    </svg>
+    <figcaption>שלוש תמ"אות על בניין: גובה ליד מסלול נחיתה, תוואי וזיגוג ליד פס רכבת, ויסודות מעל מטרו (קידוח בלי תיאום פוגע בתחנה).</figcaption>
+  </figure>
+
+  <table class="t">
+    <tr><th>תמ"א</th><th>נושא</th><th>מה זה משנה לבניין</th></tr>
+    <tr><td><b class="ltr">38</b></td><td>חיזוק מבנים לרעידות אדמה</td><td><b>הקלה</b>: זכויות בנייה נוספות תמורת חיזוק. חלה על בניינים ישנים (לפי המרצה: לפני שנות ה-90 בערך), בלי מעלית וממ"דים (מרחבים מוגנים דירתיים), מעל גובה מסוים. כ-800 אלף (?) יח"ד נבנו לפני שנות ה-80 בלי תקן לרעידות אדמה. לפי המרצה: <b>פגה</b>.</td></tr>
+    <tr><td><b class="ltr">15</b></td><td>תפרוסת שדות תעופה</td><td><b>גובה</b>: רשות שדות התעופה קובעת. באזורים מסוימים עד כ-15 קומות (בלוד: לרוחב ולא לגובה).</td></tr>
+    <tr><td><b class="ltr">23</b></td><td>מסילות ברזל</td><td><b>תוואי פנוי</b>. ליד הפס: הגבלת גובה ו<b>זיגוג</b> לרעש.</td></tr>
+    <tr><td><b class="ltr">70</b></td><td>הסעת המונים (מטרו)</td><td><b>מתחת לקרקע</b>: יסודות ועוגנים דורשים תיאום (לא במצגת). האחריות לתיאום על הרשות.</td></tr>
+    <tr><td colspan="3"><b>תמ"אות נוספות שהוזכרו בקצרה</b>: <b class="ltr">31</b> דרכים (התחדשות עירונית מגדילה אוכלוסייה ותנועה) · <b class="ltr">24</b> בתי סוהר (גודל לפי אוכלוסייה) · <b class="ltr">34</b> משק המים והביוב (במצגת בלבד, לא נדונה)</td></tr>
+  </table>
+
+  <div class="grid2">
+    <div class="box warn"><div class="box-title">טעות נפוצה</div><p>"תמ"א = תמ"א 38 = עסקת נדל"ן". תמ"א 38 היא <b>חיזוק לרעידות אדמה</b>, ויש תמ"אות לנושאים אחרים.</p></div>
+    <div class="box optional"><div class="box-title">תרגול קצר: איזו תמ"א?</div><p>מגדל 40 קומות ליד שדה תעופה ← <span class="ltr">15</span>. בניין ליד פס רכבת ← <span class="ltr">23</span>. יסודות עמוקים בעיר עם מטרו ← <span class="ltr">70</span>.</p></div>
+  </div>
+</section>
+<!-- ============ 3ב. מחוזית, מקומית, מדרג ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">3ב</span><h2>מחוזית, מקומית ומדרג התוכניות</h2><span class="time">⏱&nbsp;01:27:10</span></div>
+  <div class="bl">שלוש שכבות תכנון: <b>ארצית, מחוזית, מקומית (תב"ע)</b>. כל תוכנית <b>כפופה</b> לזו שמעליה.</div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 254" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar32" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs>
+      <g transform="translate(70,76) scale(1.32) translate(-70,-76)">
+        <circle cx="70" cy="36" r="15" fill="none" class="acc" stroke-width="2.5" stroke-dasharray="6 4"/>
+        <path d="M40 112 C40 70 52 56 70 56 C88 56 100 70 100 112 Z" fill="none" class="acc" stroke-width="2.5" stroke-dasharray="6 4"/>
+      </g>
+      <circle cx="70" cy="36" r="15" class="ink-f" fill-opacity="0.85"/>
+      <path d="M40 112 C40 70 52 56 70 56 C88 56 100 70 100 112 Z" class="ink-f" fill-opacity="0.85"/>
+      <text x="236" y="40" class="lbl-b he" text-anchor="middle">מתאר = צללית</text>
+      <text x="236" y="66" class="lbl-s he" text-anchor="middle">רואים רק את הקו החיצוני,</text>
+      <text x="236" y="86" class="lbl-s he" text-anchor="middle">וכל מה שבפנים כפוף לו</text>
+
+      <rect x="400" y="6" width="300" height="40" rx="8" class="soft-f acc" stroke-width="2"/>
+      <text x="550" y="23" class="lbl-b he" text-anchor="middle">תמ"א (תוכנית מתאר ארצית)</text>
+      <text x="550" y="39" class="lbl-s he" text-anchor="middle">גבולות המדינה</text>
+      <rect x="334" y="56" width="300" height="40" rx="8" class="soft-f acc" stroke-width="2"/>
+      <text x="484" y="73" class="lbl-b he" text-anchor="middle">תוכנית מתאר מחוזית</text>
+      <text x="484" y="89" class="lbl-s he" text-anchor="middle">גבולות המחוז</text>
+      <rect x="268" y="106" width="300" height="40" rx="8" class="acc-f"/>
+      <text x="418" y="123" class="he" fill="#fff" font-size="16" font-weight="800" text-anchor="middle">תב"ע (תוכנית בניין עיר)</text>
+      <text x="418" y="139" class="he" fill="#fff" font-size="12.5" text-anchor="middle">הקו הכחול: גבול התוכנית</text>
+      <text x="302" y="132" class="ltr" fill="#fff" font-size="13" font-weight="700" text-anchor="middle">1:2500</text>
+      <rect x="202" y="156" width="300" height="40" rx="8" class="soft-f acc" stroke-width="2"/>
+      <text x="352" y="173" class="lbl-b he" text-anchor="middle">תוכנית בינוי</text>
+      <text x="352" y="189" class="lbl-s he" text-anchor="middle">אדריכל בינוי ערים + תנועה ומערכות</text>
+      <text x="236" y="182" class="lbl-s ltr" text-anchor="middle">1:1000</text>
+      <rect x="136" y="206" width="300" height="40" rx="8" class="soft-f acc" stroke-width="2"/>
+      <text x="286" y="223" class="lbl-b he" text-anchor="middle">תוכניות מפורטות</text>
+      <text x="286" y="239" class="lbl-s he" text-anchor="middle">אדריכל + קונסטרוקטור + יועצים</text>
+      <text x="170" y="232" class="lbl-s ltr" text-anchor="middle">1:50</text>
+
+      <line x1="700" y1="240" x2="700" y2="164" class="acc" stroke-width="4" marker-end="url(#ar32)"/>
+      <text x="610" y="196" class="lbl-b he" text-anchor="middle">כל תוכנית כפופה</text>
+      <text x="610" y="218" class="lbl-b he" text-anchor="middle">לזו שמעליה</text>
+    </svg>
+    <figcaption>מדרג (היררכיית) התוכניות, מהכללי למפורט, עם קנה מידה. בשקף <span class="ltr">1:50</span> למפורטות, ובדוגמה בסעיף 5 <span class="ltr">1:100</span>.</figcaption>
+  </figure>
+
+  <ul class="pts">
+    <li><b>תוכנית מחוזית</b> מיישמת את התמ"א ומנחה רשויות: גבולות פיתוח, חקלאות, תעשייה, יערות, תחבורה, <b>שטחים בהקפאה</b> (בלי ייעוד) ו<b>תנאים להקלות</b>.</li>
+    <li><b>מחוז</b> אינו עיר: הוא כולל כמה ערים. <b>תב"ע</b> היא תוכנית מתאר <b>מקומית</b>, ולכן עולה גם ל<b>ועדה המחוזית</b>, שלפעמים <b>דורשת יותר</b> ("רוצים 200 יח"ד, אני צריך 300").</li>
+    <li><b>התחדשות עירונית</b>: לא הורסים ובונים אותו דבר, אלא מגישים <b>תב"ע חדשה</b> לאזור (<b>פינוי-בינוי</b>). <b>תמ"א 38</b>, לעומת זאת, היא תוכנית ארצית על בניין בודד.</li>
+  </ul>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור; המספר 300 לדוגמה): התחדשות</div><div class="w-body">
+    <div class="given">רחוב עם 6 חלקות, בכל אחת בניין עם 20 יח"ד. תב"ע חדשה לכל האזור מתירה 300 יח"ד. פי כמה יותר?</div>
+    <ol class="lines">
+      <li>היום: \(6 \times 20 = 120\) יח"ד.</li>
+      <li>אחרי: \(300 / 120 = 2.5\).</li>
+    </ol>
+    <div class="answer">פי 2.5 (180 יח"ד נוספות).</div>
+    <div class="check">\(120 \times 2.5 = 300\) ✓</div>
+  </div></div>
+
+  <div class="box lecturer"><div class="box-title">הודגש בשיעור <span class="ltr muted">⏱&nbsp;02:12:49</span></div><p><b>תוכנית מפורטת = תוכנית ההגשה להיתר</b>: אחרי שהתב"ע מאושרת מגישים אותה. <b>כל תוכנית כפופה</b> לזו שמעליה. <span class="ltr muted">⏱&nbsp;02:13:01</span></p></div>
+</section>
+<!-- ============ 4א. תב"ע: מה בתוכה ואיך נולדת ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">4א</span><h2>תב"ע: מה בתוכה ואיך נולדת</h2><span class="time">⏱&nbsp;01:37:30</span></div>
+  <div class="bl">תב"ע היא <b>מסמך חוקי</b>: תשריט, תקנון ונספחים. היא קובעת <b>מה מותר לבנות במגרש</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים: מצע של מפלגה <span class="ltr muted">⏱&nbsp;01:37:30</span></div>
+    <p>תב"ע כמו מצע: אומרת מה רוצים לבנות, למה ואיך, אבל לא איזה בורג. היא <b>כללי הדקדוק</b>, ובקשת ההיתר היא "המשפט" שנכתב לפיהם (תוספת בסיכום).</p>
+  </div>
+
+  <div class="grid3">
+    <div class="card"><div class="c-title">🗺️ תשריט</div><p>הדף <b>הגרפי</b>: ייעודי קרקע במצב קיים ובמצב מוצע.</p></div>
+    <div class="card"><div class="c-title">📜 תקנון</div><p>הטקסט <b>המילולי</b>: תכליות, הוראות, ייעודים. תקף אחרי פרסום ברשומות.</p></div>
+    <div class="card"><div class="c-title">🗂️ נספחים</div><p>חומר נלווה מחייב (בינוי, פיתוח ועוד).</p></div>
+  </div>
+
+  <ul class="pts" style="margin-top:3mm">
+    <li>התב"ע <b>קובעת</b>: ייעוד הקרקע, <b>אחוזי בנייה</b>, <b>קווי בניין</b>, גובה וקומות, שטחי שירות ועיקרי, חניות, ואפילו עיצוב ושימור.</li>
+    <li><b>לא האדריכל קובע, החוק</b>: האדריכל (ולפעמים הקונסטרוקטור) צריך לדעת לקרוא את הזכויות. אפשר לבקש <b>שינוי תב"ע</b>, וזה לוקח זמן. <span class="ltr muted">⏱&nbsp;01:41:52</span></li>
+  </ul>
+
+  <h3>איך תב"ע נולדת: הגשה, הפקדה, תוקף <span class="time"><span class="ltr">⏱&nbsp;01:56:39</span></span></h3>
+  <figure class="fig">
+    <svg viewBox="0 0 720 150" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar41" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs>
+      <path d="M640 46 V36 H500 V46" fill="none" class="acc" stroke-width="2.5"/>
+      <text x="592" y="28" class="lbl-s he" text-anchor="middle">עד</text>
+      <text x="570" y="28" class="lbl-s ltr" text-anchor="middle">15</text>
+      <text x="545" y="28" class="lbl-s he" text-anchor="middle">שנה</text>
+      <line x1="626" y1="70" x2="516" y2="70" class="acc" stroke-width="3" stroke-dasharray="9 6" marker-end="url(#ar41)"/>
+      <line x1="484" y1="70" x2="376" y2="70" class="acc" stroke-width="3" marker-end="url(#ar41)"/>
+      <line x1="344" y1="70" x2="236" y2="70" class="acc" stroke-width="3" marker-end="url(#ar41)"/>
+      <line x1="204" y1="70" x2="96" y2="70" class="acc" stroke-width="3" marker-end="url(#ar41)"/>
+      <circle cx="640" cy="70" r="12" class="acc-f"/>
+      <circle cx="500" cy="70" r="15" class="dark-f"/>
+      <circle cx="360" cy="70" r="12" class="acc-f"/>
+      <circle cx="220" cy="70" r="12" class="acc-f"/>
+      <circle cx="80" cy="70" r="12" class="acc-f"/>
+      <text x="640" y="106" class="lbl-b he" text-anchor="middle">הגשה</text>
+      <text x="640" y="125" class="lbl-s he" text-anchor="middle">אפשר שוב ושוב</text>
+      <text x="500" y="106" class="lbl-b he" text-anchor="middle">הפקדה</text>
+      <text x="500" y="125" class="lbl-s ltr" text-anchor="middle">07.04.2021</text>
+      <text x="360" y="106" class="lbl-b he" text-anchor="middle">תוקף</text>
+      <text x="360" y="125" class="lbl-s he" text-anchor="middle">היתרים לפני</text>
+      <text x="360" y="142" class="lbl-s ltr" text-anchor="middle">2030 / 2035</text>
+      <text x="220" y="106" class="lbl-b he" text-anchor="middle">היתר</text>
+      <text x="220" y="125" class="lbl-s he" text-anchor="middle">לכל בניין</text>
+      <text x="220" y="142" class="lbl-s he" text-anchor="middle">בנפרד</text>
+      <text x="80" y="106" class="lbl-b he" text-anchor="middle">בנייה</text>
+    </svg>
+    <figcaption>מימין לשמאל. הדוגמה: תב"ע גבעתיים (סעיף 4ג), שהופקדה ב-<span class="ltr">07.04.2021</span> אחרי כ-15 שנה. 2030 ו-2035: דוגמאות לתוקף.</figcaption>
+  </figure>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים: טסט <span class="ltr muted">⏱&nbsp;01:58:00</span></div>
+    <p>אפשר להיבחן 30 פעמים, ואין רישיון עד שעוברים. וגם אז יש עוד בדיקות.</p>
+  </div>
+
+  <ul class="pts">
+    <li><b>הגשה</b>: שוב ושוב, ואין בזה כלום עד אישור.</li>
+    <li><b>הפקדה</b> (לפי המרצה): אחרי כל הבדיקות התוכנית נרשמת רשמית, "בספר החוקים". בדוגמה עברו <b>15 שנה</b> (הצרכים השתנו, ובדיון הוסיפו קומות). תב"ע יכולה לקחת <b>5 עד 20 שנה</b>. <span class="ltr muted">⏱&nbsp;01:59:57</span></li>
+    <li><b>תוקף</b>: לעיתים כתוב שהיתרים חייבים להתקבל <b>לפני 2030 או 2035</b>, כדי שאפשר יהיה לתכנן מחדש כשהצרכים משתנים. <span class="ltr muted">⏱&nbsp;02:00:45</span></li>
+  </ul>
+
+</section>
+<!-- ============ 4ב. אחוזי בנייה ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">4ב</span><h2>אחוזי בנייה: כמה מותר לבנות</h2><span class="time">⏱&nbsp;01:39:14</span></div>
+  <div class="bl"><b>אחוזי בנייה</b> = סך שטחי הבנייה חלקי שטח המגרש. כשאי אפשר לרוחב, בונים <b>לגובה</b>.</div>
+
+  
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 262" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar42" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs>
+      <path d="M490 26 V34 M690 26 V34 M490 30 H690" fill="none" class="ink" stroke-width="2"/>
+      <text x="590" y="20" class="lbl-b ltr" text-anchor="middle">10 m</text>
+      <rect x="490" y="44" width="200" height="200" class="mid-f ink" fill-opacity="0.5" stroke-width="3"/>
+      <rect x="550" y="104" width="80" height="80" class="acc-f"/>
+      <text x="590" y="140" class="ltr" fill="#fff" font-size="14" font-weight="700" text-anchor="middle">4 × 4</text>
+      <text x="590" y="162" class="ltr" fill="#fff" font-size="16" font-weight="800" text-anchor="middle">16 m²</text>
+      <text x="590" y="80" class="lbl-s ltr" text-anchor="middle">3 m</text>
+      <text x="590" y="222" class="lbl-s ltr" text-anchor="middle">3 m</text>
+      <text x="520" y="148" class="lbl-s ltr" text-anchor="middle">3 m</text>
+      <text x="660" y="148" class="lbl-s ltr" text-anchor="middle">3 m</text>
+      <text x="590" y="258" class="lbl-s he" text-anchor="middle">מבט מלמעלה</text>
+      <line x1="470" y1="150" x2="278" y2="150" class="acc" stroke-width="4" marker-end="url(#ar42)"/>
+      <text x="374" y="134" class="lbl-b he" text-anchor="middle">לגובה</text>
+      <text x="374" y="176" class="lbl-s ltr" text-anchor="middle">300 m²</text>
+      <rect x="110" y="100" width="80" height="144" class="mid-f acc" stroke-width="2.5"/>
+      <path d="M110 108H190M110 116H190M110 124H190M110 132H190M110 140H190M110 148H190M110 156H190M110 164H190M110 172H190M110 180H190M110 188H190M110 196H190M110 204H190M110 212H190M110 220H190M110 228H190M110 236H190" fill="none" class="acc" stroke-width="1.2"/>
+      <rect x="110" y="94" width="60" height="6" class="soft-f acc" stroke-width="2"/>
+      <path d="M102 100 H96 V244 H102" fill="none" class="ink" stroke-width="2"/>
+      <text x="54" y="162" class="lbl-b ltr" text-anchor="middle">18</text>
+      <text x="54" y="182" class="lbl-s he" text-anchor="middle">קומות מלאות</text>
+      <line x1="174" y1="97" x2="206" y2="97" class="acc" stroke-width="1.5"/>
+      <text x="246" y="94" class="lbl-s he" text-anchor="middle">קומה חלקית</text>
+      <text x="246" y="110" class="lbl-s ltr" text-anchor="middle">12 m²</text>
+      <line x1="60" y1="244" x2="240" y2="244" class="ink" stroke-width="2.5"/>
+      <text x="150" y="258" class="lbl-s he" text-anchor="middle">חתך צד (לא בקנה מידה)</text>
+    </svg>
+    <figcaption>מגרש 10 × 10 מ' עם נסיגה של 3 מ' מכל צד: נשארת קומה של 16 מ"ר בלבד, ולכן בונים לגובה.</figcaption>
+  </figure>
+
+  <div class="box formula"><div class="box-title">הנוסחה (הניסוח לא נאמר בשיעור)</div>
+    \[ p = \frac{A_{\text{b}}}{A_{\text{lot}}} \times 100\% \]
+    <p class="muted">p = אחוזי בנייה · A<sub>b</sub> = סך שטחי הבנייה בכל הקומות · A<sub>lot</sub> = שטח המגרש</p>
+  </div>
+
+  <ul class="pts">
+    <li><b>מספר הקומות</b> מוגדר בתב"ע <b>בנפרד</b> מאחוזי הבנייה. <span class="ltr muted">⏱&nbsp;01:40:40</span></li>
+    <li>לפי המרצה (הערכה מההקלטה): מגדלים <b>400%</b> או <b>600%</b>, צמודי קרקע <b>90 עד 105%</b>. <span class="ltr muted">⏱&nbsp;01:41:25</span></li>
+  </ul>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): מגרש 10 × 10 מ'</div><div class="w-body">
+    <div class="given">נסיגה 3 מ' מכל צד. אחוזי בנייה 300%. מה שטח הקומה, וכמה קומות נכנסות?</div>
+    <ol class="lines">
+      <li>שטח המגרש: \(10 \times 10 = 100\) מ"ר. בנייה כוללת: \(300\% \times 100 = 300\) מ"ר.</li>
+      <li>צד פנוי: \(10 - 3 - 3 = 4\) מ'. שטח קומה: \(4 \times 4 = 16\) מ"ר (16% מהמגרש).</li>
+      <li>קומות: \(300 / 16 = 18.75\) ← <b>18 מלאות</b> (288 מ"ר) ועוד קומה חלקית של 12 מ"ר.</li>
+    </ol>
+    <div class="answer">קומה של 16 מ"ר, ו-18 קומות מלאות וחלקית (החישוב האחרון לא נאמר בשיעור).</div>
+    <div class="check">\(18 \times 16 + 12 = 300\) ✓ (19 מלאות = \(304\) מ"ר, יותר מהמותר)</div>
+  </div></div>
+
+  <div class="box warn"><p>⚠️ <b>טעות נפוצה</b> <span class="ltr muted">⏱&nbsp;01:40:01</span>: 6 × 6 או 7 × 7. מחסרים נסיגה <b>משני</b> הצדדים: \(10 - 3 - 3 = 4\).</p></div>
+</section>
+<!-- ============ 4ג. תב"ע אמיתית: גבעתיים ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">4ג</span><h2>לקרוא תב"ע אמיתית: גבעתיים</h2><span class="time">⏱&nbsp;01:45:33</span></div>
+  <div class="bl">בתב"ע אמיתית: <b>הקו הכחול</b> הוא הגבול, <b>המקרא</b> מסביר צבעים, ו<b>זיקת הנאה</b> מתירה מעבר.</div>
+
+  <ol class="steps">
+    <li><b>כותרת</b> (שם, עיר, מחוז) ו<b>תרשימי התמצאות וסביבה</b> (<span class="ltr">1:12,000</span> ו-<span class="ltr">1:3,000</span>).</li>
+    <li><b>הקו הכחול</b> = גבול התוכנית: מעבר לו היא לא חלה.</li>
+    <li><b>המקרא</b> (למטה): מה כל צבע, קו וריצוד אומרים.</li>
+  </ol>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 222" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="pt1" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#fff"/><line x1="0" y1="0" x2="0" y2="8" stroke="#222" stroke-width="2"/></pattern>
+        <pattern id="pt2" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#fff"/><path d="M0 0H8V8" fill="none" stroke="#9aa3b2" stroke-width="1.3"/></pattern>
+        <pattern id="pt3" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#eef7d6"/><line x1="0" y1="0" x2="0" y2="8" stroke="#8fc23b" stroke-width="2.4"/></pattern>
+      </defs>
+      <rect x="640" y="10" width="46" height="24" rx="3" fill="#f2a65a" class="ink" stroke-width="1"/>
+      <text x="628" y="28" class="lbl he" text-anchor="start">מגורים ד'</text>
+      <rect x="640" y="44" width="46" height="24" rx="3" fill="#94d24b" class="ink" stroke-width="1"/>
+      <text x="628" y="62" class="lbl he" text-anchor="start">שצ"פ (שטח ציבורי פתוח)</text>
+      <rect x="640" y="78" width="46" height="24" rx="3" fill="#d6b36b" class="ink" stroke-width="1"/>
+      <text x="628" y="96" class="lbl he" text-anchor="start">דרך מאושרת (כבר קיימת)</text>
+      <rect x="640" y="112" width="46" height="24" rx="3" fill="#e63a5e" class="ink" stroke-width="1"/>
+      <text x="628" y="130" class="lbl he" text-anchor="start">דרך מוצעת (חדשה או הרחבה)</text>
+      <rect x="640" y="146" width="46" height="24" rx="3" fill="url(#pt3)" class="ink" stroke-width="1"/>
+      <text x="628" y="164" class="lbl he" text-anchor="start">זיקת הנאה</text>
+      <rect x="640" y="180" width="46" height="24" rx="3" fill="url(#pt2)" class="ink" stroke-width="1"/>
+      <text x="628" y="198" class="lbl he" text-anchor="start">חניה</text>
+      <rect x="300" y="10" width="46" height="24" rx="3" fill="url(#pt1)" class="ink" stroke-width="1"/>
+      <text x="288" y="28" class="lbl he" text-anchor="start">שטח לאיחוד וחלוקה חדשה</text>
+      <rect x="300" y="44" width="46" height="24" rx="3" fill="#ffee3a" class="ink" stroke-width="1"/>
+      <text x="288" y="62" class="lbl he" text-anchor="start">מבנה להריסה</text>
+      <rect x="300" y="78" width="46" height="24" rx="3" fill="none" class="ink" stroke-width="2.5" stroke-dasharray="7 4"/>
+      <text x="288" y="96" class="lbl he" text-anchor="start">גבול מתחם</text>
+      <line x1="300" y1="124" x2="346" y2="124" stroke="#7b3fa0" stroke-width="5"/>
+      <text x="288" y="130" class="lbl he" text-anchor="start">חזית מסחרית (חנויות)</text>
+      <line x1="300" y1="158" x2="346" y2="158" stroke="#e63a5e" stroke-width="3" stroke-dasharray="7 4"/>
+      <text x="288" y="164" class="lbl he" text-anchor="start">קו בניין עילי (מעל הקרקע)</text>
+      <rect x="313" y="182" width="20" height="20" rx="5" fill="#f2a65a" class="ink" stroke-width="1"/>
+      <text x="288" y="198" class="lbl he" text-anchor="start">מבנה לצרכי חינוך</text>
+    </svg>
+    <figcaption>המקרא של התוכנית בשקף 16 (הצבעים כמו בשקף), עם הסברים קצרים. דרך מוצעת טעונה אישור. <span class="ltr muted">⏱&nbsp;01:49:53</span> <span class="ltr muted">⏱&nbsp;01:51:53</span></figcaption>
+  </figure>
+
+  <ul class="pts">
+    <li><b>הפרויקט</b>: <b>פינוי-בינוי</b> בגבעתיים, עם <b>איחוד וחלוקה מחדש</b> (מחברים את החלקות ומחלקים אותן מחדש, כדי לחלק זכויות אחרת). הורסים בניינים נמוכים ובניין "רכבת" ארוך, ובונים שכונה: מגדלים לכיוון הכביש, נמוכים לכיוון העיר, וחזית מסחרית. <span class="ltr muted">⏱&nbsp;01:44:45</span></li>
+    <li>בהסבר בשיעור (לדוגמה, "נניח"): כ-<b>300</b> דיירים ← כ-<b>600</b>. <span class="ltr muted">⏱&nbsp;01:52:43</span></li>
+    <li><b>זיקת הנאה</b>: לא שטח ציבורי, אבל מאפשרת כניסה (לדיירים, או לכיבוי וחירום). <span class="ltr muted">⏱&nbsp;01:50:46</span></li>
+    <li><b>היתר לכל בניין</b>: אחרי אישור התב"ע מגישים בקשה להיתר <b>לכל בניין בנפרד</b>. <span class="ltr muted">⏱&nbsp;01:52:43</span></li>
+    <li><b>שער התקנון</b> (שקף 15, דוגמה מתוכנית אחרת, ממחוז מרכז): משרד הפנים · מחוז · נפה · מרחב תכנון · שם התוכנית · ארבע חתימות (ועדה מקומית, ועדה מחוזית, מחבר התוכנית, יזם ומגיש). אתר <span class="ltr">mmi.gov.il</span> מפרסם תב"עות (לפי השקף). <span class="ltr muted">⏱&nbsp;01:43:30</span></li>
+  </ul>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים: שרשרת אחראים <span class="ltr muted">⏱&nbsp;01:53:31</span></div>
+    <p>שאלה מהכיתה: "עם מיליארד פרטים, אולי העירייה תפספס?" התשובה: לכל אחד אחריות על החלק שלו, <b>כמו רופא, רוקח וחברת תרופות</b>. התב"ע קובעת כללי דקדוק, והיזם לא יוכל להגיש בקשה שלא עומדת בהם.</p>
+    <p>תקלות קורות. לפי המרצה, בעיר אחת (כנראה קריית אונו) קדחו יסודות והגיעו לתחנת מטרו עתידית. <b>התיאום באחריות הרשות</b>, לא היזם.</p>
+  </div>
+
+  
+</section>
+<!-- ============ 4ד. התקנון: ייעודים והוראות בנייה ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">4ד</span><h2>התקנון: ייעודים, קווי בניין וחניות</h2><span class="time">⏱&nbsp;02:03:09</span></div>
+  <div class="bl">התקנון קובע <b>ייעודים ומידות</b>, והאדריכל מתכנן <b>בתוך המסגרת</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים: טטריס או סודוקו <span class="ltr muted">⏱&nbsp;02:10:16</span></div><p>צריך להכניס לתוך המגרש בניין, שתי חניות וכל הנסיגות. אדריכלים שונים ← <b>פתרונות שונים</b>.</p></div>
+
+  <ul class="pts">
+    <li><b>תכולת התקנון</b> (שקף 18): <b>שם ומרחב תכנון</b> · <b>תחום וגבולות</b> · <b>מטרות ונספחים</b> · <b>רשימת ייעודים</b> · <b>פעולות ומועדים</b> אחרי האישור (למשל כמות יחידות מול זמן בנייה).</li>
+    <li><b>שצ"פ</b> = שטח ציבורי <b>פתוח</b> (פארק, גינה, מדרכה): כולם נכנסים. <b>שטח ציבורי שאינו פתוח</b> = מבנה ציבור: גן ילדים, בית משפט, תחנת משטרה. <span class="ltr muted">⏱&nbsp;02:03:56</span></li>
+    <li><b>עירוב שימושים</b>: בתב"ע אחת אפשר מגורים וגם מסחר בחזית. בלי זה, מגורים אינם מסחר. <span class="ltr muted">⏱&nbsp;02:05:32</span></li>
+  </ul>
+
+  <div class="grid2">
+    <div class="card"><div class="c-title">🟧 אזור מגורים א' (כתום)</div><p>דו-משפחתי או תלת-משפחתי. מרתף: מחסן, חניה, ממ"ד ומתקנים, וגם מגורים (מטבחון ושירותים), לא מסחר או תעשייה. חדר על הגג לכל דירה.</p></div>
+    <div class="card"><div class="c-title">🟨 אזור מגורים ג' (צהוב)</div><p><b>בנייה רוויה</b> (רב-קומות, כמה דיירים בכל קומה). מרתף: מחסנים, חניות ומתקנים; מגורים במרתף רק אם מחוברים לדירה שמעליהם. חדר על הגג רק אם מחובר לדירה שמתחתיו (פנטהאוז).</p></div>
+  </div>
+
+  <h3>הוראות בנייה למגורים א' (בדוגמה מהשיעור) <span class="time"><span class="ltr">⏱&nbsp;02:07:52</span></span></h3>
+  <div class="grid2" style="align-items:start">
+    <table class="t" style="margin:0">
+      <tr><th>מה</th><th>כמה</th></tr>
+      <tr><td>קו בניין קדמי ואחורי</td><td><b>5 מ'</b> כל אחד</td></tr>
+      <tr><td>קו בניין צדדי</td><td><b>3 מ'</b></td></tr>
+      <tr><td>גובה</td><td><b>שתי קומות</b></td></tr>
+      <tr><td>שטח עיקרי</td><td>עד <b>170 מ"ר</b> ליח"ד</td></tr>
+      <tr><td>שטחי שירות</td><td>חניה מקורה עד 30 מ"ר, ועוד עד 30 מ"ר לשירות אחר</td></tr>
+      <tr><td>ממ"ד</td><td>עד 7.0 מ"ר (או לפי החוק בעת ההיתר)</td></tr>
+      <tr><td>חניה</td><td><b>2</b> בתחום המגרש</td></tr>
+      <tr><td>פרגולה</td><td>עד 15 מ"ר</td></tr>
+    </table>
+    <figure class="fig" style="margin:0">
+      <svg viewBox="0 0 360 292" xmlns="http://www.w3.org/2000/svg">
+        <text x="180" y="14" class="lbl-b he" text-anchor="middle">הכול בתוך המגרש</text>
+        <rect x="100" y="22" width="160" height="240" class="soft-f ink" stroke-width="3"/>
+        <rect x="124" y="62" width="112" height="160" fill="none" class="acc" stroke-width="2.5" stroke-dasharray="7 5"/>
+        <rect x="134" y="72" width="92" height="140" class="mid-f acc" stroke-width="2"/>
+        <text x="180" y="146" class="lbl-b he" text-anchor="middle">בניין</text>
+        <text x="180" y="168" class="lbl-s he" text-anchor="middle">שתי קומות</text>
+        <rect x="134" y="226" width="20" height="34" class="muted-f" fill-opacity="0.45" stroke-width="0"/>
+        <rect x="158" y="226" width="20" height="34" class="muted-f" fill-opacity="0.45" stroke-width="0"/>
+        <text x="144" y="248" class="lbl-s ltr" text-anchor="middle">P</text>
+        <text x="168" y="248" class="lbl-s ltr" text-anchor="middle">P</text>
+        <text x="206" y="246" class="lbl-s ltr" text-anchor="middle">5 m</text>
+        <text x="180" y="46" class="lbl-s ltr" text-anchor="middle">5 m</text>
+        <text x="112" y="146" class="lbl-s ltr" text-anchor="middle">3</text>
+        <text x="248" y="146" class="lbl-s ltr" text-anchor="middle">3</text>
+        <rect x="40" y="270" width="280" height="18" class="muted-f" fill-opacity="0.3"/>
+        <text x="180" y="283" class="lbl-s he" text-anchor="middle">רחוב</text>
+      </svg>
+      <figcaption>מגרש 20 × 30 מ' כדוגמה: נסיגות 5, 5, 3, 3 ושתי חניות בפנים.</figcaption>
+    </figure>
+  </div>
+
+  
+
+</section>
+<!-- ============ 5א. בקשה להיתר: הגרמושקה ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">5א</span><h2>בקשה להיתר: הגרמושקה</h2><span class="time">⏱&nbsp;02:23:44</span></div>
+  <div class="bl">בקשה להיתר = <b>גרמושקה</b>: חבילת תוכניות מקופלת, עם <b>טופס 1</b> בראשה. באה <b>אחרי</b> התב"ע.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים: אקורדיון וחרב סמוראי <span class="ltr muted">⏱&nbsp;02:30:27</span> <span class="ltr muted">⏱&nbsp;02:39:54</span></div>
+    <p><b>גרמושקה</b> = אקורדיון: גיליון ארוך (כ-0.7 עד 1 מ' על כ-6 מ') מקופל, ופותחים דף אחד. <b>תוכנית קומה</b> = חיתוך אופקי, כמו חרב סמוראי שחותכת את הבניין.</p>
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 110" xmlns="http://www.w3.org/2000/svg">
+      <rect x="620" y="12" width="82" height="84" rx="4" class="mid-f acc" stroke-width="1.5"/>
+      <text x="661" y="58" class="he ink-f" font-size="14" font-weight="800" text-anchor="middle">טופס 1</text>
+      <rect x="534" y="12" width="82" height="84" rx="4" class="soft-f acc" stroke-width="1.5"/>
+      <text x="575" y="44" class="he ink-f" font-size="13" font-weight="700" text-anchor="middle">תרשים</text>
+      <text x="575" y="62" class="he ink-f" font-size="13" font-weight="700" text-anchor="middle">סביבה</text>
+      <text x="575" y="84" class="ltr muted-f" font-size="12.5" text-anchor="middle">1:2500</text>
+      <rect x="448" y="12" width="82" height="84" rx="4" class="mid-f acc" stroke-width="1.5"/>
+      <text x="489" y="44" class="he ink-f" font-size="13" font-weight="700" text-anchor="middle">מדידה</text>
+      <text x="489" y="62" class="he ink-f" font-size="13" font-weight="700" text-anchor="middle">והעמדה</text>
+      <text x="489" y="84" class="ltr muted-f" font-size="12.5" text-anchor="middle">1:100</text>
+      <rect x="362" y="12" width="82" height="84" rx="4" class="soft-f acc" stroke-width="1.5"/>
+      <text x="403" y="44" class="he ink-f" font-size="13" font-weight="700" text-anchor="middle">תוכנית</text>
+      <text x="403" y="62" class="he ink-f" font-size="13" font-weight="700" text-anchor="middle">פיתוח</text>
+      <text x="403" y="84" class="ltr muted-f" font-size="12.5" text-anchor="middle">1:100</text>
+      <rect x="276" y="12" width="82" height="84" rx="4" class="mid-f acc" stroke-width="1.5"/>
+      <text x="317" y="44" class="he ink-f" font-size="13" font-weight="700" text-anchor="middle">תוכניות</text>
+      <text x="317" y="62" class="he ink-f" font-size="13" font-weight="700" text-anchor="middle">קומה</text>
+      <text x="317" y="84" class="ltr muted-f" font-size="12.5" text-anchor="middle">1:100</text>
+      <rect x="190" y="12" width="82" height="84" rx="4" class="soft-f acc" stroke-width="1.5"/>
+      <text x="231" y="44" class="he ink-f" font-size="13" font-weight="700" text-anchor="middle">חזיתות</text>
+      <text x="231" y="62" class="he ink-f" font-size="13" font-weight="700" text-anchor="middle">וחתכים</text>
+      <text x="231" y="84" class="ltr muted-f" font-size="12.5" text-anchor="middle">1:100</text>
+      <rect x="104" y="12" width="82" height="84" rx="4" class="mid-f acc" stroke-width="1.5"/>
+      <text x="145" y="44" class="he ink-f" font-size="13" font-weight="700" text-anchor="middle">חישובי</text>
+      <text x="145" y="62" class="he ink-f" font-size="13" font-weight="700" text-anchor="middle">שטחים</text>
+      <rect x="18" y="12" width="82" height="84" rx="4" class="soft-f acc" stroke-width="1.5"/>
+      <text x="59" y="58" class="he ink-f" font-size="14" font-weight="800" text-anchor="middle">ממ"ד</text>
+    </svg>
+    <figcaption>הגרמושקה פרושה: כל דף הוא חלק מהאקורדיון (שקף 21), מימין לשמאל. מתחת לשם: קנה המידה. הצבע מתחלף רק להפרדה.</figcaption>
+  </figure>
+
+  <ul class="pts">
+    <li><b>טופס 1</b>: עורך הבקשה, אחראי שלד, אחראי ביקורת, בעל הקרקע (או חוכר), יזם, <b>שכנים צמודים</b> וסיכום שטחים. <span class="ltr muted">⏱&nbsp;02:24:36</span></li>
+    <li><b>שכן צמוד</b> חותם (הקלה או גדר משותפת). אם אי אפשר למצוא אותו, <b>בית משפט</b> מאשר בשמו.</li>
+    <li><b>מדידה והעמדה</b>: מודד מוסמך חותם, ומניחים עליה את הבניין העתידי מול השכנים. <span class="ltr muted">⏱&nbsp;02:26:10</span></li>
+    <li><b>תוכנית פיתוח</b>: נוף, חניות, <b>פינוי אשפה</b> (שמשאית תגיע), גז, <b>פילרים</b> (ארונות חשמל) ו<b>ניקוז</b> (לא להציף את השכן). <span class="ltr muted">⏱&nbsp;02:26:56</span></li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 262" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar51" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs>
+      <rect x="496" y="44" width="188" height="6" class="acc-f"/>
+      <rect x="500" y="50" width="180" height="50" class="soft-f acc" stroke-width="1.5"/>
+      <rect x="500" y="100" width="180" height="50" class="soft-f acc" stroke-width="1.5"/>
+      <rect x="500" y="150" width="180" height="50" class="soft-f acc" stroke-width="1.5"/>
+      <rect x="500" y="200" width="180" height="50" class="muted-f" fill-opacity="0.22" stroke-width="0"/>
+      <rect x="500" y="200" width="180" height="50" fill="none" class="ink" stroke-width="1.5"/>
+      <line x1="470" y1="200" x2="712" y2="200" class="ink" stroke-width="3"/>
+      <line x1="590" y1="38" x2="590" y2="256" class="ink" stroke-width="2" stroke-dasharray="5 4"/>
+      <text x="590" y="30" class="lbl-s he" text-anchor="middle">חתך אנכי</text>
+      <line x1="716" y1="75" x2="428" y2="75" class="acc" stroke-width="3" stroke-dasharray="8 5" marker-end="url(#ar51)"/>
+      <line x1="716" y1="175" x2="428" y2="175" class="acc" stroke-width="3" stroke-dasharray="8 5" marker-end="url(#ar51)"/>
+      <line x1="716" y1="225" x2="428" y2="225" class="acc" stroke-width="3" stroke-dasharray="8 5" marker-end="url(#ar51)"/>
+      <rect x="250" y="53" width="160" height="44" class="soft-f ink" stroke-width="2"/>
+      <path d="M330 53 V97 M250 75 H330 M330 70 H410" fill="none" class="ink" stroke-width="1.5"/>
+      <rect x="254" y="57" width="14" height="14" class="dark-f"/>
+      <rect x="392" y="79" width="14" height="14" class="dark-f"/>
+      <rect x="250" y="153" width="160" height="44" class="soft-f ink" stroke-width="2"/>
+      <path d="M300 153 V197 M360 153 V197 M300 175 H360" fill="none" class="ink" stroke-width="1.5"/>
+      <rect x="254" y="157" width="14" height="14" class="dark-f"/>
+      <rect x="392" y="179" width="14" height="14" class="dark-f"/>
+      <rect x="250" y="203" width="160" height="44" class="soft-f ink" stroke-width="2"/>
+      <rect x="260" y="212" width="26" height="26" class="muted-f" fill-opacity="0.4"/>
+      <rect x="296" y="212" width="26" height="26" class="muted-f" fill-opacity="0.4"/>
+      <rect x="332" y="212" width="26" height="26" class="muted-f" fill-opacity="0.4"/>
+      <rect x="368" y="212" width="26" height="26" class="muted-f" fill-opacity="0.4"/>
+      <text x="130" y="70" class="lbl-b he" text-anchor="middle">קומה טיפוסית</text>
+      <text x="130" y="90" class="lbl-s he" text-anchor="middle">קירות עבים = ממ"דים</text>
+      <text x="130" y="170" class="lbl-b he" text-anchor="middle">קומת קרקע</text>
+      <text x="130" y="190" class="lbl-s he" text-anchor="middle">כניסה, אשפה</text>
+      <text x="130" y="220" class="lbl-b he" text-anchor="middle">מרתף</text>
+      <text x="130" y="240" class="lbl-s he" text-anchor="middle">חניה, מחסנים</text>
+    </svg>
+    <figcaption>קווים אופקיים = חיתוך לתוכנית קומה (שלוש דוגמאות). הקו האנכי = חתך. כל דף הוא חיתוך אחר של אותו בניין.</figcaption>
+  </figure>
+
+  <div class="box warn"><div class="box-title">טעות נפוצה (שאלה מהכיתה) <span class="ltr muted">⏱&nbsp;02:39:07</span></div><p>"תוכנית קומה היא תלת-ממד". לא: היא <b>חיתוך אופקי</b>, מבט מלמעלה על קומה אחת.</p></div>
+</section>
+<!-- ============ 5ב. דוגמה מתל אביב ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">5ב</span><h2>דוגמה אמיתית מתל אביב</h2><span class="time">⏱&nbsp;02:31:15</span></div>
+  <div class="bl">הגשה אמיתית: מגרש של <b>764 מ"ר</b>, מרתף ו-4 קומות, <b>10 דירות</b>, ו-<b>275.74%</b> בנייה.</div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): אחוזי בנייה בטופס 1 <span class="ltr" style="font-weight:500">⏱&nbsp;02:34:10</span></div><div class="w-body">
+    <div class="given">גוש 6636, חלקה 146: שטח המגרש 764.00 מ"ר. שטח הבנייה הכולל המבוקש: 2,106.64 מ"ר.</div>
+    <ol class="lines">
+      <li>\(2106.64 / 764.00 \approx 2.7574\)</li>
+      <li>\(2.7574 \times 100 = 275.74\%\)</li>
+    </ol>
+    <div class="answer">כ-275.74%, כמו שכתוב בטופס.</div>
+    <div class="check">\(764 \times 2.75738 \approx 2106.64\) ✓</div>
+  </div></div>
+
+  <div class="grid2" style="align-items:start">
+    <table class="t" style="margin:0">
+      <tr><th>קו בניין (מ')</th><th>מותר</th><th>מוצע</th><th>הפרש</th></tr>
+      <tr><td>קדמי</td><td><span class="ltr">5</span></td><td><span class="ltr">5</span></td><td><span class="ltr">0</span></td></tr>
+      <tr><td>צדדי</td><td><span class="ltr">3.4</span> או <span class="ltr">3.6</span></td><td><span class="ltr">4</span></td><td><span class="ltr">0.6</span> או <span class="ltr">0.4</span></td></tr>
+      <tr><td>אחורי</td><td><span class="ltr">4.5</span></td><td><span class="ltr">5</span></td><td><span class="ltr">0.5</span></td></tr>
+    </table>
+    <div class="box tip" style="margin:0"><div class="box-title">מה לבדוק בטופס 1</div><p>מוצע <b>גדול</b> ממותר ← הבניין מתוכנן פנימה. ובלי מספרי הרישיון של האדריכל והקונסטרוקטור <b>אין היתר</b>. העמודה "הפרש" נוספה בסיכום.</p></div>
+  </div>
+
+  <table class="t">
+    <tr><th>הדף</th><th>מה רואים</th></tr>
+    <tr><td><b>מדידה</b></td><td>תוכנית מדידה עם הבניין העתידי. <b>צהוב = מבנה להריסה</b>. חתימת מודד.</td></tr>
+    <tr><td><b>קומות, חזיתות, חתך</b></td><td>קומה לכל דף (קירות עבים = <b>ממ"דים</b>), ארבע חזיתות וחתך אנכי.</td></tr>
+    <tr><td><b>ממ"ד</b></td><td>הקונסטרוקטור מתכנן, ו<b>פיקוד העורף</b> בודק. אם לא ← הערות ← תיקון.</td></tr>
+  </table>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 132" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar52" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs>
+      <rect x="390" y="6" width="320" height="120" rx="10" class="soft-f line" stroke-width="1.5"/>
+      <text x="550" y="28" class="lbl-b he" text-anchor="middle">בתוכנית (קנה מידה 1:100)</text>
+      <rect x="430" y="40" width="120" height="56" fill="none" class="ink" stroke-width="1.5"/>
+      <rect x="550" y="40" width="120" height="56" fill="none" class="ink" stroke-width="1.5"/>
+      <line x1="550" y1="40" x2="550" y2="96" class="ink" stroke-width="6"/>
+      <text x="550" y="116" class="lbl he" text-anchor="middle">קיר = קו אחד</text>
+      <line x1="382" y1="66" x2="348" y2="66" class="acc" stroke-width="4" marker-end="url(#ar52)"/>
+      <rect x="10" y="6" width="334" height="120" rx="10" class="soft-f line" stroke-width="1.5"/>
+      <text x="177" y="28" class="lbl-b he" text-anchor="middle">מה הבנאי צריך לדעת</text>
+      <rect x="240" y="40" width="36" height="56" class="mid-f ink" stroke-width="1.5"/>
+      <rect x="170" y="40" width="70" height="56" class="soft-f ink" stroke-width="1.5"/>
+      <rect x="120" y="40" width="50" height="56" class="mid-f ink" stroke-width="1.5"/>
+      <rect x="92" y="40" width="28" height="56" class="soft-f ink" stroke-width="1.5"/>
+      <text x="258" y="73" class="he ink-f" font-size="12.5" text-anchor="middle">טיח</text>
+      <text x="205" y="73" class="he ink-f" font-size="12.5" text-anchor="middle">בלוק</text>
+      <text x="145" y="73" class="he ink-f" font-size="12.5" text-anchor="middle">בידוד</text>
+      <text x="106" y="73" class="he ink-f" font-size="12.5" text-anchor="middle">גבס</text>
+      <text x="177" y="116" class="lbl he" text-anchor="middle">שכבות ועובי הקיר</text>
+    </svg>
+    <figcaption>בקנה מידה 1:100 קיר הוא קו אחד. מהתוכניות האלה אי אפשר לבנות (השכבות בציור לא נאמרו בשיעור).</figcaption>
+  </figure>
+
+  <div class="box lecturer"><div class="box-title">הודגש בשיעור <span class="ltr muted">⏱&nbsp;02:43:02</span></div><p>"אפשר לבנות מזה?" <b>לא</b>. אלה תוכניות להיתר, ו<b>תוכניות ביצוע</b> באות אחריהן.</p></div>
+</section>
+<!-- ============ 6. מי אחראי ומי מאשר ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">6</span><h2>מי אחראי ומי מאשר</h2><span class="time">⏱&nbsp;02:44:36</span></div>
+  <div class="bl"><b>היתר</b> ניתן רק אחרי אישור האחראים והגופים, ותשלום אגרות והיטלים.</div>
+
+  <table class="t">
+    <tr><th>אחראי</th><th>על מה</th></tr>
+    <tr><td><b>עורך הבקשה</b> (אדריכל)</td><td>משלב בין התכנונים, ו<b>דורש</b> מהיזם יועצים (למשל מעלית נכים).</td></tr>
+    <tr><td><b>אחראי שלד</b> (קונסטרוקטור)</td><td>חוזק ויציבות לפי התקן, כולל מיגון.</td></tr>
+    <tr><td><b>אחראי ביצוע</b> (קבלן)</td><td>נרשם כשנבחר, ולכל המאוחר לפני תחילת הבנייה.</td></tr>
+    <tr><td><b>אחראי ביקורת</b> (מפקח)</td><td>התאמת הביצוע לתוכנית. הנדסאי או מהנדס בניין (לא המתכנן).</td></tr>
+  </table>
+  <ul class="pts" style="margin-top:2mm">
+    <li><b>הוועדה המקומית</b>: גוף מוסמך ברשות המקומית (מחלקת הנדסה), עם <b>יושב ראש</b> ואנשי מקצוע. היא מאשרת את התכנון <b>ואת האחראים באופן אישי</b> <span class="ltr muted">⏱&nbsp;02:46:15</span>. <b>מהנדס העיר</b> יכול לקדם תוכנית או לדרוש שינויים <span class="ltr muted">⏱&nbsp;02:47:54</span>.</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 208" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="ar61" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker>
+        <marker id="ar62" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ok-f"/></marker>
+      </defs>
+      <g class="acc" stroke-width="2.5" fill="none">
+        <line x1="550" y1="28" x2="420" y2="80" marker-end="url(#ar61)"/>
+        <line x1="550" y1="78" x2="424" y2="95" marker-end="url(#ar61)"/>
+        <line x1="550" y1="128" x2="424" y2="111" marker-end="url(#ar61)"/>
+        <line x1="550" y1="178" x2="420" y2="126" marker-end="url(#ar61)"/>
+        <line x1="170" y1="28" x2="300" y2="80" marker-end="url(#ar61)"/>
+        <line x1="170" y1="78" x2="296" y2="95" marker-end="url(#ar61)"/>
+        <line x1="170" y1="128" x2="296" y2="111" marker-end="url(#ar61)"/>
+        <line x1="170" y1="178" x2="300" y2="126" marker-end="url(#ar61)"/>
+      </g>
+      <rect x="550" y="8" width="150" height="40" rx="9" class="soft-f acc" stroke-width="2"/>
+      <text x="625" y="25" class="lbl-b he" text-anchor="middle">פיקוד העורף</text>
+      <text x="625" y="41" class="lbl-s he" text-anchor="middle">ממ"ד</text>
+      <rect x="550" y="58" width="150" height="40" rx="9" class="soft-f acc" stroke-width="2"/>
+      <text x="625" y="75" class="lbl-b he" text-anchor="middle">כיבוי אש</text>
+      <text x="625" y="91" class="lbl-s he" text-anchor="middle">מבנים ציבוריים וגבוהים</text>
+      <rect x="550" y="108" width="150" height="40" rx="9" class="soft-f acc" stroke-width="2"/>
+      <text x="625" y="125" class="lbl-b he" text-anchor="middle">רשות העתיקות</text>
+      <text x="625" y="141" class="lbl-s he" text-anchor="middle">תלוי ביישוב</text>
+      <rect x="550" y="158" width="150" height="40" rx="9" class="soft-f acc" stroke-width="2"/>
+      <text x="625" y="175" class="lbl-b he" text-anchor="middle">מכון התקנים</text>
+      <text x="625" y="191" class="lbl-s he" text-anchor="middle">אילו בדיקות מעבדה</text>
+      <rect x="20" y="8" width="150" height="40" rx="9" class="soft-f acc" stroke-width="2"/>
+      <text x="95" y="25" class="lbl-b he" text-anchor="middle">חברת החשמל</text>
+      <text x="95" y="41" class="lbl-s he" text-anchor="middle">חדר או ארון חשמל</text>
+      <rect x="20" y="58" width="150" height="40" rx="9" class="soft-f acc" stroke-width="2"/>
+      <text x="95" y="75" class="lbl-b he" text-anchor="middle">בזק ותקשורת</text>
+      <text x="95" y="91" class="lbl-s he" text-anchor="middle">פרויקטים ציבוריים</text>
+      <rect x="20" y="108" width="150" height="40" rx="9" class="soft-f acc" stroke-width="2"/>
+      <text x="95" y="125" class="lbl-b he" text-anchor="middle">מחלקות העירייה</text>
+      <text x="95" y="141" class="lbl-s he" text-anchor="middle">מים, ביוב, תברואה, פסולת</text>
+      <rect x="20" y="158" width="150" height="40" rx="9" class="mid-f acc" stroke-width="2"/>
+      <text x="95" y="175" class="lbl-b he" text-anchor="middle">תשלומים</text>
+      <text x="95" y="191" class="lbl-s he" text-anchor="middle">אגרות והיטלים</text>
+      <circle cx="360" cy="103" r="58" class="mid-f"/>
+      <circle cx="360" cy="103" r="47" class="acc-f"/>
+      <text x="360" y="100" class="he" fill="#fff" font-size="16" font-weight="800" text-anchor="middle">ועדה</text>
+      <text x="360" y="119" class="he" fill="#fff" font-size="16" font-weight="800" text-anchor="middle">מקומית</text>
+      <line x1="360" y1="163" x2="360" y2="171" class="ok" stroke-width="3" marker-end="url(#ar62)"/>
+      <rect x="305" y="172" width="110" height="30" rx="8" class="ok-f ok" fill-opacity="0.15" stroke-width="2"/>
+      <text x="360" y="193" class="he ok-f" font-size="16" font-weight="800" text-anchor="middle">היתר</text>
+    </svg>
+    <figcaption>הגופים שהוועדה בודקת (שקף 24). תשלומים: פתיחת תיק, אגרות, מס בנייה והיטל השבחה. בלי תשלום אין היתר.</figcaption>
+  </figure>
+
+  <div class="box life"><p>🏠 <b>דוגמה מהחיים: שדה תותים</b> <span class="ltr muted">⏱&nbsp;02:51:04</span>: שדה שווה רק את תותיו. מותר לבנות ← <b>הערך קופץ</b>.</p></div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): היטל השבחה <span class="ltr" style="font-weight:500">⏱&nbsp;02:51:56</span></div><div class="w-body">
+    <div class="given">היטל השבחה = חצי מעליית הערך. דונם חקלאי נמכר ב-300,000 ₪. אחרי שינוי ייעוד, דונם לצמודי קרקע שווה 600,000 ₪.</div>
+    <ol class="lines">
+      <li>העלייה: \(600{,}000 - 300{,}000 = 300{,}000\) ₪.</li>
+      <li>ההיטל: \(0.5 \times 300{,}000 = 150{,}000\) ₪.</li>
+    </ol>
+    <div class="answer">150,000 ₪.</div>
+    <div class="check">\(150{,}000 / 300{,}000 = 0.5\) ✓</div>
+  </div></div>
+
+  
+</section>
+<!-- ============ 7. פרסום, התנגדויות ומכרז ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">7</span><h2>פרסום, התנגדויות ומכרז</h2><span class="time">⏱&nbsp;02:52:45</span></div>
+  <div class="bl">כל מי שנוגע בעניין יכול להתנגד: <b>30 יום</b> מהפרסום, וערר עד <b>45 יום</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים: שכן וצל <span class="ltr muted">⏱&nbsp;02:53:37</span></div>
+    <p>שכן נהנה מאור כל השנה, והשכן ממול מבקש לבנות שתי קומות (יש לו זכויות). לשכן יש <b>זכות להתנגד</b>, אבל זה <b>לא</b> אומר שיזכה.</p>
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 194" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar71" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs>
+      <rect x="58" y="0" width="160" height="36" rx="9" fill="none" class="acc" stroke-width="2" stroke-dasharray="6 4"/>
+      <text x="138" y="16" class="he ink-f" font-size="14" font-weight="800" text-anchor="middle">ועדת ערר (אפשרי)</text>
+      <text x="138" y="31" class="he muted-f" font-size="12" text-anchor="middle">עד 45 יום</text>
+      <path d="M212 48 V36 M64 48 V36" fill="none" class="acc" stroke-width="2.5" stroke-dasharray="4 3"/>
+      <rect x="600" y="48" width="112" height="56" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="656" y="72" class="he ink-f" font-size="14.5" font-weight="800" text-anchor="middle">פרסום</text>
+      <text x="656" y="92" class="he muted-f" font-size="12" text-anchor="middle">ארבעה ערוצים</text>
+      <rect x="452" y="48" width="112" height="56" rx="10" class="mid-f acc" stroke-width="2"/>
+      <text x="508" y="72" class="he ink-f" font-size="14.5" font-weight="800" text-anchor="middle">התנגדויות</text>
+      <text x="508" y="92" class="he muted-f" font-size="12" text-anchor="middle">תוך 30 יום</text>
+      <rect x="304" y="48" width="112" height="56" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="360" y="72" class="he ink-f" font-size="14.5" font-weight="800" text-anchor="middle">דיון בוועדה</text>
+      <text x="360" y="92" class="he muted-f" font-size="12" text-anchor="middle">2 עד 3 חודשים</text>
+      <rect x="156" y="48" width="112" height="56" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="212" y="81" class="he ink-f" font-size="14.5" font-weight="800" text-anchor="middle">החלטה</text>
+      <rect x="8" y="48" width="112" height="56" rx="10" class="ok-f ok" fill-opacity="0.15" stroke-width="2"/>
+      <text x="64" y="82" class="he ok-f" font-size="16" font-weight="800" text-anchor="middle">היתר</text>
+      <line x1="598" y1="76" x2="566" y2="76" class="acc" stroke-width="3" marker-end="url(#ar71)"/>
+      <line x1="450" y1="76" x2="418" y2="76" class="acc" stroke-width="3" marker-end="url(#ar71)"/>
+      <line x1="302" y1="76" x2="270" y2="76" class="acc" stroke-width="3" marker-end="url(#ar71)"/>
+      <line x1="154" y1="76" x2="122" y2="76" class="acc" stroke-width="3" marker-end="url(#ar71)"/>
+      <path d="M656 104 V127 M90 127 H656 M630 127 V139 M450 127 V139 M270 127 V139 M90 127 V139" fill="none" class="acc" stroke-width="2.5" stroke-dasharray="5 4"/>
+      <text x="360" y="119" class="lbl-b he" text-anchor="middle">ערוצי הפרסום (שקף 25)</text>
+      <rect x="547" y="139" width="166" height="52" rx="10" fill="none" class="acc" stroke-width="2"/>
+      <text x="630" y="162" class="lbl-b he" text-anchor="middle">עיתונים</text>
+      <text x="630" y="181" class="lbl-s he" text-anchor="middle">שלושה, לפחות שניים נפוצים</text>
+      <rect x="367" y="139" width="166" height="52" rx="10" fill="none" class="acc" stroke-width="2"/>
+      <text x="450" y="162" class="lbl-b he" text-anchor="middle">אתר משרד הפנים</text>
+      <text x="450" y="181" class="lbl-s he" text-anchor="middle">אפשר לבדוק כל שבוע</text>
+      <rect x="187" y="139" width="166" height="52" rx="10" fill="none" class="acc" stroke-width="2"/>
+      <text x="270" y="162" class="lbl-b he" text-anchor="middle">שלט בחזית המגרש</text>
+      <text x="270" y="181" class="lbl-s he" text-anchor="middle">מיידע את השכנים</text>
+      <rect x="7" y="139" width="166" height="52" rx="10" fill="none" class="acc" stroke-width="2"/>
+      <text x="90" y="162" class="lbl-b he" text-anchor="middle">מכתבים</text>
+      <text x="90" y="181" class="lbl-s he" text-anchor="middle">לשכנים ולבעלי זכויות</text>
+    </svg>
+    <figcaption>30 יום להתנגדות, ועד 45 יום לערר (זכות נוספת, לא שלב חובה) <span class="ltr muted">⏱&nbsp;03:03:35</span>. למטה: ארבעת ערוצי הפרסום.</figcaption>
+  </figure>
+
+  <ul class="pts">
+    <li><b>חובת פרסום</b>: <b>הקלה</b> (סטייה מהתב"ע) ו<b>שימוש חורג</b> (שימוש שלא תואם את ההיתר, למשל גן ילדים בבית מגורים). אפשר לאשר שימוש חורג גם <b>לתקופה מוגבלת</b> <span class="ltr muted">⏱&nbsp;02:56:13</span></li>
+    <li><b>למה לא מספיק שלט</b>: <b>שוכרים</b> לא יודעים, <b>בעלים בחו"ל</b>, ובעלי זכויות בבניין עצמו (בריכה על הגג משפיעה על כולם ← מכתב לכל דייר). <span class="ltr muted">⏱&nbsp;02:58:48</span></li>
+    <li><b>התנגדות</b>: כל <b>בעל נגיעה</b> (בעיקר שכנים; גם רחוקים אם נפגעים, כמו כריתת עץ אלון עתיק, וגם עמותות), <b>תוך 30 יום</b>. מחלוקת נפתרת לפעמים בשינוי תכנון. <span class="ltr muted">⏱&nbsp;03:01:56</span></li>
+    <li><b>ממ"ד</b>: אחרי 7 באוקטובר <b>היתר מזורז של 14 יום</b>, והצורך בביטחון גובר על שקט השכן. <span class="ltr muted">⏱&nbsp;03:05:12</span></li>
+  </ul>
+
+  <h3>אחרי ההיתר: תוכניות ביצוע ומכרז <span class="time"><span class="ltr">⏱&nbsp;03:06:01</span></span></h3>
+
+  <div class="grid2">
+    <div class="box life"><div class="box-title">דוגמה מהחיים: קוטג' <span class="ltr muted">⏱&nbsp;03:06:31</span></div><p>"רק מותג אחד, עם תפוגה של יותר משלושה ימים" = מכרז <b>תפור</b>.</p></div>
+    <div class="box lecturer"><div class="box-title">תוקף היתר <span class="ltr muted">⏱&nbsp;02:44:36</span></div><p>שנה בלי ניצול ← עלול לפוג. הארכה עד 3 שנים. אחרי 15 שנה פג.</p></div>
+  </div>
+  <ol class="steps">
+    <li><b>תוכניות לביצוע</b>: איזה בלוק, איזו אבן, איפה הברזל בכל נקודה.</li>
+    <li><b>תיק מכרז</b>: דרישות, לוחות זמנים, בטיחות, חומרים ומעבדות, עד המסירה.</li>
+    <li><b>מכרז</b>: מפרסמים לקבלנים, יצרנים וספקים, ובוחרים קבלן.</li>
+    <li><b>צו תחילת עבודה</b> ← יוצאים לביצוע. מהמכרז לעבודה: שבועות עד חודשים (תכנון: שנים). <span class="ltr muted">⏱&nbsp;03:09:19</span></li>
+  </ol>
+
+  </section>
+<!-- ============ 🧠 לזכור ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">🧠</span><h2>לזכור</h2></div>
+  <div class="bl">מה שכדאי לדעת בעל פה. לפי המרצה, השיעור "<b>מאוד מאוד חשוב</b>" <span class="ltr muted">⏱&nbsp;00:10:17</span></div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 80" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar81" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs>
+      <rect x="615" y="8" width="100" height="64" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="665" y="46" class="lbl-b he" text-anchor="middle">קרקע</text>
+      <rect x="493" y="8" width="100" height="64" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="543" y="46" class="lbl-b he" text-anchor="middle">תב"ע</text>
+      <rect x="371" y="8" width="100" height="64" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="421" y="37" class="lbl-b he" text-anchor="middle">בקשה</text>
+      <text x="421" y="57" class="lbl-b he" text-anchor="middle">להיתר</text>
+      <rect x="249" y="8" width="100" height="64" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="299" y="29" class="lbl-b he" text-anchor="middle">אישורים,</text>
+      <text x="299" y="46" class="lbl-b he" text-anchor="middle">פרסום,</text>
+      <text x="299" y="63" class="lbl-b he" text-anchor="middle">התנגדויות</text>
+      <rect x="127" y="8" width="100" height="64" rx="10" class="ok-f ok" fill-opacity="0.15" stroke-width="2"/>
+      <text x="177" y="46" class="he ok-f" font-size="16" font-weight="800" text-anchor="middle">היתר</text>
+      <rect x="5" y="8" width="100" height="64" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="55" y="37" class="lbl-b he" text-anchor="middle">מכרז</text>
+      <text x="55" y="57" class="lbl-b he" text-anchor="middle">ובנייה</text>
+      <g class="acc" stroke-width="3" fill="none">
+        <line x1="612" y1="40" x2="596" y2="40" marker-end="url(#ar81)"/>
+        <line x1="490" y1="40" x2="474" y2="40" marker-end="url(#ar81)"/>
+        <line x1="368" y1="40" x2="352" y2="40" marker-end="url(#ar81)"/>
+        <line x1="246" y1="40" x2="230" y2="40" marker-end="url(#ar81)"/>
+        <line x1="124" y1="40" x2="108" y2="40" marker-end="url(#ar81)"/>
+      </g>
+    </svg>
+    <figcaption>הדרך מהקרקע להיתר: שש תחנות, מימין לשמאל. אחרי ההיתר מגיעים תוכניות ביצוע, מכרז והבנייה עצמה.</figcaption>
+  </figure>
+
+  <ul class="pts">
+    <li><b>93%</b> מהקרקע בבעלות המדינה (רמ"י). חכירה: <b>49 או 99 שנה</b>, לא 999, ובסוף חידוש חוזה.</li>
+    <li>כל נכס מזוהה ב<b>גוש, חלקה ותת-חלקה</b>. טאבו = פנקס הבעלות. גוש אינו עיר.</li>
+    <li>המדרג: <b>תמ"א ← מחוזית ← תב"ע ← בינוי ← מפורטת</b>. כל תוכנית כפופה לזו שמעליה.</li>
+    <li>תמ"א: <b>15</b> שדות תעופה (גובה), <b>23</b> רכבת (תוואי וזיגוג), <b>38</b> חיזוק, <b>70</b> מטרו.</li>
+    <li>תב"ע = <b>תשריט + תקנון + נספחים</b>. היא מסמך חוקי: לא האדריכל קובע, החוק.</li>
+    <li><b>אחוזי בנייה</b> = שטח בנייה כולל חלקי שטח המגרש. אי אפשר לרוחב ← בונים <b>לגובה</b>.</li>
+    <li><b>הגשה</b> אפשר שוב ושוב. <b>הפקדה</b> אחרי כל הבדיקות (לפי המרצה). היתר <b>לכל בניין</b> בנפרד.</li>
+    <li>בקשה להיתר = <b>גרמושקה</b>: טופס 1, מדידה, פיתוח, קומות, חזיתות, חתך, ממ"ד. אי אפשר לבנות ממנה.</li>
+    <li><b>היטל השבחה</b> = חצי מעליית הערך. בלי תשלום אין היתר.</li>
+    <li>התנגדות תוך <b>30 יום</b>, ערר עד <b>45 יום</b>. שלט לא מספיק: גם עיתונים ומכתבים.</li>
+    <li><b>מספרים</b>: בטון ב-30 ← <b>300</b> ק"ג/סמ"ר · קווי בניין <b><span class="ltr">5 · 5 · 3 · 3</span></b> · שטח עיקרי <b>170</b> מ"ר · תל אביב <b>764</b> מ"ר ו-<b><span class="ltr">275.74%</span></b> · ממ"ד מזורז <b>14</b> יום · תוקף היתר: שנה, 3, <b>15</b> שנים.</li>
+  </ul>
+
+  <div class="box optional"><div class="box-title">מה ההקלטה מוסיפה על המצגת (בסוגריים: הפרק)</div>
+    <div class="grid2">
+      <ul class="pts">
+        <li><b>בדיקת בטון</b> ושבירת דגימה (1)</li>
+        <li><b>חכירה</b>: 49 או 99 שנה (2א)</li>
+        <li><b>תמ"א 70</b> (מטרו), לא במצגת (3א)</li>
+        <li><b>הגשה מול הפקדה</b>, 15 שנה (4א)</li>
+        <li><b>משך תב"ע</b>: 5 עד 20 שנה (4א)</li>
+        <li><b>תוקף תב"ע</b>: 2030 או 2035 (4א)</li>
+      </ul>
+      <ul class="pts">
+        <li><b>אחראי ביקורת</b> אינו המתכנן (6)</li>
+        <li><b>תוקף היתר</b>: שנה, 3, 15 (7)</li>
+        <li><b>ערר</b> עד 45 יום (7)</li>
+        <li><b>ממ"ד</b>: היתר מזורז 14 יום (7)</li>
+        <li><b>קוטג'</b> ומכרז תפור (7)</li>
+        <li><b>פרטי המשימה</b> השבועית (עמוד 1)</li>
+      </ul>
+    </div>
+  </div>
+
+  
+</section>
+
+<!-- ============ ❓ שאלות חזרה ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">📝</span><h2>שאלות חזרה</h2></div>
+  <div class="bl">לענות בלי להציץ. התשובות בעמוד הבא.</div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 720 80" xmlns="http://www.w3.org/2000/svg">
+      <defs><marker id="ar82" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs>
+      <rect x="615" y="8" width="100" height="64" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="665" y="46" class="lbl-b he" text-anchor="middle">קרקע</text>
+      <rect x="493" y="8" width="100" height="64" rx="10" fill="none" class="acc" stroke-width="2.5" stroke-dasharray="6 4"/>
+      <text x="543" y="52" class="ltr muted-f" font-size="30" font-weight="800" text-anchor="middle">?</text>
+      <circle cx="581" cy="16" r="10" class="acc-f"/>
+      <text x="581" y="21" class="he" fill="#fff" font-size="13" font-weight="800" text-anchor="middle">א</text>
+      <rect x="371" y="8" width="100" height="64" rx="10" class="soft-f acc" stroke-width="2"/>
+      <text x="421" y="37" class="lbl-b he" text-anchor="middle">בקשה</text>
+      <text x="421" y="57" class="lbl-b he" text-anchor="middle">להיתר</text>
+      <rect x="249" y="8" width="100" height="64" rx="10" fill="none" class="acc" stroke-width="2.5" stroke-dasharray="6 4"/>
+      <text x="299" y="52" class="ltr muted-f" font-size="30" font-weight="800" text-anchor="middle">?</text>
+      <circle cx="337" cy="16" r="10" class="acc-f"/>
+      <text x="337" y="21" class="he" fill="#fff" font-size="13" font-weight="800" text-anchor="middle">ב</text>
+      <rect x="127" y="8" width="100" height="64" rx="10" class="ok-f ok" fill-opacity="0.15" stroke-width="2"/>
+      <text x="177" y="46" class="he ok-f" font-size="16" font-weight="800" text-anchor="middle">היתר</text>
+      <rect x="5" y="8" width="100" height="64" rx="10" fill="none" class="acc" stroke-width="2.5" stroke-dasharray="6 4"/>
+      <text x="55" y="52" class="ltr muted-f" font-size="30" font-weight="800" text-anchor="middle">?</text>
+      <circle cx="93" cy="16" r="10" class="acc-f"/>
+      <text x="93" y="21" class="he" fill="#fff" font-size="13" font-weight="800" text-anchor="middle">ג</text>
+      <g class="acc" stroke-width="3" fill="none">
+        <line x1="612" y1="40" x2="596" y2="40" marker-end="url(#ar82)"/>
+        <line x1="490" y1="40" x2="474" y2="40" marker-end="url(#ar82)"/>
+        <line x1="368" y1="40" x2="352" y2="40" marker-end="url(#ar82)"/>
+        <line x1="246" y1="40" x2="230" y2="40" marker-end="url(#ar82)"/>
+        <line x1="124" y1="40" x2="108" y2="40" marker-end="url(#ar82)"/>
+      </g>
+    </svg>
+    <figcaption>להשלים את שלוש התחנות החסרות (א, ב, ג), מימין לשמאל. התשובה בעמוד הבא.</figcaption>
+  </figure>
+  <ol class="quiz">
+    <li>כמה אחוזים מהקרקע מנוהלים בידי רמ"י, ולכמה שנים חוכרים? <span class="lvl">קל</span></li>
+    <li>מה ההבדל בין גוש, חלקה ותת-חלקה? <span class="lvl">קל</span></li>
+    <li>לסדר מהכללי למפורט: תב"ע, תמ"א, תוכנית מפורטת, תוכנית מחוזית. <span class="lvl">קל</span></li>
+    <li>איזו תמ"א מגבילה גובה ליד שדה תעופה, ואיזו נוגעת בתוואי רכבת? <span class="lvl">בינוני</span></li>
+    <li>מהם שלושת חלקי התב"ע, ואיזה מהם מילולי? <span class="lvl">קל</span></li>
+    <li>מגרש 10 × 10 מ', נסיגה 3 מ', 300% בנייה. מה שטח הקומה, וכמה קומות מלאות? <span class="lvl">מאתגר</span></li>
+    <li>מגרש של 500 מ"ר ובנייה כוללת של 1,250 מ"ר. מה אחוזי הבנייה? <span class="lvl">בינוני</span></li>
+    <li>מה כוללת הגרמושקה, ואיזה מהדפים בודק פיקוד העורף? <span class="lvl">בינוני</span></li>
+    <li>מי עורך הבקשה, מי אחראי השלד, ומהם שני גופים שמאשרים? <span class="lvl">בינוני</span></li>
+    <li>דונם חקלאי נמכר ב-400,000 ₪ ואחרי שינוי ייעוד שווה 1,000,000 ₪. מה היטל ההשבחה? <span class="lvl">בינוני</span></li>
+    <li>תוך כמה ימים אפשר להתנגד, ותוך כמה לערר? ולמה שלט בחזית המגרש לא מספיק? <span class="lvl">בינוני</span></li>
+    <li>מה אומר הקו הכחול בתב"ע, ומה ההבדל בין דרך מאושרת לדרך מוצעת? <span class="lvl">בינוני</span></li>
+  </ol>
+</section>
+<!-- ============ ✅ תשובות ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">✅</span><h2>תשובות</h2></div>
+  <ol class="answers">
+    <li>כ-<b>93%</b> (וכ-5% פרטית). חכירה: <b>49 או 99 שנה</b>, ובסוף חידוש חוזה.</li>
+    <li><b>גוש</b> = אזור גדול וממוספר. <b>חלקה</b> = חלק בתוכו בבעלות אחת. <b>תת-חלקה</b> = דירה בבית משותף.</li>
+    <li>תמ"א ← תוכנית מחוזית ← תב"ע ← תוכנית מפורטת.</li>
+    <li>תמ"א <b>15</b> (שדות תעופה: גובה) ותמ"א <b>23</b> (מסילות ברזל: תוואי פנוי וזיגוג).</li>
+    <li><b>תשריט</b> (גרפי), <b>תקנון</b> (מילולי) ו<b>נספחים</b>. המילולי: התקנון.</li>
+    <li>צד פנוי \(10 - 3 - 3 = 4\) מ', קומה \(4 \times 4 = 16\) מ"ר. בנייה כוללת \(3 \times 100 = 300\) מ"ר. קומות: \(300 / 16 = 18.75\) ← <b>18 מלאות</b> (288 מ"ר) ועוד 12 מ"ר בקומה 19.</li>
+    <li>\(1250 / 500 = 2.5\) ← <b>250%</b>.</li>
+    <li>טופס 1, תרשים סביבה, מדידה והעמדה, פיתוח, קומות, חזיתות וחתכים, חישובי שטחים וממ"ד. <b>פיקוד העורף</b> בודק את הממ"ד.</li>
+    <li>עורך הבקשה: <b>אדריכל</b>. אחראי שלד: <b>קונסטרוקטור</b>. גופים: למשל פיקוד העורף, כיבוי אש, רשות העתיקות, חברת החשמל.</li>
+    <li>עלייה: \(1{,}000{,}000 - 400{,}000 = 600{,}000\). היטל: \(0.5 \times 600{,}000 = 300{,}000\) ₪.</li>
+    <li><b>30 יום</b> להתנגדות, ועד <b>45 יום</b> לערר. שלט לא מספיק: <b>שוכרים</b> ו<b>בעלים בחו"ל</b> לא יודעים, וגם בעלי זכויות בבניין. לכן גם עיתונים ומכתבים.</li>
+    <li><b>הקו הכחול</b> = גבול התוכנית (מעבר לו היא לא חלה). דרך <b>מאושרת</b> = קיימת. דרך <b>מוצעת</b> = חדשה או הרחבה, וטעונה אישור.</li>
+  </ol>
+  <p><b>ציור להשלמה:</b> א = תב"ע · ב = אישורים, פרסום והתנגדויות · ג = מכרז ובנייה.</p>
+
+  <h3>📖 מילון מונחים (1)</h3>
+  <dl class="glossary">
+    <dt>יזם</dt><dd>מי שיוזם, משקיע ואחראי כלכלית. פרטי: בונה לשוק הפרטי. מוסדי (בשיעור): מוסדות המדינה.</dd>
+    
+    <dt>רמ"י</dt><dd>רשות מקרקעי ישראל: מנהלת כ-93% מהקרקע.</dd>
+    <dt>חכירה</dt><dd>"ליסינג" של קרקע מהמדינה: 49 או 99 שנה, עם חידוש חוזה.</dd>
+    <dt>עתודות, הפשרה</dt><dd>קרקע שמורה לגידול העיר, שמפשירים כשצריך שכונה חדשה.</dd>
+    <dt>טאבו</dt><dd>פנקס הבעלות על נדל"ן.</dd>
+    <dt>גוש, חלקה</dt><dd>גוש: אזור גדול ממוספר. חלקה: חלק בבעלות אחת. תת-חלקה: דירה בבית משותף.</dd>
+    <dt>תמ"א</dt><dd>תוכנית מתאר ארצית: לכל המדינה, בנושא מסוים (15, 23, 38, 70).</dd>
+    <dt>תוכנית מחוזית</dt><dd>מיישמת את התמ"א במחוז ומנחה את הרשויות המקומיות.</dd>
+  </dl>
+</section>
+
+<!-- ============ מילון (2) ולא היה ברור ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">📖</span><h2>מילון מונחים (2) ושאלות פתוחות</h2></div>
+  <dl class="glossary">
+    <dt>תב"ע</dt><dd>תוכנית בניין עיר: מקומית, מסמך חוקי (תשריט, תקנון, נספחים).</dd>
+    <dt>תשריט, תקנון</dt><dd>הדף הגרפי של התב"ע · הטקסט המילולי שלה.</dd>
+    <dt>אחוזי בנייה</dt><dd>סך שטחי הבנייה המותרים, כאחוז משטח המגרש.</dd>
+    <dt>קו בניין</dt><dd>מרחק מינימלי בין הבניין לגבול המגרש.</dd>
+    <dt>זיקת הנאה</dt><dd>זכות מעבר או שימוש בשטח שאינו ציבורי (דיירים, כיבוי).</dd>
+    <dt>הפקדה (לפי המרצה)</dt><dd>רישום רשמי של התוכנית אחרי הבדיקות. שונה מהגשה.</dd>
+    <dt>טופס 1, גרמושקה</dt><dd>טופס האחריות והפרטים בבקשה להיתר · הסט המקופל של התוכניות.</dd>
+    <dt>ממ"ד</dt><dd>מרחב מוגן דירתי. פיקוד העורף בודק ומאשר.</dd>
+    <dt>היטל השבחה</dt><dd>חצי מעליית ערך הקרקע בעקבות שינוי ייעוד או זכויות.</dd>
+    <dt>הקלה, שימוש חורג</dt><dd>סטייה מהתב"ע · שימוש שלא תואם את ההיתר. חובת פרסום.</dd>
+    <dt>ועדת ערר</dt><dd>גוף שאליו פונים עד 45 יום על החלטת הוועדה.</dd>
+    <dt>בנייה רוויה</dt><dd>בניין רב-קומות עם כמה דיירים בכל קומה (אזור מגורים ג').</dd>
+    <dt>איחוד וחלוקה מחדש</dt><dd>מחברים את החלקות ומחלקים אותן מחדש, כדי לחלק זכויות אחרת.</dd>
+    <dt>מדרג התוכניות</dt><dd>"היררכיית התכנון": ארצית ← מחוזית ← תב"ע ← בינוי ← מפורטת.</dd>
+    <dt>מינוף</dt><dd>בנייה בכסף של בנקים, ביטוח וקרנות, מעבר להון העצמי של היזם.</dd>
+    <dt>גורם בקרה</dt><dd>גוף שבודק שהכול בתקן, למשל מעבדת בטון.</dd>
+  </dl>
+
+  <div class="box unclear"><div class="box-title">לא היה ברור בהקלטה (חלק מהמספרים בסיכום מסומנים ב-?)</div>
+    <ul class="pts">
+      <li><span class="ltr">00:23:50</span> מספר דגימת הבטון (330?) משוחזר מהתמלול.</li>
+      <li><span class="ltr">00:30:29</span> 93% ו-5% הם 98%: ה-2% האחרים לא הוסברו.</li>
+      <li><span class="ltr">01:17:36</span> תנאי הזכאות של תמ"א 38, "800 אלף" יח"ד, ומה החליף אותה.</li>
+      <li><span class="ltr">01:24:47</span> תחנת המטרו והיסודות (קריית אונו?): איזה בניין ואיזו תחנה ← לא ברור.</li>
+      <li><span class="ltr">01:28:01</span> "מחוז דן" מול "מחוז תל אביב" (<span class="ltr">01:45:33</span>) ו"מחוז מרכז" בשער התקנון ← לבדוק.</li>
+      <li><span class="ltr">01:41:36</span> אחוזי בנייה (400 או 600; 90 עד 105): מספרים מההקלטה, לאמת בתב"ע.</li>
+      <li><span class="ltr">01:49:32</span> "מגורים ד'" לא הוסבר בשיעור.</li>
+      <li><span class="ltr">01:57:41</span> "הפקדה" כ"אושרה ונרשמה" (לפי המרצה), ובחוק היא שלב לפני "מתן תוקף" ← לבדוק.</li>
+      <li><span class="ltr">02:12:10</span> בשקף הסיכום כתוב "תוכנית מתאר עירונית"; הובן כמחוזית.</li>
+      <li><span class="ltr">02:35:12</span> קו בניין צדדי מותר בטופס 1: 3.4 (המרצה) או 3.6 (השקף)? ולמה הוצע 4.</li>
+      <li><span class="ltr">02:47:54</span> מהנדס העיר מעל או מתחת לוועדה? ← לבדוק.</li>
+    </ul>
+  </div>
+</section>
+
+</body>
+</html>

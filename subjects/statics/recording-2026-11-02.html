@@ -1,0 +1,1403 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>לימודי מבנים - חישוב סטטי · כוח משופע, מומנט טהור וריתום</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=block">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});document.documentElement.dataset.math='done'"></script>
+<style>
+/* Lecture summary design system: A4, RTL Hebrew, print-first. */
+
+@page {
+  size: A4;
+  margin: 18mm 16mm 17mm 16mm;
+  @bottom-center {
+    content: counter(page);
+    font-family: Heebo, "Arial Hebrew", sans-serif;
+    font-size: 9pt;
+    color: #7a8394;
+  }
+}
+@page :first {
+  margin: 0;
+  @top-right { content: none; }
+  @top-left { content: none; }
+  @bottom-center { content: none; }
+}
+
+:root {
+  --accent: #4f46e5;
+  --accent-dark: #3730a3;
+  --accent-soft: #eef0ff;
+  --accent-mid: #c7cbfb;
+  --ink: #1d2230;
+  --muted: #5d6676;
+  --line: #dfe3ea;
+  --paper: #ffffff;
+  --bg-soft: #f6f7f9;
+  --ok: #0f7b5f;
+  --ok-soft: #e2f5ee;
+  --warn: #b45309;
+  --warn-soft: #fdf1e2;
+  --bad: #b91c1c;
+  --bad-soft: #fdeaea;
+  --info: #0e6aa8;
+  --info-soft: #e5f2fb;
+}
+
+/* one accent colour per course */
+body.course-math { --accent: #4f46e5; --accent-dark: #3730a3; --accent-soft: #eef0ff; --accent-mid: #c7cbfb; }
+body.course-roads { --accent: #c2620a; --accent-dark: #8f4505; --accent-soft: #fdf0e3; --accent-mid: #f6cfa6; }
+body.course-safety { --accent: #c62828; --accent-dark: #8e1b1b; --accent-soft: #fdecea; --accent-mid: #f5bcbc; }
+body.course-geodesy { --accent: #0f766e; --accent-dark: #0b524c; --accent-soft: #e2f4f1; --accent-mid: #a7dcd5; }
+body.course-building-theory { --accent: #a5502a; --accent-dark: #74371c; --accent-soft: #f8ece5; --accent-mid: #e8c2ad; }
+body.course-drafting { --accent: #0369a1; --accent-dark: #024b74; --accent-soft: #e3f1fa; --accent-mid: #a9d3ee; }
+body.course-labor-law { --accent: #7c3aed; --accent-dark: #5521b5; --accent-soft: #f1eafe; --accent-mid: #d4c0fb; }
+body.course-statics { --accent: #2563eb; --accent-dark: #1e40af; --accent-soft: #e8f0fe; --accent-mid: #b8cdfa; }
+
+* { box-sizing: border-box; }
+html { direction: rtl; }
+body {
+  margin: 0;
+  font-family: Heebo, "Arial Hebrew", Arial, sans-serif;
+  font-size: 11.5pt;
+  line-height: 1.62;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+p { margin: 0 0 2.2mm; }
+b, strong {
+  font-weight: 700;
+  background: linear-gradient(transparent 60%, var(--accent-mid) 60%);
+  padding: 0 0.5mm;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.box b, .box strong, .bl b, .bl strong, th b { background: none; padding: 0; }
+.ltr, .num, code { direction: ltr; unicode-bidi: isolate; }
+code {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.88em;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 1.2mm;
+  padding: 0 1mm;
+}
+.katex { direction: ltr; unicode-bidi: isolate; font-size: 1.08em; }
+.katex-display { margin: 1mm 0 !important; }
+small, .muted { color: var(--muted); }
+
+/* ---------- cover ---------- */
+.cover {
+  height: 297mm;
+  width: 210mm;
+  display: flex;
+  flex-direction: column;
+  break-after: page;
+  overflow: hidden;
+}
+.cover-band {
+  background: var(--accent);
+  color: #fff;
+  padding: 22mm 18mm 14mm;
+  position: relative;
+}
+.cover-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 30%, rgba(255,255,255,.16) 0 18mm, transparent 18.2mm),
+    radial-gradient(circle at 4% 85%, rgba(255,255,255,.10) 0 28mm, transparent 28.2mm),
+    radial-gradient(circle at 30% 105%, rgba(255,255,255,.08) 0 20mm, transparent 20.2mm);
+  pointer-events: none;
+}
+.cover-kicker { font-size: 12pt; font-weight: 500; opacity: .9; margin-bottom: 3mm; }
+.cover h1 { font-size: 30pt; line-height: 1.15; font-weight: 900; margin: 0 0 3mm; }
+.cover-sub { font-size: 14pt; font-weight: 500; opacity: .95; }
+.cover-meta { display: flex; flex-wrap: wrap; gap: 2.5mm; margin-top: 7mm; position: relative; z-index: 1; }
+.chip {
+  display: inline-block;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 20mm;
+  padding: 1mm 4mm;
+  font-size: 10.5pt;
+  font-weight: 500;
+}
+.cover-body { padding: 10mm 18mm 12mm; flex: 1; display: flex; flex-direction: column; gap: 6mm; }
+.cover-body h3 { margin: 0 0 2mm; font-size: 13pt; color: var(--accent-dark); }
+.roadmap { list-style: none; margin: 0; padding: 0; display: grid; gap: 2mm; }
+.roadmap li {
+  display: grid;
+  grid-template-columns: 9mm 1fr auto;
+  align-items: center;
+  gap: 3mm;
+  background: var(--bg-soft);
+  border-radius: 2.5mm;
+  padding: 1.6mm 3mm;
+}
+.roadmap .n {
+  width: 8mm; height: 8mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 11pt;
+}
+.roadmap .t { font-weight: 600; }
+.roadmap .when { direction: ltr; font-size: 9.5pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 2mm 5mm; font-size: 9.5pt; color: var(--muted); }
+
+/* ---------- topic sections: each starts on a new page ---------- */
+section.topic { break-before: page; }
+section.topic.cont { break-before: auto; margin-top: 8mm; }
+.topic-head {
+  display: flex;
+  align-items: center;
+  gap: 3.5mm;
+  border-bottom: 2.5px solid var(--accent);
+  padding-bottom: 2.5mm;
+  margin-bottom: 4mm;
+}
+.topic-head .n {
+  flex: none;
+  width: 11mm; height: 11mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-size: 15pt; font-weight: 900;
+}
+.topic-head h2 { margin: 0; font-size: 19pt; line-height: 1.2; font-weight: 800; color: var(--ink); flex: 1; }
+.time {
+  flex: none;
+  direction: ltr;
+  font-size: 9pt;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 10mm;
+  padding: 0.6mm 2.6mm;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+h3 { font-size: 13.5pt; font-weight: 800; margin: 5mm 0 2mm; color: var(--accent-dark); break-after: avoid; }
+h4 { font-size: 11.5pt; font-weight: 700; margin: 3mm 0 1.5mm; break-after: avoid; }
+
+/* bottom line: first thing in every section */
+.bl {
+  background: var(--accent-soft);
+  border-inline-start: 5px solid var(--accent);
+  border-radius: 2.5mm;
+  padding: 2.5mm 4mm;
+  font-weight: 700;
+  font-size: 12pt;
+  margin: 0 0 4mm;
+  break-inside: avoid;
+}
+.bl::before { content: "⚡ "; }
+
+/* bullets */
+ul.pts { list-style: none; padding: 0; margin: 0 0 3mm; }
+ul.pts > li { position: relative; padding-inline-start: 6mm; margin-bottom: 1.6mm; }
+ul.pts > li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 1mm;
+  top: 2.6mm;
+  width: 2.2mm; height: 2.2mm;
+  border-radius: 50%;
+  background: var(--accent);
+}
+ul.pts ul { margin-top: 1mm; }
+
+/* generic callout box */
+.box {
+  border-radius: 3mm;
+  padding: 3mm 4mm;
+  margin: 3mm 0;
+  break-inside: avoid;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+.box > .box-title { font-weight: 800; margin-bottom: 1.2mm; display: flex; gap: 2mm; align-items: center; }
+.box > :last-child { margin-bottom: 0; }
+.box.life { background: #fffbea; border-color: #f3e3a3; }
+.box.life > .box-title::before { content: "🏠"; }
+.box.formula { background: var(--accent-soft); border-color: var(--accent-mid); text-align: center; }
+.box.formula > .box-title { justify-content: center; }
+.box.formula > .box-title::before { content: "🧮"; }
+.box.tip { background: var(--ok-soft); border-color: #b6e3d2; }
+.box.tip > .box-title::before { content: "💡"; }
+.box.warn { background: var(--warn-soft); border-color: #f2cf9f; }
+.box.warn > .box-title::before { content: "⚠️"; }
+.box.remember { background: var(--info-soft); border-color: #b9dbf2; }
+.box.remember > .box-title::before { content: "🧠"; }
+.box.optional { background: #fafafa; border: 1.5px dashed #c5cad3; }
+.box.optional > .box-title::before { content: "📎"; }
+.box.optional > .box-title::after { content: "רשות"; font-size: 8.5pt; font-weight: 700; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; }
+.box.announce { background: var(--bad-soft); border-color: #f2c2c2; }
+.box.announce > .box-title::before { content: "📢"; }
+.box.unclear { background: #f4f1fb; border-color: #d9cff3; }
+.box.unclear > .box-title::before { content: "❓"; }
+.box.lecturer { background: #fff; border-inline-start: 4px solid var(--accent-mid); }
+.box.lecturer > .box-title::before { content: "🎙️"; }
+
+/* numbered procedure */
+ol.steps { list-style: none; counter-reset: st; padding: 0; margin: 2mm 0 3mm; }
+ol.steps > li { counter-increment: st; position: relative; padding-inline-start: 9mm; margin-bottom: 2mm; min-height: 6.5mm; }
+ol.steps > li::before {
+  content: counter(st);
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.2mm;
+  width: 6.5mm; height: 6.5mm;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 9.5pt;
+  display: grid;
+  place-items: center;
+}
+
+/* worked example */
+.worked {
+  border: 1.5px solid var(--accent-mid);
+  border-radius: 3mm;
+  margin: 3.5mm 0;
+  break-inside: avoid;
+  overflow: hidden;
+}
+.worked > .w-title { background: var(--accent); color: #fff; font-weight: 800; padding: 1.6mm 4mm; }
+.worked > .w-title::before { content: "✏️ "; }
+.worked > .w-body { padding: 3mm 4mm; }
+.worked .given { background: var(--bg-soft); border-radius: 2mm; padding: 2mm 3mm; margin-bottom: 2.5mm; }
+.worked .given::before { content: "נתון: "; font-weight: 800; }
+.worked .ask::before { content: "מחפשים: "; font-weight: 800; }
+.worked ol.lines { counter-reset: ln; list-style: none; padding: 0; margin: 2mm 0; }
+.worked ol.lines > li { counter-increment: ln; padding: 1.2mm 0; padding-inline-start: 13mm; border-bottom: 1px dashed var(--line); position: relative; }
+.worked ol.lines > li::before { content: "שלב " counter(ln); position: absolute; inset-inline-start: 0; font-size: 8.5pt; color: var(--muted); top: 1.8mm; }
+.worked .answer { margin-top: 2mm; font-weight: 800; }
+.worked .answer::before { content: "✅ תשובה: "; }
+.worked .check { margin-top: 1.5mm; color: var(--ok); font-weight: 700; }
+.worked .check::before { content: "✓ בדיקה: "; }
+
+/* figures */
+figure.fig { margin: 3.5mm 0; text-align: center; break-inside: avoid; }
+figure.fig svg { max-width: 100%; height: auto; }
+figure.fig figcaption { font-size: 9.5pt; color: var(--muted); margin-top: 1.5mm; }
+figure.fig.half { width: 60%; margin-inline: auto; }
+
+/* SVG helper classes (inline SVG lives in the HTML DOM, so CSS vars work) */
+svg text { font-family: Heebo, "Arial Hebrew", sans-serif; }
+svg .acc { stroke: var(--accent); }
+svg .acc-f { fill: var(--accent); }
+svg .soft-f { fill: var(--accent-soft); }
+svg .mid-f { fill: var(--accent-mid); }
+svg .dark-f { fill: var(--accent-dark); }
+svg .ink { stroke: var(--ink); }
+svg .ink-f { fill: var(--ink); }
+svg .muted-f { fill: var(--muted); }
+svg .line { stroke: #b8bfcb; }
+svg .ok { stroke: var(--ok); }
+svg .ok-f { fill: var(--ok); }
+svg .bad { stroke: var(--bad); }
+svg .bad-f { fill: var(--bad); }
+svg .warn-f { fill: var(--warn); }
+svg .lbl { font-size: 15px; fill: var(--ink); }
+svg .lbl-s { font-size: 12.5px; fill: var(--muted); }
+svg .lbl-b { font-size: 16px; font-weight: 700; fill: var(--ink); }
+svg .he { direction: rtl; unicode-bidi: plaintext; }
+
+/* tables */
+table.t { width: 100%; border-collapse: separate; border-spacing: 0; margin: 3mm 0; font-size: 10.5pt; break-inside: avoid; border: 1px solid var(--line); border-radius: 2.5mm; overflow: hidden; }
+table.t th { background: var(--accent-soft); color: var(--accent-dark); font-weight: 800; text-align: start; padding: 1.8mm 3mm; border-bottom: 1px solid var(--accent-mid); }
+table.t td { padding: 1.6mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.t tr:last-child td { border-bottom: none; }
+table.t tr:nth-child(even) td { background: #fafbfc; }
+
+/* layout helpers */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; }
+.grid2 > .box, .grid3 > .box { margin: 0; }
+.card { border: 1px solid var(--line); border-radius: 3mm; padding: 2.5mm 3.5mm; break-inside: avoid; background: #fff; }
+.card > .c-title { font-weight: 800; color: var(--accent-dark); margin-bottom: 1mm; }
+.vs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 3mm; align-items: stretch; }
+.vs > .mid { align-self: center; font-weight: 900; color: var(--accent); font-size: 14pt; }
+.keep { break-inside: avoid; }
+.pagebreak { break-before: page; }
+
+/* end matter */
+ol.quiz { padding-inline-start: 7mm; margin: 0; }
+ol.quiz > li { margin-bottom: 3mm; padding-bottom: 2mm; border-bottom: 1px dashed var(--line); break-inside: avoid; }
+ol.quiz .lvl { font-size: 8.5pt; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; margin-inline-start: 2mm; }
+ol.answers { padding-inline-start: 7mm; margin: 0; }
+ol.answers > li { margin-bottom: 2.5mm; break-inside: avoid; }
+dl.glossary { display: grid; grid-template-columns: max-content 1fr; gap: 1.5mm 5mm; margin: 0; }
+dl.glossary dt { font-weight: 800; color: var(--accent-dark); }
+dl.glossary dd { margin: 0; }
+
+@page {
+  @top-right { content: "לימודי מבנים - חישוב סטטי"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+  @top-left { content: "02/11/2026"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+}
+</style>
+</head>
+<body class="course-statics">
+<!-- ============ COVER (page 1) ============ -->
+<div class="cover">
+  <div class="cover-band">
+    <div class="cover-kicker">🎥 סיכום הקלטה · לימודי מבנים - חישוב סטטי (850150)</div>
+    <h1>כוח משופע, מומנט טהור וריתום</h1>
+    <div class="cover-sub">הקלטת השיעור · יום שני 02/11/2026</div>
+    <div class="cover-meta">
+      <span class="chip">👤 בוקובזה רחלי</span>
+      <span class="chip">⏱ 2:49 שעות הקלטה</span>
+      <span class="chip">📄 16 עמודים</span>
+    </div>
+  </div>
+  <div class="cover-body">
+    <div class="bl">מפרקים כוח משופע ופותרים <b>בסדר קבוע</b>; מומנט טהור נכנס <b>בערכו</b>; בריתום <b>3 נעלמים</b>.</div>
+    <div>
+      <h3>🗺️ מפת השיעור</h3>
+      <ol class="roadmap">
+        <li><span class="n">1</span><span class="t">פירוק כוח משופע לרכיבים</span><span class="when">00:07:21</span></li>
+        <li><span class="n">2</span><span class="t">תרגיל 1: שישה שלבים לפתרון</span><span class="when">00:10:25</span></li>
+        <li><span class="n">3</span><span class="t">תרגיל 2: בכל איבר סימן, כוח וזרוע</span><span class="when">00:39:47</span></li>
+        <li><span class="n">4</span><span class="t">תרגיל 3: תגובה שלילית, הופכים את החץ</span><span class="when">01:05:56</span></li>
+        <li><span class="n">5</span><span class="t">מומנט טהור: מומנט מוכן</span><span class="when">01:46:52</span></li>
+        <li><span class="n">6</span><span class="t">תרגיל 5 (מסכם): הכול ביחד</span><span class="when">01:54:33</span></li>
+        <li><span class="n">7</span><span class="t">ריתום: נעלם שלישי, מומנט התגובה</span><span class="when">02:19:04</span></li>
+      </ol>
+    </div>
+    <div class="box announce"><div class="box-title">הודעות מהשיעור (עוד פרטים בסוף)</div>
+      <ul class="pts">
+        <li><span class="ltr">00:00:12</span> <span class="ltr">00:01:00</span> כל ההגשות יחד: <b>10%</b> מהציון הסופי. <b>אין ציון</b> על כל עבודה. העיקר: <b>לתרגל</b>.</li>
+        <li><span class="ltr">00:01:47</span> <b>חד-פעמי:</b> עבודות שבוע שעבר שלא הוגשו מצורפות ל<b>קובץ אחד</b> של השבוע, עד <b>09:00 בשבוע הבא</b>, עם הערה.</li>
+        <li><span class="ltr">02:25:45</span> על <b>ריתום</b> נאמר "<b>לא משהו שיש במבחן</b>" (לא ודאי).</li>
+      </ul>
+    </div>
+    <div class="legend"><span>⚡ שורה תחתונה</span><span>🏠 דוגמה מהחיים</span><span>🧮 נוסחה</span><span>✏️ דוגמה פתורה</span><span>⚠️ טעות נפוצה</span><span>💡 טיפ</span><span>📎 רשות</span><span>🎙️ הודגש בשיעור</span><span>⏱ זמן בהקלטה</span><span>\({\circlearrowright\ =\ +}\) (עם השעון)</span></div>
+  </div>
+</div>
+
+<!-- ============ TOPIC 1: inclined force ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">1</span><h2>פירוק כוח משופע לרכיבים</h2><span class="time">⏱ 00:07:21</span></div>
+  <div class="bl">כוח באלכסון מחליפים בשני כוחות: <b>אופקי</b> ו<b>אנכי</b>. זווית מהקורה ← <span class="ltr">cos</span> לאופקי, <span class="ltr">sin</span> לאנכי.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (לא נאמר בשיעור)</div>
+    <p>עגלת קניות <b>באלכסון</b>: חלק מהכוח <b>דוחף קדימה</b> (אופקי) וחלק <b>לוחץ למטה</b> (אנכי).</p>
+  </div>
+
+  <ul class="pts">
+    <li>זו <b>חזרה</b> על חומר מהשבוע הראשון. לפי המרצה: אין זמן לפרט, לראות את זה <b>ככלל</b>.</li>
+    <li><b>למה לפרק?</b> כוח אלכסוני לא נכנס ל-\({\Sigma F_x}\) או ל-\({\Sigma F_y}\), ולמומנט צריך <b>כוח וזרוע</b>.</li>
+    <li>אחרי הפירוק <b>הכוח המשופע כבר לא מעניין</b>: עובדים רק עם הרכיבים.</li>
+    <li>הכיוון לפי <b>ראש החץ</b>: ימינה ולמעלה = <b>פלוס</b>, שמאלה ולמטה = <b>מינוס</b>.</li>
+    <li><b>מציירים את הרכיבים מראש החץ</b>, כדי שהמרחקים למומנטים יצאו נכונים. <span class="ltr">00:41:08</span></li>
+  </ul>
+
+  <figure class="fig" style="width:90%;margin-inline:auto">
+<svg viewBox="0 0 720 336" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a-acc14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="acc-f"/></marker><marker id="a-ink14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ink-f"/></marker></defs><text x="540" y="24" class="he dark-f" font-size="15" text-anchor="middle" font-weight="700">הזווית נמדדת מציר X (מהקורה)</text>
+<text x="190" y="24" class="he dark-f" font-size="15" text-anchor="middle" font-weight="700">הזווית נמדדת מציר Y (מהאנך): מחליפים</text>
+<line x1="385" y1="172" x2="700" y2="172" class="line" stroke-width="6" stroke-linecap="butt"/>
+<text x="704" y="164" class="ltr muted-f" font-size="15" text-anchor="start" font-weight="700">X</text>
+<line x1="540" y1="172" x2="540" y2="60" class="line" stroke-width="2" stroke-dasharray="6 5" stroke-linecap="butt"/>
+<text x="548" y="68" class="ltr muted-f" font-size="15" text-anchor="start" font-weight="700">Y</text>
+<line x1="540" y1="172" x2="643.4" y2="258.8" class="line" stroke-width="2" stroke-dasharray="6 5" stroke-linecap="butt"/>
+<line x1="643.4" y1="172" x2="643.4" y2="258.8" class="line" stroke-width="1.5" stroke-dasharray="3 4" stroke-linecap="butt"/>
+<line x1="540" y1="258.8" x2="643.4" y2="258.8" class="line" stroke-width="1.5" stroke-dasharray="3 4" stroke-linecap="butt"/>
+<line x1="436.6" y1="85.2" x2="538.5" y2="170.7" class="acc" stroke-width="3.8" marker-end="url(#a-acc14)"/>
+<line x1="540" y1="172" x2="641.4" y2="172" class="acc" stroke-width="3.2" stroke-dasharray="7 5" marker-end="url(#a-acc14)"/>
+<line x1="540" y1="172" x2="540" y2="256.8" class="acc" stroke-width="3.2" stroke-dasharray="7 5" marker-end="url(#a-acc14)"/>
+<circle cx="540" cy="172" r="5" class="ink-f"/>
+<text x="428.6" y="89.2" class="ltr dark-f" font-size="18" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">F</text>
+<text x="591.7" y="160" class="ltr dark-f" font-size="16" text-anchor="middle" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">F cos α</text>
+<text x="530" y="220.4" class="ltr dark-f" font-size="16" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">F sin α</text>
+<path d="M486,172 A54,54 0 0 1 498.6,137.3" class="ink" fill="none" stroke-width="2.2"/>
+<text x="466.7" y="151.3" class="ltr ink-f" font-size="18" text-anchor="middle" font-weight="700">α</text>
+<text x="544" y="194" class="ltr ink-f" font-size="15" text-anchor="start" font-weight="700">P</text>
+<line x1="30" y1="172" x2="345" y2="172" class="line" stroke-width="6" stroke-linecap="butt"/>
+<text x="349" y="164" class="ltr muted-f" font-size="15" text-anchor="start" font-weight="700">X</text>
+<line x1="190" y1="172" x2="190" y2="60" class="line" stroke-width="2" stroke-dasharray="6 5" stroke-linecap="butt"/>
+<text x="198" y="68" class="ltr muted-f" font-size="15" text-anchor="start" font-weight="700">Y</text>
+<line x1="190" y1="172" x2="257.5" y2="288.9" class="line" stroke-width="2" stroke-dasharray="6 5" stroke-linecap="butt"/>
+<line x1="257.5" y1="172" x2="257.5" y2="288.9" class="line" stroke-width="1.5" stroke-dasharray="3 4" stroke-linecap="butt"/>
+<line x1="190" y1="288.9" x2="257.5" y2="288.9" class="line" stroke-width="1.5" stroke-dasharray="3 4" stroke-linecap="butt"/>
+<line x1="122.5" y1="55.1" x2="189" y2="170.3" class="acc" stroke-width="3.8" marker-end="url(#a-acc14)"/>
+<line x1="190" y1="172" x2="255.5" y2="172" class="acc" stroke-width="3.2" stroke-dasharray="7 5" marker-end="url(#a-acc14)"/>
+<line x1="190" y1="172" x2="190" y2="286.9" class="acc" stroke-width="3.2" stroke-dasharray="7 5" marker-end="url(#a-acc14)"/>
+<circle cx="190" cy="172" r="5" class="ink-f"/>
+<text x="114.5" y="59.1" class="ltr dark-f" font-size="18" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">F</text>
+<text x="223.8" y="160" class="ltr dark-f" font-size="16" text-anchor="middle" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">F sin β</text>
+<text x="180" y="235.5" class="ltr dark-f" font-size="16" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">F cos β</text>
+<path d="M158,116.6 A64,64 0 0 1 190,108" class="ink" fill="none" stroke-width="2.2"/>
+<text x="167.2" y="93" class="ltr ink-f" font-size="18" text-anchor="middle" font-weight="700">β</text>
+<text x="194" y="194" class="ltr ink-f" font-size="15" text-anchor="start" font-weight="700">P</text>
+<text x="628" y="321" class="he ink-f" font-size="14" text-anchor="middle" font-weight="700">סימן הרכיב לפי ראש החץ:</text>
+<line x1="80" y1="316" x2="112" y2="316" class="ink" stroke-width="3" marker-end="url(#a-ink14)"/>
+<text x="132" y="323" class="ltr ok-f" font-size="22" text-anchor="start" font-weight="700">+</text>
+<line x1="224" y1="316" x2="192" y2="316" class="ink" stroke-width="3" marker-end="url(#a-ink14)"/>
+<text x="242" y="323" class="ltr bad-f" font-size="22" text-anchor="start" font-weight="700">−</text>
+<line x1="317" y1="330" x2="317" y2="304" class="ink" stroke-width="3" marker-end="url(#a-ink14)"/>
+<text x="352" y="323" class="ltr ok-f" font-size="22" text-anchor="start" font-weight="700">+</text>
+<line x1="427" y1="302" x2="427" y2="328" class="ink" stroke-width="3" marker-end="url(#a-ink14)"/>
+<text x="462" y="323" class="ltr bad-f" font-size="22" text-anchor="start" font-weight="700">−</text></svg>
+<figcaption>בשני המקרים הכוח מגיע לנקודה <span class="ltr">P</span> ושם מחליפים אותו ברכיבים. מימין (זווית מציר <span class="ltr">X</span>): <b>cos</b> לאופקי. משמאל (זווית מציר <span class="ltr">Y</span>): <b>sin</b> לאופקי.</figcaption>
+</figure>
+
+
+  <div class="grid2">
+    <div class="box warn"><div class="box-title">טעות נפוצה</div><p>להחליף <span class="ltr">sin</span> ו-<span class="ltr">cos</span>. לפני כל פירוק: הזווית מציר <b>X</b> או מציר <b>Y</b>?</p></div>
+    <div class="box tip"><div class="box-title">טיפ (לא נאמר בשיעור)</div><p>הרכיב ה<b>צמוד</b> לזווית הוא <span class="ltr">cos</span>. הרכיב שמולה הוא <span class="ltr">sin</span>.</p></div>
+  </div>
+
+  <div class="box optional"><div class="box-title">דוגמה נוספת: זווית מציר Y</div>
+    <p>כוח <span class="ltr">10&nbsp;t</span>, זווית <span class="ltr">30°</span> <b>מהאנך</b>, כלפי מטה-ימינה. מחליפים: X עם sin, Y עם cos.</p>
+    \[ F_x = 10\sin30^\circ = 5.00\ \text{t}\to \qquad F_y = 10\cos30^\circ = 8.66\ \text{t}\downarrow \]
+    <p>בדיקה: \({\sqrt{5.00^2 + 8.66^2} \approx 10\ \text{t}}\) ✓</p>
+  </div>
+</section>
+
+<!-- ============ TOPIC 2: exercise 1 ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">2</span><h2>תרגיל 1: שישה שלבים לפתרון</h2><span class="time">⏱ 00:10:25</span></div>
+  <div class="bl"><b>שישה שלבים</b> קבועים: ריאקציות, פירוק, \({\Sigma F_x}\), \({\Sigma M_A}\), \({\Sigma M_B}\) ובדיקה ב-\({\Sigma F_y}\).</div>
+
+  <figure class="fig" style="width:80%;margin-inline:auto">
+<svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg"><defs><marker id="c-acc14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="acc-f"/></marker><marker id="c-ink8" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ink-f"/></marker><marker id="c-ok14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ok-f"/></marker></defs><line x1="190" y1="266" x2="640" y2="266" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="190" y1="260" x2="190" y2="272" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="390" y1="260" x2="390" y2="272" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="540" y1="260" x2="540" y2="272" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="640" y1="260" x2="640" y2="272" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="290" y="286" class="ltr ink-f" font-size="14" text-anchor="middle">4 m</text>
+<text x="465" y="286" class="ltr ink-f" font-size="14" text-anchor="middle">3 m</text>
+<text x="590" y="286" class="ltr ink-f" font-size="14" text-anchor="middle">2 m</text>
+<line x1="390" y1="194" x2="390" y2="260" class="line" stroke-width="1.3" stroke-dasharray="2 4" stroke-linecap="butt"/>
+<rect x="190" y="142" width="450" height="16" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<path d="M190,158 L177,182 L203,182 Z" class="ink mid-f" stroke-width="2.5" stroke-linejoin="round"/>
+<line x1="166" y1="182" x2="214" y2="182" class="ink" stroke-width="3" stroke-linecap="butt"/>
+<line x1="171" y1="183" x2="164" y2="191" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="179" y1="183" x2="172" y2="191" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="187" y1="183" x2="180" y2="191" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="195" y1="183" x2="188" y2="191" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="203" y1="183" x2="196" y2="191" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="211" y1="183" x2="204" y2="191" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<path d="M540,158 L527,177 L553,177 Z" class="ink mid-f" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="533" cy="182" r="4.5" class="ink mid-f" stroke-width="2"/>
+<circle cx="547" cy="182" r="4.5" class="ink mid-f" stroke-width="2"/>
+<line x1="516" y1="186.5" x2="564" y2="186.5" class="ink" stroke-width="3" stroke-linecap="butt"/>
+<line x1="521" y1="187.5" x2="514" y2="195.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="529" y1="187.5" x2="522" y2="195.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="537" y1="187.5" x2="530" y2="195.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="545" y1="187.5" x2="538" y2="195.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="553" y1="187.5" x2="546" y2="195.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="561" y1="187.5" x2="554" y2="195.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="188" y="133" class="ltr ink-f" font-size="18" text-anchor="end" font-weight="800">A</text>
+<text x="540" y="133" class="ltr ink-f" font-size="18" text-anchor="middle" font-weight="800">B</text>
+<line x1="346.2" y1="21.7" x2="389.3" y2="140.1" class="acc" stroke-width="3.8" marker-end="url(#c-acc14)"/>
+<text x="338.2" y="25.7" class="ltr dark-f" font-size="18" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">30 t</text>
+<path d="M344,142 A46,46 0 0 1 374.3,98.8" class="ink" fill="none" stroke-width="2.2"/>
+<text x="328.9" y="108.8" class="ltr ink-f" font-size="15" text-anchor="middle">70°</text>
+<line x1="390" y1="46" x2="390" y2="130" class="acc" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#c-acc14)"/>
+<text x="400" y="92" class="ltr dark-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">28.19 t</text>
+<line x1="390" y1="130" x2="426" y2="130" class="acc" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#c-acc14)"/>
+<text x="436" y="135" class="ltr dark-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">10.26 t</text>
+<line x1="168" y1="171" x2="134" y2="171" class="ok" stroke-width="3.4" marker-end="url(#c-ok14)"/>
+<text x="124" y="176" class="ltr ok-f" font-size="15" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">AX</tspan><tspan dy="-3.6"> = 10.26 t</tspan></text>
+<line x1="190" y1="246" x2="190" y2="204" class="ok" stroke-width="3.4" marker-end="url(#c-ok14)"/>
+<text x="202" y="244" class="ltr ok-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">AY</tspan><tspan dy="-3.6"> = 12.08 t</tspan></text>
+<line x1="540" y1="246" x2="540" y2="204" class="ok" stroke-width="3.4" marker-end="url(#c-ok14)"/>
+<text x="552" y="244" class="ltr ok-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">BY</tspan><tspan dy="-3.6"> = 16.11 t</tspan></text>
+<path d="M593.6,34.4 A9,9 0 1 1 606.4,34.4" class="ink" fill="none" stroke-width="2.2" stroke-linecap="round" marker-end="url(#c-ink8)"/>
+<text x="616" y="34" class="ltr ok-f" font-size="20" text-anchor="start" font-weight="700">+</text>
+<path d="M668.4,34.4 A9,9 0 1 0 655.6,34.4" class="ink" fill="none" stroke-width="2.2" stroke-linecap="round" marker-end="url(#c-ink8)"/>
+<text x="678" y="34" class="ltr bad-f" font-size="20" text-anchor="start" font-weight="700">−</text></svg>
+<figcaption>תרגיל 1. כחול: העומס ורכיביו (מקווקו). ירוק: התגובות. \({R_{AX}}\) יצא שלילי ← החץ פונה <b>שמאלה</b>. החצים אינם בקנה מידה.</figcaption>
+</figure>
+
+
+  <figure class="fig" style="width:80%;margin-inline:auto">
+<svg viewBox="0 0 720 306" xmlns="http://www.w3.org/2000/svg"><defs><marker id="b-acc14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="acc-f"/></marker><marker id="b-ink8" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ink-f"/></marker></defs><line x1="494" y1="74" x2="468" y2="74" class="acc" stroke-width="3.2" marker-end="url(#b-acc14)"/>
+<line x1="256" y1="74" x2="230" y2="74" class="acc" stroke-width="3.2" marker-end="url(#b-acc14)"/>
+<line x1="122" y1="128" x2="122" y2="151" class="acc" stroke-width="3.2" marker-end="url(#b-acc14)"/>
+<line x1="226" y1="208" x2="252" y2="208" class="acc" stroke-width="3.2" marker-end="url(#b-acc14)"/>
+<line x1="464" y1="208" x2="490" y2="208" class="acc" stroke-width="3.2" marker-end="url(#b-acc14)"/>
+<rect x="496" y="22" width="204" height="104" rx="12" class="soft-f acc" stroke-width="2.4"/>
+<text x="598" y="62" class="he ink-f" font-size="16" text-anchor="middle" font-weight="800">לסמן ריאקציות</text>
+<text x="598" y="91" class="ltr dark-f" font-size="17" text-anchor="middle" font-weight="700">R<tspan font-size="13.9" dy="4.1">AX</tspan><tspan dy="-4.1">   R</tspan><tspan font-size="13.9" dy="4.1">AY</tspan><tspan dy="-4.1">   R</tspan><tspan font-size="13.9" dy="4.1">BY</tspan></text>
+<text x="598" y="114" class="he muted-f" font-size="13" text-anchor="middle">בנייח שתיים, בנייד אחת</text>
+<circle cx="696" cy="24" r="17" class="acc-f"/>
+<text x="696" y="31" class="ltr" font-size="19" text-anchor="middle" font-weight="800" fill="#fff">1</text>
+<rect x="258" y="22" width="204" height="104" rx="12" class="soft-f acc" stroke-width="2.4"/>
+<text x="360" y="62" class="he ink-f" font-size="16" text-anchor="middle" font-weight="800">לפרק את הכוח המשופע</text>
+<text x="360" y="91" class="ltr dark-f" font-size="17" text-anchor="middle" font-weight="700">F·cos α     F·sin α</text>
+<text x="360" y="114" class="he muted-f" font-size="13" text-anchor="middle">ואז לשכוח מהכוח המקורי</text>
+<circle cx="458" cy="24" r="17" class="acc-f"/>
+<text x="458" y="31" class="ltr" font-size="19" text-anchor="middle" font-weight="800" fill="#fff">2</text>
+<rect x="20" y="22" width="204" height="104" rx="12" class="soft-f acc" stroke-width="2.4"/>
+<text x="122" y="62" class="he ink-f" font-size="16" text-anchor="middle" font-weight="800">כוחות אופקיים</text>
+<text x="122" y="91" class="ltr dark-f" font-size="17" text-anchor="middle" font-weight="700">ΣF<tspan font-size="13.9" dy="4.1">x</tspan><tspan dy="-4.1"> = 0  →  R</tspan><tspan font-size="13.9" dy="4.1">AX</tspan></text>
+<text x="122" y="114" class="he muted-f" font-size="13" text-anchor="middle">הכי קל: מתחילים כאן</text>
+<circle cx="220" cy="24" r="17" class="acc-f"/>
+<text x="220" y="31" class="ltr" font-size="19" text-anchor="middle" font-weight="800" fill="#fff">3</text>
+<rect x="20" y="156" width="204" height="104" rx="12" class="soft-f acc" stroke-width="2.4"/>
+<text x="122" y="196" class="he ink-f" font-size="16" text-anchor="middle" font-weight="800">מומנטים סביב נקודה</text>
+<text x="122" y="225" class="ltr dark-f" font-size="17" text-anchor="middle" font-weight="700">ΣM<tspan font-size="13.9" dy="4.1">A</tspan><tspan dy="-4.1"> = 0  →  R</tspan><tspan font-size="13.9" dy="4.1">BY</tspan></text>
+<text x="122" y="248" class="he muted-f" font-size="13" text-anchor="middle">תגובות הנקודה יוצאות מהחשבון</text>
+<circle cx="220" cy="158" r="17" class="acc-f"/>
+<text x="220" y="165" class="ltr" font-size="19" text-anchor="middle" font-weight="800" fill="#fff">4</text>
+<rect x="258" y="156" width="204" height="104" rx="12" class="soft-f acc" stroke-width="2.4"/>
+<text x="360" y="196" class="he ink-f" font-size="16" text-anchor="middle" font-weight="800">מומנטים סביב נקודה אחרת</text>
+<text x="360" y="225" class="ltr dark-f" font-size="17" text-anchor="middle" font-weight="700">ΣM<tspan font-size="13.9" dy="4.1">B</tspan><tspan dy="-4.1"> = 0  →  R</tspan><tspan font-size="13.9" dy="4.1">AY</tspan></text>
+<text x="360" y="248" class="he muted-f" font-size="13" text-anchor="middle">מקבלים את הנעלם האחרון</text>
+<circle cx="458" cy="158" r="17" class="acc-f"/>
+<text x="458" y="165" class="ltr" font-size="19" text-anchor="middle" font-weight="800" fill="#fff">5</text>
+<rect x="496" y="156" width="204" height="104" rx="12" class="ok" stroke-width="2.6" fill="#fff"/>
+<text x="598" y="196" class="he ink-f" font-size="16" text-anchor="middle" font-weight="800">בדיקה: כוחות אנכיים</text>
+<text x="598" y="225" class="ltr ok-f" font-size="17" text-anchor="middle" font-weight="700">ΣF<tspan font-size="13.9" dy="4.1">y</tspan><tspan dy="-4.1"> = 0</tspan></text>
+<text x="598" y="248" class="he muted-f" font-size="13" text-anchor="middle">צריך לצאת אפס</text>
+<circle cx="696" cy="158" r="17" class="ok-f"/>
+<text x="696" y="165" class="ltr" font-size="19" text-anchor="middle" font-weight="800" fill="#fff">6</text>
+<text x="560" y="292" class="he ink-f" font-size="14" text-anchor="middle" font-weight="700">מוסכמת סימנים במומנטים:</text>
+<path d="M339.6,292.4 A9,9 0 1 1 352.4,292.4" class="ink" fill="none" stroke-width="2.2" stroke-linecap="round" marker-end="url(#b-ink8)"/>
+<text x="362" y="292" class="ltr ok-f" font-size="20" text-anchor="start" font-weight="700">+</text>
+<path d="M414.4,292.4 A9,9 0 1 0 401.6,292.4" class="ink" fill="none" stroke-width="2.2" stroke-linecap="round" marker-end="url(#b-ink8)"/>
+<text x="424" y="292" class="ltr bad-f" font-size="20" text-anchor="start" font-weight="700">−</text></svg>
+<figcaption>ששת השלבים, תמיד באותו סדר. כל שלב מוצא נעלם אחד. הבדיקה רק מוודאת. בתרגילים 3 ו-4 הסמך הנייח הוא B, ולכן שלב 3 נותן את \({R_{BX}}\).</figcaption>
+</figure>
+
+
+  <div class="box lecturer"><div class="box-title">בשיעור הודגש: סדר ושאלות</div>
+    <ul class="pts">
+      <li><b>מתחילים מ-\({\Sigma F_x}\)</b>: זה השלב הכי קל. סדר קבוע בראש מונע בלבול. <span class="ltr">00:34:17</span></li>
+      <li><b>לכל כוח ב-\({\Sigma M}\) שלוש שאלות</b> <span class="ltr">00:17:43</span>
+        <ol class="steps">
+          <li>יש <b>כוח</b>?</li>
+          <li>יש <b>זרוע</b>? אין זרוע ← אין מומנט.</li>
+          <li>מה <b>הכיוון</b>: עם השעון (פלוס) או נגד (מינוס)?</li>
+        </ol>
+      </li>
+    </ul>
+  </div>
+
+  <div class="box lecturer"><div class="box-title">בשיעור הודגש: בדיקה וסגנון</div>
+    <ul class="pts">
+      <li><b>הבדיקה</b> סוכמת <b>רק כוחות על ציר Y</b>, בלי מומנטים ובלי מרחקים. יצא <b>0 = 0</b> ← נכון. יצא מספר אחר ← יש טעות. <span class="ltr">00:23:37</span></li>
+      <li>נעלמים בצד <b>שמאל</b>, מספרים בצד <b>ימין</b>. <span class="ltr">00:20:52</span></li>
+      <li>שתי דרכים תקינות להעביר אגף: "פלוס = מינוס" (בתרגיל 3: \({R_{BX} = 8.66 - 2.6}\)) או <span class="ltr">"... = 0"</span> והעברת אגף. <b>לבחור דרך אחת</b> ולהישאר איתה. <span class="ltr">01:10:13</span></li>
+    </ul>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): תרגיל 1</div><div class="w-body">
+    <div class="given">קורה 9 מ'. נייח ב-A, נייד ב-B (7 מ' מ-A). כוח <span class="ltr">30&nbsp;t</span> בזווית <span class="ltr">70°</span> מהקורה (מטה-ימינה), 4 מ' מ-A. \({\circlearrowright\ =\ +}\)</div>
+    <div class="ask">\({R_{AX}}\) , \({R_{AY}}\) , \({R_{BY}}\)</div>
+    <ol class="lines">
+      <li>ריאקציות (תגובות הסמכים): נייח ב-A ← \({R_{AX}}\) ו-\({R_{AY}}\); נייד ב-B ← \({R_{BY}}\). מניחים ימינה ולמעלה.</li>
+      <li>פירוק: \({F_x = 30\cos70^\circ = 10.26\ \text{t}\to}\) , \({F_y = 30\sin70^\circ = 28.19\ \text{t}\downarrow}\)</li>
+      <li>\({\Sigma F_x = 0}\): \({R_{AX} + 10.26 = 0}\) ← \({R_{AX} = -10.26}\) ← בפועל <b>שמאלה</b></li>
+      <li>\({\Sigma M_A = 0\ (\circlearrowright +)}\): \({+28.19\cdot4 - R_{BY}\cdot7 = 0}\) ← \({R_{BY} = 112.76 / 7 = 16.11\ \text{t}\uparrow}\)<br><small>28.19 למטה, מימין ל-A ← \({\circlearrowright}\) פלוס. \({R_{BY}}\) למעלה, מימין ל-A ← \({\circlearrowleft}\) מינוס. תגובות A: בלי זרוע.</small></li>
+      <li>\({\Sigma M_B = 0\ (\circlearrowright +)}\): \({+R_{AY}\cdot7 - 28.19\cdot3 = 0}\) ← \({R_{AY} = 84.57 / 7 = 12.08\ \text{t}\uparrow}\)</li>
+    </ol>
+    <div class="answer">\({R_{AX} = 10.26\ \text{t}\leftarrow}\) , \({R_{AY} = 12.08\ \text{t}\uparrow}\) , \({R_{BY} = 16.11\ \text{t}\uparrow}\)</div>
+    <div class="check">שלב 6, \({\Sigma F_y = 0}\) (למעלה = +): \({12.08 - 28.19 + 16.11 = 0}\)</div>
+  </div></div>
+
+  <div class="grid2">
+    <div class="box warn"><div class="box-title">יצא מינוס ב-\({\Sigma F_x}\)</div>
+      <ul class="pts">
+        <li>הכיוון שהונח <b>הפוך</b>: \({R_{AX}}\) פונה <b>שמאלה</b>.</li>
+        <li><b>מסובבים את החץ</b> (לא מוחקים את המקורי) וכותבים <b>10.26</b> בלי מינוס.</li>
+        <li><b>לא משנים את המשוואה</b>. המינוס מראה כיוון, לא "תגובה שלילית".</li>
+      </ul>
+    </div>
+    <div class="box"><div class="box-title">💬 שאלות מהכיתה</div>
+      <ul class="pts">
+        <li><b>שני ה-10.26</b>: רכיב העומס פונה ימינה, התגובה שמאלה. אותו גודל, נקודה אחרת.</li>
+        <li><b>המידה 2</b> מימין ל-B לא נכנסת לחישוב: זה המשך הקורה. <span class="ltr">00:26:55</span></li>
+        <li><b>12.09 בלוח</b>: עיגלו 28.19 ל-28.2. תקין.</li>
+        <li><b>0.0x</b> בסדר; <b>0.1</b> רק עם הרבה עיגולים ואלכסונים <span class="ltr">01:02:27</span>; <b>0.2</b> חשוד <span class="ltr">00:29:02</span>.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOPIC 3: exercise 2 ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">3</span><h2>תרגיל 2: בכל איבר סימן, כוח וזרוע</h2><span class="time">⏱ 00:39:47</span></div>
+  <div class="bl">כל איבר ב-\({\Sigma M}\) נכתב <b>(סימן)(כוח · זרוע)</b>. הזרוע היא המרחק <b>עד הנקודה</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור): אצבע על הנקודה</div>
+    <p>מחזיקים את הקורה בנקודה, והכוח "דוחף". לאן היא מסתובבת? <b>עם השעון ← פלוס</b>, <b>נגד ← מינוס</b>. <span class="ltr">00:52:01</span></p>
+  </div>
+
+  <figure class="fig" style="width:92%;margin-inline:auto">
+<svg viewBox="0 0 720 306" xmlns="http://www.w3.org/2000/svg"><defs><marker id="e-acc14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="acc-f"/></marker><marker id="e-ink8" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ink-f"/></marker><marker id="e-ok14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ok-f"/></marker></defs><line x1="110" y1="272" x2="590" y2="272" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="110" y1="266" x2="110" y2="278" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="230" y1="266" x2="230" y2="278" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="470" y1="266" x2="470" y2="278" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="590" y1="266" x2="590" y2="278" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="170" y="292" class="ltr ink-f" font-size="14" text-anchor="middle">3 m</text>
+<text x="350" y="292" class="ltr ink-f" font-size="14" text-anchor="middle">6 m</text>
+<text x="530" y="292" class="ltr ink-f" font-size="14" text-anchor="middle">3 m</text>
+<line x1="470" y1="200" x2="470" y2="266" class="line" stroke-width="1.3" stroke-dasharray="2 4" stroke-linecap="butt"/>
+<rect x="110" y="148" width="480" height="16" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<path d="M230,164 L217,188 L243,188 Z" class="ink mid-f" stroke-width="2.5" stroke-linejoin="round"/>
+<line x1="206" y1="188" x2="254" y2="188" class="ink" stroke-width="3" stroke-linecap="butt"/>
+<line x1="211" y1="189" x2="204" y2="197" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="219" y1="189" x2="212" y2="197" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="227" y1="189" x2="220" y2="197" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="235" y1="189" x2="228" y2="197" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="243" y1="189" x2="236" y2="197" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="251" y1="189" x2="244" y2="197" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<path d="M590,164 L577,183 L603,183 Z" class="ink mid-f" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="583" cy="188" r="4.5" class="ink mid-f" stroke-width="2"/>
+<circle cx="597" cy="188" r="4.5" class="ink mid-f" stroke-width="2"/>
+<line x1="566" y1="192.5" x2="614" y2="192.5" class="ink" stroke-width="3" stroke-linecap="butt"/>
+<line x1="571" y1="193.5" x2="564" y2="201.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="579" y1="193.5" x2="572" y2="201.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="587" y1="193.5" x2="580" y2="201.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="595" y1="193.5" x2="588" y2="201.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="603" y1="193.5" x2="596" y2="201.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="611" y1="193.5" x2="604" y2="201.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="232" y="139" class="ltr ink-f" font-size="18" text-anchor="start" font-weight="800">A</text>
+<text x="588" y="139" class="ltr ink-f" font-size="18" text-anchor="end" font-weight="800">B</text>
+<line x1="197.7" y1="60.3" x2="111.4" y2="146.6" class="acc" stroke-width="3.8" marker-end="url(#e-acc14)"/>
+<text x="205.7" y="64.3" class="ltr dark-f" font-size="18" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">7 t</text>
+<path d="M160,148 A50,50 0 0 0 145.4,112.6" class="ink" fill="none" stroke-width="2.2"/>
+<text x="180.5" y="124.5" class="ltr ink-f" font-size="15" text-anchor="middle">45°</text>
+<line x1="110" y1="90" x2="110" y2="136" class="acc" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#e-acc14)"/>
+<text x="100" y="118" class="ltr dark-f" font-size="15" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">4.95 t</text>
+<line x1="110" y1="136" x2="66" y2="136" class="acc" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#e-acc14)"/>
+<text x="56" y="141" class="ltr dark-f" font-size="15" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">4.95 t</text>
+<line x1="470" y1="86" x2="470" y2="146" class="acc" stroke-width="3.8" marker-end="url(#e-acc14)"/>
+<text x="480" y="112" class="ltr dark-f" font-size="18" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">3 t</text>
+<line x1="252" y1="177" x2="286" y2="177" class="ok" stroke-width="3.4" marker-end="url(#e-ok14)"/>
+<text x="294" y="182" class="ltr ok-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">AX</tspan><tspan dy="-3.6"> = 4.95 t</tspan></text>
+<line x1="230" y1="252" x2="230" y2="210" class="ok" stroke-width="3.4" marker-end="url(#e-ok14)"/>
+<text x="242" y="250" class="ltr ok-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">AY</tspan><tspan dy="-3.6"> = 7.60 t</tspan></text>
+<line x1="590" y1="248" x2="590" y2="206" class="ok" stroke-width="3.4" marker-end="url(#e-ok14)"/>
+<text x="578" y="246" class="ltr ok-f" font-size="15" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">BY</tspan><tspan dy="-3.6"> = 0.35 t</tspan></text>
+<path d="M593.6,34.4 A9,9 0 1 1 606.4,34.4" class="ink" fill="none" stroke-width="2.2" stroke-linecap="round" marker-end="url(#e-ink8)"/>
+<text x="616" y="34" class="ltr ok-f" font-size="20" text-anchor="start" font-weight="700">+</text>
+<path d="M668.4,34.4 A9,9 0 1 0 655.6,34.4" class="ink" fill="none" stroke-width="2.2" stroke-linecap="round" marker-end="url(#e-ink8)"/>
+<text x="678" y="34" class="ltr bad-f" font-size="20" text-anchor="start" font-weight="700">−</text></svg>
+<figcaption>תרגיל 2. הכוח <span class="ltr">7&nbsp;t</span> מגיע לקצה השמאלי, ולכן מושכים משם את הרכיבים. הזרוע של \({R_{BY}}\) היא <b>מ-A עד B</b>: 9 מ'.</figcaption>
+</figure>
+
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): תרגיל 2</div><div class="w-body">
+    <div class="given">קורה 12 מ'. נייח ב-A (3 מ' מהשמאל), נייד ב-B (קצה ימין). <span class="ltr">7&nbsp;t</span> ב-<span class="ltr">45°</span> בקצה השמאלי (מטה-שמאלה). <span class="ltr">3&nbsp;t</span> למטה, 3 מ' משמאל ל-B. \({\circlearrowright\ =\ +}\)</div>
+    <div class="ask">\({R_{AX}}\) , \({R_{AY}}\) , \({R_{BY}}\)</div>
+    <ol class="lines">
+      <li>ריאקציות: \({R_{AX}}\) ו-\({R_{AY}}\) ב-A, \({R_{BY}}\) ב-B (ימינה ולמעלה).</li>
+      <li>פירוק <b>מראש החץ</b>, בקצה השמאלי: \({7\cos45^\circ = 4.95\ \text{t}\leftarrow}\) , \({7\sin45^\circ = 4.95\ \text{t}\downarrow}\)</li>
+      <li>\({\Sigma F_x = 0}\): \({R_{AX} - 4.95 = 0}\) ← \({R_{AX} = 4.95\ \text{t}\to}\)</li>
+      <li>\({\Sigma M_A = 0\ (\circlearrowright +)}\): \({-(4.95\cdot3) + (3\cdot6) - (R_{BY}\cdot9) = 0}\) ← \({R_{BY} = 3.15 / 9 = 0.35\ \text{t}\uparrow}\)</li>
+      <li>\({\Sigma M_B = 0\ (\circlearrowright +)}\): \({-(4.95\cdot12) + (R_{AY}\cdot9) - (3\cdot3) = 0}\) ← \({R_{AY} = 68.4 / 9 = 7.60\ \text{t}\uparrow}\)</li>
+    </ol>
+    <div class="answer">\({R_{AX} = 4.95\ \text{t}\to}\) , \({R_{AY} = 7.60\ \text{t}\uparrow}\) , \({R_{BY} = 0.35\ \text{t}\uparrow}\)</div>
+    <div class="check">שלב 6, \({\Sigma F_y = 0}\) (למעלה = +): \({-4.95 + 7.60 - 3 + 0.35 = 0}\)</div>
+  </div></div>
+</section>
+
+<section class="topic cont">
+  <h3>איך נבנה כל איבר ב-\({\Sigma M_A}\)</h3>
+
+  <figure class="fig">
+    <div class="box formula">
+      \[ \huge \textcolor{#b91c1c}{-}\,\left(\textcolor{#1d4ed8}{4.95}\cdot\textcolor{#0f7b5f}{3}\right) \]
+    </div>
+    <div class="grid3">
+      <div class="card"><div class="c-title">🔴 סימן</div>לפי כיוון הסיבוב סביב A. כאן \({\circlearrowleft}\) ← <b>מינוס</b>.</div>
+      <div class="card"><div class="c-title">🔵 כוח (t)</div>הגודל בלבד, בלי סימן. כאן <b>4.95</b>: הרכיב האנכי של ה-<span class="ltr">7&nbsp;t</span>.</div>
+      <div class="card"><div class="c-title">🟢 זרוע (m)</div>המרחק <b>מ-A עד קו הכוח</b>. כאן <b>3</b> מ'.</div>
+    </div>
+    <figcaption>אנטומיה של איבר אחד. אותו מבנה בכל איבר, גם ב-\({\Sigma M_B}\).</figcaption>
+  </figure>
+
+  <table class="t">
+    <tr><th>כוח</th><th>כיוון</th><th>מיקום ביחס ל-A</th><th>סיבוב</th><th>סימן</th><th>האיבר</th></tr>
+    <tr><td><span class="ltr">4.95&nbsp;t</span> (אנכי)</td><td>למטה</td><td>3 מ' משמאל</td><td>\({\circlearrowleft}\)</td><td>\({\textcolor{#b91c1c}{-}}\)</td><td>\({-(4.95\cdot3)}\)</td></tr>
+    <tr><td><span class="ltr">3&nbsp;t</span></td><td>למטה</td><td>6 מ' מימין</td><td>\({\circlearrowright}\)</td><td>\({\textcolor{#0f7b5f}{+}}\)</td><td>\({+(3\cdot6)}\)</td></tr>
+    <tr><td>\({R_{BY}}\)</td><td>למעלה</td><td>9 מ' מימין</td><td>\({\circlearrowleft}\)</td><td>\({\textcolor{#b91c1c}{-}}\)</td><td>\({-(R_{BY}\cdot9)}\)</td></tr>
+    <tr><td>\({R_{AX}}\) , \({R_{AY}}\) , <span class="ltr">4.95&nbsp;t</span> (אופקי)</td><td colspan="3">על A, או לאורך הקורה: אין זרוע</td><td>—</td><td><b>לא נכנסים</b></td></tr>
+  </table>
+
+  <div class="box optional"><div class="box-title">קיצור לסימנים: כוח אנכי (מהרשימות במחברת, לא נאמר בשיעור)</div>
+    <figure class="fig" style="width:94%;margin:1mm auto 0">
+<svg viewBox="0 0 720 176" xmlns="http://www.w3.org/2000/svg"><defs><marker id="t-acc14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="acc-f"/></marker><marker id="t-ink10" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ink-f"/></marker></defs><text x="632" y="17" class="he ink-f" font-size="15" text-anchor="middle" font-weight="800">כוח למטה</text>
+<text x="632" y="35" class="he muted-f" font-size="14" text-anchor="middle">מימין לנקודה</text>
+<rect x="560" y="80" width="144" height="14" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<circle cx="632" cy="87" r="5.5" class="ink-f"/>
+<text x="632" y="72" class="ltr ink-f" font-size="15" text-anchor="middle" font-weight="800">P</text>
+<line x1="680" y1="44" x2="680" y2="78" class="acc" stroke-width="3.6" marker-end="url(#t-acc14)"/>
+<path d="M564,156.4 A13,13 0 1 1 584,156.4" class="ink" fill="none" stroke-width="3.2" stroke-linecap="round" marker-end="url(#t-ink10)"/>
+<text x="594" y="157" class="ltr ok-f" font-size="28" text-anchor="start" font-weight="700">+</text>
+<text x="662" y="156" class="he ink-f" font-size="14" text-anchor="middle" font-weight="700">עם השעון</text>
+<text x="456" y="17" class="he ink-f" font-size="15" text-anchor="middle" font-weight="800">כוח למטה</text>
+<text x="456" y="35" class="he muted-f" font-size="14" text-anchor="middle">משמאל לנקודה</text>
+<rect x="384" y="80" width="144" height="14" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<circle cx="456" cy="87" r="5.5" class="ink-f"/>
+<text x="456" y="72" class="ltr ink-f" font-size="15" text-anchor="middle" font-weight="800">P</text>
+<line x1="408" y1="44" x2="408" y2="78" class="acc" stroke-width="3.6" marker-end="url(#t-acc14)"/>
+<path d="M408,156.4 A13,13 0 1 0 388,156.4" class="ink" fill="none" stroke-width="3.2" stroke-linecap="round" marker-end="url(#t-ink10)"/>
+<text x="418" y="157" class="ltr bad-f" font-size="28" text-anchor="start" font-weight="700">−</text>
+<text x="486" y="156" class="he ink-f" font-size="14" text-anchor="middle" font-weight="700">נגד השעון</text>
+<text x="280" y="17" class="he ink-f" font-size="15" text-anchor="middle" font-weight="800">כוח למעלה</text>
+<text x="280" y="35" class="he muted-f" font-size="14" text-anchor="middle">מימין לנקודה</text>
+<rect x="208" y="80" width="144" height="14" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<circle cx="280" cy="87" r="5.5" class="ink-f"/>
+<text x="280" y="72" class="ltr ink-f" font-size="15" text-anchor="middle" font-weight="800">P</text>
+<line x1="328" y1="132" x2="328" y2="96" class="acc" stroke-width="3.6" marker-end="url(#t-acc14)"/>
+<path d="M232,156.4 A13,13 0 1 0 212,156.4" class="ink" fill="none" stroke-width="3.2" stroke-linecap="round" marker-end="url(#t-ink10)"/>
+<text x="242" y="157" class="ltr bad-f" font-size="28" text-anchor="start" font-weight="700">−</text>
+<text x="310" y="156" class="he ink-f" font-size="14" text-anchor="middle" font-weight="700">נגד השעון</text>
+<text x="104" y="17" class="he ink-f" font-size="15" text-anchor="middle" font-weight="800">כוח למעלה</text>
+<text x="104" y="35" class="he muted-f" font-size="14" text-anchor="middle">משמאל לנקודה</text>
+<rect x="32" y="80" width="144" height="14" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<circle cx="104" cy="87" r="5.5" class="ink-f"/>
+<text x="104" y="72" class="ltr ink-f" font-size="15" text-anchor="middle" font-weight="800">P</text>
+<line x1="56" y1="132" x2="56" y2="96" class="acc" stroke-width="3.6" marker-end="url(#t-acc14)"/>
+<path d="M36,156.4 A13,13 0 1 1 56,156.4" class="ink" fill="none" stroke-width="3.2" stroke-linecap="round" marker-end="url(#t-ink10)"/>
+<text x="66" y="157" class="ltr ok-f" font-size="28" text-anchor="start" font-weight="700">+</text>
+<text x="134" y="156" class="he ink-f" font-size="14" text-anchor="middle" font-weight="700">עם השעון</text></svg>
+<figcaption>ארבעה מקרים של כוח אנכי ביחס לנקודה <span class="ltr">P</span>. עם כיוון השעון ← פלוס, נגד ← מינוס.</figcaption>
+</figure>
+
+  </div>
+
+  <div class="box lecturer"><div class="box-title">בשיעור הודגש</div>
+    <ul class="pts">
+      <li><b>גודל מול כיוון:</b> בשרטוט המספר נטו (4.95) והחץ מראה כיוון. הסימן רק במשוואה. <span class="ltr">01:01:07</span></li>
+      <li><b>הכותרות קריטיות:</b> לרשום \({\Sigma M_A = 0}\) וכן הלאה בכל שלב, כדי לדעת מה עושים. <span class="ltr">00:53:52</span></li>
+      <li><b>השאיפה בסטטיקה היא שיווי משקל:</b> מה שדוחף למטה מתאזן עם מה שעולה למעלה. <span class="ltr">00:55:28</span></li>
+    </ul>
+  </div>
+
+  <div class="box tip"><div class="box-title">עיגול ובדיקה</div>
+    <p><b>שתי ספרות</b> אחרי הנקודה; הספרה <b>השלישית</b> קובעת איך לעגל. <span class="ltr">00:57:04</span> בבדיקה: סטייה <b>0.0x</b> בסדר (בלוח יצא <span class="ltr">0.01 ≅ 0</span>), <b>0.1</b> לפעמים, <b>0.2 ומעלה</b> חשוד. <span class="ltr">01:02:13</span></p>
+  </div>
+</section>
+
+<!-- ============ TOPIC 4: exercise 3 ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">4</span><h2>תרגיל 3: תגובה שלילית, הופכים את החץ</h2><span class="time">⏱ 01:05:56</span></div>
+  <div class="bl">תגובה יצאה <b>שלילית</b>? <b>הופכים את החץ</b> בשרטוט, ולא נוגעים במשוואה.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (לא נאמר בשיעור)</div>
+    <p>קרש קפיצה: הקצה בולט החוצה, והתמיכה האחורית <b>נמשכת למטה</b> (בורג עוגן).</p>
+  </div>
+
+  <figure class="fig" style="width:82%;margin-inline:auto">
+<svg viewBox="0 0 724 278" xmlns="http://www.w3.org/2000/svg"><defs><marker id="g-acc14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="acc-f"/></marker><marker id="g-ink8" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ink-f"/></marker><marker id="g-ok14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ok-f"/></marker></defs><line x1="70" y1="236" x2="590" y2="236" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="70" y1="230" x2="70" y2="242" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="230" y1="230" x2="230" y2="242" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="330" y1="230" x2="330" y2="242" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="430" y1="230" x2="430" y2="242" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="590" y1="230" x2="590" y2="242" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="150" y="256" class="ltr ink-f" font-size="14" text-anchor="middle">4 m</text>
+<text x="280" y="256" class="ltr ink-f" font-size="14" text-anchor="middle">2.5 m</text>
+<text x="380" y="256" class="ltr ink-f" font-size="14" text-anchor="middle">2.5 m</text>
+<text x="510" y="256" class="ltr ink-f" font-size="14" text-anchor="middle">4 m</text>
+<line x1="330" y1="164" x2="330" y2="230" class="line" stroke-width="1.3" stroke-dasharray="2 4" stroke-linecap="butt"/>
+<rect x="70" y="112" width="520" height="16" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<path d="M230,128 L217,147 L243,147 Z" class="ink mid-f" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="223" cy="152" r="4.5" class="ink mid-f" stroke-width="2"/>
+<circle cx="237" cy="152" r="4.5" class="ink mid-f" stroke-width="2"/>
+<line x1="206" y1="156.5" x2="254" y2="156.5" class="ink" stroke-width="3" stroke-linecap="butt"/>
+<line x1="211" y1="157.5" x2="204" y2="165.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="219" y1="157.5" x2="212" y2="165.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="227" y1="157.5" x2="220" y2="165.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="235" y1="157.5" x2="228" y2="165.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="243" y1="157.5" x2="236" y2="165.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="251" y1="157.5" x2="244" y2="165.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<path d="M430,128 L417,152 L443,152 Z" class="ink mid-f" stroke-width="2.5" stroke-linejoin="round"/>
+<line x1="406" y1="152" x2="454" y2="152" class="ink" stroke-width="3" stroke-linecap="butt"/>
+<line x1="411" y1="153" x2="404" y2="161" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="419" y1="153" x2="412" y2="161" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="427" y1="153" x2="420" y2="161" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="435" y1="153" x2="428" y2="161" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="443" y1="153" x2="436" y2="161" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="451" y1="153" x2="444" y2="161" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="212" y="103" class="ltr ink-f" font-size="18" text-anchor="middle" font-weight="800">A</text>
+<text x="464" y="103" class="ltr ink-f" font-size="18" text-anchor="middle" font-weight="800">B</text>
+<line x1="70" y1="54" x2="70" y2="110" class="acc" stroke-width="3.8" marker-end="url(#g-acc14)"/>
+<text x="80" y="80" class="ltr dark-f" font-size="18" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">5 t</text>
+<line x1="233" y1="56" x2="328.3" y2="111" class="acc" stroke-width="3.8" marker-end="url(#g-acc14)"/>
+<text x="227" y="58" class="ltr dark-f" font-size="18" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">3 t</text>
+<path d="M284,112 A46,46 0 0 1 290.2,89" class="ink" fill="none" stroke-width="2.2"/>
+<text x="258.4" y="98.9" class="ltr ink-f" font-size="15" text-anchor="middle">30°</text>
+<line x1="330" y1="66" x2="330" y2="100" class="acc" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#g-acc14)"/>
+<text x="339" y="88" class="ltr dark-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">1.50 t</text>
+<line x1="330" y1="100" x2="374" y2="100" class="acc" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#g-acc14)"/>
+<text x="384" y="105" class="ltr dark-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">2.60 t</text>
+<line x1="676.6" y1="178" x2="591.7" y2="129" class="acc" stroke-width="3.8" marker-end="url(#g-acc14)"/>
+<text x="680.6" y="198" class="ltr dark-f" font-size="18" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">10 t</text>
+<path d="M634,128 A44,44 0 0 1 628.1,150" class="ink" fill="none" stroke-width="2.2"/>
+<text x="654.6" y="146.7" class="ltr ink-f" font-size="15" text-anchor="start">30°</text>
+<line x1="590" y1="184" x2="590" y2="140" class="acc" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#g-acc14)"/>
+<text x="581" y="172" class="ltr dark-f" font-size="15" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">5.00 t</text>
+<line x1="590" y1="120" x2="542" y2="120" class="acc" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#g-acc14)"/>
+<text x="564" y="105" class="ltr dark-f" font-size="15" text-anchor="middle" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">8.66 t</text>
+<line x1="230" y1="216" x2="230" y2="174" class="ok" stroke-width="3.4" marker-end="url(#g-ok14)"/>
+<text x="218" y="214" class="ltr ok-f" font-size="15" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">AY</tspan><tspan dy="-3.6"> = 13.75 t</tspan></text>
+<line x1="450" y1="141" x2="478" y2="141" class="ok" stroke-width="3.4" marker-end="url(#g-ok14)"/>
+<text x="486" y="146" class="ltr ok-f" font-size="14" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="11.5" dy="3.4">BX</tspan><tspan dy="-3.4"> = 6.06 t</tspan></text>
+<line x1="430" y1="170" x2="430" y2="218" class="ok" stroke-width="3.4" marker-end="url(#g-ok14)"/>
+<text x="442" y="210" class="ltr ok-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">BY</tspan><tspan dy="-3.6"> = 12.25 t</tspan></text>
+<path d="M603.6,34.4 A9,9 0 1 1 616.4,34.4" class="ink" fill="none" stroke-width="2.2" stroke-linecap="round" marker-end="url(#g-ink8)"/>
+<text x="626" y="34" class="ltr ok-f" font-size="20" text-anchor="start" font-weight="700">+</text>
+<path d="M678.4,34.4 A9,9 0 1 0 665.6,34.4" class="ink" fill="none" stroke-width="2.2" stroke-linecap="round" marker-end="url(#g-ink8)"/>
+<text x="688" y="34" class="ltr bad-f" font-size="20" text-anchor="start" font-weight="700">−</text></svg>
+<figcaption>תרגיל 3. \({R_{BY}}\) יצא שלילי ← החץ ב-B פונה <b>למטה</b>. הרכיב האנכי של <span class="ltr">10&nbsp;t</span> פונה למעלה.</figcaption>
+</figure>
+
+
+  <figure class="fig" style="width:80%;margin-inline:auto">
+<svg viewBox="0 0 720 218" xmlns="http://www.w3.org/2000/svg"><defs><marker id="d-bad14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="bad-f"/></marker><marker id="d-ink14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ink-f"/></marker><marker id="d-ok14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ok-f"/></marker></defs><text x="540" y="24" class="he bad-f" font-size="16" text-anchor="middle" font-weight="800">ההנחה: החץ למעלה</text>
+<rect x="430" y="50" width="220" height="16" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<path d="M610,66 L597,90 L623,90 Z" class="ink mid-f" stroke-width="2.5" stroke-linejoin="round"/>
+<line x1="586" y1="90" x2="634" y2="90" class="ink" stroke-width="3" stroke-linecap="butt"/>
+<line x1="591" y1="91" x2="584" y2="99" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="599" y1="91" x2="592" y2="99" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="607" y1="91" x2="600" y2="99" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="615" y1="91" x2="608" y2="99" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="623" y1="91" x2="616" y2="99" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="631" y1="91" x2="624" y2="99" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="610" y="44" class="ltr ink-f" font-size="18" text-anchor="middle" font-weight="800">B</text>
+<line x1="610" y1="170" x2="610" y2="110" class="bad" stroke-width="3.4" stroke-dasharray="7 5" marker-end="url(#d-bad14)"/>
+<text x="624" y="148" class="ltr bad-f" font-size="17" text-anchor="start" font-weight="700">R<tspan font-size="13.9" dy="4.1">BY</tspan></text>
+<line x1="568" y1="128" x2="592" y2="152" class="bad" stroke-width="4" stroke-linecap="butt"/>
+<line x1="592" y1="128" x2="568" y2="152" class="bad" stroke-width="4" stroke-linecap="butt"/>
+<text x="540" y="184" class="he ink-f" font-size="15" text-anchor="middle" font-weight="700">המשוואה נתנה מינוס</text>
+<text x="540" y="207" class="ltr bad-f" font-size="17" text-anchor="middle" font-weight="700">R<tspan font-size="13.9" dy="4.1">BY</tspan><tspan dy="-4.1"> = −12.25</tspan></text>
+<line x1="402" y1="96" x2="320" y2="96" class="ink" stroke-width="4" marker-end="url(#d-ink14)"/>
+<text x="360" y="76" class="he ink-f" font-size="16" text-anchor="middle" font-weight="800">הופכים</text>
+<text x="360" y="124" class="he ink-f" font-size="16" text-anchor="middle" font-weight="800">את החץ</text>
+<text x="180" y="24" class="he ok-f" font-size="16" text-anchor="middle" font-weight="800">בפועל: החץ למטה</text>
+<rect x="70" y="50" width="220" height="16" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<path d="M250,66 L237,90 L263,90 Z" class="ink mid-f" stroke-width="2.5" stroke-linejoin="round"/>
+<line x1="226" y1="90" x2="274" y2="90" class="ink" stroke-width="3" stroke-linecap="butt"/>
+<line x1="231" y1="91" x2="224" y2="99" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="239" y1="91" x2="232" y2="99" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="247" y1="91" x2="240" y2="99" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="255" y1="91" x2="248" y2="99" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="263" y1="91" x2="256" y2="99" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="271" y1="91" x2="264" y2="99" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="250" y="44" class="ltr ink-f" font-size="18" text-anchor="middle" font-weight="800">B</text>
+<line x1="250" y1="104" x2="250" y2="158" class="ok" stroke-width="3.4" marker-end="url(#d-ok14)"/>
+<text x="262" y="150" class="ltr ok-f" font-size="17" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">12.25 t</text>
+<text x="180" y="184" class="he ink-f" font-size="15" text-anchor="middle" font-weight="700">בשרטוט כותבים גודל בלבד</text>
+<text x="180" y="207" class="he ink-f" font-size="15" text-anchor="middle" font-weight="700">ובמשוואה לא נוגעים</text></svg>
+<figcaption>תגובה שלילית: <b>הופכים את החץ</b> בשרטוט, וכותבים את הגודל בלי מינוס. את המשוואה לא משנים.</figcaption>
+</figure>
+
+
+
+
+  <div class="box lecturer"><div class="box-title">בשיעור הודגש</div>
+    <ul class="pts">
+      <li><b>קריטי לסמן את כיוון החץ.</b> השלב הבא הוא <b>מהלכי גזירה ומהלכי מומנטים</b>, ובלי לדעת לאן החץ פונה אי אפשר. <span class="ltr">01:17:16</span></li>
+      <li><b>בודקים את כל הקורה</b>, לא עוצרים באמצע: עוברים על <b>כל</b> הכוחות לאורכה. מאיפה מתחילים לא משנה. <span class="ltr">01:20:01</span></li>
+      <li>לסמך <b>נייח</b> תמיד מניחים שתי ריאקציות: אחת ל-Y ואחת ל-X. <span class="ltr">01:11:36</span></li>
+    </ul>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): תרגיל 3</div><div class="w-body">
+    <div class="given">קורה 13 מ' עם שני קצוות בולטים (4 מ' בכל צד). נייד ב-A (4 מ' מהשמאל), נייח ב-B (5 מ' מ-A). <span class="ltr">5&nbsp;t</span> למטה בקצה השמאלי; <span class="ltr">3&nbsp;t</span> ב-<span class="ltr">30°</span> (מטה-ימינה) 2.5 מ' מימין ל-A; <span class="ltr">10&nbsp;t</span> ב-<span class="ltr">30°</span> (מעלה-שמאלה) בקצה הימני. \({\circlearrowright\ =\ +}\)</div>
+    <div class="ask">\({R_{AY}}\) , \({R_{BX}}\) , \({R_{BY}}\)</div>
+    <ol class="lines">
+      <li>ריאקציות: \({R_{AY}}\) ב-A (נייד). \({R_{BX}}\) ו-\({R_{BY}}\) ב-B (נייח). מניחים ימינה ולמעלה.</li>
+      <li>פירוק: <span class="ltr">3&nbsp;t</span> ← \({2.60\to}\) , \({1.50\downarrow}\). <span class="ltr">10&nbsp;t</span> ← \({8.66\leftarrow}\) , \({5.00}\) <b>למעלה</b>.</li>
+      <li>\({\Sigma F_x = 0}\): \({2.60 + R_{BX} - 8.66 = 0}\) ← \({R_{BX} = 6.06\ \text{t}\to}\)</li>
+      <li>\({\Sigma M_A = 0\ (\circlearrowright +)}\): \({-(5\cdot4) + (1.5\cdot2.5) - (R_{BY}\cdot5) - (5\cdot9) = 0}\) ← \({R_{BY} = -12.25}\) ← בפועל <b>למטה</b></li>
+      <li>\({\Sigma M_B = 0\ (\circlearrowright +)}\): \({-(5\cdot9) + (R_{AY}\cdot5) - (1.5\cdot2.5) - (5\cdot4) = 0}\) ← \({R_{AY} = 68.75 / 5 = 13.75\ \text{t}\uparrow}\)</li>
+    </ol>
+    <div class="answer">\({R_{BX} = 6.06\ \text{t}\to}\) , \({R_{AY} = 13.75\ \text{t}\uparrow}\) , \({R_{BY} = 12.25\ \text{t}\downarrow}\)</div>
+    <div class="check">שלב 6, \({\Sigma F_y = 0}\): \({-5 + 13.75 - 1.5 - 12.25 + 5 = 0}\). \({R_{BY}}\) נכנס כ-<b>12.25 מינוס</b>, כי החץ שלו כבר <b>למטה</b>.</div>
+  </div></div>
+
+  <div class="box optional"><div class="box-title">דוגמה נוספת: \({R_{AY}}\) שלילי</div>
+    <p>נייח בקצה השמאלי (A), נייד 4 מ' ממנו (B), <span class="ltr">5&nbsp;t</span> למטה, 6 מ' מ-A.</p>
+    \[ \Sigma M_A\ (\circlearrowright +):\ 5\cdot6 - 4R_{BY} = 0 \Rightarrow R_{BY} = 7.5 \]
+    \[ \Sigma F_y:\ R_{AY} + 7.5 - 5 = 0 \Rightarrow R_{AY} = -2.5 \]
+    <p>\({R_{AY}}\) בפועל <b>למטה</b>. בדיקה, \({\Sigma M_B\ (\circlearrowright +)}\): \({4\cdot(-2.5) + 5\cdot2 = 0}\) ✓</p>
+  </div>
+</section>
+
+<!-- ============ TOPIC 5: pure moment ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">5</span><h2>מומנט טהור: מומנט מוכן</h2><span class="time">⏱ 01:46:52</span></div>
+  <div class="bl">מומנט טהור הוא <b>מומנט מוכן</b>: נכנס <b>רק ל-\({\Sigma M}\)</b>, <b>בערכו</b>, <b>בלי זרוע</b>, לפי כיוון החץ המעוגל.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (בהשראת דברי המרצה): מנה מוכנה</div>
+    <p>בשיעור נאמר על המומנט: "<b>נפל עלינו משמיים, מוכן</b>" <span class="ltr">01:50:46</span>. לא עושים לו כלום: <b>בודקים את הכיוון</b> שלו ומכניסים. (ההשוואה למנה מוכנה: לא נאמרה בשיעור.)</p>
+  </div>
+
+  <ul class="pts">
+    <li>עד עכשיו מומנט נוצר מ<b>כוח וזרוע</b>. כאן הוא <b>כבר מומנט</b>, ביחידות <b>tm</b> (טון-מטר).</li>
+    <li>נכנס <b>רק למשוואות המומנטים</b>, גם ל-\({\Sigma M_A}\) וגם ל-\({\Sigma M_B}\), <b>נטו</b> ובלי להכפיל בזרוע.</li>
+    <li>הכיוון <b>אבסולוטי</b>, לא ביחס לנקודה. הוא תמיד מגיע <b>עם הציור</b>.</li>
+    <li><b>לא נכנס</b> ל-\({\Sigma F_x}\), ל-\({\Sigma F_y}\) ולבדיקה. <span class="ltr">02:02:27</span></li>
+  </ul>
+
+  <figure class="fig">
+<svg viewBox="0 0 720 232" xmlns="http://www.w3.org/2000/svg"><defs><marker id="h-ink18" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="18" markerHeight="18" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ink-f"/></marker></defs><rect x="405" y="150" width="250" height="16" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<path d="M497.8,113 A42,42 0 1 1 562.2,113" class="ink" fill="none" stroke-width="4.6" stroke-linecap="round" marker-end="url(#h-ink18)"/>
+<text x="530" y="24" class="ltr dark-f" font-size="18" text-anchor="middle" font-weight="800">3 tm</text>
+<circle cx="562.2" cy="113" r="15" class="acc" fill="none" stroke-width="2" stroke-dasharray="4 4"/>
+<circle cx="634" cy="62" r="24" class="ok-f"/>
+<text x="634" y="73" class="ltr" font-size="34" text-anchor="middle" font-weight="800" fill="#fff">+</text>
+<rect x="65" y="150" width="250" height="16" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<path d="M222.2,113 A42,42 0 1 0 157.8,113" class="ink" fill="none" stroke-width="4.6" stroke-linecap="round" marker-end="url(#h-ink18)"/>
+<text x="190" y="24" class="ltr dark-f" font-size="18" text-anchor="middle" font-weight="800">3 tm</text>
+<circle cx="157.8" cy="113" r="15" class="acc" fill="none" stroke-width="2" stroke-dasharray="4 4"/>
+<circle cx="86" cy="62" r="24" class="bad-f"/>
+<text x="86" y="73" class="ltr" font-size="34" text-anchor="middle" font-weight="800" fill="#fff">−</text>
+<text x="530" y="198" class="he ink-f" font-size="18" text-anchor="middle" font-weight="800">עם כיוון השעון</text>
+<text x="530" y="221" class="he muted-f" font-size="14" text-anchor="middle">ראש החץ בצד ימין (קשת מעל הקורה)</text>
+<text x="190" y="198" class="he ink-f" font-size="18" text-anchor="middle" font-weight="800">נגד כיוון השעון</text>
+<text x="190" y="221" class="he muted-f" font-size="14" text-anchor="middle">ראש החץ בצד שמאל (קשת מעל הקורה)</text></svg>
+<figcaption>מומנט טהור מגיע כחץ מעוגל. הסימן נקבע לפי <b>כיוון הסיבוב</b>, לא לפי הנקודה שסביבה סוכמים. הקיצור ״ראש החץ בצד ימין או שמאל״ נכון רק כשהקשת <b>מעל</b> הקורה (קשת מתחת לקורה: ההפך), ולא נאמר בשיעור. תמיד לבדוק לאן הקשת מסתובבת.</figcaption>
+</figure>
+
+
+  <table class="t">
+    <tr><th>עומס</th><th>\({\Sigma F_x}\)</th><th>\({\Sigma F_y}\)</th><th>\({\Sigma M}\)</th></tr>
+    <tr><td>כוח אנכי</td><td>לא</td><td><b>כן</b></td><td>כוח · זרוע</td></tr>
+    <tr><td>רכיב אופקי</td><td><b>כן</b></td><td>לא</td><td>לא (אין זרוע)</td></tr>
+    <tr><td><b>מומנט טהור</b></td><td>לא</td><td><b>לא</b></td><td><b>ערכו בלבד</b> <span class="ltr">(\({\circlearrowright\ +}\), \({\circlearrowleft\ -}\))</span></td></tr>
+    <tr><td>\({M_A}\) בריתום</td><td>לא</td><td>לא</td><td>ערכו בלבד (כמו מומנט טהור)</td></tr>
+  </table>
+
+  <figure class="fig">
+<svg viewBox="0 0 700 270" xmlns="http://www.w3.org/2000/svg"><defs><marker id="i-acc14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="acc-f"/></marker><marker id="i-ink8" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ink-f"/></marker><marker id="i-ink14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ink-f"/></marker><marker id="i-ok14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ok-f"/></marker></defs><line x1="100" y1="234" x2="520" y2="234" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="100" y1="228" x2="100" y2="240" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="310" y1="228" x2="310" y2="240" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="450" y1="228" x2="450" y2="240" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="228" x2="520" y2="240" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="205" y="254" class="ltr ink-f" font-size="14" text-anchor="middle">3 m</text>
+<text x="380" y="254" class="ltr ink-f" font-size="14" text-anchor="middle">2 m</text>
+<text x="485" y="254" class="ltr ink-f" font-size="14" text-anchor="middle">1 m</text>
+<line x1="310" y1="162" x2="310" y2="228" class="line" stroke-width="1.3" stroke-dasharray="2 4" stroke-linecap="butt"/>
+<line x1="450" y1="162" x2="450" y2="228" class="line" stroke-width="1.3" stroke-dasharray="2 4" stroke-linecap="butt"/>
+<rect x="100" y="110" width="420" height="16" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<path d="M100,126 L87,145 L113,145 Z" class="ink mid-f" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="93" cy="150" r="4.5" class="ink mid-f" stroke-width="2"/>
+<circle cx="107" cy="150" r="4.5" class="ink mid-f" stroke-width="2"/>
+<line x1="76" y1="154.5" x2="124" y2="154.5" class="ink" stroke-width="3" stroke-linecap="butt"/>
+<line x1="81" y1="155.5" x2="74" y2="163.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="89" y1="155.5" x2="82" y2="163.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="97" y1="155.5" x2="90" y2="163.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="105" y1="155.5" x2="98" y2="163.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="113" y1="155.5" x2="106" y2="163.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="121" y1="155.5" x2="114" y2="163.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<path d="M520,126 L507,150 L533,150 Z" class="ink mid-f" stroke-width="2.5" stroke-linejoin="round"/>
+<line x1="496" y1="150" x2="544" y2="150" class="ink" stroke-width="3" stroke-linecap="butt"/>
+<line x1="501" y1="151" x2="494" y2="159" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="509" y1="151" x2="502" y2="159" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="517" y1="151" x2="510" y2="159" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="525" y1="151" x2="518" y2="159" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="533" y1="151" x2="526" y2="159" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="541" y1="151" x2="534" y2="159" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="120" y="101" class="ltr ink-f" font-size="18" text-anchor="start" font-weight="800">A</text>
+<text x="500" y="101" class="ltr ink-f" font-size="18" text-anchor="end" font-weight="800">B</text>
+<path d="M329.9,90.7 A26,26 0 1 0 290.1,90.7" class="ink" fill="none" stroke-width="4" stroke-linecap="round" marker-end="url(#i-ink14)"/>
+<text x="310" y="32" class="ltr dark-f" font-size="18" text-anchor="middle" font-weight="800">3 tm</text>
+<line x1="450" y1="44" x2="450" y2="108" class="acc" stroke-width="3.8" marker-end="url(#i-acc14)"/>
+<text x="460" y="70" class="ltr dark-f" font-size="18" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">2 t</text>
+<line x1="100" y1="214" x2="100" y2="172" class="ok" stroke-width="3.4" marker-end="url(#i-ok14)"/>
+<text x="112" y="212" class="ltr ok-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">AY</tspan><tspan dy="-3.6"> = 0.83 t</tspan></text>
+<line x1="520" y1="214" x2="520" y2="172" class="ok" stroke-width="3.4" marker-end="url(#i-ok14)"/>
+<text x="508" y="212" class="ltr ok-f" font-size="15" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">BY</tspan><tspan dy="-3.6"> = 1.17 t</tspan></text>
+<text x="550" y="144" class="ltr ok-f" font-size="14" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="11.5" dy="3.4">BX</tspan><tspan dy="-3.4"> = 0</tspan></text>
+<path d="M563.6,36.4 A9,9 0 1 1 576.4,36.4" class="ink" fill="none" stroke-width="2.2" stroke-linecap="round" marker-end="url(#i-ink8)"/>
+<text x="586" y="36" class="ltr ok-f" font-size="20" text-anchor="start" font-weight="700">+</text>
+<path d="M638.4,36.4 A9,9 0 1 0 625.6,36.4" class="ink" fill="none" stroke-width="2.2" stroke-linecap="round" marker-end="url(#i-ink8)"/>
+<text x="648" y="36" class="ltr bad-f" font-size="20" text-anchor="start" font-weight="700">−</text></svg>
+<figcaption>תרגיל 4. המומנט <span class="ltr">3&nbsp;tm</span> <b>נגד</b> כיוון השעון ← נכנס כ-\({(-3)}\), בלי זרוע.</figcaption>
+</figure>
+
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): תרגיל 4</div><div class="w-body">
+    <div class="given">קורה 6 מ'. נייד ב-A, נייח ב-B. מומנט טהור <span class="ltr">3&nbsp;tm</span> \({\circlearrowleft}\) (נגד השעון), 3 מ' מ-A. <span class="ltr">2&nbsp;t</span> למטה, 1 מ' משמאל ל-B. \({\circlearrowright\ =\ +}\)</div>
+    <div class="ask">\({R_{AY}}\) , \({R_{BX}}\) , \({R_{BY}}\)</div>
+    <ol class="lines">
+      <li>ריאקציות: \({R_{AY}}\) ב-A (נייד), \({R_{BX}}\) ו-\({R_{BY}}\) ב-B (נייח).</li>
+      <li>פירוק: אין כוח משופע ← אין מה לפרק.</li>
+      <li>\({\Sigma F_x = 0}\): אין כוחות אופקיים ← \({R_{BX} = 0}\)</li>
+      <li>\({\Sigma M_A = 0\ (\circlearrowright +)}\): \({-3 + (2\cdot5) - (R_{BY}\cdot6) = 0}\) ← \({R_{BY} = 7 / 6 = 1.17\ \text{t}\uparrow}\)<br><small>המומנט נכנס כמו שהוא, \({-3}\), בלי זרוע, כי הוא \({\circlearrowleft}\).</small></li>
+      <li>\({\Sigma M_B = 0\ (\circlearrowright +)}\): \({+(R_{AY}\cdot6) - 3 - (2\cdot1) = 0}\) ← \({R_{AY} = 5 / 6 = 0.83\ \text{t}\uparrow}\)</li>
+    </ol>
+    <div class="answer">\({R_{BX} = 0}\) , \({R_{AY} = 0.83\ \text{t}\uparrow}\) , \({R_{BY} = 1.17\ \text{t}\uparrow}\)</div>
+    <div class="check">שלב 6, \({\Sigma F_y = 0}\), <b>בלי המומנט</b>: \({0.83 + 1.17 - 2 = 0}\)</div>
+  </div></div>
+
+  <div class="grid2">
+    <div class="box warn"><div class="box-title">טעויות נפוצות</div>
+      <ul class="pts">
+        <li><b>להכפיל</b> את המומנט בזרוע.</li>
+        <li>לחשב את כיוונו <b>ביחס לנקודה</b>.</li>
+        <li>להכניס אותו ל-\({\Sigma F_y}\) <b>בבדיקה</b>.</li>
+        <li>לבלבל <b>t</b> (כוח) עם <b>tm</b> (מומנט).</li>
+      </ul>
+    </div>
+    <div class="box optional"><div class="box-title">דוגמה נוספת: <span class="ltr">6&nbsp;tm</span> ו-<span class="ltr">4&nbsp;t</span></div>
+      <p>קורה 6 מ', נייח ב-A (שמאל), נייד ב-B (ימין). מומנט טהור <span class="ltr">6&nbsp;tm</span> \({\circlearrowleft}\), ו-<span class="ltr">4&nbsp;t</span> למטה, 3 מ' מ-A.</p>
+      \[ \Sigma M_A\ (\circlearrowright +):\ -6 + 4\cdot3 - 6R_{BY} = 0 \]
+      \[ R_{BY} = 1.00 \qquad R_{AY} = 4 - 1.00 = 3.00 \]
+      <p>בדיקה, \({\Sigma M_B\ (\circlearrowright +)}\): \({18 - 6 - 12 = 0}\) ✓</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOPIC 6: summary exercise ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">6</span><h2>תרגיל 5 (מסכם): הכול ביחד</h2><span class="time">⏱ 01:54:33</span></div>
+  <div class="bl">פירוק + מומנט טהור + בדיקה ב-\({\Sigma F_y}\) <b>בלי המומנט</b>.</div>
+
+  <figure class="fig" style="width:92%;margin-inline:auto">
+<svg viewBox="0 0 720 282" xmlns="http://www.w3.org/2000/svg"><defs><marker id="j-acc14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="acc-f"/></marker><marker id="j-ink8" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ink-f"/></marker><marker id="j-ink14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ink-f"/></marker><marker id="j-ok14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ok-f"/></marker></defs><line x1="100" y1="246" x2="640" y2="246" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="100" y1="240" x2="100" y2="252" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="220" y1="240" x2="220" y2="252" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="340" y1="240" x2="340" y2="252" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="240" x2="520" y2="252" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="640" y1="240" x2="640" y2="252" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="160" y="266" class="ltr ink-f" font-size="14" text-anchor="middle">2 m</text>
+<text x="280" y="266" class="ltr ink-f" font-size="14" text-anchor="middle">2 m</text>
+<text x="430" y="266" class="ltr ink-f" font-size="14" text-anchor="middle">3 m</text>
+<text x="580" y="266" class="ltr ink-f" font-size="14" text-anchor="middle">2 m</text>
+<line x1="220" y1="174" x2="220" y2="240" class="line" stroke-width="1.3" stroke-dasharray="2 4" stroke-linecap="butt"/>
+<line x1="340" y1="174" x2="340" y2="240" class="line" stroke-width="1.3" stroke-dasharray="2 4" stroke-linecap="butt"/>
+<line x1="520" y1="174" x2="520" y2="240" class="line" stroke-width="1.3" stroke-dasharray="2 4" stroke-linecap="butt"/>
+<rect x="100" y="122" width="540" height="16" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<path d="M100,138 L87,162 L113,162 Z" class="ink mid-f" stroke-width="2.5" stroke-linejoin="round"/>
+<line x1="76" y1="162" x2="124" y2="162" class="ink" stroke-width="3" stroke-linecap="butt"/>
+<line x1="81" y1="163" x2="74" y2="171" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="89" y1="163" x2="82" y2="171" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="97" y1="163" x2="90" y2="171" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="105" y1="163" x2="98" y2="171" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="113" y1="163" x2="106" y2="171" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="121" y1="163" x2="114" y2="171" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<path d="M640,138 L627,157 L653,157 Z" class="ink mid-f" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="633" cy="162" r="4.5" class="ink mid-f" stroke-width="2"/>
+<circle cx="647" cy="162" r="4.5" class="ink mid-f" stroke-width="2"/>
+<line x1="616" y1="166.5" x2="664" y2="166.5" class="ink" stroke-width="3" stroke-linecap="butt"/>
+<line x1="621" y1="167.5" x2="614" y2="175.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="629" y1="167.5" x2="622" y2="175.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="637" y1="167.5" x2="630" y2="175.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="645" y1="167.5" x2="638" y2="175.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="653" y1="167.5" x2="646" y2="175.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="661" y1="167.5" x2="654" y2="175.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="120" y="113" class="ltr ink-f" font-size="18" text-anchor="start" font-weight="800">A</text>
+<text x="620" y="113" class="ltr ink-f" font-size="18" text-anchor="end" font-weight="800">B</text>
+<path d="M239.9,100.7 A26,26 0 1 0 200.1,100.7" class="ink" fill="none" stroke-width="4" stroke-linecap="round" marker-end="url(#j-ink14)"/>
+<text x="220" y="42" class="ltr dark-f" font-size="18" text-anchor="middle" font-weight="800">2 tm</text>
+<line x1="437" y1="66" x2="341.7" y2="121" class="acc" stroke-width="3.8" marker-end="url(#j-acc14)"/>
+<text x="445" y="70" class="ltr dark-f" font-size="18" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">4 t</text>
+<path d="M388,122 A48,48 0 0 0 381.6,98" class="ink" fill="none" stroke-width="2.2"/>
+<text x="409.9" y="109.6" class="ltr ink-f" font-size="15" text-anchor="start">30°</text>
+<line x1="340" y1="70" x2="340" y2="110" class="acc" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#j-acc14)"/>
+<text x="330" y="96" class="ltr dark-f" font-size="15" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">2.00 t</text>
+<line x1="340" y1="130" x2="292" y2="130" class="acc" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#j-acc14)"/>
+<text x="315" y="158" class="ltr dark-f" font-size="15" text-anchor="middle" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">3.46 t</text>
+<line x1="520" y1="60" x2="520" y2="120" class="acc" stroke-width="3.8" marker-end="url(#j-acc14)"/>
+<text x="530" y="86" class="ltr dark-f" font-size="18" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">2 t</text>
+<line x1="122" y1="151" x2="156" y2="151" class="ok" stroke-width="3.4" marker-end="url(#j-ok14)"/>
+<text x="164" y="156" class="ltr ok-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">AX</tspan><tspan dy="-3.6"> = 3.46 t</tspan></text>
+<line x1="100" y1="226" x2="100" y2="184" class="ok" stroke-width="3.4" marker-end="url(#j-ok14)"/>
+<text x="112" y="224" class="ltr ok-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">AY</tspan><tspan dy="-3.6"> = 1.78 t</tspan></text>
+<line x1="640" y1="222" x2="640" y2="180" class="ok" stroke-width="3.4" marker-end="url(#j-ok14)"/>
+<text x="628" y="220" class="ltr ok-f" font-size="15" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">BY</tspan><tspan dy="-3.6"> = 2.22 t</tspan></text>
+<path d="M593.6,34.4 A9,9 0 1 1 606.4,34.4" class="ink" fill="none" stroke-width="2.2" stroke-linecap="round" marker-end="url(#j-ink8)"/>
+<text x="616" y="34" class="ltr ok-f" font-size="20" text-anchor="start" font-weight="700">+</text>
+<path d="M668.4,34.4 A9,9 0 1 0 655.6,34.4" class="ink" fill="none" stroke-width="2.2" stroke-linecap="round" marker-end="url(#j-ink8)"/>
+<text x="678" y="34" class="ltr bad-f" font-size="20" text-anchor="start" font-weight="700">−</text></svg>
+<figcaption>תרגיל 5 (מסכם). הרכיב האופקי <span class="ltr">3.46&nbsp;t</span> פועל לאורך הקורה, לכן אינו נכנס ל-\({\Sigma M}\).</figcaption>
+</figure>
+
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): תרגיל 5 (מסכם)</div><div class="w-body">
+    <div class="given">קורה 9 מ', נייח ב-A (שמאל), נייד ב-B (ימין). מומנט טהור <span class="ltr">2&nbsp;tm</span> \({\circlearrowleft}\), 2 מ' מ-A. <span class="ltr">4&nbsp;t</span> ב-<span class="ltr">30°</span> (מטה-שמאלה), 4 מ' מ-A. <span class="ltr">2&nbsp;t</span> למטה, 7 מ' מ-A. \({\circlearrowright\ =\ +}\)</div>
+    <div class="ask">\({R_{AX}}\) , \({R_{AY}}\) , \({R_{BY}}\)</div>
+    <ol class="lines">
+      <li>ריאקציות: \({R_{AX}}\) ו-\({R_{AY}}\) ב-A, \({R_{BY}}\) ב-B (ימינה ולמעלה).</li>
+      <li>פירוק <span class="ltr">4&nbsp;t</span>, מראש החץ: \({4\cos30^\circ = 3.46\ \text{t}\leftarrow}\) , \({4\sin30^\circ = 2.00\ \text{t}\downarrow}\)</li>
+      <li>\({\Sigma F_x = 0}\): \({R_{AX} - 3.46 = 0}\) ← \({R_{AX} = 3.46\ \text{t}\to}\) (יצא פלוס: אין צורך לסובב)</li>
+      <li>\({\Sigma M_A = 0\ (\circlearrowright +)}\): \({(-2) + (2\cdot4) + (2\cdot7) - (R_{BY}\cdot9) = 0}\) ← \({R_{BY} = 20 / 9 = 2.22\ \text{t}\uparrow}\)</li>
+      <li>\({\Sigma M_B = 0\ (\circlearrowright +)}\): \({(R_{AY}\cdot9) - 2 - (2\cdot5) - (2\cdot2) = 0}\) ← \({R_{AY} = 16 / 9 = 1.78\ \text{t}\uparrow}\)</li>
+    </ol>
+    <div class="answer">\({R_{AX} = 3.46\ \text{t}\to}\) , \({R_{AY} = 1.78\ \text{t}\uparrow}\) , \({R_{BY} = 2.22\ \text{t}\uparrow}\)</div>
+    <div class="check">שלב 6, \({\Sigma F_y = 0}\), <b>בלי המומנט</b>: \({1.78 - 2 - 2 + 2.22 = 0}\)</div>
+  </div></div>
+
+  <div class="box lecturer"><div class="box-title">בשיעור הודגש</div>
+    <p>בבדיקה ב-\({\Sigma F_y}\) <b>לא מכניסים את המומנט</b>: הוא רלוונטי למשוואות המומנטים בלבד. <span class="ltr">02:02:27</span></p>
+  </div>
+</section>
+
+<!-- ============ TOPIC 7: fixed support ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">7</span><h2>ריתום: נעלם שלישי, מומנט התגובה</h2><span class="time">⏱ 02:19:04</span></div>
+  <div class="bl">בריתום <b>שלושה נעלמים</b>: \({R_{AX}}\), \({R_{AY}}\) ו-\({M_A}\). \({\Sigma F_y}\) נותן את \({R_{AY}}\), ו-\({\Sigma M_A}\) נותן את \({M_A}\) ישר.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (לא נאמר בשיעור)</div>
+    <p>מדף מוברג לקיר, מרפסת: <b>סמך אחד</b> שמונע גם תזוזה וגם סיבוב.</p>
+  </div>
+
+  <figure class="fig" style="width:88%;margin-inline:auto">
+<svg viewBox="0 0 720 164" xmlns="http://www.w3.org/2000/svg"><defs><marker id="s-ok10" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ok-f"/></marker><marker id="s-ok14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ok-f"/></marker></defs><rect x="300" y="40" width="160" height="16" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<path d="M380,56 L367,80 L393,80 Z" class="ink mid-f" stroke-width="2.5" stroke-linejoin="round"/>
+<line x1="356" y1="80" x2="404" y2="80" class="ink" stroke-width="3" stroke-linecap="butt"/>
+<line x1="361" y1="81" x2="354" y2="89" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="369" y1="81" x2="362" y2="89" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="377" y1="81" x2="370" y2="89" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="385" y1="81" x2="378" y2="89" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="393" y1="81" x2="386" y2="89" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="401" y1="81" x2="394" y2="89" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="384" y="18" class="he ink-f" font-size="16" text-anchor="middle" font-weight="800">סמך נייח</text>
+<circle cx="318" cy="14" r="12" class="acc-f"/>
+<text x="318" y="20" class="ltr" font-size="16" text-anchor="middle" font-weight="800" fill="#fff">2</text>
+<line x1="400" y1="69" x2="428" y2="69" class="ok" stroke-width="3.4" marker-end="url(#s-ok14)"/>
+<text x="436" y="74" class="ltr ok-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">X</tspan></text>
+<line x1="380" y1="142" x2="380" y2="106" class="ok" stroke-width="3.4" marker-end="url(#s-ok14)"/>
+<text x="392" y="134" class="ltr ok-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">Y</tspan></text>
+<text x="380" y="158" class="he muted-f" font-size="14" text-anchor="middle">שתי ריאקציות</text>
+<rect x="530" y="40" width="160" height="16" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<path d="M610,56 L597,75 L623,75 Z" class="ink mid-f" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="603" cy="80" r="4.5" class="ink mid-f" stroke-width="2"/>
+<circle cx="617" cy="80" r="4.5" class="ink mid-f" stroke-width="2"/>
+<line x1="586" y1="84.5" x2="634" y2="84.5" class="ink" stroke-width="3" stroke-linecap="butt"/>
+<line x1="591" y1="85.5" x2="584" y2="93.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="599" y1="85.5" x2="592" y2="93.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="607" y1="85.5" x2="600" y2="93.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="615" y1="85.5" x2="608" y2="93.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="623" y1="85.5" x2="616" y2="93.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="631" y1="85.5" x2="624" y2="93.5" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="614" y="18" class="he ink-f" font-size="16" text-anchor="middle" font-weight="800">סמך נייד</text>
+<circle cx="548" cy="14" r="12" class="acc-f"/>
+<text x="548" y="20" class="ltr" font-size="16" text-anchor="middle" font-weight="800" fill="#fff">1</text>
+<line x1="610" y1="142" x2="610" y2="106" class="ok" stroke-width="3.4" marker-end="url(#s-ok14)"/>
+<text x="622" y="134" class="ltr ok-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">Y</tspan></text>
+<text x="610" y="158" class="he muted-f" font-size="14" text-anchor="middle">ריאקציה אחת</text>
+<rect x="20" y="40" width="180" height="16" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<rect x="200" y="28" width="14" height="92" rx="0" class="soft-f" stroke-width="0" stroke="none"/>
+<line x1="200" y1="28" x2="200" y2="120" class="ink" stroke-width="4" stroke-linecap="butt"/>
+<line x1="200" y1="42" x2="214" y2="28" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="200" y1="53" x2="214" y2="39" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="200" y1="64" x2="214" y2="50" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="200" y1="75" x2="214" y2="61" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="200" y1="86" x2="214" y2="72" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="200" y1="97" x2="214" y2="83" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="200" y1="108" x2="214" y2="94" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="200" y1="119" x2="214" y2="105" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="110" y="18" class="he ink-f" font-size="16" text-anchor="middle" font-weight="800">ריתום</text>
+<circle cx="46" cy="14" r="12" class="acc-f"/>
+<text x="46" y="20" class="ltr" font-size="16" text-anchor="middle" font-weight="800" fill="#fff">3</text>
+<path d="M162,38.4 A13,13 0 1 1 182,38.4" class="ok" fill="none" stroke-width="3.2" stroke-linecap="round" marker-end="url(#s-ok10)"/>
+<text x="150" y="36" class="ltr ok-f" font-size="15" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">M</text>
+<line x1="140" y1="70" x2="192" y2="70" class="ok" stroke-width="3.4" marker-end="url(#s-ok14)"/>
+<text x="134" y="75" class="ltr ok-f" font-size="15" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">X</tspan></text>
+<line x1="100" y1="144" x2="100" y2="106" class="ok" stroke-width="3.4" marker-end="url(#s-ok14)"/>
+<text x="112" y="134" class="ltr ok-f" font-size="15" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">Y</tspan></text>
+<text x="104" y="158" class="he muted-f" font-size="14" text-anchor="middle">שתי ריאקציות ומומנט</text></svg>
+<figcaption>שלושה סוגי סמכים <span class="ltr">02:20:40</span>. המספר בעיגול = כמות הנעלמים (נייד 1, נייח 2, ריתום 3).</figcaption>
+</figure>
+
+
+  <ul class="pts">
+    <li>לפי המרצה: <b>זה לא נושא חדש</b>, רק פתרון קצת שונה. <span class="ltr">02:08:12</span> <span class="ltr">02:09:40</span></li>
+    <li>נאמר שלשיעורי הבית נדרש עוד סוג תרגיל (בהמשך הוצג <b>ריתום</b>). <span class="ltr">02:08:06</span></li>
+    <li>יש <b>סמך אחד בלבד</b>. עוד סמך = עוד נעלמים, ואז אי אפשר לפתור. <span class="ltr">02:19:34</span></li>
+    <li>\({M_A}\) מניחים <b>עם כיוון השעון</b> <span class="ltr">\({(\circlearrowright\ +)}\)</span>. יצא שלילי ← הופכים את הכיוון. <span class="ltr">02:20:04</span></li>
+    <li>\({M_A}\) <b>מתנהג כמו מומנט טהור</b>: בלי זרוע, נכנס <b>בערכו</b> ל-\({\Sigma M_A}\). יחידה: <b>tm</b>. <span class="ltr">02:23:42</span> <span class="ltr">02:24:34</span></li>
+    <li>\({R_{AX}}\) ו-\({R_{AY}}\) עוברות דרך A: אין זרוע, ולכן לא נכנסות ל-\({\Sigma M_A}\).</li>
+    <li><b>קודם מפרקים</b> את הכוח המשופע. <span class="ltr">02:21:08</span></li>
+    <li>\({R_{AY}}\) מוצאים ישר מ-\({\Sigma F_y}\): זו <b>לא בדיקה</b>. לבדיקה: מומנטים סביב <b>נקודה אחרת</b>. <span class="ltr">02:27:28</span></li>
+  </ul>
+
+  <figure class="fig" style="width:84%;margin-inline:auto">
+<svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg"><defs><marker id="k-acc14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="acc-f"/></marker><marker id="k-ink8" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ink-f"/></marker><marker id="k-ok14" viewBox="0 0 14 14" refX="12" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1.5 L14,7 L0,12.5 z" class="ok-f"/></marker></defs><line x1="70" y1="264" x2="520" y2="264" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="70" y1="258" x2="70" y2="270" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="170" y1="258" x2="170" y2="270" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="320" y1="258" x2="320" y2="270" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="258" x2="520" y2="270" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="120" y="284" class="ltr ink-f" font-size="14" text-anchor="middle">2 m</text>
+<text x="245" y="284" class="ltr ink-f" font-size="14" text-anchor="middle">3 m</text>
+<text x="420" y="284" class="ltr ink-f" font-size="14" text-anchor="middle">4 m</text>
+<line x1="170" y1="154" x2="170" y2="258" class="line" stroke-width="1.3" stroke-dasharray="2 4" stroke-linecap="butt"/>
+<line x1="320" y1="154" x2="320" y2="258" class="line" stroke-width="1.3" stroke-dasharray="2 4" stroke-linecap="butt"/>
+<rect x="70" y="132" width="450" height="16" rx="2" class="ink soft-f" stroke-width="2.5"/>
+<rect x="520" y="70" width="16" height="184" rx="0" class="soft-f" stroke-width="0" stroke="none"/>
+<line x1="520" y1="70" x2="520" y2="254" class="ink" stroke-width="4" stroke-linecap="butt"/>
+<line x1="520" y1="86" x2="536" y2="70" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="97" x2="536" y2="81" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="108" x2="536" y2="92" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="119" x2="536" y2="103" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="130" x2="536" y2="114" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="141" x2="536" y2="125" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="152" x2="536" y2="136" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="163" x2="536" y2="147" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="174" x2="536" y2="158" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="185" x2="536" y2="169" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="196" x2="536" y2="180" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="207" x2="536" y2="191" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="218" x2="536" y2="202" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="229" x2="536" y2="213" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="240" x2="536" y2="224" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<line x1="520" y1="251" x2="536" y2="235" class="ink" stroke-width="1.8" stroke-linecap="butt"/>
+<text x="550" y="146" class="ltr ink-f" font-size="18" text-anchor="start" font-weight="800">A</text>
+<line x1="170" y1="70" x2="170" y2="130" class="acc" stroke-width="3.8" marker-end="url(#k-acc14)"/>
+<text x="180" y="96" class="ltr dark-f" font-size="18" text-anchor="start" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">5 t</text>
+<line x1="393.5" y1="58.5" x2="321.4" y2="130.6" class="acc" stroke-width="3.8" marker-end="url(#k-acc14)"/>
+<text x="385.5" y="56.5" class="ltr dark-f" font-size="18" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">2 t</text>
+<path d="M364,132 A44,44 0 0 0 351.1,100.9" class="ink" fill="none" stroke-width="2.2"/>
+<text x="387" y="111.5" class="ltr ink-f" font-size="15" text-anchor="start">45°</text>
+<line x1="320" y1="82" x2="320" y2="120" class="acc" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#k-acc14)"/>
+<text x="310" y="106" class="ltr dark-f" font-size="15" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">1.41 t</text>
+<line x1="320" y1="140" x2="280" y2="140" class="acc" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#k-acc14)"/>
+<text x="299" y="168" class="ltr dark-f" font-size="15" text-anchor="middle" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">1.41 t</text>
+<path d="M466.1,112.7 A26,26 0 1 1 505.9,112.7" class="ok" fill="none" stroke-width="4" stroke-linecap="round" marker-end="url(#k-ok14)"/>
+<text x="516" y="54" class="ltr ok-f" font-size="16" text-anchor="middle" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">M<tspan font-size="13.1" dy="3.8">A</tspan><tspan dy="-3.8"> = 40.64 tm</tspan></text>
+<line x1="468" y1="170" x2="512" y2="170" class="ok" stroke-width="3.4" marker-end="url(#k-ok14)"/>
+<text x="460" y="175" class="ltr ok-f" font-size="15" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">AX</tspan><tspan dy="-3.6"> = 1.41 t</tspan></text>
+<line x1="492" y1="248" x2="492" y2="200" class="ok" stroke-width="3.4" marker-end="url(#k-ok14)"/>
+<text x="480" y="240" class="ltr ok-f" font-size="15" text-anchor="end" font-weight="700" stroke="#fff" stroke-width="4.5" stroke-linejoin="round" paint-order="stroke">R<tspan font-size="12.3" dy="3.6">AY</tspan><tspan dy="-3.6"> = 6.41 t</tspan></text>
+<path d="M63.6,42.4 A9,9 0 1 1 76.4,42.4" class="ink" fill="none" stroke-width="2.2" stroke-linecap="round" marker-end="url(#k-ink8)"/>
+<text x="86" y="42" class="ltr ok-f" font-size="20" text-anchor="start" font-weight="700">+</text>
+<path d="M138.4,42.4 A9,9 0 1 0 125.6,42.4" class="ink" fill="none" stroke-width="2.2" stroke-linecap="round" marker-end="url(#k-ink8)"/>
+<text x="148" y="42" class="ltr bad-f" font-size="20" text-anchor="start" font-weight="700">−</text></svg>
+<figcaption>תרגיל 6. העומסים מסובבים את הקורה <b>נגד</b> כיוון השעון, לכן הקיר מחזיק <b>עם</b> כיוון השעון: \({M_A}\) \({\circlearrowright}\).</figcaption>
+</figure>
+
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): תרגיל 6, ריתום</div><div class="w-body">
+    <div class="given">קורה 9 מ', ריתום בקצה הימני (A). <span class="ltr">5&nbsp;t</span> למטה, 7 מ' מהקיר. <span class="ltr">2&nbsp;t</span> ב-<span class="ltr">45°</span> (מטה-שמאלה), 4 מ' מהקיר. \({\circlearrowright\ =\ +}\)</div>
+    <div class="ask">\({R_{AX}}\) , \({R_{AY}}\) , \({M_A}\)</div>
+    <ol class="lines">
+      <li>ריאקציות בקיר: \({R_{AX}}\) , \({R_{AY}}\) ו-\({M_A}\) (מניחים \({\circlearrowright}\), כלומר פלוס).</li>
+      <li>פירוק <span class="ltr">2&nbsp;t</span>: \({2\cos45^\circ = 1.41\ \text{t}\leftarrow}\) , \({2\sin45^\circ = 1.41\ \text{t}\downarrow}\)</li>
+      <li>\({\Sigma F_x = 0}\): \({R_{AX} - 1.41 = 0}\) ← \({R_{AX} = 1.41\ \text{t}\to}\)</li>
+      <li>\({\Sigma M_A = 0\ (\circlearrowright +)}\): \({-(5\cdot7) - (1.41\cdot4) + M_A = 0}\) ← \({M_A = 35 + 5.64 = 40.64\ \text{tm}}\)<br><small>שני העומסים משמאל לקיר ופונים למטה ← \({\circlearrowleft}\) ← מינוס. הקיר מחזיק \({\circlearrowright}\). (מדויק: 40.66)</small><br><small>⚠️ בכיתה נכתב בטעות \({M_A = 35 - 5.64 = 29.36}\): שני האיברים שליליים, ולכן עוברים לצד השני <b>ביחד</b> (\({35 + 5.64}\)) <span class="ltr">02:33:04</span></small></li>
+      <li>\({\Sigma F_y = 0\ (\uparrow +)}\): \({R_{AY} - 5 - 1.41 = 0}\) ← \({R_{AY} = 6.41\ \text{t}\uparrow}\)</li>
+    </ol>
+    <div class="answer">\({R_{AX} = 1.41\ \text{t}\to}\) , \({R_{AY} = 6.41\ \text{t}\uparrow}\) , \({M_A = 40.64\ \text{tm}\circlearrowright}\)</div>
+    <div class="check">מומנטים סביב הקצה החופשי (9 מ' מהקיר): \({-6.41\cdot9 + 5\cdot2 + 1.41\cdot5 + 40.64 = -57.69 + 10 + 7.05 + 40.64 = 0}\)</div>
+  </div></div>
+
+  <div class="box lecturer"><div class="box-title">האם זה במבחן?</div>
+    <p>נאמר על קורות רתומות: "<b>זה לא משהו שיש במבחן</b>" <span class="ltr">02:25:45</span>, אבל <b>מלמדים את זה במכללה</b>, כי "לא הגיוני לא לדעת את זה", ונדרש בהמשך (נשמע: בבטון) <span class="ltr">02:25:54</span>. לשאלה "יהיה במבחן?" נשמע "(לא) נראה לי" (ה"לא" לא ברור) <span class="ltr">02:34:57</span>. <b>לא ודאי</b>: לבדוק עם המרצה.</p>
+  </div>
+
+  <div class="box optional"><div class="box-title">שלושה תרגילי תרגול מהלוח (לפתרון עצמי) <span class="ltr">02:28:34</span></div>
+    <ol class="steps">
+      <li>קורה 12 מ' (4 קטעים של 3 מ'), נייח ב-A (שמאל), נייד ב-B (ימין). מומנט <span class="ltr">1&nbsp;tm</span> \({\circlearrowright}\) במרחק 3 מ' מ-A, כוח <span class="ltr">5&nbsp;t</span> למטה במרחק 6 מ', מומנט <span class="ltr">4&nbsp;tm</span> \({\circlearrowleft}\) במרחק 9 מ'. תשובת המרצה בלוח <span class="ltr">02:34:08</span>: \({R_{BY} = 2.25}\) , \({R_{AY} = 2.25}\) (שגוי; נכון 2.75) , \({R_{AX} = 0}\). <b>חישוב (תוספת):</b> \({R_{BY} = (1 - 4 + 30)/12 = 2.25}\) , \({R_{AY} = 5 - 2.25 = 2.75}\).</li>
+      <li>קורה 12 מ' (4 קטעים של 3 מ'). נייח ב-A, 3 מ' מהקצה השמאלי; נייד ב-B, 9 מ' מהקצה השמאלי. מומנט <span class="ltr">3&nbsp;tm</span> (נראה \({\circlearrowleft}\)) בקצה השמאלי, כוח <span class="ltr">2&nbsp;t</span> ב-<span class="ltr">60°</span> (מטה-ימינה) באמצע (6 מ'), <span class="ltr">4&nbsp;t</span> למטה בקצה הימני. לא נפתר בהקלטה; מידות לפי הלוח, בקירוב.</li>
+      <li>קורה עם קצה בולט משמאל (מידות 2, 3, 3, 2 מ'): <span class="ltr">4&nbsp;t</span> ו-<span class="ltr">2&nbsp;t</span> למטה, מומנטים <span class="ltr">1&nbsp;tm</span> \({\circlearrowright}\) ו-<span class="ltr">3&nbsp;tm</span> \({\circlearrowleft}\), כוח <span class="ltr">3&nbsp;t</span> ב-<span class="ltr">60°</span> וסמך נייח בקצה הימני. לא נפתר בהקלטה, חלקית קריא.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ END MATTER ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">🧠</span><h2>לזכור</h2></div>
+  <div class="bl"><b>הופכים חץ</b>, <b>מומנט טהור בלי זרוע</b>, <b>ריתום = 3 נעלמים</b>, ומקפידים על הסדר.</div>
+  <ul class="pts">
+    <li><b>פירוק:</b> מציר X ← \({F\cos\alpha}\) אופקי, \({F\sin\alpha}\) אנכי. מציר Y ← מחליפים. הרכיבים <b>מראש החץ</b>.</li>
+    <li><b>סדר קבוע:</b> ריאקציות, פירוק, \({\Sigma F_x}\), \({\Sigma M_A}\), \({\Sigma M_B}\), בדיקה ב-\({\Sigma F_y}\).</li>
+    <li>כל איבר ב-\({\Sigma M}\): <b>(סימן)(כוח · זרוע)</b>. הזרוע: <b>עד הנקודה</b>. \({\circlearrowright}\) = <b>פלוס</b>, \({\circlearrowleft}\) = <b>מינוס</b>.</li>
+    <li>כוחות <b>לאורך הקורה</b> ותגובות הנקודה שסביבה סוכמים: אין זרוע, <b>לא נכנסים</b> ל-\({\Sigma M}\).</li>
+    <li>בשרטוט <b>גודל נטו</b> וחץ, <b>מינוס</b> רק במשוואה. תגובה שלילית: <b>הופכים את החץ</b>, לא נוגעים במשוואה.</li>
+    <li><b>בדיקה:</b> \({\Sigma F_y}\) בלבד. סטייה <b>0.0x</b> בסדר. עיגול ל-<b>שתי ספרות</b>.</li>
+    <li><b>מומנט טהור:</b> רק \({\Sigma M}\), בערכו, בלי זרוע, כיוון <b>אבסולוטי</b>. <b>לא</b> נכנס ל-\({\Sigma F_y}\).</li>
+    <li><b>ריתום:</b> שלושה נעלמים. \({M_A}\) מניחים \({\circlearrowright}\). \({\Sigma F_y}\) ← \({R_{AY}}\), ו-\({\Sigma M_A}\) ← \({M_A}\).</li>
+  </ul>
+</section>
+
+<section class="topic cont">
+  <div class="topic-head"><span class="n">❓</span><h2>שאלות חזרה</h2></div>
+  <div class="bl">לענות בלי להציץ. התשובות בהמשך. מומנטים: \({\circlearrowright\ =\ +}\)</div>
+  <ol class="quiz">
+    <li>כוח \({F}\) בזווית \({\alpha}\) מציר X. מה הרכיב האופקי ומה האנכי? <span class="lvl">קל</span></li>
+    <li>הזווית נתונה מציר Y. מה משתנה בפירוק? <span class="lvl">קל</span></li>
+    <li>מהו סדר הפתרון שנלמד בשיעור? <span class="lvl">בינוני</span></li>
+    <li>למה בבדיקת \({\Sigma F_y}\) אין מומנטים ומרחקים? <span class="lvl">בינוני</span></li>
+    <li>\({R_{BY}}\) יצא שלילי. מה עושים בשרטוט ומה במשוואה? <span class="lvl">בינוני</span></li>
+    <li>איך נכנס מומנט טהור של <span class="ltr">5&nbsp;tm</span> נגד כיוון השעון ל-\({\Sigma M}\)? <span class="lvl">בינוני</span></li>
+    <li>כוח <span class="ltr">20&nbsp;t</span> בזווית <span class="ltr">60°</span> מהקורה, כלפי מטה-ימינה. מה הרכיבים? <span class="lvl">קל</span></li>
+    <li>A נייח (שמאל), B נייד (ימין), קורה 8 מ': <span class="ltr">5&nbsp;t</span> למטה, 2 מ' מ-A, ומומנט טהור <span class="ltr">4&nbsp;tm</span> \({\circlearrowright}\). מה \({R_{BY}}\) ו-\({R_{AY}}\)? <span class="lvl">מאתגר</span></li>
+    <li>ריתום ב-A (שמאל), <span class="ltr">4&nbsp;t</span> למטה, 3 מ' מ-A. מה \({R_{AY}}\) ו-\({M_A}\) (מניחים \({\circlearrowright}\))? <span class="lvl">מאתגר</span></li>
+    <li>בבדיקה יצא 0.3 במקום 0. מה עושים, ובכמה ספרות עובדים? <span class="lvl">בינוני</span></li>
+  </ol>
+</section>
+
+<section class="topic">
+  <div class="topic-head"><span class="n">✅</span><h2>תשובות</h2></div>
+  <ol class="answers">
+    <li>\({F_x = F\cos\alpha}\) (אופקי) , \({F_y = F\sin\alpha}\) (אנכי).</li>
+    <li>מחליפים: האופקי עם <span class="ltr">sin</span> והאנכי עם <span class="ltr">cos</span>: \({F_x = F\sin\beta}\) , \({F_y = F\cos\beta}\).</li>
+    <li>ריאקציות ← פירוק ← \({\Sigma F_x}\) ← \({\Sigma M_A}\) ← \({\Sigma M_B}\) ← בדיקה ב-\({\Sigma F_y}\).</li>
+    <li>היא סוכמת <b>רק כוחות על ציר Y</b>. מומנט (גם טהור) לא נכנס לשם, ואין בה זרועות.</li>
+    <li>בשרטוט <b>הופכים את החץ</b> וכותבים את הגודל בלי מינוס. במשוואה <b>לא נוגעים</b>. בבדיקה נכנס לפי החץ החדש.</li>
+    <li>כ-\({(-5)}\), בלי להכפיל בזרוע: נגד כיוון השעון \({(\circlearrowleft)}\) הוא מינוס.</li>
+    <li>\({20\cos60^\circ = 10\ \text{t}\to}\) , \({20\sin60^\circ = 17.32\ \text{t}\downarrow}\)</li>
+    <li>\({\Sigma M_A\ (\circlearrowright +)}\): \({+5\cdot2 + 4 - 8R_{BY} = 0}\) ← \({R_{BY} = 14/8 = 1.75\ \text{t}\uparrow}\). \({\Sigma F_y}\): \({R_{AY} = 5 - 1.75 = 3.25\ \text{t}\uparrow}\). בדיקה, \({\Sigma M_B\ (\circlearrowright +)}\): \({8\cdot3.25 - 5\cdot6 + 4 = 26 - 30 + 4 = 0}\).</li>
+    <li>\({R_{AY} = 4\ \text{t}\uparrow}\). \({\Sigma M_A\ (\circlearrowright +)}\): \({+4\cdot3 + M_A = 0}\) ← \({M_A = -12\ \text{tm}}\) ← בפועל <b>\({\circlearrowleft}\) <span class="ltr">12&nbsp;tm</span></b>. הגיוני: העומס מסובב את הקורה \({\circlearrowright}\), והקיר מחזיק \({\circlearrowleft}\).</li>
+    <li>סטייה <b>0.2 ומעלה</b> חשודה (כאן 0.3): לחפש טעות בסימן, בזרוע או בעיגול. <b>0.0x</b> תקינה; <b>0.1</b> אפשרי רק כשיש הרבה עיגולים ואלכסונים. עובדים עם <b>שתי ספרות</b> אחרי הנקודה.</li>
+  </ol>
+
+  <h3>📖 מילון מונחים</h3>
+  <dl class="glossary">
+    <dt>כוח משופע (F)</dt><dd>כוח שאינו אופקי ואינו אנכי. מפרקים לרכיבים.</dd>
+    <dt>רכיב (\({F_x}\), \({F_y}\))</dt><dd>החלק האופקי או האנכי של כוח.</dd>
+    <dt>ריאקציה (תגובה, R)</dt><dd>הכוח שהסמך מפעיל על הקורה.</dd>
+    <dt>סמך נייח</dt><dd>שתי ריאקציות (\({R_X}\), \({R_Y}\)). מניחים ימינה ולמעלה.</dd>
+    <dt>סמך נייד</dt><dd>ריאקציה אחת, ניצבת למשטח (\({R_Y}\)).</dd>
+    <dt>ריתום</dt><dd>שתי ריאקציות ומומנט תגובה (\({R_X}\), \({R_Y}\), \({M_A}\)).</dd>
+    <dt>נעלם</dt><dd>תגובה שמחפשים. שלוש משוואות ← עד שלושה נעלמים.</dd>
+    <dt>משוואות שיווי משקל</dt><dd>\({\Sigma F_x = 0}\), \({\Sigma F_y = 0}\), \({\Sigma M = 0}\).</dd>
+    <dt>זרוע (d)</dt><dd>המרחק מהנקודה אל קו הכוח. בלי זרוע אין מומנט.</dd>
+    <dt>מומנט (\({M = F\cdot d}\))</dt><dd>סיבוב. \({\circlearrowright\ =\ +}\), \({\circlearrowleft\ =\ -}\). יחידות: <span class="ltr">tm</span> (טון-מטר) למומנט, <span class="ltr">t</span> (טון) לכוח.</dd>
+    <dt>מומנט טהור</dt><dd>מומנט מוכן (חץ מעוגל). נכנס רק ל-\({\Sigma M}\), בערכו. ברשימות במחברת: "מומנט מרוכז".</dd>
+    <dt>מומנט תגובה (\({M_A}\))</dt><dd>המומנט שהריתום מפעיל. מניחים \({\circlearrowright}\).</dd>
+    <dt>ראש החץ</dt><dd>מראה את כיוון הכוח וקובע את סימן הרכיב מול הצירים.</dd>
+    <dt>בדיקה</dt><dd>\({\Sigma F_y = 0}\) אחרי הפתרון. צריך לצאת 0 (סטייה 0.0x מותרת).</dd>
+  </dl>
+
+  <div class="box announce"><div class="box-title">עוד פרטים מהשיעור</div>
+    <ul class="pts">
+      <li><span class="ltr">00:00:18</span> <b>נבדק מי הגיש</b>, לא כל עבודה. בכל שבוע נבדקות כ-<b>6 עד 8</b> עבודות, להבנת רמת הכיתה. על שיעורי הבית נאמר: "זה נטו בשבילכם" <span class="ltr">00:28:32</span></li>
+      <li><span class="ltr">00:02:01</span> <span class="ltr">00:02:16</span> בהערה לרשום "הגשתי עבודה 1 ו-2 ביחד באישורך", ולאחד ל<b>קובץ אחד</b> (מצלמים ומעלים), כי אחרת "זה כבד מדי".</li>
+      <li><span class="ltr">00:03:05</span> נלקחה <b>נוכחות</b> בקריאת שמות.</li>
+      <li><span class="ltr">02:18:59</span> ככל שיש יותר <b>תרגילים פתורים</b> במחברת, זה רק עוזר.</li>
+      <li><span class="ltr">02:38:13</span> <b>סוף השיעור בפועל</b>: אפשר ללכת, או להישאר לתרגל ולשאול בכיתה (בשקט).</li>
+    </ul>
+  </div>
+
+  <div class="box unclear"><div class="box-title">לא היה ברור בהקלטה</div>
+    <ul class="pts">
+      <li><span class="ltr">00:08:40</span> <b>זווית מציר Y</b>: הכלל נאמר בצורה לא עקבית. נשמע "X עם קוסינוס, Y עם סינוס" (כמו במקרה הרגיל), וב-<span class="ltr">00:30:58</span> "קוסינוס" לרכיב X ו"קוסינוס" או "סינוס" לרכיב Y (תלוי במעבר תמלול). בסיכום: הכלל הנכון לפי הגאומטריה והרשימות במחברת, \({F_x = F\sin\beta}\) , \({F_y = F\cos\beta}\).</li>
+      <li><span class="ltr">00:42:48</span> <b>בלוח</b> נכתב 4.5 במקום 4.95, ו-<span class="ltr">00:49:36</span> נכתב 14.89 במקום 14.85. התוצאה 0.35 זהה.</li>
+      <li><span class="ltr">02:42:20</span> <b>תרגיל תרגול 1</b>: בלוח נכתב \({R_{AY} = 2.25}\). סכום התגובות חייב להיות <span class="ltr">5&nbsp;t</span>, ולכן נכון <b>2.75</b>. תרגילים 2 ו-3 חלקית קריאים (מידות לפי הלוח, בקירוב).</li>
+      <li><span class="ltr">02:25:45</span> <b>ריתום "במבחן"</b>: האודיו רועש, ובמעבר נוסף על אותו קטע (<span class="ltr">02:34:57</span>) התשובה נשמעת "נראה לי" בלי "לא". לבדוק עם המרצה מה מחוץ למבחן.</li>
+      <li><span class="ltr">00:07:02</span> <b>קובץ של 9 עמודים</b>: נשמע "תעשו אחד עד שש" ו"העליתי קובץ אחד שיש בו תשעה עמודים" (כנראה קובץ התרגילים), בתוך שיחה על הגשה <span class="ltr">00:06:17</span>. לבדוק מול הפורטל.</li>
+      <li><span class="ltr">02:06:01</span> <b>עמוד 2, העמודה השמאלית</b>: נשמע "בשיעורי בית, חברים, לפתור רק את עמוד 2, רק את העמודה השמאלית". לא ברור מי אמר. וב-<span class="ltr">02:11:40</span> נשמע "מתי ...? בשבוע" (אולי מועד הגשה). לבדוק מול הפורטל.</li>
+      <li><span class="ltr">02:03:25</span> <b>"אותו שיעור" בין 5 ל-9</b>: נשמע ש"מי שמעוניין" יעשה את אותו שיעור. ההמשך לא ברור.</li>
+      <li><span class="ltr">00:37:08</span> <b>מערכת השעות</b>: שיחה על שינוי. נשמעים "תשע וארבעים עד אחת", "באחת וחצי" ו"היא שעה אחרי". לא ברור מה השתנה.</li>
+      <li><span class="ltr">01:22:33</span> <b>החזרה מההפסקה</b> "בשעה שנייה" (אולי 14:00). לפי שעון הווידאו ההפסקה התחילה בסביבות <span class="ltr">13:41</span> וההוראה חזרה בסביבות <span class="ltr">14:05</span>.</li>
+    </ul>
+  </div>
+
+  <div class="box"><div class="box-title">🎞 על ההקלטה והסיכום</div>
+    <p>ההקלטה היא של <b>לוח בלבד</b>, בלי מצגת. ההפסקה נמשכת כ-25 דקות (<span class="ltr">01:22</span> עד <span class="ltr">01:47</span>); בשאר הזמן יש הוראה, עבודה עצמית ושיחות. תרגילים מהשיעור מסומנים <b>(מהשיעור)</b>; תוספות: <b>דוגמה נוספת</b> או <b>לא נאמר בשיעור</b>. מספור התרגילים (1 עד 6) הוא של הסיכום, ו"קצה בולט" הוא מונח מהרשימות במחברת.</p>
+  </div>
+</section>
+
+</body>
+</html>

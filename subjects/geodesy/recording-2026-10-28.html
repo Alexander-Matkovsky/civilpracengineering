@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>גיאודזיה - תורת המדידות · זכויות בקרקע: טאבו, חלקה ומושע</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=block">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});document.documentElement.dataset.math='done'"></script>
+<style>
+/* Lecture summary design system: A4, RTL Hebrew, print-first. */
+
+@page {
+  size: A4;
+  margin: 18mm 16mm 17mm 16mm;
+  @bottom-center {
+    content: counter(page);
+    font-family: Heebo, "Arial Hebrew", sans-serif;
+    font-size: 9pt;
+    color: #7a8394;
+  }
+}
+@page :first {
+  margin: 0;
+  @top-right { content: none; }
+  @top-left { content: none; }
+  @bottom-center { content: none; }
+}
+
+:root {
+  --accent: #4f46e5;
+  --accent-dark: #3730a3;
+  --accent-soft: #eef0ff;
+  --accent-mid: #c7cbfb;
+  --ink: #1d2230;
+  --muted: #5d6676;
+  --line: #dfe3ea;
+  --paper: #ffffff;
+  --bg-soft: #f6f7f9;
+  --ok: #0f7b5f;
+  --ok-soft: #e2f5ee;
+  --warn: #b45309;
+  --warn-soft: #fdf1e2;
+  --bad: #b91c1c;
+  --bad-soft: #fdeaea;
+  --info: #0e6aa8;
+  --info-soft: #e5f2fb;
+}
+
+/* one accent colour per course */
+body.course-math { --accent: #4f46e5; --accent-dark: #3730a3; --accent-soft: #eef0ff; --accent-mid: #c7cbfb; }
+body.course-roads { --accent: #c2620a; --accent-dark: #8f4505; --accent-soft: #fdf0e3; --accent-mid: #f6cfa6; }
+body.course-safety { --accent: #c62828; --accent-dark: #8e1b1b; --accent-soft: #fdecea; --accent-mid: #f5bcbc; }
+body.course-geodesy { --accent: #0f766e; --accent-dark: #0b524c; --accent-soft: #e2f4f1; --accent-mid: #a7dcd5; }
+body.course-building-theory { --accent: #a5502a; --accent-dark: #74371c; --accent-soft: #f8ece5; --accent-mid: #e8c2ad; }
+body.course-drafting { --accent: #0369a1; --accent-dark: #024b74; --accent-soft: #e3f1fa; --accent-mid: #a9d3ee; }
+body.course-labor-law { --accent: #7c3aed; --accent-dark: #5521b5; --accent-soft: #f1eafe; --accent-mid: #d4c0fb; }
+body.course-statics { --accent: #2563eb; --accent-dark: #1e40af; --accent-soft: #e8f0fe; --accent-mid: #b8cdfa; }
+
+* { box-sizing: border-box; }
+html { direction: rtl; }
+body {
+  margin: 0;
+  font-family: Heebo, "Arial Hebrew", Arial, sans-serif;
+  font-size: 11.5pt;
+  line-height: 1.62;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+p { margin: 0 0 2.2mm; }
+b, strong {
+  font-weight: 700;
+  background: linear-gradient(transparent 60%, var(--accent-mid) 60%);
+  padding: 0 0.5mm;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.box b, .box strong, .bl b, .bl strong, th b { background: none; padding: 0; }
+.ltr, .num, code { direction: ltr; unicode-bidi: isolate; }
+code {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.88em;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 1.2mm;
+  padding: 0 1mm;
+}
+.katex { direction: ltr; unicode-bidi: isolate; font-size: 1.08em; }
+.katex-display { margin: 1mm 0 !important; }
+small, .muted { color: var(--muted); }
+
+/* ---------- cover ---------- */
+.cover {
+  height: 297mm;
+  width: 210mm;
+  display: flex;
+  flex-direction: column;
+  break-after: page;
+  overflow: hidden;
+}
+.cover-band {
+  background: var(--accent);
+  color: #fff;
+  padding: 22mm 18mm 14mm;
+  position: relative;
+}
+.cover-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 30%, rgba(255,255,255,.16) 0 18mm, transparent 18.2mm),
+    radial-gradient(circle at 4% 85%, rgba(255,255,255,.10) 0 28mm, transparent 28.2mm),
+    radial-gradient(circle at 30% 105%, rgba(255,255,255,.08) 0 20mm, transparent 20.2mm);
+  pointer-events: none;
+}
+.cover-kicker { font-size: 12pt; font-weight: 500; opacity: .9; margin-bottom: 3mm; }
+.cover h1 { font-size: 30pt; line-height: 1.15; font-weight: 900; margin: 0 0 3mm; }
+.cover-sub { font-size: 14pt; font-weight: 500; opacity: .95; }
+.cover-meta { display: flex; flex-wrap: wrap; gap: 2.5mm; margin-top: 7mm; position: relative; z-index: 1; }
+.chip {
+  display: inline-block;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 20mm;
+  padding: 1mm 4mm;
+  font-size: 10.5pt;
+  font-weight: 500;
+}
+.cover-body { padding: 10mm 18mm 12mm; flex: 1; display: flex; flex-direction: column; gap: 6mm; }
+.cover-body h3 { margin: 0 0 2mm; font-size: 13pt; color: var(--accent-dark); }
+.roadmap { list-style: none; margin: 0; padding: 0; display: grid; gap: 2mm; }
+.roadmap li {
+  display: grid;
+  grid-template-columns: 9mm 1fr auto;
+  align-items: center;
+  gap: 3mm;
+  background: var(--bg-soft);
+  border-radius: 2.5mm;
+  padding: 1.6mm 3mm;
+}
+.roadmap .n {
+  width: 8mm; height: 8mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 11pt;
+}
+.roadmap .t { font-weight: 600; }
+.roadmap .when { direction: ltr; font-size: 9.5pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 2mm 5mm; font-size: 9.5pt; color: var(--muted); }
+
+/* ---------- topic sections: each starts on a new page ---------- */
+section.topic { break-before: page; }
+section.topic.cont { break-before: auto; margin-top: 8mm; }
+.topic-head {
+  display: flex;
+  align-items: center;
+  gap: 3.5mm;
+  border-bottom: 2.5px solid var(--accent);
+  padding-bottom: 2.5mm;
+  margin-bottom: 4mm;
+}
+.topic-head .n {
+  flex: none;
+  width: 11mm; height: 11mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-size: 15pt; font-weight: 900;
+}
+.topic-head h2 { margin: 0; font-size: 19pt; line-height: 1.2; font-weight: 800; color: var(--ink); flex: 1; }
+.time {
+  flex: none;
+  direction: ltr;
+  font-size: 9pt;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 10mm;
+  padding: 0.6mm 2.6mm;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+h3 { font-size: 13.5pt; font-weight: 800; margin: 5mm 0 2mm; color: var(--accent-dark); break-after: avoid; }
+h4 { font-size: 11.5pt; font-weight: 700; margin: 3mm 0 1.5mm; break-after: avoid; }
+
+/* bottom line: first thing in every section */
+.bl {
+  background: var(--accent-soft);
+  border-inline-start: 5px solid var(--accent);
+  border-radius: 2.5mm;
+  padding: 2.5mm 4mm;
+  font-weight: 700;
+  font-size: 12pt;
+  margin: 0 0 4mm;
+  break-inside: avoid;
+}
+.bl::before { content: "⚡ "; }
+
+/* bullets */
+ul.pts { list-style: none; padding: 0; margin: 0 0 3mm; }
+ul.pts > li { position: relative; padding-inline-start: 6mm; margin-bottom: 1.6mm; }
+ul.pts > li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 1mm;
+  top: 2.6mm;
+  width: 2.2mm; height: 2.2mm;
+  border-radius: 50%;
+  background: var(--accent);
+}
+ul.pts ul { margin-top: 1mm; }
+
+/* generic callout box */
+.box {
+  border-radius: 3mm;
+  padding: 3mm 4mm;
+  margin: 3mm 0;
+  break-inside: avoid;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+.box > .box-title { font-weight: 800; margin-bottom: 1.2mm; display: flex; gap: 2mm; align-items: center; }
+.box > :last-child { margin-bottom: 0; }
+.box.life { background: #fffbea; border-color: #f3e3a3; }
+.box.life > .box-title::before { content: "🏠"; }
+.box.formula { background: var(--accent-soft); border-color: var(--accent-mid); text-align: center; }
+.box.formula > .box-title { justify-content: center; }
+.box.formula > .box-title::before { content: "🧮"; }
+.box.tip { background: var(--ok-soft); border-color: #b6e3d2; }
+.box.tip > .box-title::before { content: "💡"; }
+.box.warn { background: var(--warn-soft); border-color: #f2cf9f; }
+.box.warn > .box-title::before { content: "⚠️"; }
+.box.remember { background: var(--info-soft); border-color: #b9dbf2; }
+.box.remember > .box-title::before { content: "🧠"; }
+.box.optional { background: #fafafa; border: 1.5px dashed #c5cad3; }
+.box.optional > .box-title::before { content: "📎"; }
+.box.optional > .box-title::after { content: "רשות"; font-size: 8.5pt; font-weight: 700; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; }
+.box.announce { background: var(--bad-soft); border-color: #f2c2c2; }
+.box.announce > .box-title::before { content: "📢"; }
+.box.unclear { background: #f4f1fb; border-color: #d9cff3; }
+.box.unclear > .box-title::before { content: "❓"; }
+.box.lecturer { background: #fff; border-inline-start: 4px solid var(--accent-mid); }
+.box.lecturer > .box-title::before { content: "🎙️"; }
+
+/* numbered procedure */
+ol.steps { list-style: none; counter-reset: st; padding: 0; margin: 2mm 0 3mm; }
+ol.steps > li { counter-increment: st; position: relative; padding-inline-start: 9mm; margin-bottom: 2mm; min-height: 6.5mm; }
+ol.steps > li::before {
+  content: counter(st);
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.2mm;
+  width: 6.5mm; height: 6.5mm;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 9.5pt;
+  display: grid;
+  place-items: center;
+}
+
+/* worked example */
+.worked {
+  border: 1.5px solid var(--accent-mid);
+  border-radius: 3mm;
+  margin: 3.5mm 0;
+  break-inside: avoid;
+  overflow: hidden;
+}
+.worked > .w-title { background: var(--accent); color: #fff; font-weight: 800; padding: 1.6mm 4mm; }
+.worked > .w-title::before { content: "✏️ "; }
+.worked > .w-body { padding: 3mm 4mm; }
+.worked .given { background: var(--bg-soft); border-radius: 2mm; padding: 2mm 3mm; margin-bottom: 2.5mm; }
+.worked .given::before { content: "נתון: "; font-weight: 800; }
+.worked .ask::before { content: "מחפשים: "; font-weight: 800; }
+.worked ol.lines { counter-reset: ln; list-style: none; padding: 0; margin: 2mm 0; }
+.worked ol.lines > li { counter-increment: ln; padding: 1.2mm 0; padding-inline-start: 13mm; border-bottom: 1px dashed var(--line); position: relative; }
+.worked ol.lines > li::before { content: "שלב " counter(ln); position: absolute; inset-inline-start: 0; font-size: 8.5pt; color: var(--muted); top: 1.8mm; }
+.worked .answer { margin-top: 2mm; font-weight: 800; }
+.worked .answer::before { content: "✅ תשובה: "; }
+.worked .check { margin-top: 1.5mm; color: var(--ok); font-weight: 700; }
+.worked .check::before { content: "✓ בדיקה: "; }
+
+/* figures */
+figure.fig { margin: 3.5mm 0; text-align: center; break-inside: avoid; }
+figure.fig svg { max-width: 100%; height: auto; }
+figure.fig figcaption { font-size: 9.5pt; color: var(--muted); margin-top: 1.5mm; }
+figure.fig.half { width: 60%; margin-inline: auto; }
+
+/* SVG helper classes (inline SVG lives in the HTML DOM, so CSS vars work) */
+svg text { font-family: Heebo, "Arial Hebrew", sans-serif; }
+svg .acc { stroke: var(--accent); }
+svg .acc-f { fill: var(--accent); }
+svg .soft-f { fill: var(--accent-soft); }
+svg .mid-f { fill: var(--accent-mid); }
+svg .dark-f { fill: var(--accent-dark); }
+svg .ink { stroke: var(--ink); }
+svg .ink-f { fill: var(--ink); }
+svg .muted-f { fill: var(--muted); }
+svg .line { stroke: #b8bfcb; }
+svg .ok { stroke: var(--ok); }
+svg .ok-f { fill: var(--ok); }
+svg .bad { stroke: var(--bad); }
+svg .bad-f { fill: var(--bad); }
+svg .warn-f { fill: var(--warn); }
+svg .lbl { font-size: 15px; fill: var(--ink); }
+svg .lbl-s { font-size: 12.5px; fill: var(--muted); }
+svg .lbl-b { font-size: 16px; font-weight: 700; fill: var(--ink); }
+svg .he { direction: rtl; unicode-bidi: plaintext; }
+
+/* tables */
+table.t { width: 100%; border-collapse: separate; border-spacing: 0; margin: 3mm 0; font-size: 10.5pt; break-inside: avoid; border: 1px solid var(--line); border-radius: 2.5mm; overflow: hidden; }
+table.t th { background: var(--accent-soft); color: var(--accent-dark); font-weight: 800; text-align: start; padding: 1.8mm 3mm; border-bottom: 1px solid var(--accent-mid); }
+table.t td { padding: 1.6mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.t tr:last-child td { border-bottom: none; }
+table.t tr:nth-child(even) td { background: #fafbfc; }
+
+/* layout helpers */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; }
+.grid2 > .box, .grid3 > .box { margin: 0; }
+.card { border: 1px solid var(--line); border-radius: 3mm; padding: 2.5mm 3.5mm; break-inside: avoid; background: #fff; }
+.card > .c-title { font-weight: 800; color: var(--accent-dark); margin-bottom: 1mm; }
+.vs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 3mm; align-items: stretch; }
+.vs > .mid { align-self: center; font-weight: 900; color: var(--accent); font-size: 14pt; }
+.keep { break-inside: avoid; }
+.pagebreak { break-before: page; }
+
+/* end matter */
+ol.quiz { padding-inline-start: 7mm; margin: 0; }
+ol.quiz > li { margin-bottom: 3mm; padding-bottom: 2mm; border-bottom: 1px dashed var(--line); break-inside: avoid; }
+ol.quiz .lvl { font-size: 8.5pt; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; margin-inline-start: 2mm; }
+ol.answers { padding-inline-start: 7mm; margin: 0; }
+ol.answers > li { margin-bottom: 2.5mm; break-inside: avoid; }
+dl.glossary { display: grid; grid-template-columns: max-content 1fr; gap: 1.5mm 5mm; margin: 0; }
+dl.glossary dt { font-weight: 800; color: var(--accent-dark); }
+dl.glossary dd { margin: 0; }
+
+@page {
+  @top-right { content: "גיאודזיה - תורת המדידות"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+  @top-left { content: "28/10/2026"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+}
+</style>
+</head>
+<body class="course-geodesy">
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="cover-band">
+    <div class="cover-kicker">🎥 סיכום הקלטה · גיאודזיה - תורת המדידות (850142)</div>
+    <h1>זכויות בקרקע: טאבו, חלקה ומושע</h1>
+    <div class="cover-sub">הקלטת השיעור · יום רביעי 28/10/2026</div>
+    <div class="cover-meta">
+      <span class="chip">👤 לוי ניסנבוים אדטל</span>
+      <span class="chip">⏱ 2:27 שעות הקלטה</span>
+      <span class="chip">📄 17 עמודים</span>
+    </div>
+  </div>
+  <div class="cover-body">
+    <div class="bl">השיעור בשורה אחת: <b>זכות שלא רשומה בנסח הטאבו לא קיימת</b>.</div>
+    <div>
+      <h3>🗺️ מפת השיעור</h3>
+      <ol class="roadmap">
+        <li><span class="n">1</span><span class="t">חזרה והעתקת עצים</span><span class="when">00:06:38</span></li>
+        <li><span class="n">2</span><span class="t">קרקע המדינה, חכירה ונסח טאבו</span><span class="when">00:25:35</span></li>
+        <li><span class="n">3</span><span class="t">סוגי זכויות: בעלות, חכירה, שכירות, זיקת הנאה</span><span class="when">00:45:40</span></li>
+        <li><span class="n">4</span><span class="t">גוש, חלקה ותת חלקה</span><span class="when">00:52:03</span></li>
+        <li><span class="n">5</span><span class="t">מושע: מתי מוסיף ערך ומתי מוריד</span><span class="when">01:20:13</span></li>
+        <li><span class="n">6</span><span class="t">מגרש, התחדשות עירונית והגנה על הכסף</span><span class="when">01:40:53</span></li>
+        <li><span class="n">7</span><span class="t">הליך ההסדר וצורת כדור הארץ</span><span class="when">02:08:53</span></li>
+      </ol>
+    </div>
+    <div class="box announce"><div class="box-title">הודעות מהשיעור</div>
+      <ul class="pts">
+        <li>השיעור התקיים ב<b>זום</b>. המצגת שימשה להקרנה ו<b>לא חולקה</b>. ⏱ <span class="ltr">00:06:38</span></li>
+        <li>הייתה <b>הפסקה של רבע שעה</b>. ⏱ <span class="ltr">01:05:27</span> עד <span class="ltr">01:19:47</span></li>
+        <li><b>נוכחות</b> נלקחה בקריאת שמות ⏱ <span class="ltr">02:22:02</span>. לפי המרצה <b>מותר להיעדר פעמיים</b>, ו<b>טופס מחלה</b> מבטל היעדרות ⏱ <span class="ltr">02:26:26</span>.</li>
+        <li><b>בשבוע הבא</b> ממשיכים בצורות כדור הארץ. ⏱ <span class="ltr">02:22:02</span></li>
+      </ul>
+    </div>
+    <div class="legend"><span>⚡ שורה תחתונה</span><span>🏠 דוגמה מהחיים</span><span>✏️ דוגמה פתורה</span><span>⚠️ טעות נפוצה</span><span>💡 טיפ</span><span>📎 רשות</span><span>⏱ זמן בהקלטה</span></div>
+  </div>
+</div>
+
+<!-- ============ 1. TREES ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">1</span><h2>חזרה והעתקת עצים</h2><span class="time">⏱ 00:06:38</span></div>
+  <div class="bl">עץ במגרש: <b>אסור לגדוע בלי אישור</b>, והעתקת עץ בוגר עולה <b>50 עד 150 אלף ₪</b>.</div>
+
+  <ul class="pts">
+    <li><b>חזרה</b> (⏱ <span class="ltr">00:07:28</span>): למודד שתי נקודות מבט, <b>מאקרו</b> (כדור הארץ כולו, עבודת חוקרים) ו<b>מיקרו</b> (ירידה לקרקע ומפת מדידה, כולל מדידת מרחקים, שיפועים, אסימוטים ושטחים). המיקרו הוא הרלוונטי יותר לקורס.</li>
+    <li><b>מפת מדידה מונעת סכסוכים</b> (⏱ <span class="ltr">00:09:08</span>): במקום להתווכח <b>30 שנה</b> עם שכן על סנטימטרים של גדר, כל צד נותן מסמכים והמודד מכין מפה <b>מוסכמת</b>, ולפיה אפשר לשנות את הרישום. כך גם בסכסוכי יורשים.</li>
+  </ul>
+
+  <h3>🌳 עצים: חוק, סיבה ועלות <span class="time">⏱ 00:12:20</span></h3>
+  <ul class="pts">
+    <li>כל אלמנט קרקעי במפה (עמודי חשמל, עצים, גדרות, צנרת) עולה כסף ← נכנס ל<b>דו״ח אפס</b> (בדיקת כדאיות כלכלית של פרויקט בנייה; לפי השקף, את הדו״ח מכין שמאי מקרקעין).</li>
+    <li>רוב האלמנטים זולים יחסית לפרויקט, אבל <b>עצים</b> הם אלמנט משמעותי.</li>
+    <li>לפי המרצה, <b>אסור לגדוע עץ</b> בלי אישור של משרד החקלאות או קק״ל (קרן קיימת לישראל). הסיבה (בעיקר היסטורית): עץ מעיד על <b>זכות קניינית</b> בקרקע, וגדיעה פוגעת בה.</li>
+    <li><b>עץ פרי</b>: בדרך כלל לא יאשרו גדיעה ← העתקה בשלמות, הליך מורכב ויקר (50 עד 150 אלף ₪ לעץ בוגר). לכן קרקע עם 5 עצים עולה <b>250 עד 750 אלף ₪</b>, ועם 20 עצים <b>1 עד 3 מיליון ₪</b>: זה יכול לפגוע ברווחיות לגמרי.</li>
+    <li><b>הפתרון הנפוץ</b>: לשלב את העצים ב<b>פיתוח הסביבתי</b>. היזם חוסך פעמיים: אין העתקה, ואין תוספת גדולה לעלויות הפיתוח.</li>
+  </ul>
+
+
+  <h3>🎬 הסרטון והנוהל <span class="time">⏱ 00:17:03</span></h3>
+  <figure class="fig"><svg viewBox="0 0 720 156" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="תרשים זרימה: מודד, אגרונום, החלטה, אכיפה"><defs><marker id="ar_tf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs><rect x="561.0" y="40.0" width="150.0" height="100.0" rx="12" class="soft-f acc" stroke-width="2.5"/><text x="636.0" y="80.0" class="he" text-anchor="middle" style="font-size:17px;font-weight:800;fill:var(--ink)">המודד</text><text x="636.0" y="104.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:400;fill:var(--muted)">מסמן במפה את</text><text x="636.0" y="124.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:400;fill:var(--muted)">מיקום כל עץ</text><circle cx="697.0" cy="40.0" r="15" class="dark-f"/><text x="697.0" y="45.5" class="ltr" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">1</text><rect x="377.0" y="40.0" width="150.0" height="100.0" rx="12" class="soft-f acc" stroke-width="2.5"/><text x="452.0" y="80.0" class="he" text-anchor="middle" style="font-size:17px;font-weight:800;fill:var(--ink)">האגרונום</text><text x="452.0" y="104.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:400;fill:var(--muted)">ממליץ על פעולה</text><text x="452.0" y="124.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:400;fill:var(--muted)">לכל עץ</text><circle cx="513.0" cy="40.0" r="15" class="dark-f"/><text x="513.0" y="45.5" class="ltr" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">2</text><rect x="193.0" y="40.0" width="150.0" height="100.0" rx="12" class="acc-f acc" stroke-width="2.5"/><text x="268.0" y="74.0" class="he" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">משרד החקלאות</text><text x="268.0" y="94.0" class="he" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">וקק״ל</text><text x="268.0" y="120.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:600;fill:#fff">מחליטים</text><circle cx="329.0" cy="40.0" r="15" class="dark-f"/><text x="329.0" y="45.5" class="ltr" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">3</text><rect x="9.0" y="40.0" width="150.0" height="100.0" rx="12" class="soft-f acc" stroke-width="2.5"/><text x="84.0" y="80.0" class="he" text-anchor="middle" style="font-size:17px;font-weight:800;fill:var(--ink)">אכיפה</text><text x="84.0" y="104.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:400;fill:var(--muted)">בודקים שההחלטה</text><text x="84.0" y="124.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:400;fill:var(--muted)">בוצעה</text><circle cx="145.0" cy="40.0" r="15" class="dark-f"/><text x="145.0" y="45.5" class="ltr" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">4</text><line x1="557.0" y1="90.0" x2="532.0" y2="90.0" class="ink" stroke-width="3" marker-end="url(#ar_tf)"/><line x1="373.0" y1="90.0" x2="348.0" y2="90.0" class="ink" stroke-width="3" marker-end="url(#ar_tf)"/><line x1="189.0" y1="90.0" x2="164.0" y2="90.0" class="ink" stroke-width="3" marker-end="url(#ar_tf)"/></svg><figcaption>הנוהל, מימין לשמאל: המודד לא מחליט, רק מסמן. ההחלטה אצל משרד החקלאות וקק״ל, ואחריה אכיפה.</figcaption></figure>
+  <ul class="pts">
+    <li>בסרטון (כ-5 דקות): חופרים סביב העץ, <b>גוש השורשים</b> נעטף בקצף מגן, ו<b>שני מנופים</b> מעבירים אותו. לפי המרצה זה מתחיל כשנה מראש, בדרך כלל בחורף, והמטרה שהעץ <b>לא ימות</b> אחרי ההעברה.</li>
+    <li>את ה<b>אגרונום</b> מזמין היזם ומשלם לו: הוא רושם ליד כל עץ את סוגו ואת הפעולה המומלצת. בעץ פרי תמיד <b>העתקה</b>.</li>
+    <li><b>אכיפה</b>: בודקים שההחלטה בוצעה. אין "לא ידעתי" ואין "העובד פעל בניגוד לדעתי".</li>
+    <li>לפני קנייה: בסיור רואים את העץ, אבל <b>לא את גודלו האמיתי</b> ולא את עומק השורש ← צריך מנופים גדולים יותר, ויותר מהם.</li>
+    <li><b>חזרה</b> (⏱ <span class="ltr">00:25:16</span>): ממצא ארכיאולוגי, מתכת יקרה או נפט בקרקע שייכים <b>למדינה</b>, לא לבעל הקרקע.</li>
+  </ul>
+  <div class="box warn"><div class="box-title">טעות נפוצה</div><p>לחשוב שאפשר לגדוע עץ "בשקט" או להאשים עובד. <b>האחריות על היזם</b>, גם אם עובד גדע. בעץ פרי, לפי המרצה, כמעט תמיד לא יאשרו גדיעה.</p></div>
+</section>
+
+<!-- ============ 2. STATE LAND ============ -->
+<section class="topic cont">
+  <div class="keep">
+    <div class="topic-head"><span class="n">2</span><h2>קרקע המדינה, חכירה ונסח טאבו</h2><span class="time">⏱ 00:25:35</span></div>
+    <div class="bl">כ-<b>93%</b> מהקרקע שייכת למדינה, ו<b>זכות שלא רשומה בנסח הטאבו לא קיימת</b>.</div>
+    <h3>🧩 מי הבעלים? <span class="time">⏱ 00:26:24</span></h3>
+    <ul class="pts">
+    <li><b>שתי קבוצות</b>: קרקע <b>פרטית</b> כ-7%, וקרקע <b>המדינה</b> כ-93%. מרבית קרקע המדינה מוחכרת לאנשים פרטיים ולרשויות. אנשים מופתעים, כי נדמה שהקרקע הפרטית גדולה הרבה יותר.</li>
+    </ul>
+  </div>
+    <figure class="fig"><svg viewBox="0 0 720 142" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="מאה ריבועים: 7 קרקע פרטית ו-93 קרקע המדינה"><rect x="638.5" y="8.5" width="19" height="19" rx="4" class="acc-f"/><rect x="638.5" y="32.5" width="19" height="19" rx="4" class="acc-f"/><rect x="638.5" y="56.5" width="19" height="19" rx="4" class="acc-f"/><rect x="638.5" y="80.5" width="19" height="19" rx="4" class="acc-f"/><rect x="614.5" y="8.5" width="19" height="19" rx="4" class="acc-f"/><rect x="614.5" y="32.5" width="19" height="19" rx="4" class="acc-f"/><rect x="614.5" y="56.5" width="19" height="19" rx="4" class="acc-f"/><rect x="614.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="590.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="590.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="590.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="590.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="566.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="566.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="566.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="566.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="542.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="542.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="542.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="542.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="518.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="518.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="518.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="518.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="494.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="494.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="494.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="494.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="470.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="470.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="470.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="470.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="446.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="446.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="446.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="446.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="422.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="422.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="422.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="422.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="398.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="398.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="398.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="398.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="374.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="374.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="374.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="374.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="350.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="350.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="350.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="350.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="326.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="326.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="326.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="326.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="302.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="302.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="302.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="302.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="278.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="278.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="278.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="278.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="254.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="254.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="254.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="254.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="230.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="230.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="230.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="230.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="206.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="206.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="206.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="206.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="182.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="182.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="182.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="182.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="158.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="158.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="158.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="158.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="134.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="134.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="134.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="134.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="110.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="110.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="110.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="110.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="86.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="86.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="86.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="86.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="62.5" y="8.5" width="19" height="19" rx="4" class="mid-f"/><rect x="62.5" y="32.5" width="19" height="19" rx="4" class="mid-f"/><rect x="62.5" y="56.5" width="19" height="19" rx="4" class="mid-f"/><rect x="62.5" y="80.5" width="19" height="19" rx="4" class="mid-f"/><rect x="644.0" y="119.0" width="18.0" height="18.0" rx="4" class="acc-f"/><text x="636.0" y="134.0" class="he" text-anchor="start" style="font-size:15px;font-weight:700;fill:var(--ink)">קרקע פרטית</text><text x="540.0" y="135.0" class="ltr" text-anchor="end" style="font-size:22px;font-weight:800;fill:var(--accent-dark)">7%</text><rect x="404.0" y="119.0" width="18.0" height="18.0" rx="4" class="mid-f"/><text x="396.0" y="134.0" class="he" text-anchor="start" style="font-size:15px;font-weight:700;fill:var(--ink)">קרקע המדינה</text><text x="292.0" y="135.0" class="ltr" text-anchor="end" style="font-size:22px;font-weight:800;fill:var(--accent-dark)">93%</text></svg><figcaption>100 ריבועים = כל הקרקע בארץ: 7 פרטיים (כהה) ו-93 של המדינה (בהיר), לפי הערכות המרצה.</figcaption></figure>
+  <ul class="pts">
+    <li>לפי המרצה, גם בדירה מקבלן הקרקע שמתחת לבניין היא <b>חכורה</b>: לא של הקונה ולא של הדיירים.</li>
+  </ul>
+
+  <h3>📜 חכירה: כמו ליסינג <span class="time">⏱ 00:27:11</span></h3>
+  <ul class="pts">
+    <li>הסכם <b>חכירה</b> ל-<b>49, 99 או 999 שנים</b>. החוכר משלם למדינה. כמו ליסינג לרכב: משתמשים, משלמים, והבעלות אצל מישהו אחר.</li>
+    <li>לפי המרצה, התשלום יכול להגיע עד <b>91% משווי הקרקע</b> (בפועל עשרות עד מאות אלפי ₪).</li>
+    <li>בסוף התקופה מאריכים בתשלום: מראש לכל התקופה (<b>היוון</b>: משלמים היום על העתיד, וזה יחסית זול), או ב-<b>2% לשנה</b>.</li>
+    <li><b>רמ״י</b> (רשות מקרקעי ישראל, בעבר ממ״י) מנהלת את קרקעות המדינה, ולפי המרצה שוכחת לא פעם שהיא לא הבעלים. היא <b>איטית ובירוקרטית</b>: על כל פעולה משלמים, ואי אפשר לפעול בקרקע בלי אישורה ← עיכובים בתכנון ובביצוע.</li>
+    <li><b>מי משלם בסוף?</b> הקבלן יוצא מהתמונה אחרי שנה עד שנה וחצי ← החשבון של רמ״י מגיע <b>לדיירים</b>.</li>
+  </ul>
+
+  <figure class="fig"><svg viewBox="0 0 720 204" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ציר זמן של חכירה ל-49 שנה: 2020 עד 2069"><line x1="660.0" y1="92.0" x2="589.2" y2="92.0" class="line" stroke-width="16"/><line x1="589.2" y1="92.0" x2="82.0" y2="92.0" class="acc" stroke-width="16"/><circle cx="660.0" cy="92" r="12" fill="#fff" class="ink" stroke-width="3.5"/><circle cx="589.2" cy="92" r="12" fill="#fff" class="ink" stroke-width="3.5"/><circle cx="82.0" cy="92" r="12" fill="#fff" class="ink" stroke-width="3.5"/><text x="660.0" y="28.0" class="ltr" text-anchor="middle" style="font-size:20px;font-weight:800;fill:var(--ink)">2020</text><text x="589.2" y="28.0" class="ltr" text-anchor="middle" style="font-size:20px;font-weight:800;fill:var(--ink)">2026</text><text x="82.0" y="28.0" class="ltr" text-anchor="middle" style="font-size:20px;font-weight:800;fill:var(--bad)">2069</text><text x="658.0" y="52.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:600;fill:var(--muted)">קניית הקרקע</text><text x="569.2" y="52.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:600;fill:var(--muted)">קניית הדירה</text><text x="82.0" y="52.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:700;fill:var(--bad)">סוף החכירה</text><text x="642.1" y="130.0" class="ltr" text-anchor="middle" style="font-size:20px;font-weight:800;fill:var(--muted)">6</text><text x="616.1" y="130.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:400;fill:var(--muted)">שנים</text><text x="386.6" y="132.0" class="ltr" text-anchor="middle" style="font-size:28px;font-weight:800;fill:var(--accent-dark)">43</text><text x="346.3" y="132.0" class="he" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--accent-dark)">שנים</text><text x="295.2" y="132.0" class="he" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--accent-dark)">נשארות</text><text x="92.0" y="126.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:700;fill:var(--bad)">החשבון מגיע</text><text x="92.0" y="145.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:700;fill:var(--bad)">לדיירים</text><path d="M660.0,159 V168 H82.0 V159" class="ink" fill="none" stroke-width="2.5"/><text x="387.3" y="194.0" class="ltr" text-anchor="middle" style="font-size:20px;font-weight:800;fill:var(--ink)">49</text><text x="356.4" y="194.0" class="he" text-anchor="middle" style="font-size:16px;font-weight:700;fill:var(--ink)">שנה</text></svg><figcaption>לשים לב: 6 מתוך 49 השנים כבר עברו, 43 נשארו, ובסוף החכירה (2069) החשבון לרמ״י מגיע לדיירים.</figcaption></figure>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): כמה שנות חכירה נשארו?</div><div class="w-body">
+    <div class="given">הקבלן רכש קרקע ב-2020 (חכירה ל-49 שנה). הדירה נקנתה ב-2026.</div>
+    <div class="ask">כמה שנות חכירה נשארו, ומתי החכירה נגמרת</div>
+    <ol class="lines">
+      <li>שנים שחלפו: \(2026 - 2020 = 6\)</li>
+      <li>שנים שנשארו: \(49 - 6 = 43\)</li>
+      <li>שנת הסיום: \(2020 + 49 = 2069\)</li>
+    </ol>
+    <div class="answer">43 שנה, עד 2069</div>
+    <div class="check">\(2069 - 2026 = 43\) ✓ <span class="muted">(בשיעור נאמר גם "שבע שנים": אז נשארות 42.)</span></div>
+  </div></div>
+
+  <h3>📄 נסח טאבו <span class="time">⏱ 00:31:28</span></h3>
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור): "קרקע של סבא רבא"</div>
+    <p>סיפור משפחתי כזה מתגלה לא פעם כקרקע <b>שלא נרשמה בשום מקום</b>. לפני 60 עד 80 שנה שילמו על קרקע לפי סיפור, והזכויות לא נרשמו.</p>
+  </div>
+  <div class="box lecturer"><div class="box-title">בשיעור הודגש</div><p><b>זכות שלא רשומה בנסח לא קיימת.</b> לא משנה איזה סיפור סיפרו.</p></div>
+  <ul class="pts">
+    <li><b>נסח טאבו</b>: מסמך <b>סטטוטורי</b> עם תוקף משפטי. נרשמים בו סוג הבעלות, השטח ועוד.</li>
+    <li><b>היום</b>, לפי המרצה: הקבלן חייב לרשום את הזכויות על שם הרוכש תוך כשנה. אם לא, הן נשארות על שם היזם, ורבים מגלים זאת אחרי 30 שנה, כשרוצים למכור.</li>
+  </ul>
+  <div class="box tip"><div class="box-title">טיפ</div><p><b>לרשום קרוב למועד הקנייה</b>, כל עוד אפשר לאתר את היזם או המוכר. אחרי 80 שנה אולי אין מי לאתר.</p></div>
+
+  <h3>🤔 למה המדינה מחכירה ולא מוכרת? <span class="time">⏱ 00:34:58</span></h3>
+  <ul class="pts">
+    <li>שאלה מהכיתה. לפי המרצה זה לא רק עניין של אגרה: <b>משאבי טבע</b> בקרקע שייכים למדינה, והמדינה קטנה (כ-<b>21 אלף קמ״ר</b>).</li>
+    <li>בין החוקים הראשונים היו חוקים להגנה על משאביה. לפי המרצה, אחד מהם אסר למכור קרקע ל<b>תושבי חוץ</b> (לא לאזרח ישראלי שגר בחו״ל), והשיטה די <b>ייחודית לישראל</b>.</li>
+    <li><b>ריבונות</b>: כשקניין עובר לגוף פרטי, אי אפשר לשלוט במה יעשה בו. גוף עם הון בלי גבול יכול לקנות נכסים בלי גבול, והמדינה מאבדת שליטה.</li>
+    <li>דוגמה (לפי המרצה): חברת מזון גדולה שנמכרה ל<b>תאגיד זר</b>. אם הבעלים מחליט לפרק אותה, אין עוד מוצרי חלב בארץ. כך גם בקרקע.</li>
+  </ul>
+
+  <h3>🕰️ מאיפה ה-7% הפרטיים? <span class="time">⏱ 00:40:43</span></h3>
+  <ul class="pts">
+    <li>היסטוריה (לפי המרצה): העות׳מאנים שלטו כ-400 שנה, הבריטים מ-1918 עד 1948. גם אז הקרקע <b>הושאלה</b>: הסולטן רצה מסים, ולתושבים הייתה רק <b>זכות עיבוד</b>.</li>
+  </ul>
+  <div class="grid3">
+    <div class="card"><div class="c-title">🏰 הברון רוטשילד</div><p>קרקעות שרכש: עשרות עד מאות נכסים (ראשון לציון, בנימינה, תל אביב).</p></div>
+    <div class="card"><div class="c-title">👑 קרקע מולק</div><p>הסולטן העניק לקרובים ולידידים <b>בעלות מלאה</b>, בלי מגבלות.</p></div>
+    <div class="card"><div class="c-title">🔁 רפורמה</div><p>לפני הקורונה: חוכרים יכלו לרכוש <b>בעלות מלאה</b>, כדי שרמ״י תפסיק לתחזק את הקרקע. אילו הצליחה, 7% היו גדלים ל-8% עד 10%. היא <b>לא צלחה</b> ← נשאר כ-7%.</p></div>
+  </div>
+</section>
+
+<!-- ============ 3. RIGHTS ============ -->
+<section class="topic cont">
+  <div class="keep">
+    <div class="topic-head"><span class="n">3</span><h2>סוגי זכויות בקרקע</h2><span class="time">⏱ 00:45:40</span></div>
+    <div class="bl">זכות בקרקע: <b>בעלות, חכירה, שכירות או זיקת הנאה</b>. שכירות לרוב לא נרשמת בנסח.</div>
+
+  <table class="t">
+    <tr><th style="width:20%">סוג הזכות</th><th style="width:38%">מה זה</th><th>רישום בנסח</th></tr>
+    <tr><td><b>בעלות</b></td><td>הזכויות המלאות בנכס</td><td>נרשמת</td></tr>
+    <tr><td><b>חכירה</b></td><td>שימוש ארוך בתשלום, כמו ליסינג</td><td>נרשמת</td></tr>
+    <tr><td><b>שכירות</b></td><td>שימוש בנכס תמורת שכר</td><td>הערה אפשרית מ-5 שנים, בהסכמת בעל הנכס. לרוב לא נרשמת: כדי למחוק את ההערה צריך אישור השוכר.</td></tr>
+    <tr><td><b>זיקת הנאה</b></td><td>מעבר או שימוש בקרקע <b>בלי בעלות</b></td><td><b>חייבת</b> להיות רשומה</td></tr>
+  </table>
+  </div>
+
+  <h3>🚪 זיקת הנאה <span class="time">⏱ 00:46:27</span></h3>
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור): בתים ליד נחל</div>
+    <p>גרים בעורף המגרש, והדרך היחידה עוברת דרך הבתים שבחזית. בלי זיקת הנאה רשומה אפשר לגבות <b>אגרה על כל מעבר</b>.</p>
+  </div>
+  <div class="grid2">
+    <figure class="fig"><svg viewBox="0 0 360 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ארבעה בתים: המעבר היחיד מהנחל לרחוב עובר בין שני הבתים שבחזית"><defs><marker id="ar_ez" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs><path d="M16,30 q14,-10 28,0 t28,0 t28,0 t28,0 t28,0 t28,0 t28,0 t28,0 t28,0 t28,0 t28,0 t28,0" class="acc" fill="none" stroke-width="3"/><path d="M16,43 q14,-10 28,0 t28,0 t28,0 t28,0 t28,0 t28,0 t28,0 t28,0 t28,0 t28,0 t28,0 t28,0" class="acc" fill="none" stroke-width="3"/><text x="180.0" y="15.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:700;fill:var(--accent-dark)">נחל</text><rect x="135.0" y="54.0" width="90.0" height="160.0" class="soft-f acc" stroke-width="2" stroke-dasharray="7 5"/><text x="180.0" y="72.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:800;fill:var(--accent-dark)">זיקת הנאה</text><rect x="225.0" y="84.0" width="80.0" height="50.0" rx="6" class="mid-f acc" stroke-width="2.5"/><text x="265.0" y="117.0" class="ltr" text-anchor="middle" style="font-size:21px;font-weight:800;fill:var(--ink)">1</text><rect x="55.0" y="84.0" width="80.0" height="50.0" rx="6" class="mid-f acc" stroke-width="2.5"/><text x="95.0" y="117.0" class="ltr" text-anchor="middle" style="font-size:21px;font-weight:800;fill:var(--ink)">2</text><rect x="225.0" y="148.0" width="80.0" height="50.0" rx="6" class="mid-f acc" stroke-width="2.5"/><text x="265.0" y="181.0" class="ltr" text-anchor="middle" style="font-size:21px;font-weight:800;fill:var(--ink)">3</text><rect x="55.0" y="148.0" width="80.0" height="50.0" rx="6" class="mid-f acc" stroke-width="2.5"/><text x="95.0" y="181.0" class="ltr" text-anchor="middle" style="font-size:21px;font-weight:800;fill:var(--ink)">4</text><line x1="180.0" y1="84.0" x2="180.0" y2="212.0" class="acc" stroke-width="4" stroke-dasharray="8 6" marker-end="url(#ar_ez)"/><rect x="10.0" y="216.0" width="340.0" height="28.0" rx="4" class="muted-f" fill-opacity="0.2"/><text x="70.0" y="235.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:700;fill:var(--ink)">רחוב</text><text x="331.0" y="113.0" class="he" text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:var(--muted)">ליד הנחל</text><text x="331.0" y="177.0" class="he" text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:var(--muted)">בחזית</text></svg><figcaption>לשים לב: מי שגר ליד הנחל (בתים 1 ו-2) מגיע לרחוב רק דרך המעבר שבין בתים 3 ו-4. בלי זיקת הנאה רשומה אפשר לגבות אגרה על כל מעבר.</figcaption></figure>
+    <ul class="pts">
+      <li>הרישום קובע שמותר לעבור בקרקע. לבעלי הזכות <b>אין זכויות קנייניות</b> בשטח, רק מעבר.</li>
+      <li><b>חניון בית העלמין בחולון</b> (⏱ <span class="ltr">00:48:03</span>): בבעלות פרטית, ולכן התעריף גבוה.</li>
+      <li><b>חניון משותף</b> (⏱ <span class="ltr">00:48:53</span>): 3 או 4 בניינים עם חניון תת-קרקעי משותף. בלי זיקה אי אפשר לעבור בין האגפים או לחנות מבניין א׳ בבניין ב׳.</li>
+    </ul>
+  </div>
+  <ul class="pts">
+    <li><b>קושן</b> (⏱ <span class="ltr">00:49:56</span>): שטר בעלות עות׳מאני (מסמך, לא סוג זכות), ללא מדידה ← רישום לא מדויק. היום לא קונים בלי מדידה או מסמך מהמדינה על השטח, כדי לא לשלם על זכויות גדולות ממה שיש.</li>
+    <li>העתקים נשמרו ב<b>ארכיון באיסטנבול</b>, ובעלי זכויות נסעו לשם להביא מסמך (לחלק עזר, לחלק פחות).</li>
+    <li><b>שאלה בצ׳אט</b> (⏱ <span class="ltr">01:02:39</span>): האם יש זיקת הנאה גם בשבילים? כן, בפרויקטים משותפים (קומפלקס של 3 או 4 מגדלים): בשטחים המשותפים ובשבילים. בפארק ציבורי לא צריך (ראו "שני מובנים").</li>
+    <li><b>חניות</b> (⏱ <span class="ltr">01:03:24</span>): בדרך כלל <b>לא זיקת הנאה</b> אלא <b>הצמדה</b> לדירה (בעשר עד 20 השנים האחרונות). בעבר היו חניות משותפות: "מי שמגיע ראשון חונה".</li>
+    <li>דוגמה (מהשיעור): 12 דירות ו-8 חניות, <b>4 מוצמדות</b> ← נשארות 8 דירות על 4 חניות חופשיות = <b>2 דירות לכל חניה</b>.</li>
+  </ul>
+  <div class="box warn"><div class="box-title">לשים לב: שני מובנים</div><p>"שטח ציבורי" <b>בעיר</b> (פארק) פתוח לכולם ולא דורש רישום. שטח <b>משותף בבניין</b> הוא של הדיירים ודורש רישום. בשיעור נעשה שימוש במונח בשני המובנים.</p></div>
+</section>
+
+<!-- ============ 4. BLOCK / PARCEL / SUB-PARCEL ============ -->
+<section class="topic cont">
+  <div class="keep">
+    <div class="topic-head"><span class="n">4</span><h2>גוש, חלקה ותת חלקה</h2><span class="time">⏱ 00:52:03</span></div>
+    <div class="bl">כדי לאתר נכס צריך <b>שלושה מספרים</b>: גוש, חלקה ותת חלקה.</div>
+    <ul class="pts">
+    <li>הן <b>יחידות קרקעיות</b> (המצב הפיזי) ו<b>יחידות רישומיות</b>. החלוקה היא <b>ירושה מהבריטים</b>.</li>
+    </ul>
+  </div>
+
+  <figure class="fig"><svg viewBox="0 0 720 224" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="גוש מכיל חלקות, חלקה מכילה תתי חלקות"><defs><marker id="ar_h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs><rect x="512.0" y="48.0" width="192.0" height="140.0" rx="10" class="soft-f acc" stroke-width="3"/><rect x="517.5" y="57.0" width="40.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="564.5" y="57.0" width="40.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="611.5" y="57.0" width="40.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="658.5" y="57.0" width="40.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="517.5" y="100.0" width="40.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="564.5" y="100.0" width="40.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="611.5" y="100.0" width="40.0" height="36.0" rx="4" class="acc-f"/><rect x="658.5" y="100.0" width="40.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="517.5" y="143.0" width="40.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="564.5" y="143.0" width="40.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="611.5" y="143.0" width="40.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="658.5" y="143.0" width="40.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="264.0" y="48.0" width="192.0" height="140.0" rx="10" class="soft-f acc" stroke-width="3"/><rect x="308.0" y="76.0" width="104.0" height="84.0" rx="5" class="mid-f acc" stroke-width="2.5"/><rect x="16.0" y="48.0" width="192.0" height="140.0" rx="10" class="soft-f acc" stroke-width="3"/><rect x="27.0" y="57.0" width="52.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="86.0" y="57.0" width="52.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="145.0" y="57.0" width="52.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="27.0" y="100.0" width="52.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="86.0" y="100.0" width="52.0" height="36.0" rx="4" class="acc-f"/><rect x="145.0" y="100.0" width="52.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="27.0" y="143.0" width="52.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="86.0" y="143.0" width="52.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><rect x="145.0" y="143.0" width="52.0" height="36.0" rx="4" class="line" fill="#fff" stroke-width="1.5"/><line x1="508.0" y1="118.0" x2="462.0" y2="118.0" class="ink" stroke-width="3" marker-end="url(#ar_h)"/><line x1="260.0" y1="118.0" x2="214.0" y2="118.0" class="ink" stroke-width="3" marker-end="url(#ar_h)"/><text x="628.4" y="30.0" class="he" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--accent-dark)">גוש</text><text x="588.5" y="30.0" class="ltr" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--accent-dark)">123</text><text x="608.0" y="212.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:500;fill:var(--muted)">יחידת קרקע גדולה</text><text x="368.8" y="30.0" class="he" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--accent-dark)">חלקה</text><text x="335.0" y="30.0" class="ltr" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--accent-dark)">5</text><text x="360.0" y="212.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:500;fill:var(--muted)">יחידת רישום (למשל קרקע של בניין)</text><text x="120.8" y="30.0" class="he" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--accent-dark)">תת חלקה</text><text x="73.3" y="30.0" class="ltr" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--accent-dark)">3</text><text x="112.0" y="212.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:500;fill:var(--muted)">דירה בבית משותף</text></svg><figcaption>מימין לשמאל: הגוש מכיל חלקות, והחלקה מכילה תתי חלקות. (בקירוב, לא נאמר בשיעור: אזור ← קרקע של בניין ← דירה.)</figcaption></figure>
+
+  <ul class="pts">
+    <li><b>גוש</b>: כ-<b>30,000</b> בארץ, בגדלים שונים. הגודל נקבע לפי <b>ייעוד</b>: חקלאי ← גוש <b>גדול</b> (כלים כבדים צריכים מקום לעבוד); מגורים ומשרדים ← גוש <b>קטן</b>.</li>
+    <li>הייעוד נקבע ב<b>תוכניות מתאר</b> מקומיות. הן לא תמיד מפורטות מספיק ← מכינים <b>תב״ע</b> (תוכנית בניין עיר מפורטת) שעליה מוציאים <b>היתר</b>. לפי המרצה, <b>בלי היתר אין בנייה</b>.</li>
+    <li><b>חלקה</b> = חלוקת משנה של הגוש. <b>תת חלקה</b> = חלוקת משנה של החלקה: בבנייה רוויה <b>כל דירה</b>, ובשטח חקלאי חלק מהקרקע.</li>
+  </ul>
+  <div class="box optional"><div class="box-title">מהשקף, לא הוסבר בהקלטה</div><p><b>היטל השבחה</b>: השבחה כתוצאה מתוכנית; בעל הנכס משלם 50% מההשבחה לעירייה. <b>מס שבח</b>: השבחה שלא כתוצאה מאישור תוכנית; בעל הנכס משלם 25% מההשבחה לרשות המסים.</p></div>
+
+  <h3>🏢 בית משותף: ברוב המקרים \(N\) דירות = \(N + 1\) תתי חלקות <span class="time">⏱ 00:56:51</span></h3>
+  <figure class="fig"><svg viewBox="0 0 720 196" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="עשר דירות ועוד תת חלקה עודפת אחת: אחת עשרה תתי חלקות"><rect x="638.0" y="50.0" width="66.0" height="46.0" rx="6" class="soft-f acc" stroke-width="2"/><text x="671.0" y="80.0" class="ltr" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--ink)">1</text><rect x="564.0" y="50.0" width="66.0" height="46.0" rx="6" class="soft-f acc" stroke-width="2"/><text x="597.0" y="80.0" class="ltr" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--ink)">2</text><rect x="490.0" y="50.0" width="66.0" height="46.0" rx="6" class="soft-f acc" stroke-width="2"/><text x="523.0" y="80.0" class="ltr" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--ink)">3</text><rect x="416.0" y="50.0" width="66.0" height="46.0" rx="6" class="soft-f acc" stroke-width="2"/><text x="449.0" y="80.0" class="ltr" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--ink)">4</text><rect x="342.0" y="50.0" width="66.0" height="46.0" rx="6" class="soft-f acc" stroke-width="2"/><text x="375.0" y="80.0" class="ltr" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--ink)">5</text><rect x="638.0" y="104.0" width="66.0" height="46.0" rx="6" class="soft-f acc" stroke-width="2"/><text x="671.0" y="134.0" class="ltr" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--ink)">6</text><rect x="564.0" y="104.0" width="66.0" height="46.0" rx="6" class="soft-f acc" stroke-width="2"/><text x="597.0" y="134.0" class="ltr" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--ink)">7</text><rect x="490.0" y="104.0" width="66.0" height="46.0" rx="6" class="soft-f acc" stroke-width="2"/><text x="523.0" y="134.0" class="ltr" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--ink)">8</text><rect x="416.0" y="104.0" width="66.0" height="46.0" rx="6" class="soft-f acc" stroke-width="2"/><text x="449.0" y="134.0" class="ltr" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--ink)">9</text><rect x="342.0" y="104.0" width="66.0" height="46.0" rx="6" class="soft-f acc" stroke-width="2"/><text x="375.0" y="134.0" class="ltr" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--ink)">10</text><text x="523.0" y="32.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:700;fill:var(--accent-dark)">עשר דירות: כל דירה היא תת חלקה</text><text x="322.0" y="106.0" class="ltr" text-anchor="middle" style="font-size:36px;font-weight:700;fill:var(--muted)">+</text><rect x="30.0" y="50.0" width="262.0" height="100.0" rx="10" class="mid-f acc" stroke-width="2.5" stroke-dasharray="7 5"/><text x="161.0" y="80.0" class="he" text-anchor="middle" style="font-size:16.5px;font-weight:800;fill:var(--ink)">שטחים משותפים</text><text x="161.0" y="104.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:400;fill:var(--ink)">לובי, מדרגות, מעלית, חדר אשפה,</text><text x="161.0" y="122.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:400;fill:var(--ink)">ובמידה ויש: חדר כביסה,</text><text x="161.0" y="140.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:400;fill:var(--ink)">חדר מכונות, מועדון</text><circle cx="278.0" cy="50.0" r="17" class="acc-f"/><text x="278.0" y="56.0" class="ltr" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">11</text><text x="161.0" y="32.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:700;fill:var(--accent-dark)">תת חלקה עודפת</text><text x="578.0" y="184.0" class="he" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">סך הכל תתי חלקות:</text><text x="410.0" y="186.0" class="ltr" text-anchor="middle" style="font-size:21px;font-weight:800;fill:var(--accent-dark)">10 + 1 = 11</text></svg><figcaption>לכל דירה תת חלקה משלה, ועוד תת חלקה עודפת אחת לשטחים המשותפים של כולם.</figcaption></figure>
+  <ul class="pts">
+    <li>ה-11 היא <b>תת חלקה עודפת</b>: היא משמשת לרישום <b>השטחים המשותפים</b> של כולם. בנסח מופיע גם חלקו של כל בעלים בהם, וקונים דירה <b>עם החלק היחסי שלה</b>: חלק גדול יותר ← שווי גבוה יותר.</li>
+    <li><b>בעבר</b>: חלוקה <b>שווה</b> (10 דיירים = 10% לכל אחד). בעשר עד 15 השנים האחרונות החלק לא בהכרח שווה: <b>תלוי מי משלם יותר</b>.</li>
+    <li><b>בפרויקטים חדשים</b> (יד ראשונה): <b>זכויות הגג</b> נמכרות בנפרד (בדרך כלל לקונה של הקומה העליונה), וזה כתוב בהסכם ← אין "לא ידעתי".</li>
+    <li>לפי המרצה, מהות <b>תמ״א 38</b> (תוכנית לחיזוק מבנים; לא נאמר בשיעור) הייתה לתת ליזם את זכויות הגג (2 או 2.5 קומות), והוא מימן מהן חיזוק, ממ״דים, חניות ומרפסות.</li>
+    <li><b>בעלות במושע</b> בתת החלקה העודפת = בעלות משותפת <b>בלתי מסוימת</b>: "בכל מטר יש לי 10%", ואי אפשר להצביע על ה-10% שלי.</li>
+  </ul>
+
+  <div class="worked"><div class="w-title">דוגמה נוספת (לפי 10 הדירות מהשיעור)</div><div class="w-body">
+    <div class="given">בניין עם 10 דירות, חלוקה שווה של השטחים המשותפים. לובי של 40 מ״ר.</div>
+    <div class="ask">כמה תתי חלקות, איזה חלק לכל דירה, וכמה מ״ר מהלובי</div>
+    <ol class="lines">
+      <li>תתי חלקות: 10 דירות ועוד עודפת, \(10 + 1 = 11\)</li>
+      <li>חלק כל דירה: \(100\% \div 10 = 10\%\)</li>
+      <li>בלובי: \(10\% \times 40 = 4\ \text{m}^2\) (אבל "בלתי מסוימים")</li>
+    </ol>
+    <div class="answer">11 תתי חלקות · 10% לכל דירה · 4 מ״ר מהלובי</div>
+    <div class="check">\(10 \times 4 = 40\ \text{m}^2\) ← כל הלובי ✓</div>
+  </div></div>
+</section>
+
+<!-- ============ 5. MOSHAA ============ -->
+<section class="topic cont">
+  <div class="keep">
+    <div class="topic-head"><span class="n">5</span><h2>מושע: מתי מוסיף ערך ומתי מוריד</h2><span class="time">⏱ 01:20:13</span></div>
+    <div class="bl">ריבוי שותפים באותו נכס (למשל יורשים) <b>מוריד שווי</b>, כי קשה להחליט. אבל לפעמים מושע דווקא <b>מוסיף זכויות בנייה</b>.</div>
+  </div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור): ארבעה יורשים</div>
+    <p>ארבעה יורשים, רבע לכל אחד: אחד רוצה להשאיר, שניים מוכנים להשכיר, ואחד במצוקה רוצה לגור בנכס. כל אחד מושך לכיוון אחר ← <b>לא קורה כלום</b>, והנכס נשאר "מיותם" שנים.</p>
+  </div>
+
+  <h3>👥 מה זה מושע, ואיך מגדירים איפה כל חלק</h3>
+  <ul class="pts">
+    <li><b>מושע</b> מופיע בבית משותף (שטחים משותפים) וגם בקרקע חקלאית עם כמה שותפים. לכל שותף <b>חלק יחסי</b>, אבל לא ידוע <b>איפה</b> הוא.</li>
+    <li>הדוגמה (שקף): מגרש של <b>1,000 מ״ר</b>. A בעל <b>40%</b>, B בעל <b>60%</b>. כדי <b>להגדיר איפה חלקו של כל שותף</b> יש <b>שתי דרכים</b>:</li>
+  </ul>
+  <div class="grid2">
+    <div class="card"><div class="c-title">דרך א׳: הסכם שיתוף</div><p>מסמך משפטי שמגדיר איפה חלקו של כל שותף (המודד מכין מפה; לרוב "חלוקה מרצון": שני הצדדים מסכימים על המיקום). ברישום <b>נשארים במושע</b>, עם הערה בנסח. <b>ההסכם עובר עם הזכויות</b>: אם שותף מוכר, הקונה נכנס בנעליו ומקבל את אותו מיקום במפה.</p></div>
+    <div class="card"><div class="c-title">דרך ב׳: חלוקה בעין (פרצלציה)</div><p>חלוקה <b>פיזית</b>: נוצרות <b>שתי תתי חלקות חדשות</b>. מתאים לשותפים שלא רוצים להיות תלויים זה בזה, למשל זוג מתגרש או יורשים.</p></div>
+  </div>
+
+  <h3>📉 למה ריבוי שותפים מוריד שווי? <span class="time">⏱ 01:25:46</span></h3>
+  <figure class="fig"><svg viewBox="0 0 720 226" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="שווי נכס בבעלות יחיד מול עשרה שותפים, ועץ ירושה"><text x="555.0" y="22.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:700;fill:var(--muted)">שווי הנכס (₪)</text><rect x="620.0" y="65.0" width="70.0" height="125.0" rx="4" class="acc-f"/><text x="655.0" y="56.0" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:800;fill:var(--ink)">1,000,000</text><rect x="530.0" y="83.8" width="70.0" height="106.2" rx="4" class="mid-f acc" stroke-width="2.5"/><text x="565.0" y="74.8" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:800;fill:var(--ink)">850,000</text><text x="565.0" y="113.8" class="ltr" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--bad)">−15%</text><rect x="440.0" y="90.0" width="70.0" height="100.0" rx="4" class="mid-f acc" stroke-width="2.5"/><text x="475.0" y="81.0" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:800;fill:var(--ink)">800,000</text><text x="475.0" y="120.0" class="ltr" text-anchor="middle" style="font-size:19px;font-weight:800;fill:var(--bad)">−20%</text><line x1="425.0" y1="190.0" x2="705.0" y2="190.0" class="ink" stroke-width="2.5"/><text x="655.0" y="212.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:600;fill:var(--ink)">בעלים יחיד</text><line x1="444.0" y1="200.0" x2="596.0" y2="200.0" class="ink" stroke-width="2"/><text x="520.0" y="218.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:600;fill:var(--ink)">עשרה שותפים</text><line x1="380.0" y1="12.0" x2="380.0" y2="214.0" class="line" stroke-width="1.5" stroke-dasharray="4 5"/><text x="190.0" y="22.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:700;fill:var(--muted)">ירושה: יותר ויותר שותפים</text><rect x="150.0" y="34.0" width="80.0" height="28.0" rx="8" class="soft-f acc" stroke-width="2.5"/><text x="190.0" y="54.0" class="he" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">הנכס</text><line x1="190.0" y1="62.0" x2="80.0" y2="84.0" class="ink" stroke-width="2"/><rect x="48.0" y="84.0" width="64.0" height="28.0" rx="8" class="soft-f acc" stroke-width="2.5"/><text x="80.0" y="104.0" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:800;fill:var(--ink)">1/3</text><line x1="80.0" y1="112.0" x2="52.0" y2="142.0" class="ink" stroke-width="1.5"/><circle cx="52.0" cy="152.0" r="10" class="acc-f"/><line x1="80.0" y1="112.0" x2="80.0" y2="142.0" class="ink" stroke-width="1.5"/><circle cx="80.0" cy="152.0" r="10" class="acc-f"/><line x1="80.0" y1="112.0" x2="108.0" y2="142.0" class="ink" stroke-width="1.5"/><circle cx="108.0" cy="152.0" r="10" class="acc-f"/><line x1="190.0" y1="62.0" x2="190.0" y2="84.0" class="ink" stroke-width="2"/><rect x="158.0" y="84.0" width="64.0" height="28.0" rx="8" class="soft-f acc" stroke-width="2.5"/><text x="190.0" y="104.0" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:800;fill:var(--ink)">1/3</text><line x1="190.0" y1="112.0" x2="162.0" y2="142.0" class="ink" stroke-width="1.5"/><circle cx="162.0" cy="152.0" r="10" class="acc-f"/><line x1="190.0" y1="112.0" x2="190.0" y2="142.0" class="ink" stroke-width="1.5"/><circle cx="190.0" cy="152.0" r="10" class="acc-f"/><line x1="190.0" y1="112.0" x2="218.0" y2="142.0" class="ink" stroke-width="1.5"/><circle cx="218.0" cy="152.0" r="10" class="acc-f"/><line x1="190.0" y1="62.0" x2="300.0" y2="84.0" class="ink" stroke-width="2"/><rect x="268.0" y="84.0" width="64.0" height="28.0" rx="8" class="soft-f acc" stroke-width="2.5"/><text x="300.0" y="104.0" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:800;fill:var(--ink)">1/3</text><line x1="300.0" y1="112.0" x2="272.0" y2="142.0" class="ink" stroke-width="1.5"/><circle cx="272.0" cy="152.0" r="10" class="acc-f"/><line x1="300.0" y1="112.0" x2="300.0" y2="142.0" class="ink" stroke-width="1.5"/><circle cx="300.0" cy="152.0" r="10" class="acc-f"/><line x1="300.0" y1="112.0" x2="328.0" y2="142.0" class="ink" stroke-width="1.5"/><circle cx="328.0" cy="152.0" r="10" class="acc-f"/><text x="245.0" y="194.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:600;fill:var(--ink)">תשעה שותפים, לכל אחד</text><text x="128.0" y="195.0" class="ltr" text-anchor="middle" style="font-size:17px;font-weight:800;fill:var(--accent-dark)">1/9</text></svg><figcaption>לשים לב: אותו נכס, אבל עם עשרה שותפים השווי יורד ב-15% עד 20%. משמאל: ירושה מכפילה שותפים (3 אחים, שליש לכל אחד, ולכל אח 3 ילדים ← 9 שותפים; אחרי עוד דור, עשרות ואפילו מאות).</figcaption></figure>
+  <ul class="pts">
+    <li><b>שווי יורד</b> (לפי המרצה, להמחשה): נכס של 1,000,000 ₪ אצל בעלים יחיד שווה 800,000 עד 850,000 ₪ עם 10 שותפים. הירידה: \(1{,}000{,}000 - 850{,}000 = 150{,}000\), כלומר <b>15%</b>, ובדומה <b>20%</b> ל-800,000. (לא מדובר בשטחים המשותפים של בית משותף; כך הובהר בשיעור.)</li>
+    <li><b>הסיבה הנכונה</b>: קשה להחליט <b>איך ממשים את הזכויות</b> (מכירה או בנייה). בלי הסכמה ← סכסוך ← המחיר נפגע. אם כולם מסכימים, אפילו 100 שותפים מוכרים במחיר ראוי. (לא הסיבה, לפי תשובות מהכיתה: "הדירה מתחלקת" או "שכר טרחה".)</li>
+    <li><b>ירושה לא אחידה</b> (⏱ <span class="ltr">01:35:22</span>): ילד אחד מקבל יותר ← "מראש גוררת סכסוך", ולכן כדאי להוריש בצורה אחידה.</li>
+  </ul>
+  <h3>📈 ומתי מושע דווקא מוסיף? <span class="time">⏱ 01:36:58</span></h3>
+  <ul class="pts">
+    <li>לפי תב״ע (דוגמת השקף): מגרש מינימלי של <b>500 מ״ר = יחידת דיור (יח״ד) אחת</b>, ומגרש של <b>1,000 מ״ר = 3 יח״ד</b>.</li>
+    <li><b>במושע</b> עם הסכם שיתוף: המגרש הוא 1,000 מ״ר ← <b>3 יח״ד</b>. המושע הוסיף 2 (בחלוקה בעין: יחידה אחת).</li>
+    <li>את ה-3 מחלקים <b>בהסכמה</b>, למשל: (1) בונים, מוכרים ומחלקים 40:60; (2) כל שותף מקבל יחידה, ועל השלישית מחלקים 40:60 (A מקבל 1.4 מתוך 3).</li>
+  </ul>
+  <figure class="fig"><svg viewBox="0 0 720 312" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="מושע עם הסכם שיתוף נותן שלוש יחידות דיור, חלוקה בעין נותנת אחת"><defs><marker id="ar_m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs><text x="545.0" y="24.0" class="he" text-anchor="middle" style="font-size:16px;font-weight:800;fill:var(--accent-dark)">נשארים במושע (הסכם שיתוף)</text><rect x="395.0" y="38.0" width="300.0" height="112.0" rx="10" class="soft-f acc" stroke-width="3"/><text x="545.0" y="92.0" class="ltr" text-anchor="middle" style="font-size:28px;font-weight:800;fill:var(--ink)">1,000</text><text x="545.0" y="116.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:600;fill:var(--muted)">מ״ר, מגרש אחד</text><text x="545.0" y="138.0" class="he" text-anchor="middle" style="font-size:13px;font-weight:400;fill:var(--muted)">בלי קו חלוקה</text><text x="630.0" y="177.0" class="ltr" text-anchor="middle" style="font-size:17px;font-weight:800;fill:var(--ink)">A: 40%</text><text x="460.0" y="177.0" class="ltr" text-anchor="middle" style="font-size:17px;font-weight:800;fill:var(--ink)">B: 60%</text><text x="545.0" y="203.0" class="he" text-anchor="middle" style="font-size:13px;font-weight:400;fill:var(--muted)">ההסכם קובע איפה כל אחד</text><rect x="445.0" y="236.0" width="200.0" height="66.0" rx="12" class="acc-f"/><text x="585.0" y="283.0" class="ltr" text-anchor="middle" style="font-size:40px;font-weight:800;fill:#fff">3</text><text x="503.0" y="280.0" class="he" text-anchor="middle" style="font-size:21px;font-weight:700;fill:#fff">יח״ד</text><text x="175.0" y="24.0" class="he" text-anchor="middle" style="font-size:16px;font-weight:800;fill:var(--accent-dark)">חלוקה בעין (פרצלציה)</text><rect x="25.0" y="38.0" width="180.0" height="112.0" class="soft-f"/><rect x="205.0" y="38.0" width="120.0" height="112.0" class="bad-f" fill-opacity="0.16"/><rect x="25.0" y="38.0" width="300.0" height="112.0" rx="10" class="acc" fill="none" stroke-width="3"/><line x1="205.0" y1="38.0" x2="205.0" y2="150.0" class="ink" stroke-width="3"/><text x="265.0" y="92.0" class="ltr" text-anchor="middle" style="font-size:27px;font-weight:800;fill:var(--bad)">400</text><text x="265.0" y="116.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:600;fill:var(--muted)">מ״ר</text><text x="115.0" y="92.0" class="ltr" text-anchor="middle" style="font-size:27px;font-weight:800;fill:var(--ink)">600</text><text x="115.0" y="116.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:600;fill:var(--muted)">מ״ר</text><text x="265.0" y="177.0" class="ltr" text-anchor="middle" style="font-size:17px;font-weight:800;fill:var(--ink)">A</text><text x="115.0" y="177.0" class="ltr" text-anchor="middle" style="font-size:17px;font-weight:800;fill:var(--ink)">B</text><text x="265.0" y="199.0" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:800;fill:var(--bad)">&lt; 500</text><text x="265.0" y="218.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:700;fill:var(--bad)">אין זכות לבנות</text><text x="115.0" y="199.0" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:800;fill:var(--ok)">≥ 500</text><text x="115.0" y="218.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:700;fill:var(--ok)">יחידה אחת</text><rect x="75.0" y="236.0" width="200.0" height="66.0" rx="12" class="acc-f"/><text x="215.0" y="283.0" class="ltr" text-anchor="middle" style="font-size:40px;font-weight:800;fill:#fff">1</text><text x="133.0" y="280.0" class="he" text-anchor="middle" style="font-size:21px;font-weight:700;fill:#fff">יח״ד</text><text x="360.0" y="238.0" class="he" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--muted)">המושע מוסיף</text><line x1="281.0" y1="269.0" x2="439.0" y2="269.0" class="acc" stroke-width="4" marker-end="url(#ar_m)"/><circle cx="360.0" cy="269.0" r="23" class="dark-f"/><text x="360.0" y="277.0" class="ltr" text-anchor="middle" style="font-size:21px;font-weight:800;fill:#fff">+2</text></svg><figcaption>בחלוקה בעין רק ל-B יש זכות בנייה (יחידה אחת). במושע המגרש כולו 1,000 מ״ר ← 3 יחידות.</figcaption></figure>
+  <div class="box lecturer"><div class="box-title">בשיעור הודגש</div><p>תמיד לדון <b>לגופו של עניין</b>: מושע יכול להוריד שווי וגם להוסיף זכויות בנייה.</p></div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): מושע מול חלוקה בעין</div><div class="w-body">
+    <div class="given">מגרש 1,000 מ״ר. A בעל 40%, B בעל 60%. מגרש מינימלי: 500 מ״ר ליח״ד אחת, 1,000 מ״ר ל-3 יח״ד.</div>
+    <div class="ask">כמה יח״ד אפשר לבנות בחלוקה בעין, וכמה במושע</div>
+    <ol class="lines">
+      <li>חלוקה בעין, \(A\): \(1{,}000 \times 0.4 = 400\ \text{m}^2\) ← \(400 &lt; 500\) ← 0 יח״ד</li>
+      <li>חלוקה בעין, \(B\): \(1{,}000 \times 0.6 = 600\ \text{m}^2\) ← \(600 \ge 500\) ← 1 יח״ד</li>
+      <li>במושע: \(1{,}000\ \text{m}^2\) ← 3 יח״ד. הפרש: \(3 - 1 = 2\)</li>
+    </ol>
+    <div class="answer">חלוקה בעין: 1 יח״ד. במושע: 3 יח״ד. המושע מוסיף 2</div>
+    <div class="check">\(400 + 600 = 1{,}000\ \text{m}^2\) ✓ · חלוקה 40:60 של 3 יחידות: \(1.2 + 1.8 = 3\) ✓</div>
+  </div></div>
+</section>
+
+<!-- ============ 6. PLOTS, URBAN RENEWAL, MONEY ============ -->
+<section class="topic cont">
+  <div class="keep">
+    <div class="topic-head"><span class="n">6</span><h2>מגרש, התחדשות עירונית והגנה על הכסף</h2><span class="time">⏱ 01:40:53</span></div>
+    <div class="bl">מגרש הוא <b>שם זמני</b> שהופך לחלקה ברישום. לפני שמעבירים כסף: <b>נאמן והערת אזהרה</b>.</div>
+    <h3>🗺️ מגרש מול חלקה</h3>
+    <ul class="pts">
+    <li>הדוגמה (שקף): גוש 123, חלקה 5. מתכננים שכונה עם ארבעה שימושים: <b>דרך, שצ״פ</b> (שטח ציבורי פתוח), <b>בנייה רוויה וצמודי קרקע</b>. קל לתכנן מגרש עם שימוש אחד.</li>
+    </ul>
+  </div>
+    <figure class="fig"><svg viewBox="0 0 720 244" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="חלקה אחת מתחלקת בתכנון לארבעה מגרשים, ובסוף הרישום הם הופכים לחלקות"><defs><marker id="ar_pl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="acc-f"/></marker></defs><rect x="512.0" y="46.0" width="184.0" height="140.0" rx="6" class="soft-f acc" stroke-width="3"/><text x="604.0" y="116.0" class="he" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">ייעוד חקלאי</text><text x="604.0" y="138.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:400;fill:var(--muted)">חלקה אחת</text><path d="M264,46 H448 V74 H264 Z" class="muted-f" fill-opacity="0.3"/><path d="M264,74 H334 V186 H264 Z" class="ok-f" fill-opacity="0.28"/><path d="M334,116 H394 V186 H334 Z" class="acc-f" fill-opacity="0.42"/><path d="M334,74 H448 V186 H394 V116 H334 Z" class="warn-f" fill-opacity="0.3"/><line x1="264.0" y1="74.0" x2="448.0" y2="74.0" class="ink" stroke-width="2"/><line x1="334.0" y1="74.0" x2="334.0" y2="186.0" class="ink" stroke-width="2"/><line x1="334.0" y1="116.0" x2="394.0" y2="116.0" class="ink" stroke-width="2"/><line x1="394.0" y1="116.0" x2="394.0" y2="186.0" class="ink" stroke-width="2"/><rect x="264.0" y="46.0" width="184.0" height="140.0" rx="6" class="acc" fill="none" stroke-width="3"/><text x="360.0" y="65.0" class="he" text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:var(--ink)">דרך</text><text x="299.0" y="146.0" class="he" text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:var(--ink)">שצ״פ</text><text x="364.0" y="158.0" class="he" text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:var(--ink)">בנייה</text><text x="421.0" y="128.0" class="he" text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:var(--ink)">צמודי</text><text x="364.0" y="173.0" class="he" text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:var(--ink)">רוויה</text><text x="421.0" y="144.0" class="he" text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:var(--ink)">קרקע</text><circle cx="292.0" cy="60.0" r="12" class="ink" fill="#fff" stroke-width="2"/><text x="292.0" y="65.0" class="ltr" text-anchor="middle" style="font-size:14px;font-weight:800;fill:var(--ink)">6</text><circle cx="299.0" cy="118.0" r="12" class="ink" fill="#fff" stroke-width="2"/><text x="299.0" y="123.0" class="ltr" text-anchor="middle" style="font-size:14px;font-weight:800;fill:var(--ink)">7</text><circle cx="364.0" cy="136.0" r="12" class="ink" fill="#fff" stroke-width="2"/><text x="364.0" y="141.0" class="ltr" text-anchor="middle" style="font-size:14px;font-weight:800;fill:var(--ink)">8</text><circle cx="421.0" cy="102.0" r="12" class="ink" fill="#fff" stroke-width="2"/><text x="421.0" y="107.0" class="ltr" text-anchor="middle" style="font-size:14px;font-weight:800;fill:var(--ink)">9</text><path d="M16,46 H200 V74 H16 Z" class="muted-f" fill-opacity="0.3"/><path d="M16,74 H86 V186 H16 Z" class="ok-f" fill-opacity="0.28"/><path d="M86,116 H146 V186 H86 Z" class="acc-f" fill-opacity="0.42"/><path d="M86,74 H200 V186 H146 V116 H86 Z" class="warn-f" fill-opacity="0.3"/><line x1="16.0" y1="74.0" x2="200.0" y2="74.0" class="ink" stroke-width="2"/><line x1="86.0" y1="74.0" x2="86.0" y2="186.0" class="ink" stroke-width="2"/><line x1="86.0" y1="116.0" x2="146.0" y2="116.0" class="ink" stroke-width="2"/><line x1="146.0" y1="116.0" x2="146.0" y2="186.0" class="ink" stroke-width="2"/><rect x="16.0" y="46.0" width="184.0" height="140.0" rx="6" class="acc" fill="none" stroke-width="3"/><text x="112.0" y="65.0" class="he" text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:var(--ink)">דרך</text><text x="51.0" y="146.0" class="he" text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:var(--ink)">שצ״פ</text><text x="116.0" y="158.0" class="he" text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:var(--ink)">בנייה</text><text x="173.0" y="128.0" class="he" text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:var(--ink)">צמודי</text><text x="116.0" y="173.0" class="he" text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:var(--ink)">רוויה</text><text x="173.0" y="144.0" class="he" text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:var(--ink)">קרקע</text><circle cx="44.0" cy="60.0" r="12" class="acc-f"/><text x="44.0" y="65.0" class="ltr" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">6</text><circle cx="51.0" cy="118.0" r="12" class="acc-f"/><text x="51.0" y="123.0" class="ltr" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">7</text><circle cx="116.0" cy="136.0" r="12" class="acc-f"/><text x="116.0" y="141.0" class="ltr" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">8</text><circle cx="173.0" cy="102.0" r="12" class="acc-f"/><text x="173.0" y="107.0" class="ltr" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">9</text><line x1="508.0" y1="116.0" x2="454.0" y2="116.0" class="acc" stroke-width="4" marker-end="url(#ar_pl)"/><line x1="260.0" y1="116.0" x2="206.0" y2="116.0" class="acc" stroke-width="4" marker-end="url(#ar_pl)"/><text x="486.0" y="104.0" class="he" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--accent-dark)">תכנון</text><text x="238.0" y="104.0" class="he" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--accent-dark)">רישום</text><text x="604.0" y="28.0" class="he" text-anchor="middle" style="font-size:16px;font-weight:800;fill:var(--accent-dark)">לפני התכנון</text><text x="356.0" y="28.0" class="he" text-anchor="middle" style="font-size:16px;font-weight:800;fill:var(--accent-dark)">בתכנון ובביצוע</text><text x="108.0" y="28.0" class="he" text-anchor="middle" style="font-size:16px;font-weight:800;fill:var(--accent-dark)">אחרי הרישום</text><text x="646.8" y="212.0" class="he" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">גוש</text><text x="615.3" y="212.0" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">123</text><text x="579.5" y="212.0" class="he" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">חלקה</text><text x="552.7" y="212.0" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">5</text><text x="381.0" y="212.0" class="he" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">מגרשים</text><text x="345.6" y="212.0" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">6</text><text x="327.6" y="212.0" class="he" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">עד</text><text x="309.6" y="212.0" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--ink)">9</text><text x="133.0" y="212.0" class="he" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--accent-dark)">חלקות</text><text x="102.0" y="212.0" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--accent-dark)">6</text><text x="83.9" y="212.0" class="he" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--accent-dark)">עד</text><text x="65.9" y="212.0" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:700;fill:var(--accent-dark)">9</text><text x="645.6" y="234.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:600;fill:var(--muted)">חלקה</text><text x="621.6" y="234.0" class="ltr" text-anchor="middle" style="font-size:13.5px;font-weight:600;fill:var(--muted)">5</text><text x="580.0" y="234.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:600;fill:var(--muted)">עוד קיימת</text><text x="159.3" y="234.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:700;fill:var(--bad)">חלקה</text><text x="135.3" y="234.0" class="ltr" text-anchor="middle" style="font-size:13.5px;font-weight:700;fill:var(--bad)">5</text><text x="84.0" y="234.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:700;fill:var(--bad)">כבר לא קיימת</text></svg><figcaption>מימין לשמאל: חלקה חקלאית אחת ← ארבעה מגרשים בתכנון ← ארבע חלקות חדשות ברישום. החלקה המקורית כבר לא קיימת.</figcaption></figure>
+  <ul class="pts">
+    <li>שלבים: <b>תכנון ← ביצוע ← רישום</b>. ברישום כל מגרש הופך <b>לחלקה</b>: מגרש 6 ← חלקה 6, וכן הלאה. נסח על חלקה 5 יחזיר שגיאה (נסח היסטורי עדיין יראה את הייעוד החקלאי).</li>
+    <li><b>מגרש</b> = יחידה תכנונית, שם זמני בהליך בנייה. גוש, חלקה ותת חלקה = יחידות רישום.</li>
+  </ul>
+
+  <h3>🏗️ יוצא מן הכלל: התחדשות עירונית <span class="time">⏱ 01:44:40</span></h3>
+  <ul class="pts">
+    <li>בתמ״א 38/2 או בפינוי-בינוי (הריסה ובנייה מחדש) הבניין נהרס, ואין מה לאתר לפי גוש, חלקה ותת חלקה ← הזכויות <b>מעוגנות במגרש ובתוכנית</b>.</li>
+    <li>דוגמה (המרצה): "<b>מגרש 203</b>, לפי תוכנית 332: היזם אמור להקנות לי דירה חלופית של 120 מ״ר בקומה 5".</li>
+    <li>בנסח תופיע הערה: <b>הבניין בהליך פינוי-בינוי</b>, "ראה תב״ע נקודתית". בתב״ע: תמהיל הדירות, ולכל דירה הבעלים, השטח וההצמדות (מרפסת, חניה, מחסן). דירות <b>בבעלות המדינה</b> לא נכנסות לפרויקט של דיירים: המדינה מבצעת בעצמה (⏱ <span class="ltr">01:49:54</span>).</li>
+    <li>הזכות היא <b>מכוח הסכם</b> עם היזם, ולכן חשוב לעגן אותה בהסכם. לפי המרצה, בנדל״ן <b>הכול חייב להיות רשום</b>: העברה בעל פה אפשרית רק במקרים נדירים (שני עדים ללא אינטרס, והמעביר במצב בריאותי קשה).</li>
+  </ul>
+
+  <h3>💸 לפני שמעבירים כסף: שתי פרשות (לפי המרצה) <span class="time">⏱ 01:52:16</span></h3>
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור): גבינה, מוסך ודירה</div>
+    <p>על גבינה בודקים כמה פעמים איזו לקנות, ועל דירה ב-5 מיליון ₪ חותמים בלי בדיקה. כשיש תקלה ברכב הולכים למוסך: גם כאן צריך <b>איש מקצוע</b>.</p>
+  </div>
+  <div class="grid2">
+    <div class="card"><div class="c-title">פרשה 1: קבוצת רכישה</div>
+      <ul class="pts">
+        <li>בעל קרקע נותן <b>אופציה</b> (זמן קצוב) למארגן לגייס חברים וכסף.</li>
+        <li>אופציה שנגמרה בלי חברים ← מועברים <b>10% משווי הקרקע</b> (20 מיליון מתוך 200).</li>
+        <li>כ-<b>100 רוכשים</b> חתמו שאפשר להשתמש בכספם 30 יום ← <b>הכסף נעלם</b>.</li>
+      </ul>
+    </div>
+    <div class="card"><div class="c-title">פרשה 2: חפציבה (2007)</div>
+      <ul class="pts">
+        <li>יזם עם חובות הציע בפרויקט רווחי <b>הנחה</b> של 50 או 100 אלף ₪, בתנאי שהצ׳ק על <b>שמו</b> ולא על שם החברה.</li>
+        <li>הכסף כיסה <b>חובות בפרויקט אחר</b>.</li>
+      </ul>
+    </div>
+  </div>
+  <figure class="fig"><svg viewBox="0 0 720 244" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="העברת כסף: דרך לא בטוחה מול דרך בטוחה עם נאמן"><defs><marker id="ar_bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="bad-f"/></marker><marker id="ar_ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ok-f"/></marker></defs><rect x="612.0" y="6.0" width="98.0" height="24.0" rx="12" class="bad-f"/><text x="633.0" y="24.0" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:800;fill:#fff">✗</text><text x="675.0" y="23.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">לא בטוח</text><rect x="505.0" y="46.0" width="205.0" height="68.0" rx="10" class="bad-f bad" stroke-width="2.5" fill-opacity="0.09"/><circle cx="697.0" cy="46.0" r="13" class="dark-f"/><text x="697.0" y="51.0" class="ltr" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">1</text><text x="607.5" y="75.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:700;fill:var(--ink)">הקונה מעביר כסף</text><text x="607.5" y="96.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:400;fill:var(--muted)">ישר למארגן או למוכר</text><rect x="255.0" y="46.0" width="205.0" height="68.0" rx="10" class="bad-f bad" stroke-width="2.5" fill-opacity="0.09"/><circle cx="447.0" cy="46.0" r="13" class="dark-f"/><text x="447.0" y="51.0" class="ltr" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">2</text><text x="357.5" y="75.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:700;fill:var(--ink)">אין רישום בטאבו</text><text x="357.5" y="96.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:400;fill:var(--muted)">על שם הקונה</text><rect x="5.0" y="46.0" width="205.0" height="68.0" rx="10" class="bad-f bad" stroke-width="2.5" fill-opacity="0.09"/><circle cx="197.0" cy="46.0" r="13" class="dark-f"/><text x="197.0" y="51.0" class="ltr" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">3</text><text x="107.5" y="75.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:700;fill:var(--bad)">אם יש חובות: אין זכות</text><text x="107.5" y="96.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:400;fill:var(--bad)">וקשה להוכיח ששילמו</text><line x1="501.0" y1="80.0" x2="465.0" y2="80.0" class="bad" stroke-width="3" marker-end="url(#ar_bad)"/><line x1="251.0" y1="80.0" x2="215.0" y2="80.0" class="bad" stroke-width="3" marker-end="url(#ar_bad)"/><rect x="612.0" y="130.0" width="98.0" height="24.0" rx="12" class="ok-f"/><text x="633.0" y="148.0" class="ltr" text-anchor="middle" style="font-size:15px;font-weight:800;fill:#fff">✓</text><text x="675.0" y="147.0" class="he" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">בטוח</text><rect x="505.0" y="170.0" width="205.0" height="68.0" rx="10" class="ok-f ok" stroke-width="2.5" fill-opacity="0.09"/><circle cx="697.0" cy="170.0" r="13" class="dark-f"/><text x="697.0" y="175.0" class="ltr" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">1</text><text x="607.5" y="199.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:700;fill:var(--ink)">הקונה מעביר כסף</text><text x="607.5" y="220.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:400;fill:var(--muted)">לנאמן</text><rect x="255.0" y="170.0" width="205.0" height="68.0" rx="10" class="ok-f ok" stroke-width="2.5" fill-opacity="0.09"/><circle cx="447.0" cy="170.0" r="13" class="dark-f"/><text x="447.0" y="175.0" class="ltr" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">2</text><text x="357.5" y="199.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:700;fill:var(--ink)">הזכות נרשמת על שם הקונה</text><text x="357.5" y="220.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:400;fill:var(--muted)">(או הערת אזהרה בטאבו)</text><rect x="5.0" y="170.0" width="205.0" height="68.0" rx="10" class="ok-f ok" stroke-width="2.5" fill-opacity="0.09"/><circle cx="197.0" cy="170.0" r="13" class="dark-f"/><text x="197.0" y="175.0" class="ltr" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#fff">3</text><text x="107.5" y="199.0" class="he" text-anchor="middle" style="font-size:14.5px;font-weight:700;fill:var(--ink)">רק אז הנאמן מעביר</text><text x="107.5" y="220.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:400;fill:var(--muted)">את הכסף למוכר</text><line x1="501.0" y1="204.0" x2="465.0" y2="204.0" class="ok" stroke-width="3" marker-end="url(#ar_ok)"/><line x1="251.0" y1="204.0" x2="215.0" y2="204.0" class="ok" stroke-width="3" marker-end="url(#ar_ok)"/></svg><figcaption>שתי דרכים להעביר כסף על נכס. בדרך הבטוחה הכסף נשאר אצל הנאמן עד שהזכות רשומה על שם הקונה.</figcaption></figure>
+  <div class="box lecturer"><div class="box-title">בשיעור הודגש: מה היה נכון לעשות</div><p><b>עורך דין או שמאי</b>, ו<b>נאמן</b> או <b>הערת אזהרה</b> (רישום בנסח שמגן על זכות הקונה). לא פועלים לבד, ולא מעבירים כסף <b>לפני</b> שהזכות נרשמה.</p></div>
+  <ul class="pts">
+    <li><b>תגובת המדינה</b> לחפציבה: חוק המכר (דירות), הפקדה בחשבון צדדי לפי התקדמות הפרויקט, והיום ליווי בנקאי עם <b>חשבון פתוח וסגור</b> ושוברים, למניעת זליגה בין חשבונות.</li>
+    <li><b>סדר נושים</b>: קודם בנקים ומדינה (מסים, הפרשות לעובדים), אחר כך ספקים, והרוכשים <b>אחרונים</b>. מול חוב של 90 מיליון, 20 מיליון מכסים כ-22% בלבד, ולרוכשים לא נשאר דבר.</li>
+    <li><b>הרמת מסך</b>: חברה בע״מ שנכנסה לגרעון בתום לב נסגרת, והרכוש הפרטי של הבעלים לא נפגע. אם ההתנהלות <b>לא בתום לב</b>, מחברים בין החברה לחשבונות הפרטיים של הבעלים.</li>
+  </ul>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): כמה בסיכון, וכמה עולה ייעוץ?</div><div class="w-body">
+    <div class="given">100 רוכשים, 100,000 ₪ כל אחד. ייעוץ של שמאי או עורך דין: 1,000 ₪ פלוס מע״מ לאדם.</div>
+    <div class="ask">כמה כסף בסיכון, וכמה עולה ייעוץ לכולם (לפני מע״מ)</div>
+    <ol class="lines">
+      <li>כסף בסיכון: \(100 \times 100{,}000 = 10{,}000{,}000\) ₪</li>
+      <li>ייעוץ לכולם: \(100 \times 1{,}000 = 100{,}000\) ₪</li>
+      <li>היחס: \(100{,}000 \div 10{,}000{,}000 = 1\%\)</li>
+    </ol>
+    <div class="answer">10 מיליון ₪ בסיכון מול 100 אלף ₪ לייעוץ: 1% מההפסד</div>
+    <div class="check">\(1\% \times 10{,}000{,}000 = 100{,}000\) ✓</div>
+  </div></div>
+</section>
+
+<!-- ============ 7. SETTLEMENT + EARTH ============ -->
+<section class="topic cont">
+  <div class="keep">
+    <div class="topic-head"><span class="n">7</span><h2>הליך ההסדר וצורת כדור הארץ</h2><span class="time">⏱ 02:08:53</span></div>
+    <div class="bl"><b>הליך ההסדר</b> קובע גבולות, שטח ובעלות של החלקה. עד שהוא מסתיים, עסקאות <b>מסוכנות</b>.</div>
+    <ul class="pts">
+    <li>לפי המרצה, ההליך התחיל בימי הבריטים, בסביבות <b>1929</b>. הרישום העות׳מאני לא לווה במדידה ← נדרשה שיטה שמשלבת מדידה, כדי שמוכר וקונה ידעו מה קונים ומוכרים.</li>
+    </ul>
+  </div>
+  <ul class="pts">
+    <li>עד היום כ-<b>10%</b> משטח המדינה לא הוסדרו. לפי המרצה, בלי הסדר אי אפשר לבצע פעולות כמו מכירה, קנייה ובנייה, כי אף צד לא יודע מה השטח (בפועל יש עסקאות, בסיכון גבוה).</li>
+    <li><b>שיטת טורנס</b> (מאוסטרליה): המדינה <b>ערבה</b> לגבולות ולשטח. אם יש טענה, אפשר להתלונן נגד המדינה. לפי המרצה, בדרך כלל אין ערעור אחרי ההליך: המדינה קובעת לפי המסמכים ההיסטוריים שברשותה.</li>
+    <li>ב<b>שכונת התקווה</b> (לפי המרצה): סיפוחי קרקע לא חוקיים (חלק ממדרכה או מכביש) במשך 50 עד 60 שנה, ומאות או אלפי יורשים ← ההסדר איטי. <b>יש עסקאות, אבל בסיכון גבוה מאוד</b>.</li>
+    <li>ב<b>צפון הנגב</b> (לפי המרצה): חוק עות׳מאני קבע שעיבוד רציף של <b>15 שנה</b> מקנה טענה לזכויות, והמחלוקת היא אם העיבוד היה "רציף". כשני מיליון דונם בהליכים משפטיים ← בדרך כלל <b>לא לבצע עסקאות</b>.</li>
+  </ul>
+  <h3>🧭 סדר הפעולות: ממדידה לרישום</h3>
+  <ol class="steps">
+    <li><b>הליך הסדר</b>: מדידה וקביעת גבולות, שטח ובעלות.</li>
+    <li><b>פרצלציה או רפרצלציה</b>: חלוקה מחדש של הקרקע ליחידות לפי בעלויות וזכויות.</li>
+    <li><b>רישום</b> גוש, חלקה ותת חלקה.</li>
+    <li><b>רישום בית משותף</b>: תתי חלקות ועוד עודפת.</li>
+  </ol>
+  <p>בכל השלבים <b>המודד מעורב</b>, ותפקידו קריטי.</p>
+
+  <h3>🌍 צורות כדור הארץ <span class="time">⏱ 02:18:42</span></h3>
+  <ul class="pts">
+    <li>לפי השקף יש <b>ארבע צורות</b>: משטח, כדור, אליפסואיד וגיאואידה. בשיעור נדונו <b>משטח וכדור</b>, והשאר <b>בשבוע הבא</b>.</li>
+    <li>מהשקף בלבד: <b>אליפסואיד ייחוס</b> = צמד רדיוסים (גדול וקטן) שנמדד במקום מסוים (בארץ: קלארק 1880), ו<b>גיאואידה</b> = הצורה המשויכת היום לכדור הארץ.</li>
+    <li><b>משטח</b>: במשך שנים ראו את כדור הארץ כשטוח. <b>כדור</b>: כבר פיתגורס (כ-600 לפני הספירה) טען שהוא כדור.</li>
+    <li><b>איך גילה?</b> מנמל רואים אונייה מתקרבת, וככל שהיא מתקרבת רואים <b>יותר פרטים</b>: קודם ראש התורן, אחר כך התורן והמפרש, ולבסוף את בטן האונייה. על משטח היו רואים הכול בכל מרחק.</li>
+  </ul>
+  <div class="grid2">
+    <figure class="fig"><svg viewBox="0 0 420 224" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="אוניות על משטח: רואים את כולן במלואן"><rect x="0.0" y="122.0" width="420.0" height="102.0" class="soft-f"/><line x1="0.0" y1="122.0" x2="415.0" y2="122.0" class="ink" stroke-width="3"/><ellipse cx="26" cy="108" rx="15" ry="9" fill="#fff" class="ink" stroke-width="2.5"/><circle cx="26" cy="108" r="4.5" class="ink-f"/><g transform="translate(115.0,122.0) rotate(0.0) scale(1)"><path d="M-19,-14 H19 L13,0 H-13 Z" class="acc-f"/><line x1="0" y1="0" x2="0" y2="-57" class="ink" stroke-width="2.5"/><rect x="-14" y="-46" width="28" height="24" fill="#fff" class="ink" stroke-width="2"/><path d="M0,-57 L13,-52.5 L0,-48 Z" class="bad-f"/></g><g transform="translate(195.0,122.0) rotate(0.0) scale(1)"><path d="M-19,-14 H19 L13,0 H-13 Z" class="acc-f"/><line x1="0" y1="0" x2="0" y2="-57" class="ink" stroke-width="2.5"/><rect x="-14" y="-46" width="28" height="24" fill="#fff" class="ink" stroke-width="2"/><path d="M0,-57 L13,-52.5 L0,-48 Z" class="bad-f"/></g><g transform="translate(275.0,122.0) rotate(0.0) scale(1)"><path d="M-19,-14 H19 L13,0 H-13 Z" class="acc-f"/><line x1="0" y1="0" x2="0" y2="-57" class="ink" stroke-width="2.5"/><rect x="-14" y="-46" width="28" height="24" fill="#fff" class="ink" stroke-width="2"/><path d="M0,-57 L13,-52.5 L0,-48 Z" class="bad-f"/></g><g transform="translate(355.0,122.0) rotate(0.0) scale(1)"><path d="M-19,-14 H19 L13,0 H-13 Z" class="acc-f"/><line x1="0" y1="0" x2="0" y2="-57" class="ink" stroke-width="2.5"/><rect x="-14" y="-46" width="28" height="24" fill="#fff" class="ink" stroke-width="2"/><path d="M0,-57 L13,-52.5 L0,-48 Z" class="bad-f"/></g><text x="115.0" y="148.0" class="he" text-anchor="middle" style="font-size:12.5px;font-weight:600;fill:var(--muted)">אונייה</text><text x="372.0" y="24.0" class="he" text-anchor="middle" style="font-size:18px;font-weight:800;fill:var(--accent-dark)">משטח</text></svg><figcaption>משטח: רואים את כל האונייה, בכל מרחק.</figcaption></figure>
+    <figure class="fig"><svg viewBox="0 0 420 224" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="אוניות על כדור: ככל שרחוקות, הגוף נעלם ראשון"><path d="M0.0,69.3 A600,600 0 0 1 412.0,197.2 L412.0,224 L0.0,224 Z" class="soft-f"/><g transform="translate(115.0,72.7) rotate(7.2) scale(1)"><path d="M-19,-14 H19 L13,0 H-13 Z" class="acc-f"/><line x1="0" y1="0" x2="0" y2="-57" class="ink" stroke-width="2.5"/><rect x="-14" y="-46" width="28" height="24" fill="#fff" class="ink" stroke-width="2"/><path d="M0,-57 L13,-52.5 L0,-48 Z" class="bad-f"/></g><g transform="translate(228.0,98.2) rotate(18.3) scale(1)"><path d="M-19,-14 H19 L13,0 H-13 Z" class="acc-f"/><line x1="0" y1="0" x2="0" y2="-57" class="ink" stroke-width="2.5"/><rect x="-14" y="-46" width="28" height="24" fill="#fff" class="ink" stroke-width="2"/><path d="M0,-57 L13,-52.5 L0,-48 Z" class="bad-f"/></g><g transform="translate(305.0,129.7) rotate(26.2) scale(1)"><path d="M-19,-14 H19 L13,0 H-13 Z" class="acc-f"/><line x1="0" y1="0" x2="0" y2="-57" class="ink" stroke-width="2.5"/><rect x="-14" y="-46" width="28" height="24" fill="#fff" class="ink" stroke-width="2"/><path d="M0,-57 L13,-52.5 L0,-48 Z" class="bad-f"/></g><g transform="translate(368.0,165.6) rotate(33.1) scale(1)"><path d="M-19,-14 H19 L13,0 H-13 Z" class="acc-f"/><line x1="0" y1="0" x2="0" y2="-57" class="ink" stroke-width="2.5"/><rect x="-14" y="-46" width="28" height="24" fill="#fff" class="ink" stroke-width="2"/><path d="M0,-57 L13,-52.5 L0,-48 Z" class="bad-f"/></g><path d="M167.4,81.7 L412.0,134.8 L412.0,197.2 A600,600 0 0 0 167.4,81.7 Z" fill="#fff" fill-opacity="0.82"/><path d="M0.0,69.3 A600,600 0 0 1 412.0,197.2" class="ink" fill="none" stroke-width="3"/><line x1="55.0" y1="56.0" x2="412.0" y2="134.8" class="bad" stroke-width="2.5" stroke-dasharray="7 5"/><ellipse cx="40" cy="54" rx="15" ry="9" fill="#fff" class="ink" stroke-width="2.5"/><circle cx="40" cy="54" r="4.5" class="ink-f"/><text x="372.0" y="24.0" class="he" text-anchor="middle" style="font-size:18px;font-weight:800;fill:var(--accent-dark)">כדור</text></svg><figcaption>כדור: הקו המקווקו הוא קו הראייה מהעין. מה שמתחתיו מוסתר, והגוף נעלם ראשון.</figcaption></figure>
+  </div>
+</section>
+
+<!-- ============ END MATTER ============ -->
+<section class="topic cont">
+  <div class="keep">
+    <div class="topic-head"><span class="n">🧠</span><h2>לזכור</h2></div>
+    <div class="bl">11 דברים לזכור. אם יש זמן רק לאחד: <b>זכות שלא רשומה בנסח לא קיימת</b>.</div>
+    <ul class="pts">
+      <li><b>עצים</b>: אסור לגדוע בלי אישור משרד החקלאות או קק״ל. עץ = זכות קניינית. העתקת עץ בוגר: 50 עד 150 אלף ₪. מודד מסמן ← אגרונום ממליץ ← משרד החקלאות וקק״ל מחליטים.</li>
+    </ul>
+  </div>
+  <ul class="pts">
+    <li>כ-<b>7%</b> מהקרקע פרטית וכ-<b>93%</b> של המדינה, מרביתה בחכירה ל-<b>49, 99 או 999</b> שנים (כמו ליסינג). בסוף משלמים לרמ״י: הדיירים, לא הקבלן. המדינה לא מוכרת קרקע: <b>ריבונות</b> ומשאב נדיר.</li>
+    <li><b>נסח טאבו</b> הוא מסמך סטטוטורי: זכות שלא רשומה בו לא קיימת. לרשום על שם הקונה קרוב למועד הקנייה.</li>
+    <li>זכויות: <b>בעלות, חכירה, שכירות, זיקת הנאה</b>. זיקת הנאה = מעבר בלי בעלות, <b>חייבת להיות רשומה</b>. בפארק ציבורי לא צריך.</li>
+    <li><b>גוש</b> (כ-30,000) ← <b>חלקה</b> ← <b>תת חלקה</b>. ברוב המקרים בבית משותף \(N\) דירות = \(N + 1\) תתי חלקות. העודפת = שטחים משותפים, בבעלות <b>במושע</b> (משותפת בלתי מסוימת: חלק יחסי בכל מטר).</li>
+    <li><b>ריבוי שותפים</b> בנכס אחד (בעיקר אחרי ירושה) <b>מוריד שווי</b> (בדוגמה 15% עד 20%), כי קשה להחליט איך לממש. זה לא נאמר על השטחים המשותפים של בניין.</li>
+    <li><b>הסכם שיתוף</b> = נשארים במושע, עם מיקום מוסכם. <b>חלוקה בעין</b> = שתי תתי חלקות חדשות. לפעמים מושע מוסיף זכויות: 3 יח״ד במקום 1.</li>
+    <li><b>מגרש</b> = יחידה תכנונית זמנית; בסוף הופך לחלקה חדשה (מגרש 6 ← חלקה 6). בהתחדשות עירונית הזכויות מעוגנות במגרש.</li>
+    <li>לפני שמעבירים כסף: <b>עורך דין או שמאי, נאמן והערת אזהרה</b>. בלי רישום אין זכות.</li>
+    <li><b>הליך ההסדר</b>: עד שלא הושלם אין ודאות בגבולות, בשטח ובבעלות ← עסקאות מסוכנות (כ-10% מהשטח עדיין לא הוסדרו).</li>
+    <li><b>צורות כדור הארץ</b>: לפי השקף ארבע (משטח, כדור, אליפסואיד, גיאואידה); נדונו משטח וכדור. אונייה מתקרבת: רואים קודם את ראש התורן ← כדור הארץ <b>אינו שטוח</b>.</li>
+  </ul>
+  <figure class="fig"><svg viewBox="0 0 720 126" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ארבע שאלות לכל נכס"><defs><marker id="ar_cn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs><rect x="561.0" y="22.0" width="150.0" height="92.0" rx="12" class="soft-f acc" stroke-width="2.5"/><text x="636.0" y="56.0" class="he" text-anchor="middle" style="font-size:16.5px;font-weight:800;fill:var(--ink)">מי הבעלים?</text><text x="636.0" y="80.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:400;fill:var(--muted)">מדינה או פרטי</text><circle cx="697.0" cy="22.0" r="15" class="dark-f"/><text x="697.0" y="27.5" class="ltr" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">1</text><rect x="377.0" y="22.0" width="150.0" height="92.0" rx="12" class="soft-f acc" stroke-width="2.5"/><text x="452.0" y="56.0" class="he" text-anchor="middle" style="font-size:16.5px;font-weight:800;fill:var(--ink)">איזו זכות?</text><text x="452.0" y="80.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:400;fill:var(--muted)">בעלות, חכירה, שכירות,</text><text x="452.0" y="98.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:400;fill:var(--muted)">זיקת הנאה</text><circle cx="513.0" cy="22.0" r="15" class="dark-f"/><text x="513.0" y="27.5" class="ltr" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">2</text><rect x="193.0" y="22.0" width="150.0" height="92.0" rx="12" class="soft-f acc" stroke-width="2.5"/><text x="268.0" y="56.0" class="he" text-anchor="middle" style="font-size:16.5px;font-weight:800;fill:var(--ink)">באיזו יחידה?</text><text x="268.0" y="80.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:400;fill:var(--muted)">גוש, חלקה, תת חלקה</text><text x="268.0" y="98.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:400;fill:var(--muted)">(בהתחדשות: מגרש)</text><circle cx="329.0" cy="22.0" r="15" class="dark-f"/><text x="329.0" y="27.5" class="ltr" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">3</text><rect x="9.0" y="22.0" width="150.0" height="92.0" rx="12" class="acc-f acc" stroke-width="2.5"/><text x="84.0" y="56.0" class="he" text-anchor="middle" style="font-size:16.5px;font-weight:800;fill:#fff">הוסדר ונרשם?</text><text x="84.0" y="80.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:600;fill:#fff">אם כן: נסח טאבו</text><text x="84.0" y="98.0" class="he" text-anchor="middle" style="font-size:13.5px;font-weight:600;fill:#fff">מראה את הזכויות</text><circle cx="145.0" cy="22.0" r="15" class="dark-f"/><text x="145.0" y="27.5" class="ltr" text-anchor="middle" style="font-size:16px;font-weight:800;fill:#fff">4</text><line x1="557.0" y1="68.0" x2="532.0" y2="68.0" class="ink" stroke-width="3" marker-end="url(#ar_cn)"/><line x1="373.0" y1="68.0" x2="348.0" y2="68.0" class="ink" stroke-width="3" marker-end="url(#ar_cn)"/><line x1="189.0" y1="68.0" x2="164.0" y2="68.0" class="ink" stroke-width="3" marker-end="url(#ar_cn)"/></svg><figcaption>אם יש רק דקה: לשאול את ארבע השאלות בסדר הזה, מימין לשמאל.</figcaption></figure>
+</section>
+
+<section class="topic cont">
+  <div class="keep">
+  <div class="topic-head"><span class="n">❓</span><h2>שאלות חזרה</h2></div>
+  <div class="bl">לענות בלי להציץ. התשובות בהמשך.</div>
+  <ol class="quiz">
+    <li><span class="lvl">קל</span> מי מחליט מה עושים בעץ שנמצא במגרש?</li>
+    </ol>
+  </div>
+  <ol class="quiz" start="2">
+    <li><span class="lvl">קל</span> מהן תקופות החכירה המקובלות?</li>
+    <li><span class="lvl">בינוני</span> חכירה ל-49 שנה החלה ב-2020, והדירה נקנתה ב-2026. כמה שנים נותרו?</li>
+    <li><span class="lvl">בינוני</span> מה פירוש "זכות שלא רשומה בנסח לא קיימת"?</li>
+    <li><span class="lvl">בינוני</span> מהו הנימוק העיקרי לכך שהמדינה מחכירה ולא מוכרת קרקע?</li>
+    <li><span class="lvl">קל</span> מהי זיקת הנאה?</li>
+    <li><span class="lvl">בינוני</span> בבניין של 12 דירות, כמה תתי חלקות יש ברוב המקרים?</li>
+    <li><span class="lvl">בינוני</span> למה ריבוי שותפים במושע מוריד שווי?</li>
+    <li><span class="lvl">מאתגר</span> מגרש של 1,000 מ״ר, A בעל 40% ו-B בעל 60%. מינימום 500 מ״ר ליח״ד אחת, ו-1,000 מ״ר ל-3 יח״ד. כמה יח״ד אפשר לבנות בחלוקה בעין, וכמה במושע?</li>
+    <li><span class="lvl">בינוני</span> מה קורה למגרש 7 בסוף ההליך?</li>
+    <li><span class="lvl">בינוני</span> מה תפקיד הנאמן בעסקה על נכס?</li>
+    <li><span class="lvl">בינוני</span> למה מסוכן לקנות בשטח שלא הוסדר?</li>
+  </ol>
+</section>
+
+<section class="topic cont">
+  <div class="keep">
+  <div class="topic-head"><span class="n">✅</span><h2>תשובות</h2></div>
+  <ol class="answers">
+    <li><b>משרד החקלאות וקק״ל</b> מחליטים (המודד מסמן, האגרונום ממליץ, ואחר כך אכיפה). העתקת עץ בוגר: 50 עד 150 אלף ₪.</li>
+    </ol>
+  </div>
+  <ol class="answers" start="2">
+    <li>49, 99 או 999 שנים.</li>
+    <li>עברו \(2026 - 2020 = 6\) שנים, ולכן נותרו \(49 - 6 = 43\) (עד 2069). בדיקה: <span style="white-space:nowrap">\(2069 - 2026 = 43\)</span> ✓</li>
+    <li>זכות שלא נרשמה לא קיימת (לא רק שקשה להוכיח אותה). לכן לרשום על שם הקונה קרוב לקנייה, כל עוד אפשר לאתר את היזם. לפי המרצה, הקבלן חייב לרשום תוך כשנה.</li>
+    <li><b>ריבונות</b> ושליטה, ו<b>משאב נדיר</b> בשטח קטן (כ-21 אלף קמ״ר). עוד: משאבי הטבע בקרקע שייכים למדינה.</li>
+    <li>זכות להשתמש בקרקע (למשל לעבור) בלי להיות הבעלים. חייבת להיות רשומה: בלי רישום אפשר לגבות אגרה על המעבר.</li>
+    <li><span style="white-space:nowrap">\(12 + 1 = 13\)</span> תתי חלקות. האחרונה היא <b>תת חלקה עודפת</b> של השטחים המשותפים.</li>
+    <li>בנכס עם הרבה שותפים (למשל יורשים) קשה להחליט איך ממשים את הזכויות (מכירה או בנייה) ← סכסוך. כשכולם מסכימים אין ירידה. (לא מדובר בשטחים המשותפים של בניין.)</li>
+    <li>חלוקה בעין: \(A\) מקבל 400 מ״ר (פחות מ-500) ← 0 יח״ד, ו-\(B\) מקבל 600 מ״ר ← יחידה אחת. סך הכל 1. במושע: 1,000 מ״ר ← 3 יח״ד. המושע מוסיף 2. בדיקה: <span style="white-space:nowrap">\(400 + 600 = 1{,}000\)</span> ✓</li>
+    <li>מגרש = יחידה תכנונית זמנית; חלקה = יחידה רשומה. מגרש 7 הופך לחלקה 7, והחלקה המקורית (5) כבר לא קיימת.</li>
+    <li>הנאמן מעביר את הכסף למוכר רק אחרי שהזכויות נרשמו על שם הקונה.</li>
+    <li>כי עד שההסדר מסתיים לא ידועים הגבולות, השטח והבעלות: המוכר לא יודע מה הוא מוכר, והקונה לא יודע מה הוא קונה.</li>
+  </ol>
+
+  <h3>📖 מילון מונחים</h3>
+  <dl class="glossary">
+    <dt>דו״ח אפס</dt><dd>בדיקת כדאיות כלכלית של פרויקט בנייה.</dd>
+    <dt>אגרונום</dt><dd>מומחה לצמחים שהיזם מזמין; ממליץ מה לעשות בכל עץ.</dd>
+    <dt>רמ״י</dt><dd>רשות מקרקעי ישראל (בעבר ממ״י): מנהלת את קרקעות המדינה.</dd>
+    <dt>נסח טאבו</dt><dd>מסמך סטטוטורי על הזכויות בנכס. זכות שלא רשומה בו לא קיימת.</dd>
+    <dt>זיקת הנאה</dt><dd>זכות לעבור או להשתמש בקרקע בלי בעלות. חייבת רישום.</dd>
+    <dt>קושן · מולק</dt><dd>קושן: שטר בעלות עות׳מאני. מולק: קרקע בבעלות מלאה.</dd>
+    <dt>גוש · חלקה · תת חלקה</dt><dd>יחידות קרקע ורישום, מהגדולה לקטנה.</dd>
+    <dt>תב״ע</dt><dd>תוכנית בניין עיר מפורטת, שעליה מוציאים היתר.</dd>
+    <dt>בעלות במושע</dt><dd>בעלות משותפת בלתי מסוימת: חלק יחסי, בלי מקום מוגדר.</dd>
+    <dt>הסכם שיתוף</dt><dd>מגדיר איפה חלקו של כל שותף, כשנשארים במושע.</dd>
+    <dt>חלוקה בעין</dt><dd>פרצלציה: חלוקה פיזית, נוצרות תתי חלקות חדשות.</dd>
+    <dt>מגרש</dt><dd>יחידה תכנונית זמנית. בסוף הופכת לחלקה.</dd>
+    <dt>תמ״א 38 · פינוי-בינוי</dt><dd>התחדשות עירונית: חיזוק, או הריסה ובנייה מחדש.</dd>
+    <dt>אופציה</dt><dd>זכות קצובה בזמן לגייס רוכשים לקרקע (קבוצת רכישה).</dd>
+    <dt>נאמן · הערת אזהרה</dt><dd>מגינים על הקונה: הכסף עובר רק אחרי רישום הזכות.</dd>
+    <dt>הרמת מסך</dt><dd>חיבור בין חברה בע״מ לרכוש הפרטי של הבעלים.</dd>
+  </dl>
+
+  <div class="box unclear"><div class="box-title">לא היה ברור בהקלטה</div>
+    <ul class="pts">
+      <li>⏱ <span class="ltr">00:22:16</span> הסרטון היה בלי שמע בהקלטה. אחריו נאמרו שורש של "כשמונה מטר" (קוטר או עומק?) ועץ במשקל 100 עד 150 טון: הערכות המרצה, לא נבדקו.</li>
+      <li>⏱ <span class="ltr">00:27:11</span> "עד 91% משווי הקרקע" ו"2% לשנה" לא מופיעים בשקף. לבדוק בהחלטות רמ״י.</li>
+      <li>⏱ <span class="ltr">00:33:31</span> לא ברור מאיפה נספרת שנת הרישום (סיום הפרויקט או מסירת המפתח). לבדוק בחוזה.</li>
+      <li>⏱ <span class="ltr">00:35:58</span> ניסוח החוק על מכירה לתושבי חוץ אינו מדויק. לפי ידע כללי (לא נאמר בשיעור): בעלות במקרקעי המדינה אינה מועברת (חוק יסוד: מקרקעי ישראל). לבדוק.</li>
+      <li>⏱ <span class="ltr">01:04:27</span> דוגמת החניות נאמרה בצורה לא ברורה ("8 חניות מתוך 12", 4 מוצמדות). בסיכום היא משוחזרת כ-12 דירות ו-8 חניות.</li>
+      <li>⏱ <span class="ltr">01:38:33</span> "חלקה משלימה" לא הוסברה.</li>
+      <li>⏱ <span class="ltr">01:39:20</span> בדרך השנייה לחלוקת 3 היחידות A מקבל 1.4 מתוך 3 (כ-46.7%), לא בדיוק 40%.</li>
+      <li>⏱ <span class="ltr">01:52:16</span> עד <span class="ltr">02:14:02</span> סכומי הפרשות והמסקנות המשפטיות כפי שסופרו (סדר הנושים נקבע בחוק); "15 שנות עיבוד רציף" וכשני מיליון דונם בנגב לא אומתו.</li>
+      <li>⏱ <span class="ltr">02:19:41</span> לפי המרצה והשקף, ההכרה בצורה הכדורית התקבלה רק במאה ה-19. לפי ידע כללי (לא נאמר בשיעור) הכדוריות התקבלה הרבה לפני כן.</li>
+      <li>⏱ <span class="ltr">02:26:26</span> כלל טופס המחלה (ולמי מגישים אותו): לבדוק בנוהלי המכללה.</li>
+    </ul>
+  </div>
+</section>
+
+</body>
+</html>

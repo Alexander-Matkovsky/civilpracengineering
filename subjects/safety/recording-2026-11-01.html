@@ -1,0 +1,1135 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>בטיחות · סולמות: אורך, גובה נגיעה ומרחק</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=block">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false});document.documentElement.dataset.math='done'"></script>
+<style>
+/* Lecture summary design system: A4, RTL Hebrew, print-first. */
+
+@page {
+  size: A4;
+  margin: 18mm 16mm 17mm 16mm;
+  @bottom-center {
+    content: counter(page);
+    font-family: Heebo, "Arial Hebrew", sans-serif;
+    font-size: 9pt;
+    color: #7a8394;
+  }
+}
+@page :first {
+  margin: 0;
+  @top-right { content: none; }
+  @top-left { content: none; }
+  @bottom-center { content: none; }
+}
+
+:root {
+  --accent: #4f46e5;
+  --accent-dark: #3730a3;
+  --accent-soft: #eef0ff;
+  --accent-mid: #c7cbfb;
+  --ink: #1d2230;
+  --muted: #5d6676;
+  --line: #dfe3ea;
+  --paper: #ffffff;
+  --bg-soft: #f6f7f9;
+  --ok: #0f7b5f;
+  --ok-soft: #e2f5ee;
+  --warn: #b45309;
+  --warn-soft: #fdf1e2;
+  --bad: #b91c1c;
+  --bad-soft: #fdeaea;
+  --info: #0e6aa8;
+  --info-soft: #e5f2fb;
+}
+
+/* one accent colour per course */
+body.course-math { --accent: #4f46e5; --accent-dark: #3730a3; --accent-soft: #eef0ff; --accent-mid: #c7cbfb; }
+body.course-roads { --accent: #c2620a; --accent-dark: #8f4505; --accent-soft: #fdf0e3; --accent-mid: #f6cfa6; }
+body.course-safety { --accent: #c62828; --accent-dark: #8e1b1b; --accent-soft: #fdecea; --accent-mid: #f5bcbc; }
+body.course-geodesy { --accent: #0f766e; --accent-dark: #0b524c; --accent-soft: #e2f4f1; --accent-mid: #a7dcd5; }
+body.course-building-theory { --accent: #a5502a; --accent-dark: #74371c; --accent-soft: #f8ece5; --accent-mid: #e8c2ad; }
+body.course-drafting { --accent: #0369a1; --accent-dark: #024b74; --accent-soft: #e3f1fa; --accent-mid: #a9d3ee; }
+body.course-labor-law { --accent: #7c3aed; --accent-dark: #5521b5; --accent-soft: #f1eafe; --accent-mid: #d4c0fb; }
+body.course-statics { --accent: #2563eb; --accent-dark: #1e40af; --accent-soft: #e8f0fe; --accent-mid: #b8cdfa; }
+
+* { box-sizing: border-box; }
+html { direction: rtl; }
+body {
+  margin: 0;
+  font-family: Heebo, "Arial Hebrew", Arial, sans-serif;
+  font-size: 11.5pt;
+  line-height: 1.62;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+p { margin: 0 0 2.2mm; }
+b, strong {
+  font-weight: 700;
+  background: linear-gradient(transparent 60%, var(--accent-mid) 60%);
+  padding: 0 0.5mm;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.box b, .box strong, .bl b, .bl strong, th b { background: none; padding: 0; }
+.ltr, .num, code { direction: ltr; unicode-bidi: isolate; }
+code {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.88em;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 1.2mm;
+  padding: 0 1mm;
+}
+.katex { direction: ltr; unicode-bidi: isolate; font-size: 1.08em; }
+.katex-display { margin: 1mm 0 !important; }
+small, .muted { color: var(--muted); }
+
+/* ---------- cover ---------- */
+.cover {
+  height: 297mm;
+  width: 210mm;
+  display: flex;
+  flex-direction: column;
+  break-after: page;
+  overflow: hidden;
+}
+.cover-band {
+  background: var(--accent);
+  color: #fff;
+  padding: 22mm 18mm 14mm;
+  position: relative;
+}
+.cover-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 30%, rgba(255,255,255,.16) 0 18mm, transparent 18.2mm),
+    radial-gradient(circle at 4% 85%, rgba(255,255,255,.10) 0 28mm, transparent 28.2mm),
+    radial-gradient(circle at 30% 105%, rgba(255,255,255,.08) 0 20mm, transparent 20.2mm);
+  pointer-events: none;
+}
+.cover-kicker { font-size: 12pt; font-weight: 500; opacity: .9; margin-bottom: 3mm; }
+.cover h1 { font-size: 30pt; line-height: 1.15; font-weight: 900; margin: 0 0 3mm; }
+.cover-sub { font-size: 14pt; font-weight: 500; opacity: .95; }
+.cover-meta { display: flex; flex-wrap: wrap; gap: 2.5mm; margin-top: 7mm; position: relative; z-index: 1; }
+.chip {
+  display: inline-block;
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 20mm;
+  padding: 1mm 4mm;
+  font-size: 10.5pt;
+  font-weight: 500;
+}
+.cover-body { padding: 10mm 18mm 12mm; flex: 1; display: flex; flex-direction: column; gap: 6mm; }
+.cover-body h3 { margin: 0 0 2mm; font-size: 13pt; color: var(--accent-dark); }
+.roadmap { list-style: none; margin: 0; padding: 0; display: grid; gap: 2mm; }
+.roadmap li {
+  display: grid;
+  grid-template-columns: 9mm 1fr auto;
+  align-items: center;
+  gap: 3mm;
+  background: var(--bg-soft);
+  border-radius: 2.5mm;
+  padding: 1.6mm 3mm;
+}
+.roadmap .n {
+  width: 8mm; height: 8mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-weight: 800; font-size: 11pt;
+}
+.roadmap .t { font-weight: 600; }
+.roadmap .when { direction: ltr; font-size: 9.5pt; color: var(--muted); font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 2mm 5mm; font-size: 9.5pt; color: var(--muted); }
+
+/* ---------- topic sections: each starts on a new page ---------- */
+section.topic { break-before: page; }
+section.topic.cont { break-before: auto; margin-top: 8mm; }
+.topic-head {
+  display: flex;
+  align-items: center;
+  gap: 3.5mm;
+  border-bottom: 2.5px solid var(--accent);
+  padding-bottom: 2.5mm;
+  margin-bottom: 4mm;
+}
+.topic-head .n {
+  flex: none;
+  width: 11mm; height: 11mm; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  display: grid; place-items: center;
+  font-size: 15pt; font-weight: 900;
+}
+.topic-head h2 { margin: 0; font-size: 19pt; line-height: 1.2; font-weight: 800; color: var(--ink); flex: 1; }
+.time {
+  flex: none;
+  direction: ltr;
+  font-size: 9pt;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 10mm;
+  padding: 0.6mm 2.6mm;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+h3 { font-size: 13.5pt; font-weight: 800; margin: 5mm 0 2mm; color: var(--accent-dark); break-after: avoid; }
+h4 { font-size: 11.5pt; font-weight: 700; margin: 3mm 0 1.5mm; break-after: avoid; }
+
+/* bottom line: first thing in every section */
+.bl {
+  background: var(--accent-soft);
+  border-inline-start: 5px solid var(--accent);
+  border-radius: 2.5mm;
+  padding: 2.5mm 4mm;
+  font-weight: 700;
+  font-size: 12pt;
+  margin: 0 0 4mm;
+  break-inside: avoid;
+}
+.bl::before { content: "⚡ "; }
+
+/* bullets */
+ul.pts { list-style: none; padding: 0; margin: 0 0 3mm; }
+ul.pts > li { position: relative; padding-inline-start: 6mm; margin-bottom: 1.6mm; }
+ul.pts > li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 1mm;
+  top: 2.6mm;
+  width: 2.2mm; height: 2.2mm;
+  border-radius: 50%;
+  background: var(--accent);
+}
+ul.pts ul { margin-top: 1mm; }
+
+/* generic callout box */
+.box {
+  border-radius: 3mm;
+  padding: 3mm 4mm;
+  margin: 3mm 0;
+  break-inside: avoid;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+.box > .box-title { font-weight: 800; margin-bottom: 1.2mm; display: flex; gap: 2mm; align-items: center; }
+.box > :last-child { margin-bottom: 0; }
+.box.life { background: #fffbea; border-color: #f3e3a3; }
+.box.life > .box-title::before { content: "🏠"; }
+.box.formula { background: var(--accent-soft); border-color: var(--accent-mid); text-align: center; }
+.box.formula > .box-title { justify-content: center; }
+.box.formula > .box-title::before { content: "🧮"; }
+.box.tip { background: var(--ok-soft); border-color: #b6e3d2; }
+.box.tip > .box-title::before { content: "💡"; }
+.box.warn { background: var(--warn-soft); border-color: #f2cf9f; }
+.box.warn > .box-title::before { content: "⚠️"; }
+.box.remember { background: var(--info-soft); border-color: #b9dbf2; }
+.box.remember > .box-title::before { content: "🧠"; }
+.box.optional { background: #fafafa; border: 1.5px dashed #c5cad3; }
+.box.optional > .box-title::before { content: "📎"; }
+.box.optional > .box-title::after { content: "רשות"; font-size: 8.5pt; font-weight: 700; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; }
+.box.announce { background: var(--bad-soft); border-color: #f2c2c2; }
+.box.announce > .box-title::before { content: "📢"; }
+.box.unclear { background: #f4f1fb; border-color: #d9cff3; }
+.box.unclear > .box-title::before { content: "❓"; }
+.box.lecturer { background: #fff; border-inline-start: 4px solid var(--accent-mid); }
+.box.lecturer > .box-title::before { content: "🎙️"; }
+
+/* numbered procedure */
+ol.steps { list-style: none; counter-reset: st; padding: 0; margin: 2mm 0 3mm; }
+ol.steps > li { counter-increment: st; position: relative; padding-inline-start: 9mm; margin-bottom: 2mm; min-height: 6.5mm; }
+ol.steps > li::before {
+  content: counter(st);
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.2mm;
+  width: 6.5mm; height: 6.5mm;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 800;
+  font-size: 9.5pt;
+  display: grid;
+  place-items: center;
+}
+
+/* worked example */
+.worked {
+  border: 1.5px solid var(--accent-mid);
+  border-radius: 3mm;
+  margin: 3.5mm 0;
+  break-inside: avoid;
+  overflow: hidden;
+}
+.worked > .w-title { background: var(--accent); color: #fff; font-weight: 800; padding: 1.6mm 4mm; }
+.worked > .w-title::before { content: "✏️ "; }
+.worked > .w-body { padding: 3mm 4mm; }
+.worked .given { background: var(--bg-soft); border-radius: 2mm; padding: 2mm 3mm; margin-bottom: 2.5mm; }
+.worked .given::before { content: "נתון: "; font-weight: 800; }
+.worked .ask::before { content: "מחפשים: "; font-weight: 800; }
+.worked ol.lines { counter-reset: ln; list-style: none; padding: 0; margin: 2mm 0; }
+.worked ol.lines > li { counter-increment: ln; padding: 1.2mm 0; padding-inline-start: 13mm; border-bottom: 1px dashed var(--line); position: relative; }
+.worked ol.lines > li::before { content: "שלב " counter(ln); position: absolute; inset-inline-start: 0; font-size: 8.5pt; color: var(--muted); top: 1.8mm; }
+.worked .answer { margin-top: 2mm; font-weight: 800; }
+.worked .answer::before { content: "✅ תשובה: "; }
+.worked .check { margin-top: 1.5mm; color: var(--ok); font-weight: 700; }
+.worked .check::before { content: "✓ בדיקה: "; }
+
+/* figures */
+figure.fig { margin: 3.5mm 0; text-align: center; break-inside: avoid; }
+figure.fig svg { max-width: 100%; height: auto; }
+figure.fig figcaption { font-size: 9.5pt; color: var(--muted); margin-top: 1.5mm; }
+figure.fig.half { width: 60%; margin-inline: auto; }
+
+/* SVG helper classes (inline SVG lives in the HTML DOM, so CSS vars work) */
+svg text { font-family: Heebo, "Arial Hebrew", sans-serif; }
+svg .acc { stroke: var(--accent); }
+svg .acc-f { fill: var(--accent); }
+svg .soft-f { fill: var(--accent-soft); }
+svg .mid-f { fill: var(--accent-mid); }
+svg .dark-f { fill: var(--accent-dark); }
+svg .ink { stroke: var(--ink); }
+svg .ink-f { fill: var(--ink); }
+svg .muted-f { fill: var(--muted); }
+svg .line { stroke: #b8bfcb; }
+svg .ok { stroke: var(--ok); }
+svg .ok-f { fill: var(--ok); }
+svg .bad { stroke: var(--bad); }
+svg .bad-f { fill: var(--bad); }
+svg .warn-f { fill: var(--warn); }
+svg .lbl { font-size: 15px; fill: var(--ink); }
+svg .lbl-s { font-size: 12.5px; fill: var(--muted); }
+svg .lbl-b { font-size: 16px; font-weight: 700; fill: var(--ink); }
+svg .he { direction: rtl; unicode-bidi: plaintext; }
+
+/* tables */
+table.t { width: 100%; border-collapse: separate; border-spacing: 0; margin: 3mm 0; font-size: 10.5pt; break-inside: avoid; border: 1px solid var(--line); border-radius: 2.5mm; overflow: hidden; }
+table.t th { background: var(--accent-soft); color: var(--accent-dark); font-weight: 800; text-align: start; padding: 1.8mm 3mm; border-bottom: 1px solid var(--accent-mid); }
+table.t td { padding: 1.6mm 3mm; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.t tr:last-child td { border-bottom: none; }
+table.t tr:nth-child(even) td { background: #fafbfc; }
+
+/* layout helpers */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3mm; }
+.grid2 > .box, .grid3 > .box { margin: 0; }
+.card { border: 1px solid var(--line); border-radius: 3mm; padding: 2.5mm 3.5mm; break-inside: avoid; background: #fff; }
+.card > .c-title { font-weight: 800; color: var(--accent-dark); margin-bottom: 1mm; }
+.vs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 3mm; align-items: stretch; }
+.vs > .mid { align-self: center; font-weight: 900; color: var(--accent); font-size: 14pt; }
+.keep { break-inside: avoid; }
+.pagebreak { break-before: page; }
+
+/* end matter */
+ol.quiz { padding-inline-start: 7mm; margin: 0; }
+ol.quiz > li { margin-bottom: 3mm; padding-bottom: 2mm; border-bottom: 1px dashed var(--line); break-inside: avoid; }
+ol.quiz .lvl { font-size: 8.5pt; color: var(--muted); border: 1px solid var(--line); border-radius: 5mm; padding: 0 2mm; margin-inline-start: 2mm; }
+ol.answers { padding-inline-start: 7mm; margin: 0; }
+ol.answers > li { margin-bottom: 2.5mm; break-inside: avoid; }
+dl.glossary { display: grid; grid-template-columns: max-content 1fr; gap: 1.5mm 5mm; margin: 0; }
+dl.glossary dt { font-weight: 800; color: var(--accent-dark); }
+dl.glossary dd { margin: 0; }
+
+@page {
+  @top-right { content: "בטיחות"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+  @top-left { content: "01/11/2026"; font-family: Heebo, "Arial Hebrew", sans-serif; font-size: 8.5pt; color: #7a8394; }
+}
+</style>
+</head>
+<body class="course-safety">
+<!-- ============ COVER (page 1) ============ -->
+<div class="cover">
+  <div class="cover-band">
+    <div class="cover-kicker">🎥 סיכום הקלטה · בטיחות (850138)</div>
+    <h1>סולמות: אורך, גובה נגיעה ומרחק</h1>
+    <div class="cover-sub">הקלטת השיעור · יום ראשון 01/11/2026</div>
+    <div class="cover-meta">
+      <span class="chip">👤 בהומי הרצל</span>
+      <span class="chip">⏱ 2:07 שעות הקלטה</span>
+      <span class="chip">📄 15 עמודים</span>
+    </div>
+  </div>
+  <div class="cover-body" style="gap:3.5mm">
+    <div class="bl">סולם נשען ביחס <b>4:1</b> (<b>76°</b>). מגובה ← <b>אורך סולם</b>. מאורך ← <b>גובה נגיעה ומרחק</b>.</div>
+    <div>
+      <h3>🗺️ מפת השיעור</h3>
+      <ol class="roadmap">
+        <li><span class="n">1</span><span class="t">יחס הסולם בתקנות: 4:1</span><span class="when">00:05:52</span></li>
+        <li><span class="n">2</span><span class="t">סולם פשוט: מגובה המבנה לאורך הסולם</span><span class="when">00:08:48</span></li>
+        <li><span class="n">3</span><span class="t">למה מטר נוסף, ומה כשנתון המרחק מהקיר</span><span class="when">00:33:01</span></li>
+        <li><span class="n">4</span><span class="t">שאלת מה"ט: גלריה בגובה 7 מ' ו"לפחות"</span><span class="when">00:38:51</span></li>
+        <li><span class="n">5</span><span class="t">סולם מורכב: ידוע אורך הסולם</span><span class="when">01:02:29</span></li>
+        <li><span class="n">6</span><span class="t">תרגול ובדיקה: סולם 7.3 מ' וסולם 6.5 מ'</span><span class="when">01:23:30</span></li>
+        <li><span class="n">7</span><span class="t">הדרייב, הציונים והמבחנים</span><span class="when">01:44:12</span></li>
+      </ol>
+    </div>
+    <div class="box announce"><div class="box-title">הודעות מהשיעור</div>
+      <ul class="pts">
+        <li><b>שני קורסים</b> (סיכוני בטיחות, נאמן בטיחות): <b>להראות</b> למרצה שבוצעו. <span class="ltr muted">00:27:41</span></li>
+        <li><b>נוכחות</b> נלקחה באמצע השיעור. <span class="ltr muted">00:48:53</span></li>
+        <li><b>קישור לדרייב</b> לא הגיע? לשלוח בוואטסאפ <b>כתובת Gmail</b> (כך נשמע) ואת הכיתה. <span class="ltr muted">00:55:46</span></li>
+        <li><b>בשיעור הבא</b>: חזרה על הכול. <b>להתחיל ללמוד כבר עכשיו</b>. <span class="ltr muted">01:44:12</span></li>
+        <li><b>מבחן אמצע</b>: <b><span class="ltr">29.11.2026</span></b> (יום) או <b><span class="ltr">03.12.2026</span></b> (ערב). <b>4 שעות</b> (כך נשמע). <span class="ltr muted">01:47:53</span></li>
+      </ul>
+    </div>
+    <div class="legend"><span>⚡ שורה תחתונה</span><span>🏠 דוגמה מהחיים</span><span>✏️ דוגמה פתורה</span><span>⚠️ טעות נפוצה</span><span>💡 טיפ</span><span>🎙️ הודגש בשיעור</span><span>⏱ זמן</span></div>
+  </div>
+</div>
+
+<!-- ============ TOPIC 1 ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">1</span><h2>יחס הסולם בתקנות: 4:1</h2><span class="time">⏱ 00:05:52</span></div>
+  <div class="bl">סולם נשען ביחס <b>4:1</b>: על כל <b>4 מ'</b> גובה, מרחיקים את הרגליים <b>מטר אחד</b> מהקיר (זווית <b>76°</b>).</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (תוספת)</div>
+    <p>שיפוע מתון ← <b>הולכים</b>. מדרכה עם שלבים ← <b>דורכים</b>. סולם ← <b>מטפסים</b>. ככל שאנכי:אופקי גדול יותר, זה <b>תלול</b> יותר.</p>
+  </div>
+
+  <ul class="pts">
+    <li>בתקנות: <b>4 חלקים אנכיים</b> על <b>חלק אחד אופקי</b>. זה היחס של <b>סולם</b>.</li>
+    <li>זה <b>4 ל-1</b>: האנכי 4, האופקי 1. במדרכה זה <b>הפוך</b> (אנכי 1, אופקי 4).</li>
+    <li>ידוע האנכי ← <b><span class="ltr">÷ 4</span></b> ← האופקי. ידוע האופקי ← <b><span class="ltr">× 4</span></b> ← האנכי.</li>
+    <li>יחס ← <b>זווית</b>: אנכי ÷ אופקי = \({\tan\alpha}\). בסולם: \({\tan\alpha = 4}\) ← \({\alpha \approx 76^\circ}\).</li>
+  </ul>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 242" xmlns="http://www.w3.org/2000/svg">
+<line x1="20" y1="186" x2="628" y2="186" class="ink" stroke-width="2.5"/>
+<polygon points="452,186 588,186 588,152" class="ok-f ink" fill-opacity="0.16" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="452.7,188.9 588.7,154.9 587.3,149.1 451.3,183.1" class="ok-f"/>
+<path d="M579,186 L579,177 L588,177" class="ink" fill="none" stroke-width="1.5"/>
+<path d="M496,186 A44,44 0 0 0 494.7,175.3" class="ink" fill="none" stroke-width="1.5"/>
+<text x="444" y="180" class="lbl ltr" text-anchor="end">14°</text>
+<line x1="486" y1="180" x2="486" y2="192" class="line" stroke-width="2"/>
+<line x1="520" y1="180" x2="520" y2="192" class="line" stroke-width="2"/>
+<line x1="554" y1="180" x2="554" y2="192" class="line" stroke-width="2"/>
+<text x="603" y="174" class="lbl-b ltr" text-anchor="middle">1</text>
+<text x="520" y="208" class="lbl-b ltr" text-anchor="middle">4</text>
+<rect x="484" y="98" width="72" height="28" rx="14" class="soft-f acc" stroke-width="1.5"/>
+<text x="520" y="118" class="lbl-b ltr" text-anchor="middle">1 : 4</text>
+<text x="520" y="234" class="lbl-b he" text-anchor="middle">מדרכה פשוטה</text>
+<polygon points="300,186 351,186 351,152" class="warn-f ink" fill-opacity="0.16" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="301.7,188.5 352.7,154.5 349.3,149.5 298.3,183.5" class="warn-f"/>
+<path d="M342,186 L342,177 L351,177" class="ink" fill="none" stroke-width="1.5"/>
+<path d="M334.9,186 A35,35 0 0 0 329.1,166.6" class="ink" fill="none" stroke-width="1.5"/>
+<text x="292" y="180" class="lbl ltr" text-anchor="end">34°</text>
+<text x="366" y="174" class="lbl-b ltr" text-anchor="middle">1</text>
+<text x="325.5" y="208" class="lbl-b ltr" text-anchor="middle">1.5</text>
+<rect x="289.5" y="98" width="72" height="28" rx="14" class="soft-f acc" stroke-width="1.5"/>
+<text x="325.5" y="118" class="lbl-b ltr" text-anchor="middle">1 : 1.5</text>
+<text x="325.5" y="234" class="lbl-b he" text-anchor="middle">מדרכה עם שלבים</text>
+<polygon points="116,186 150,186 150,50" class="acc-f ink" fill-opacity="0.16" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="118.9,186.7 152.9,50.7 147.1,49.3 113.1,185.3" class="acc-f"/>
+<path d="M141,186 L141,177 L150,177" class="ink" fill="none" stroke-width="1.5"/>
+<path d="M143.3,186 A27.3,27.3 0 0 0 122.6,159.5" class="ink" fill="none" stroke-width="1.5"/>
+<text x="108" y="180" class="lbl ltr" text-anchor="end">76°</text>
+<line x1="144" y1="152" x2="156" y2="152" class="line" stroke-width="2"/>
+<line x1="144" y1="118" x2="156" y2="118" class="line" stroke-width="2"/>
+<line x1="144" y1="84" x2="156" y2="84" class="line" stroke-width="2"/>
+<text x="165" y="123" class="lbl-b ltr" text-anchor="middle">4</text>
+<text x="133" y="208" class="lbl-b ltr" text-anchor="middle">1</text>
+<rect x="97" y="12" width="72" height="28" rx="14" class="soft-f acc" stroke-width="1.5"/>
+<text x="133" y="32" class="lbl-b ltr" text-anchor="middle">4 : 1</text>
+<text x="133" y="234" class="lbl-b he" text-anchor="middle">סולם</text>
+</svg>
+    <figcaption>אותו קנה מידה לשלושת המשולשים (האנכי בצד הקיר). ככל שהיחס אנכי ÷ אופקי גדול יותר, השיפוע תלול יותר: 14°, 34° ו-76°.</figcaption>
+  </figure>
+
+  <table class="t">
+    <tr><th>נתון (יחס 4:1)</th><th>פעולה</th><th>תוצאה</th><th>בדיקה: אנכי ÷ אופקי</th></tr>
+    <tr><td>אנכי <b>3 מ'</b> <small>(מהשיעור)</small></td><td>\({\div 4}\)</td><td>אופקי <b>0.75 מ'</b> (75 ס"מ)</td><td>\({3 \div 0.75 = 4}\) ✓</td></tr>
+    <tr><td>אנכי <b>10 מ'</b> <small>(מהשיעור)</small></td><td>\({\div 4}\)</td><td>אופקי <b>2.5 מ'</b></td><td>\({10 \div 2.5 = 4}\) ✓</td></tr>
+    <tr><td>אופקי <b>2 מ'</b> <small>(מהשיעור)</small></td><td>\({\times 4}\)</td><td>אנכי <b>8 מ'</b></td><td>\({8 \div 2 = 4}\) ✓</td></tr>
+  </table>
+
+  <div class="grid2">
+    <div class="box lecturer"><div class="box-title">הודגש בשיעור</div>
+      <ul class="pts">
+        <li>חלק חדש בחומר: <b>"על פי התקנות"</b>. כשחסר נתון, לוקחים אותו מהתקנות. <span class="ltr muted">00:06:07</span></li>
+        <li><b>לשנן ולתרגל</b> אותו הרבה. <span class="ltr muted">02:02:47</span></li>
+      </ul>
+    </div>
+    <div class="box warn"><div class="box-title">טעות נפוצה</div>
+      <p>לערבב את <b>4:1</b> (סולם, 76°) עם <b>1:1.5</b> (מדרכה עם שלבים ויציאה מחפירה, 34°). זה קרה גם בכיתה. <span class="ltr muted">01:08:10</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOPIC 2 ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">2</span><h2>סולם פשוט: מגובה המבנה לאורך הסולם</h2><span class="time">⏱ 00:08:48</span></div>
+  <div class="bl">גובה המבנה ← <b><span class="ltr">÷ 4</span></b> ← <b>פיתגורס</b> ← <b>עוד מטר</b>: זה אורך הסולם.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p>"תביא סולם" בלי מטרים ← מגיע סולם <b>ענק</b> או <b>קטן מדי</b>. מנהל אתר רוצה לקנות <b>בדיוק מה שצריך</b>, ולא סולם שיתאים גם בעוד שנתיים.</p>
+  </div>
+
+  <div class="grid2" style="grid-template-columns:1.12fr 1fr;align-items:center">
+    <div>
+      <h3 style="margin-top:0">איך מחשבים (5 צעדים)</h3>
+      <ol class="steps">
+        <li>לרשום את <b>גובה המבנה</b> (a). זה הנתון היחיד: צלע אחת, והיחס מביא את השנייה.</li>
+        <li>לחשב את <b>המרחק מהקיר</b>: \({b = a \div 4}\).</li>
+        <li><b>פיתגורס</b>: \({c = \sqrt{a^2 + b^2}}\). זה <b>היתר</b>, הסולם עד קצה המבנה.</li>
+        <li>להוסיף <b>1 מ'</b> מעל המעקה: \({L = c + 1}\).</li>
+        <li>לכתוב <b>"אשתמש בסולם באורך L לפחות"</b>. לא לעגל כלפי מטה.</li>
+      </ol>
+    </div>
+    <figure class="fig" style="margin:0">
+      <svg viewBox="0 6 350 318" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+<line x1="8" y1="262" x2="342" y2="262" class="ink" stroke-width="3"/>
+<rect x="170" y="78" width="90" height="184" class="soft-f ink" stroke-width="2"/>
+<text x="215" y="180" class="lbl-s he" text-anchor="middle">המבנה</text>
+<line x1="124" y1="262" x2="170" y2="78" class="acc" stroke-width="7" stroke-linecap="round"/>
+<line x1="170" y1="78" x2="181.2" y2="33.4" class="ok" stroke-width="7" stroke-linecap="round"/>
+<circle cx="170" cy="78" r="5" class="ink-f"/>
+<path d="M158,262 L158,250 L170,250" class="ink" fill="none" stroke-width="1.5"/>
+<line x1="262" y1="78" x2="298" y2="78" class="line" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="262" y1="262" x2="298" y2="262" class="line" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="288" y1="80" x2="288" y2="260" class="ink" stroke-width="1.5" marker-start="url(#ar1)" marker-end="url(#ar1)"/>
+<line x1="282" y1="216" x2="294" y2="216" class="ink" stroke-width="2"/>
+<line x1="282" y1="170" x2="294" y2="170" class="ink" stroke-width="2"/>
+<line x1="282" y1="124" x2="294" y2="124" class="ink" stroke-width="2"/>
+<text x="322" y="176" class="lbl-b ltr" text-anchor="middle">a = 4</text>
+<line x1="124" y1="264" x2="124" y2="290" class="line" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="170" y1="264" x2="170" y2="290" class="line" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="125" y1="284" x2="169" y2="284" class="ink" stroke-width="1.5" marker-start="url(#ar1)" marker-end="url(#ar1)"/>
+<text x="147" y="308" class="lbl-b ltr" text-anchor="middle">b = 1</text>
+<line x1="88" y1="170" x2="143" y2="170" class="line" stroke-width="1.5"/>
+<text x="46" y="176" class="lbl-b ltr" text-anchor="middle">c = 4.12</text>
+<text x="46" y="152" class="lbl he" text-anchor="middle">היתר</text>
+<line x1="228" y1="38" x2="187.2" y2="36.4" class="line" stroke-width="1.5"/>
+<text x="262" y="24" class="lbl he" text-anchor="middle">מעל המעקה</text>
+<text x="262" y="46" class="lbl-b ltr" text-anchor="middle">+ 1 m</text>
+<text x="10" y="22" class="lbl-b ltr" text-anchor="start">L = c + 1</text>
+<text x="10" y="44" class="lbl ltr" text-anchor="start">L = 4.12 + 1 = 5.12</text>
+</svg>
+      <figcaption>לשים לב: הסולם (<span class="ltr">5.12</span>) ארוך מהיתר (<span class="ltr">4.12</span>) בדיוק ב<b style="white-space:nowrap">מטר אחד</b> שבולט מעל המעקה (בירוק). מידות במטרים.</figcaption>
+    </figure>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): מבנה בגובה 4 מ' <span class="ltr">⏱ 00:17:04</span></div><div class="w-body">
+    <div class="given">גובה המבנה 4 מ'. מחפשים: אורך הסולם.</div>
+    <ol class="lines">
+      <li>\({b = 4 \div 4 = 1\ \text{m}}\)</li>
+      <li>\({c^2 = 4^2 + 1^2 = 16 + 1 = 17}\) ← \({c = \sqrt{17} = 4.12\ \text{m}}\)</li>
+      <li>\({L = 4.12 + 1 = 5.12\ \text{m}}\)</li>
+    </ol>
+    <div class="answer">סולם באורך <span class="ltr">5.12</span> מ' לפחות.</div>
+    <div class="check">היתר גדול מהגובה וקטן מסכום הניצבים: \({4 &lt; 4.12 &lt; 4 + 1}\)</div>
+  </div></div>
+
+  <h3>עוד גבהים מהלוח <span class="time">⏱ 00:13:47</span></h3>
+  <table class="t">
+    <tr><th>גובה a (מ')</th><th>\({b = a \div 4}\)</th><th>\({c^2 = a^2 + b^2}\)</th><th>\({c = \sqrt{c^2}}\)</th><th>\({L = c + 1}\)</th><th>בשיעור</th></tr>
+    <tr><td>3</td><td>0.75</td><td>9.56</td><td>3.09</td><td><b>4.09</b></td><td>ברשימה בלבד</td></tr>
+    <tr><td>4.5</td><td>1.125</td><td>21.52</td><td>4.64</td><td><b>5.64</b></td><td>ברשימה בלבד</td></tr>
+    <tr><td>5</td><td>1.25</td><td>26.56</td><td>5.15</td><td><b>6.15</b></td><td>הוצב בשיעור</td></tr>
+    <tr><td>5.5</td><td>1.375</td><td>32.14</td><td>5.67</td><td><b>6.67</b></td><td>ברשימה בלבד</td></tr>
+    <tr><td>8</td><td>2</td><td>68</td><td>8.25</td><td><b>9.25</b></td><td>הוצב בשיעור</td></tr>
+  </table>
+  <p class="muted" style="margin:-1mm 0 3mm;font-size:9.5pt">בשיעור נכתבה רשימת הגבהים. רק 4 מ' נפתר עד התוצאה: 5 ו-8 מ' הגיעו עד הצבה בפיתגורס. שאר התוצאות חושבו בסיכום.</p>
+
+  <div class="box warn"><div class="box-title">טעויות נפוצות</div>
+    <ul class="pts">
+      <li>לשכוח את <b>המטר הנוסף</b>, או לעגל <b>כלפי מטה</b>.</li>
+      <li>להוסיף הרבה יותר ממטר. אם זה יותר, זה לא נורא, אבל <b>3 מ' יותר</b> ← סולם כבד מאוד.</li>
+      <li>לחבר ניצבים במקום <b>פיתגורס</b>. <small class="muted">(לא נאמר בשיעור)</small></li>
+      <li>לבלבל: <b>מבנה 5.5 מ'</b> ← סולם 6.67 מ'. <b>סולם 5.5 מ'</b> הוא עניין אחר (נושא 5). <small class="muted">(לא נאמר בשיעור)</small></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ TOPIC 3 ============ -->
+<section class="topic cont">
+  <div class="keep">
+  <div class="topic-head"><span class="n">3</span><h2>למה מטר נוסף, ומה כשנתון המרחק מהקיר</h2><span class="time">⏱ 00:33:01</span></div>
+  <div class="bl">המטר הנוסף הוא <b>המאחז</b> לעלייה לגג. ואם נתון המרחק מהקיר: <b><span class="ltr">× 4</span></b> וממשיכים כרגיל.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור)</div>
+    <p>עולים על הסולם עד שהרגל <b>בגובה הגג</b>, <b>מחזיקים חזק</b> בבליטה של הסולם, מסתובבים ועוברים לגג. אילו הסולם נגמר בדיוק בקצה, אין במה להחזיק. <b>המטר הוא המאחז.</b></p>
+  </div>
+  </div>
+
+  <ul class="pts">
+    <li>מדרכה עם שלבים (<span class="ltr">1:1.5</span>) <b>תלולה מדי</b>? ← <b>סולם</b> במקומה. למשל: גובה 10 מ' ← <b>15 מ'</b> אופקיים. יש רק 14.5 מ'? ← סולם או מדרגות.</li>
+    <li>לכל אורך שיצא (היתר) מוסיפים <b>1 מ'</b>. אם המספר "לא הגיוני" ← כותבים <b>לפחות</b>.</li>
+    <li>סוג שני של שאלה: נתון <b>המרחק מהקיר</b>, כלומר ה<b>זקפים</b> (שני העמודים של הסולם) הורחקו. אז <b>× 4</b> ← הגובה.</li>
+    <li>עד היום מה"ט נתנו רק <b>גובה מבנה</b>. לפי המרצה, כנראה יום אחד יינתן גם <b>המרחק</b>. "כל המטרה: להגיע לאותה שאלה <b>מכל כיוון</b>."</li>
+  </ul>
+
+  <figure class="fig" style="width:90%;margin:3.5mm auto">
+    <svg viewBox="0 14 640 124" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+<rect x="516" y="34" width="112" height="84" rx="12" class="soft-f acc" stroke-width="1.5"/>
+<text x="572" y="58" class="lbl-s he" text-anchor="middle">מרחק מהקיר</text>
+<text x="572" y="86" class="lbl-b ltr" text-anchor="middle">b = 1.25</text>
+<rect x="348" y="34" width="112" height="84" rx="12" class="soft-f acc" stroke-width="1.5"/>
+<text x="404" y="58" class="lbl-s he" text-anchor="middle">גובה המבנה</text>
+<text x="404" y="86" class="lbl-b ltr" text-anchor="middle">a = 5</text>
+<text x="404" y="108" class="lbl-s ltr" text-anchor="middle">a = 4 × 1.25</text>
+<rect x="180" y="34" width="112" height="84" rx="12" class="soft-f acc" stroke-width="1.5"/>
+<text x="236" y="58" class="lbl-s he" text-anchor="middle">היתר</text>
+<text x="236" y="86" class="lbl-b ltr" text-anchor="middle">c = 5.15</text>
+<text x="236" y="108" class="lbl-s ltr" text-anchor="middle">c² = 5² + 1.25²</text>
+<rect x="12" y="34" width="112" height="84" rx="12" class="mid-f acc" stroke-width="3"/>
+<text x="68" y="58" class="lbl-s he" text-anchor="middle">אורך הסולם</text>
+<text x="68" y="86" class="lbl-b ltr" text-anchor="middle">L = 6.15</text>
+<text x="68" y="108" class="lbl-s ltr" text-anchor="middle">L = 5.15 + 1</text>
+<line x1="512" y1="76" x2="464" y2="76" class="ink" stroke-width="2.5" marker-end="url(#ar2)"/>
+<text x="488" y="64" class="lbl-b ltr" text-anchor="middle">× 4</text>
+<line x1="344" y1="76" x2="296" y2="76" class="ink" stroke-width="2.5" marker-end="url(#ar2)"/>
+<text x="320" y="64" class="lbl-s he" text-anchor="middle">פיתגורס</text>
+<line x1="176" y1="76" x2="128" y2="76" class="ink" stroke-width="2.5" marker-end="url(#ar2)"/>
+<text x="152" y="64" class="lbl-b ltr" text-anchor="middle">+ 1</text>
+</svg>
+    <figcaption>אותו מסלול כמו בנושא 2, רק שמתחילים מהמרחק. חושבו בסיכום: הורחקו 1.5 מ' ← 7.18 מ', הורחקו 2 מ' ← 9.25 מ'.</figcaption>
+  </figure>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): הזקפים הורחקו 1.25 מ' <span class="ltr">⏱ 00:35:27</span></div><div class="w-body">
+    <div class="given">הזקפים של סולם הורחקו 1.25 מ' מהקיר. מחפשים: אורך הסולם של אותו בניין.</div>
+    <ol class="lines">
+      <li>על פי התקנות ← יחס 4:1: \({a = 4 \times 1.25 = 5\ \text{m}}\)</li>
+      <li>פיתגורס: \({c = \sqrt{5^2 + 1.25^2} = \sqrt{26.5625} = 5.15\ \text{m}}\)</li>
+      <li>מטר נוסף: \({L = 5.15 + 1 = 6.15\ \text{m}}\)</li>
+    </ol>
+    <div class="answer">סולם באורך <span class="ltr">6.15</span> מ' לפחות.</div>
+    <div class="check">\({5 \div 1.25 = 4}\) ✓. אותו משולש כמו מבנה של 5 מ' (טבלת נושא 2): 6.15 מ' ✓</div>
+  </div></div>
+</section>
+
+<!-- ============ TOPIC 4 ============ -->
+<section class="topic cont">
+  <div class="keep">
+  <div class="topic-head"><span class="n">4</span><h2>שאלת מה"ט: גלריה בגובה 7 מ' ו"לפחות"</h2><span class="time">⏱ 00:38:51</span></div>
+  <div class="bl">גלריה 7 מ' <b>בלי מעקה</b> ← סולם של <b>8.22 מ' לפחות</b>. ובכל שאלה כזו כותבים <b>"לפחות"</b>.</div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור): מוט 12 מ"מ</div>
+      <ul class="pts">
+        <li>בתקנה: מוט עגול <b>12 מ"מ לפחות</b>. בשוק אין 12 ← <b>לוקחים 13</b>. אין 13 ← <b>14</b>.</li>
+        <li>כך גם בסולם: סולם של <span class="ltr">5.12</span> מ' <b>לא קיים</b>. סולמות מגיעים ב-<b>5</b>, <b>5.5</b> או <b>6</b> מ'.</li>
+      </ul>
+  </div>
+  </div>
+
+  <div class="grid2">
+    <div class="box lecturer"><div class="box-title">הודגש בשיעור</div>
+      <ul class="pts">
+        <li>השאלה <b>כבר הופיעה</b> במה"ט ובמבחן מגן, ותופיע גם <b>במבחנים</b>. <span class="ltr muted">00:40:00</span></li>
+        <li>לקרוא כל שאלת מה"ט <b>פעמיים</b> ולראות מה בדיוק שואלים. <span class="ltr muted">00:44:50</span></li>
+      </ul>
+    </div>
+    <div class="box warn"><div class="box-title">טעויות נפוצות</div>
+      <ul class="pts">
+        <li>לענות 7.22: <b>בלי המטר</b>.</li>
+        <li>מספר מדויק <b>בלי "לפחות"</b>.</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div class="grid2" style="grid-template-columns:1.1fr 1fr;align-items:center;margin-bottom:3mm">
+    <ul class="pts">
+      <li><b>אין מעקה</b> ← אין במה להחזיק, ורוצים להגיע <b>בעמידה</b>, לא לזחול. לכן צריך את <b>המטר הנוסף</b>.</li>
+      <li>"גלריה" היא רק <b>הרקע</b>: גם גג של גזיבו (כך נשמע) או של מכלית הוא <b>מבנה בגובה</b>.</li>
+      <li><b>"לפחות"</b>: מוכר שאין לו את המידה מביא <b>מידה אחת או שתיים מעל</b>.</li>
+    </ul>
+    <figure class="fig" style="margin:0">
+      <svg viewBox="0 4 350 306" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+<line x1="8" y1="250" x2="342" y2="250" class="ink" stroke-width="3"/>
+<rect x="140" y="68" width="150" height="12" class="mid-f ink" stroke-width="2"/>
+<rect x="146" y="80" width="10" height="170" class="soft-f ink" stroke-width="2"/>
+<rect x="274" y="80" width="10" height="170" class="soft-f ink" stroke-width="2"/>
+<text x="228" y="150" class="lbl he" text-anchor="middle">גלריה</text>
+<line x1="94.5" y1="250" x2="140" y2="68" class="acc" stroke-width="7" stroke-linecap="round"/>
+<line x1="140" y1="68" x2="146.3" y2="42.8" class="ok" stroke-width="7" stroke-linecap="round"/>
+<circle cx="140" cy="68" r="5" class="ink-f"/>
+<circle cx="186" cy="32" r="7" class="ink" fill="none" stroke-width="2.5"/>
+<line x1="186" y1="39" x2="186" y2="56" class="ink" stroke-width="3" stroke-linecap="round"/>
+<line x1="186" y1="56" x2="180" y2="68" class="ink" stroke-width="3" stroke-linecap="round"/>
+<line x1="186" y1="56" x2="193" y2="68" class="ink" stroke-width="3" stroke-linecap="round"/>
+<line x1="186" y1="44" x2="171" y2="38" class="ink" stroke-width="3" stroke-linecap="round"/>
+<line x1="186" y1="44" x2="197" y2="54" class="ink" stroke-width="3" stroke-linecap="round"/>
+<text x="252" y="56" class="he bad-f" text-anchor="middle" style="font-size:16px;font-weight:800">ללא מעקה</text>
+<line x1="294" y1="68" x2="322" y2="68" class="line" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="286" y1="250" x2="322" y2="250" class="line" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="314" y1="70" x2="314" y2="248" class="ink" stroke-width="1.5" marker-start="url(#ar3)" marker-end="url(#ar3)"/>
+<text x="334" y="160" class="lbl-b ltr" text-anchor="middle">7 m</text>
+<line x1="94.5" y1="252" x2="94.5" y2="278" class="line" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="140" y1="252" x2="140" y2="278" class="line" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="95.5" y1="272" x2="139" y2="272" class="ink" stroke-width="1.5" marker-start="url(#ar3)" marker-end="url(#ar3)"/>
+<text x="117.2" y="296" class="lbl-b ltr" text-anchor="middle">b = 1.75 m</text>
+<line x1="78" y1="170" x2="110.5" y2="170" class="line" stroke-width="1.5"/>
+<text x="40" y="176" class="lbl-b ltr" text-anchor="middle">c = 7.22 m</text>
+<text x="40" y="152" class="lbl he" text-anchor="middle">היתר</text>
+<line x1="78" y1="44" x2="142.3" y2="44.8" class="line" stroke-width="1.5"/>
+<text x="44" y="28" class="lbl he" text-anchor="middle">המאחז</text>
+<text x="44" y="50" class="lbl-b ltr" text-anchor="middle">+ 1 m</text>
+<text x="262" y="17" class="lbl-s he" text-anchor="middle">אורך הסולם</text>
+<text x="262" y="37" class="lbl-b ltr" text-anchor="middle">L = 8.22 m</text>
+<path d="M229,12 L146.3,12 L146.3,37" class="line" fill="none" stroke-width="1.5"/>
+</svg>
+      <figcaption>הסולם עולה עד קצה הרצפה ובולט עוד מטר: שם מחזיקים ועוברים בעמידה. מידות במטרים.</figcaption>
+    </figure>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (שאלת מה"ט מהשיעור, הפתרון חושב בסיכום): גלריה 7 מ' <span class="ltr">⏱ 00:39:05</span></div><div class="w-body">
+    <div class="given">גלריה בגובה 7 מ' ללא מעקה (10 נקודות). מחפשים: אורך הסולם.</div>
+    <ol class="lines">
+      <li>\({b = 7 \div 4 = 1.75\ \text{m}}\)</li>
+      <li>פיתגורס: \({c = \sqrt{49 + 3.0625} = \sqrt{52.0625} = 7.22\ \text{m}}\)</li>
+      <li>מטר נוסף: \({L = 7.22 + 1 = 8.22\ \text{m}}\)</li>
+    </ol>
+    <div class="answer">אשתמש בסולם באורך <span class="ltr">8.22</span> מ' לפחות.</div>
+    <div class="check">\({7 &lt; 7.22 &lt; 7 + 1.75}\) ✓ ; \({7.22 \times 0.97 \approx 7.0}\) (קבוע מנושא 5) ✓</div>
+  </div></div>
+
+</section>
+
+<!-- ============ TOPIC 5 ============ -->
+<section class="topic cont">
+  <div class="keep">
+  <div class="topic-head"><span class="n">5</span><h2>סולם מורכב: ידוע אורך הסולם</h2><span class="time">⏱ 01:02:29</span></div>
+  <div class="bl">אורך הסולם נתון ← גובה = אורך × <b>0.97</b>, מרחק = אורך × <b>0.24</b> (זווית <b>76°</b>).</div>
+
+  <div class="card"><div class="c-title">השאלה (מהלוח, מה"ט)</div>
+    <p>צוות חברת חשמל בא לחבר מבנה לחשמל. גובה החזית 8 מ'. אורך הסולם 5.5 מ'. (א) באיזה גובה הסולם נוגע בחזית? (ב) מה המרחק של הסולם (בחלקו התחתון) מהחזית?</p>
+  </div>
+  </div>
+
+  <div class="box life"><div class="box-title">דוגמה מהחיים (מהשיעור): למה 8 מ' הוא נתון מיותר</div>
+    <ul class="pts">
+      <li>חלק מהכיתה רצו לחלק את <b>8 ב-4</b>. לפי המרצה: הוסיפו לבניין עוד שתי קומות (כ-6 מ'), והחזית כבר <b>14 מ'</b>.</li>
+      <li>הסולם (5.5 מ') נוגע <b>באותו גובה</b>. ה-8 רק מראה שהוא <b>לא עובר את הגג</b>.</li>
+    </ul>
+  </div>
+
+  <div class="grid2" style="grid-template-columns:1.12fr 1fr;align-items:center">
+    <div>
+      <h3 style="margin-top:0">איך פותרים (6 צעדים)</h3>
+      <ol class="steps">
+        <li><b>לצייר</b>: הסולם הוא <b>היתר</b> (c), הקיר <b>אנכי</b> (a), הרצפה <b>אופקית</b> (b), והזווית \({\alpha}\) בתחתית. במבחן אין סרטוט מוכן.</li>
+        <li><b>"על פי התקנות"</b>: יש צלע (5.5 מ'), חסרה <b>זווית</b>: \({\tan\alpha = 4}\) ← \({\alpha \approx 76^\circ}\).</li>
+        <li><b>גובה הנגיעה</b>: \({a = c \cdot \sin\alpha}\).</li>
+        <li><b>המרחק מהקיר</b>: \({b = c \cdot \cos\alpha}\).</li>
+        <li><b>בדיקה</b>: \({a \div b \approx 4}\).</li>
+        <li><b>בלי מטר נוסף</b>: הסולם נתון. <span class="ltr muted">01:03:23</span></li>
+      </ol>
+    </div>
+    <figure class="fig" style="margin:0">
+      <svg viewBox="0 36 360 318" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+<line x1="8" y1="290" x2="352" y2="290" class="ink" stroke-width="3"/>
+<rect x="190" y="50" width="110" height="240" class="soft-f ink" stroke-width="2"/>
+<text x="246" y="78" class="lbl-s he" text-anchor="middle">חזית המבנה</text>
+<text x="246" y="100" class="he warn-f" text-anchor="middle" style="font-size:15px;font-weight:800">נתון מיותר</text>
+<line x1="150" y1="290" x2="190" y2="130" class="acc" stroke-width="7" stroke-linecap="round"/>
+<circle cx="190" cy="130" r="5" class="ink-f"/>
+<path d="M178,290 L178,278 L190,278" class="ink" fill="none" stroke-width="1.5"/>
+<path d="M176,290 A26,26 0 0 0 156.3,264.8" class="ink" fill="none" stroke-width="2"/>
+<text x="142" y="282" class="lbl-b ltr" text-anchor="end">α = 76°</text>
+<line x1="192" y1="130" x2="214" y2="130" class="line" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="208" y1="132" x2="208" y2="288" class="ink" stroke-width="1.5" marker-start="url(#ar4)" marker-end="url(#ar4)"/>
+<text x="258" y="196" class="lbl he" text-anchor="middle">גובה הנגיעה</text>
+<text x="258" y="220" class="lbl-b ltr" text-anchor="middle">a = 5.33 m</text>
+<line x1="150" y1="292" x2="150" y2="318" class="line" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="190" y1="292" x2="190" y2="318" class="line" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="151" y1="312" x2="189" y2="312" class="ink" stroke-width="1.5" marker-start="url(#ar4)" marker-end="url(#ar4)"/>
+<text x="170" y="336" class="lbl-b ltr" text-anchor="middle">b = 1.33 m</text>
+<line x1="98" y1="214" x2="165" y2="214" class="line" stroke-width="1.5"/>
+<text x="54" y="220" class="lbl-b ltr" text-anchor="middle">c = 5.5 m</text>
+<text x="54" y="196" class="lbl he" text-anchor="middle">הסולם</text>
+<line x1="302" y1="50" x2="328" y2="50" class="line" stroke-width="1.5" stroke-dasharray="4 3"/>
+<line x1="320" y1="52" x2="320" y2="288" class="ink" stroke-width="1.5" marker-start="url(#ar4)" marker-end="url(#ar4)"/>
+<text x="338" y="170" class="lbl-b ltr" text-anchor="middle">8 m</text>
+</svg>
+      <figcaption>הגובה והמרחק ביחס 4:1. הקיר של 8 מ' רק מראה שהסולם נשען מתחת לגג.</figcaption>
+    </figure>
+  </div>
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): סולם 5.5 מ', חזית 8 מ' <span class="ltr">⏱ 01:11:22</span></div><div class="w-body">
+    <div class="given">סולם 5.5 מ' (גובה החזית 8 מ': מיותר). מחפשים: (א) גובה, (ב) מרחק.</div>
+    <ol class="lines">
+      <li>על פי התקנות: \({\tan\alpha = 4 \div 1 = 4}\) ← \({\alpha = 75.96^\circ \approx 76^\circ}\)</li>
+      <li>\(a = 5.5 \times \sin 76^\circ \approx 5.33\ \text{m}\) <small class="muted">(כך בלוח. במחשבון מדויק: 5.34)</small></li>
+      <li>\(b = 5.5 \times \cos 76^\circ \approx 1.33\ \text{m}\)</li>
+    </ol>
+    <div class="answer">(א) גובה הנגיעה <span class="ltr">5.33</span> מ'. (ב) המרחק מהקיר <span class="ltr">1.33</span> מ'.</div>
+    <div class="check">\({1.33 \times 4 = 5.32 \approx 5.33}\) ✓ ; \({5.33 &lt; 5.5 &lt; 8}\) ✓</div>
+  </div></div>
+
+  <div class="box optional"><div class="box-title">מאיפה 76°, ואיך בוחרים נוסחה? (הוסבר בשיעור) <span class="ltr muted">01:06:24</span></div>
+    <p>יחס 4:1 ← \({\tan\alpha = a \div b = 4}\). במחשבון <b>Shift + tan 4</b> ← \({75.96^\circ}\). לנו זה <b>76°</b> (הפרש של 0.04° לא מעניין). אותה זווית ← אותם סינוס וקוסינוס, <b>בלי קשר לאורך הסולם</b>.</p>
+    <p>בחירת הנוסחה: מסתכלים אילו צלעות ידועות. "a ÷ c לא מתאים, b ÷ c לא מתאים, <b>a ÷ b</b> מתאים" ← טנגנס. <span class="ltr muted">01:10:36</span></p>
+  </div>
+
+  <h3>הקבועים והכללים <span class="time">⏱ 01:11:22</span></h3>
+  <figure class="fig" style="width:90%;margin:3.5mm auto">
+    <svg viewBox="0 0 640 228" xmlns="http://www.w3.org/2000/svg">
+<rect x="430" y="4" width="196" height="220" rx="12" class="soft-f line" fill-opacity="0.55" stroke-width="1.5"/>
+<text x="528" y="30" class="lbl-b ltr" text-anchor="middle">sin 76° = 0.97</text>
+<polygon points="544.2,152 544.2,46 538.2,46 538.2,152" class="acc-f"/>
+<line x1="514.8" y1="152" x2="541.2" y2="152" class="line" stroke-width="2" stroke-dasharray="5 4"/>
+<polygon points="517.7,152.7 544.2,46.7 538.3,45.3 511.8,151.3" class="acc-f"/>
+<path d="M536.8,152 A22,22 0 0 0 520.1,130.7" class="ink" fill="none" stroke-width="1.5"/>
+<text x="555.2" y="104" class="lbl-b ltr" text-anchor="middle">a</text>
+<text x="528" y="174" class="lbl-b ltr" text-anchor="middle">b</text>
+<text x="502.8" y="104" class="lbl-b ltr" text-anchor="middle">c</text>
+<text x="528" y="194" class="lbl-b ltr" text-anchor="middle">a = c × 0.97</text>
+<text x="528" y="214" class="lbl-s he" text-anchor="middle">גובה הנגיעה (למעלה)</text>
+<rect x="222" y="4" width="196" height="220" rx="12" class="soft-f line" fill-opacity="0.55" stroke-width="1.5"/>
+<text x="320" y="30" class="lbl-b ltr" text-anchor="middle">cos 76° = 0.24</text>
+<line x1="333.2" y1="152" x2="333.2" y2="46" class="line" stroke-width="2" stroke-dasharray="5 4"/>
+<polygon points="306.8,155 333.2,155 333.2,149 306.8,149" class="acc-f"/>
+<polygon points="309.7,152.7 336.2,46.7 330.3,45.3 303.8,151.3" class="acc-f"/>
+<path d="M328.8,152 A22,22 0 0 0 312.1,130.7" class="ink" fill="none" stroke-width="1.5"/>
+<text x="347.2" y="104" class="lbl-b ltr" text-anchor="middle">a</text>
+<text x="320" y="174" class="lbl-b ltr" text-anchor="middle">b</text>
+<text x="294.8" y="104" class="lbl-b ltr" text-anchor="middle">c</text>
+<text x="320" y="194" class="lbl-b ltr" text-anchor="middle">b = c × 0.24</text>
+<text x="320" y="214" class="lbl-s he" text-anchor="middle">מרחק מהקיר (למטה)</text>
+<rect x="14" y="4" width="196" height="220" rx="12" class="soft-f line" fill-opacity="0.55" stroke-width="1.5"/>
+<text x="112" y="30" class="lbl-b ltr" text-anchor="middle">tan 76° = 4</text>
+<polygon points="128.2,152 128.2,46 122.2,46 122.2,152" class="acc-f"/>
+<polygon points="98.8,155 125.2,155 125.2,149 98.8,149" class="acc-f"/>
+<line x1="98.8" y1="152" x2="125.2" y2="46" class="line" stroke-width="2" stroke-dasharray="5 4"/>
+<path d="M120.8,152 A22,22 0 0 0 104.1,130.7" class="ink" fill="none" stroke-width="1.5"/>
+<text x="139.2" y="104" class="lbl-b ltr" text-anchor="middle">a</text>
+<text x="112" y="174" class="lbl-b ltr" text-anchor="middle">b</text>
+<text x="86.8" y="104" class="lbl-b ltr" text-anchor="middle">c</text>
+<text x="112" y="194" class="lbl-b ltr" text-anchor="middle">a ÷ b = 4</text>
+<text x="112" y="214" class="lbl-s he" text-anchor="middle">היחס בין הגובה למרחק</text>
+</svg>
+    <figcaption>סינוס ← <b>גובה</b> (למעלה). קוסינוס ← <b>מרחק</b> (למטה). טנגנס ← היחס ביניהם. באדום עבה: שתי הצלעות שבנוסחה. מקווקו: הצלע שלא משתתפת. הקבועים נכונים לכל אורך סולם, גם ל-200 מ' (המרצה).</figcaption>
+  </figure>
+
+
+  <div class="grid2">
+    <div class="box lecturer"><div class="box-title">הודגש בשיעור</div>
+      <ul class="pts">
+        <li>במבחן מספיק לכתוב <b>"על פי התקנות"</b> ואת <b>הקבועים</b> (<span class="ltr">0.97</span>, <span class="ltr">0.24</span>, <span class="ltr">4</span>). <span class="ltr muted">01:22:40</span></li>
+        <li>בשאלות מה"ט עד היום חזרו <b>אותם נתונים</b> (חזית 8 מ', סולם 5.5 מ'). "אם הייתי במה"ט הייתי משנה את הנתון." <span class="ltr muted">00:13:29</span></li>
+      </ul>
+    </div>
+    <div class="box warn"><div class="box-title">טעויות נפוצות</div>
+      <ul class="pts">
+        <li>לחלק את <b>8 מ'</b> ב-4.</li>
+        <li>להוסיף <b>1 מ'</b> לסולם שנתון.</li>
+        <li>לחשב מרחק עם <b>סינוס</b>.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOPIC 6 ============ -->
+<section class="topic cont">
+  <div class="keep">
+  <div class="topic-head"><span class="n">6</span><h2>תרגול ובדיקה: סולם 7.3 מ' וסולם 6.5 מ'</h2><span class="time">⏱ 01:23:30</span></div>
+  <div class="bl">מחשבים <b>גם גובה וגם מרחק</b>, ובודקים שהיחס ביניהם <b>4</b>. אם לא יוצא 4 ← טעות באחד מהם.</div>
+
+  <div class="grid2" style="align-items:start;margin-bottom:3mm">
+    <div class="box life" style="margin-top:0"><div class="box-title">דוגמה מהחיים (תוספת)</div>
+      <p>בקופה סופרים את <b>העודף פעם שנייה</b>. כאן: החישוב השני (קוסינוס) הוא <b>הספירה השנייה</b> שמגלה טעות.</p>
+    </div>
+    <div class="box lecturer" style="margin-top:0"><div class="box-title">הודגש בשיעור <span class="ltr muted">01:27:32</span></div>
+      <p>טעות בגובה ← <b>טעות בהמשך</b>. גם אם אפשר סתם לחלק ב-4, <b>כדאי לבדוק</b>: "חבל להפסיד את הנקודה".</p>
+    </div>
+  </div>
+  </div>
+
+  <ul class="pts">
+    <li><b>7.3 מ'</b> ("מחר יבוא ויגיד: אורך הסולם 7.3, באיזה גובה נוגע?"): בלוח \({7.3 \times 0.97}\) ו-\({7.3 \times 0.24}\). חושב בסיכום: גובה <b>7.08</b> מ', מרחק <b>1.77</b> מ'.</li>
+    <li><b>6.5 מ' על בניין של 28 מ'</b>: ה-28 רק מראה שהסולם <b>לא עובר את הגג</b>.</li>
+    <li>76° היא <b>"על פי התקנות"</b>: אין צורך להוכיח. <b>פיתגורס לא נחוץ</b>: יש זווית וצלע.</li>
+    <li><b>סינוס ← למעלה</b> (גובה). <b>קוסינוס ← למטה</b> (מרחק).</li>
+    <li>במחשבון: <b>sin 76</b> ← 0.97, ואז כופלים באורך. הגובה יוצא <b>טיפה פחות</b> מאורך הסולם.</li>
+  </ul>
+
+  <figure class="fig" style="width:88%;margin:3.5mm auto">
+    <svg viewBox="0 0 640 218" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="ar5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ink-f"/></marker></defs>
+<rect x="26" y="38" width="360" height="40" rx="6" class="mid-f acc" stroke-width="2"/>
+<line x1="116" y1="38" x2="116" y2="78" class="acc" stroke-width="1.5"/>
+<line x1="206" y1="38" x2="206" y2="78" class="acc" stroke-width="1.5"/>
+<line x1="296" y1="38" x2="296" y2="78" class="acc" stroke-width="1.5"/>
+<text x="71" y="64" class="lbl-s ltr" text-anchor="middle">b</text>
+<text x="161" y="64" class="lbl-s ltr" text-anchor="middle">b</text>
+<text x="251" y="64" class="lbl-s ltr" text-anchor="middle">b</text>
+<text x="341" y="64" class="lbl-s ltr" text-anchor="middle">b</text>
+<text x="206" y="28" class="lbl-b ltr" text-anchor="middle">a = 6.31 m</text>
+<rect x="26" y="150" width="90" height="40" rx="6" class="soft-f acc" stroke-width="2"/>
+<text x="71" y="176" class="lbl-b ltr" text-anchor="middle">b = 1.57</text>
+<line x1="50" y1="82" x2="50" y2="146" class="ink" stroke-width="2.5" marker-end="url(#ar5)"/>
+<text x="60" y="118" class="lbl-b ltr" text-anchor="start">÷ 4</text>
+<line x1="102" y1="146" x2="102" y2="82" class="ink" stroke-width="2.5" marker-end="url(#ar5)"/>
+<text x="112" y="118" class="lbl-b ltr" text-anchor="start">× 4</text>
+<rect x="420" y="24" width="206" height="78" rx="12" class="ok-f" fill-opacity="0.14" stroke-width="0"/>
+<text x="523" y="52" class="lbl-b he" text-anchor="middle">היחס יוצא</text>
+<text x="523" y="86" class="lbl-b ltr" text-anchor="middle">a ÷ b ≈ 4  ✓</text>
+<rect x="420" y="116" width="206" height="92" rx="12" class="bad-f" fill-opacity="0.12" stroke-width="0"/>
+<text x="523" y="144" class="lbl-b he" text-anchor="middle">היחס לא יוצא</text>
+<text x="523" y="170" class="lbl-b ltr" text-anchor="middle">a ÷ b ≠ 4  ✗</text>
+<text x="523" y="196" class="lbl-s he" text-anchor="middle">טעות באחד המספרים</text>
+</svg>
+    <figcaption>סולם 6.5 מ': גובה 6.31 ומרחק 1.57. המרחק נכנס 4 פעמים בגובה ← היחס כ-4 ← החישוב תקין.</figcaption>
+  </figure>
+
+
+
+  <div class="worked"><div class="w-title">דוגמה פתורה (מהשיעור): סולם 6.5 מ', בניין 28 מ' <span class="ltr">⏱ 01:25:15</span></div><div class="w-body">
+    <div class="given">סולם 6.5 מ', בניין 28 מ' (מיותר). מחפשים: גובה הנגיעה והמרחק. <small class="muted">(בלוח רק הנוסחאות; התוצאות חושבו בסיכום)</small></div>
+    <ol class="lines">
+      <li>על פי התקנות: \({\alpha = 76^\circ}\)</li>
+      <li>גובה: \({a = 6.5 \times 0.9703 = 6.31\ \text{m}}\)</li>
+      <li>מרחק: \({b = 6.5 \times 0.2419 = 1.57\ \text{m}}\)</li>
+    </ol>
+    <div class="answer">גובה <span class="ltr">6.31</span> מ', מרחק <span class="ltr">1.57</span> מ'.</div>
+    <div class="check">\({1.57 \times 4 = 6.28 \approx 6.31}\) ✓. \({6.31 &lt; 6.5 &lt; 28}\) ✓</div>
+  </div></div>
+
+  <h3>איזו דרך לבחור?</h3>
+  <figure class="fig">
+    <div class="grid3" style="text-align:start">
+      <div class="card"><div class="c-title">א. נתון: גובה המבנה</div>
+        <p class="muted">סולם פשוט. מחפשים <b>אורך סולם</b>.</p>
+        <ol class="steps">
+          <li><span class="ltr">÷ 4</span> ← המרחק</li>
+          <li><b>פיתגורס</b> ← היתר</li>
+          <li><span class="ltr">+ 1 m</span> ← אורך הסולם</li>
+          <li>לכתוב <b>"לפחות"</b></li>
+        </ol>
+      </div>
+      <div class="card"><div class="c-title">ב. נתון: מרחק מהקיר</div>
+        <p class="muted">הזקפים הורחקו. מחפשים <b>אורך סולם</b>.</p>
+        <ol class="steps">
+          <li><span class="ltr">× 4</span> ← הגובה</li>
+          <li>ממשיכים <b>כמו א</b></li>
+        </ol>
+      </div>
+      <div class="card"><div class="c-title">ג. נתון: אורך הסולם</div>
+        <p class="muted">סולם מורכב. מחפשים <b>גובה ומרחק</b>.</p>
+        <ol class="steps">
+          <li><b>76°</b> על פי התקנות</li>
+          <li>גובה: <span class="ltr">a = c × 0.97</span></li>
+          <li>מרחק: <span class="ltr">b = c × 0.24</span></li>
+          <li>בדיקה: יחס <b>4</b></li>
+          <li><b>בלי</b> מטר נוסף</li>
+        </ol>
+      </div>
+    </div>
+    <figcaption>שלושה סוגי שאלות על סולם. לפי מה שנתון בוחרים את הדרך.</figcaption>
+  </figure>
+
+  <div class="grid2">
+    <div class="box lecturer"><div class="box-title">סעיף אפשרי (נשמע חלקית)</div>
+      <p>"עד איזה גובה עומדים על הסולם?" סולם 5.5 מ' ← משאירים מטר ← <b>4.5 מ'</b> (שתי נקודות). <span class="ltr muted">01:32:29</span></p>
+    </div>
+    <div class="box tip"><div class="box-title">טיפ (לא נאמר בשיעור)</div>
+      <p>הקבועים 0.97 ו-0.24 מעוגלים, ולכן היחס ביניהם 4.04. במחשבון: 4.01. שניהם "בערך 4".</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============ TOPIC 7 ============ -->
+<section class="topic cont">
+  <div class="keep">
+  <div class="topic-head"><span class="n">7</span><h2>הדרייב, הציונים והמבחנים</h2><span class="time">⏱ 01:44:12</span></div>
+  <div class="bl">מתחילים ללמוד <b>מעכשיו</b>, לא שבוע לפני: בדרייב יש תמצית, בנק שאלות ומבחנים פתורים.</div>
+  </div>
+
+  <h3>מפת הדרייב <span class="time">⏱ 01:46:50</span></h3>
+  <figure class="fig">
+    <div class="grid2" style="grid-template-columns:repeat(4,1fr);gap:2mm;text-align:start">
+      <div class="card" style="padding:1.5mm 2.5mm;background:var(--accent-soft);border-color:var(--accent-mid)">📁 <b>01</b> תוכן עניינים והישגים</div>
+      <div class="card" style="padding:1.5mm 2.5mm;background:var(--accent-soft);border-color:var(--accent-mid)">📁 <b>02</b> תמצית החומר</div>
+      <div class="card muted" style="padding:1.5mm 2.5mm">📁 <b>03</b> מבדקי ידע</div>
+      <div class="card" style="padding:1.5mm 2.5mm;background:var(--accent-soft);border-color:var(--accent-mid)">📁 <b>04</b> בנק שאלות</div>
+      <div class="card" style="padding:1.5mm 2.5mm;background:var(--accent-soft);border-color:var(--accent-mid)">📁 <b>05</b> מבחני מגן</div>
+      <div class="card" style="padding:1.5mm 2.5mm;background:var(--accent-soft);border-color:var(--accent-mid)">📁 <b>06</b> מבחני מה"ט</div>
+      <div class="card muted" style="padding:1.5mm 2.5mm">📁 <b>10</b> מדריכים</div>
+      <div class="card muted" style="padding:1.5mm 2.5mm">📁 <b>15</b> ספרות</div>
+    </div>
+    <figcaption>תיקיות הדרייב (מהמסך). מסומנות: התיקיות שנדונו.</figcaption>
+  </figure>
+
+  <h3>ציונים ונקודות <span class="time">⏱ 01:49:51</span></h3>
+  <table class="t">
+    <tr><th>רכיב</th><th>נקודות לציון המגן</th><th>מקור</th></tr>
+    <tr><td>תעודת "סיכוני בטיחות בבנייה"</td><td><b>1</b></td><td>נאמר</td></tr>
+    <tr><td>תעודת "נאמן בטיחות"</td><td><b>3</b></td><td>נאמר</td></tr>
+    <tr><td>מבחן אמצע</td><td><b>עד 2</b> (100 ← 2, 50 ← 1)</td><td>נאמר</td></tr>
+    <tr><td>עבודת הגשה</td><td><b>3</b></td><td>המסמך שהוצג <small>(בגיליון ההישגים: 2 ← לבדוק)</small></td></tr>
+    <tr><td>דפי עזר</td><td><b>1</b></td><td>המסמך שהוצג</td></tr>
+  </table>
+  <ul class="pts">
+    <li>תקרה: ציון המגן <b>לא עולה על 90</b>. <span class="ltr muted">01:50:39</span></li>
+    <li>הנקודות מחושבות <b>אוטומטית</b> בגיליון ההישגים (יתמלא בעוד שבוע-שבועיים). אפשר להשוות לחמש כיתות אחרות. <span class="ltr muted">01:48:45</span> <span class="ltr muted">01:51:08</span></li>
+    <li>סמסטר א': <b>שני מבחנים, הגבוה נחשב</b> (הסמסטר מסתיים ב-<span class="ltr">22.01.2027</span> לפי המסמך). סמסטר ב': מבחן אמצע, עבודה, דף עזר ומבחן מגן. <span class="ltr muted">01:49:51</span></li>
+    <li>מהמסמך: ציון <b>90 ומעלה</b> במה"ט ← הסמכת עבודה בגובה ורענון מלגזנים בחינם.</li>
+    <li>מהמסמך: מועד הגשת התעודות עד <span class="ltr">11.10.2026</span> + <b><span class="ltr">30.11.2026</span></b> ("בהתאמה"; לא ברור איזה לאיזו כיתה). <span class="ltr muted">01:48:20</span></li>
+  </ul>
+
+  <h3>מבחן האמצע <span class="time">⏱ 00:06:41</span></h3>
+  <ul class="pts">
+    <li>מבחן במתכונת מה"ט: <b>4 שעות</b> (כך נשמע). הארכת זמן: <b>רבע שעה על כל שעה</b>, כלומר 5 שעות. "מבחן פשוט": שעתיים, ובהארכה עוד חצי שעה.</li>
+    <li>תאריך (מהמסמך): כיתות יום <b><span class="ltr">29.11.2026</span></b>, כיתות ערב <b><span class="ltr">03.12.2026</span></b>. לברר איזה תאריך מתאים לכיתה (פרטים בסוף). <span class="ltr muted">01:47:53</span></li>
+  </ul>
+
+  <h3>בנק השאלות <span class="time">⏱ 01:51:27</span></h3>
+  <ul class="pts">
+    <li><b>מבחני המרצה לוקחים שאלות מהבנק.</b> שאלות <b>סגורות ופתוחות</b>, עם פתרון ובלי. <span class="ltr muted">01:53:42</span></li>
+    <li>כרגע בבנק: <b>משטחי עבודה ומדרכות מעבר</b> (פרק ב') ו<b>חפירות ועבודות עפר</b> (פרק ט'). סולמות עוד לא הועלו (לפי המסך). <span class="ltr muted">01:52:15</span></li>
+    <li>ב<b>אוקטובר עודכנו 3 תקנות</b> (עבודות בנייה, עבודה בגובה, הדרכה ומסירת מידע): השאלות יותאמו. "עבודה בגובה" עוד לא נלמדה. <span class="ltr muted">01:52:15</span> <span class="ltr muted">00:08:01</span></li>
+    <li>למשל: סף התכנית ל<b>פיגום זקפים</b> ירד מ-30 מ' ל-<b>25 מ'</b> (גם במסמך שהוצג). <span class="ltr muted">01:55:47</span></li>
+    <li>בנק בתשלום (כ-400 ₪, כפי שנשמע): יש הבדלים בתשובות. הבנק של המרצה <b>חינם</b>. חסר או שגוי? <b>"להרים דגל"</b>. עצה (נשמעה חלקית): להישאר עם <b>מקור אחד</b>. <span class="ltr muted">01:56:02</span> <span class="ltr muted">01:56:23</span></li>
+    <li>מבחנים פתורים (מגן ומה"ט) עולים <b>באותו ערב</b> אם אפשר, אחרת למחרת. קודם <b>להסתכל איך פתרון נראה</b>, ואז לתרגל. <span class="ltr muted">01:59:21</span></li>
+  </ul>
+
+  <h3>תמצית החומר ודפי עזר <span class="time">⏱ 01:59:43</span></h3>
+  <ul class="pts">
+    <li><b>מכינים שני דפי עזר אישיים</b> מהתמצית. דפים מוכנים של אחרים: "עסקה חולה" (כך נשמע). <span class="ltr muted">01:59:47</span></li>
+  </ul>
+  <div class="grid3" style="margin:2mm 0 3mm;text-align:start">
+    <div class="card" style="padding:1.5mm 2.5mm">🟩 <b>ירוק</b>: עודכן לתקנות החדשות</div>
+    <div class="card" style="padding:1.5mm 2.5mm">🟨🟥 <b>צהוב-אדום</b>: הופיע במה"ט</div>
+    <div class="card" style="padding:1.5mm 2.5mm">🟪 <b>סגול</b>: אילו תקנות מחייבות</div>
+  </div>
+  <ul class="pts">
+    <li>דוגמה לעדכון (ירוק): בשלט האתר נוספה, מחצות 15/16 באוקטובר, חובה לרשום גם את <b>שם מנהל האתר</b> ואת <b>שם בקר הבטיחות</b>. <span class="ltr muted">02:00:06</span></li>
+    <li>ליד כל נתון כתובה <b>כתובת התקנה</b>. אם נשמעים מספרים שונים, פותחים את התקנה וקוראים. <span class="ltr muted">02:01:52</span></li>
+  </ul>
+
+  <div class="box announce"><div class="box-title">קורסים נוספים <span class="ltr muted">00:27:41</span></div>
+    <ul class="pts">
+      <li><b>"סיכוני בטיחות בבנייה"</b>: תעודה שנותנת ידע על בנייה. <b>"נאמן בטיחות"</b>: כ-80 עד 85 אחוז מהקורס מתאימים לחומר (הוא כללי: מכללה, מלון, מפעל). למה: <b>תעודה נוספת</b> לקורות החיים, וידע.</li>
+      <li>מספיק <b>להראות</b> למרצה שהקורס בוצע, אין צורך לשלוח. <span class="ltr muted">00:27:22</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ REMEMBER ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">🧠</span><h2>לזכור</h2></div>
+  <div class="bl"><b>4:1</b> ← <b>76°</b>. מגובה ← אורך הסולם. מאורך ← גובה (<b><span class="ltr">× 0.97</span></b>), מרחק (<b><span class="ltr">× 0.24</span></b>).</div>
+  <ul class="pts">
+    <li>יחס סולם בתקנות: <b>4:1</b> (אנכי : אופקי) ← \({\tan\alpha = 4}\) ← <b>76°</b> (75.96°).</li>
+    <li>אנכי <b><span class="ltr">÷ 4</span></b> = אופקי. אופקי <b><span class="ltr">× 4</span></b> = אנכי.</li>
+    <li>נתון <b>גובה מבנה</b>: \({b = a \div 4}\), פיתגורס, <b>+ 1 מ'</b>, וכותבים <b>"לפחות"</b>.</li>
+    <li>נתון <b>מרחק מהקיר</b>: \({a = 4b}\), ומשם אותו דבר.</li>
+    <li><b>לא מעגלים כלפי מטה.</b> סולמות מיוצרים ב-<b>5</b>, <b>5.5</b> או <b>6</b> מ' (כפי שנאמר).</li>
+    <li>נתון <b>אורך הסולם</b>: גובה \({a = c \times \sin 76^\circ}\) (0.97), מרחק \({b = c \times \cos 76^\circ}\) (0.24). <b>בלי מטר נוסף.</b></li>
+    <li><b>סינוס ← למעלה</b> (גובה). <b>קוסינוס ← למטה</b> (מרחק).</li>
+    <li><b>בדיקה</b>: גובה ÷ מרחק ≈ <b>4</b>. אם לא ← <b>טעות</b> באחד מהם.</li>
+    <li>"<b>נתון מיותר</b>" (חזית 8 או 28 מ'): רק מראה שהסולם לא עובר את הגג.</li>
+    <li>שאלת מה"ט: לקרוא <b>פעמיים</b>. "גלריה" = מבנה בגובה.</li>
+    <li>לא ללמוד שבוע לפני: <b>להתחיל עכשיו</b>.</li>
+  </ul>
+
+  <div class="box formula"><div class="box-title">סעיף 40 בתמצית: "על פי התקנות" (מהמסך) <span class="ltr muted">02:02:43</span></div>
+    <p><b>זווית סולם</b>: יחס \({4 : 1}\) (אנכי : אופקי), זווית \({76^\circ}\) (\({75.96^\circ}\)), \({\tan = 4}\), \({\sin = 0.97}\), \({\cos = 0.24}\).</p>
+    <p><b>שיפוע יציאה מחפירה</b>: יחס \({1 : 1.5}\), זווית \({34^\circ}\) (\({33.69^\circ}\)).</p>
+  </div>
+
+  <h3>מספרים לזכור (לדפי העזר)</h3>
+  <table class="t">
+    <tr><th>מה</th><th>המספר</th><th>⏱</th></tr>
+    <tr><td>מדרכה פשוטה</td><td><b>1:4</b> ← 0.25 ← 14° (מהשיעור הקודם)</td><td class="ltr">00:09:52</td></tr>
+    <tr><td>מדרכה עם שלבים, יציאה מחפירה</td><td><b>1:1.5</b> ← 0.667 ← 34°</td><td class="ltr">01:05:37</td></tr>
+    <tr><td>גלריה 7 מ', בלי מעקה</td><td><b>8.22 מ'</b> לפחות (חושב בסיכום)</td><td class="ltr">00:39:05</td></tr>
+    <tr><td>סולם 5.5 מ'</td><td>גובה <b>5.33</b> מ' (במחשבון 5.34), מרחק <b>1.33</b> מ'</td><td class="ltr">01:11:22</td></tr>
+  </table>
+</section>
+
+<!-- ============ QUESTIONS ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">❓</span><h2>שאלות חזרה</h2></div>
+  <div class="bl">לענות בלי להציץ. התשובות בעמוד הבא.</div>
+  <ol class="quiz">
+    <li>מה יחס הסולם בתקנות, ואיזו זווית הוא נותן? <span class="lvl">קל</span></li>
+    <li>מה ההבדל בין 4:1 ל-1:4? <span class="lvl">קל</span></li>
+    <li>למה מוסיפים 1 מ' לאורך הסולם (בסולם פשוט)? <span class="lvl">קל</span></li>
+    <li>סינוס מוביל לגובה או למרחק? ומה עם קוסינוס? <span class="lvl">קל</span></li>
+    <li>מבנה בגובה 6 מ'. מה אורך הסולם? <span class="lvl">בינוני</span></li>
+    <li>הזקפים הורחקו 2.5 מ' מהקיר. מה אורך הסולם? <span class="lvl">בינוני</span></li>
+    <li>למה כותבים "לפחות"? לתת דוגמה. <span class="lvl">בינוני</span></li>
+    <li>חזית 8 מ', סולם 5.5 מ'. למה לא מחלקים את ה-8 ב-4? <span class="lvl">בינוני</span></li>
+    <li>סולם באורך 6 מ'. באיזה גובה הוא נוגע, ומה המרחק מהקיר? <span class="lvl">בינוני</span></li>
+    <li>גלריה בגובה 7 מ' ללא מעקה. מה אורך הסולם? <span class="lvl">בינוני</span></li>
+    <li>איך מגיעים ל-76° מהיחס 4:1? <span class="lvl">מאתגר</span></li>
+    <li>חושבו לסולם 6.5 מ' גובה 6.31 מ' ומרחק 2.1 מ'. האם זה סביר? אם לא, מה הנכון? <span class="lvl">מאתגר</span></li>
+  </ol>
+</section>
+
+<!-- ============ ANSWERS ============ -->
+<section class="topic">
+  <div class="topic-head"><span class="n">✅</span><h2>תשובות</h2></div>
+  <ol class="answers">
+    <li><b>4:1</b> (אנכי : אופקי). הזווית \({76^\circ}\) (75.96°).</li>
+    <li><b>4:1</b> הוא סולם: תלול (76°). <b>1:4</b> הוא מדרכה פשוטה: מתונה (14°).</li>
+    <li>הסולם <b>בולט מעל המעקה</b>: המטר הוא המאחז לעלייה לגג.</li>
+    <li>סינוס ← <b>גובה</b> (למעלה): \({a = c\sin\alpha}\). קוסינוס ← <b>מרחק</b> (למטה): \({b = c\cos\alpha}\).</li>
+    <li>\({b = 6 \div 4 = 1.5}\); \({c = \sqrt{36 + 2.25} = \sqrt{38.25} = 6.18}\); \({L = 6.18 + 1 = 7.18\ \text{m}}\) <b>לפחות</b>.<br>בדיקה: \({6 &lt; 6.18 &lt; 7.5}\) ✓</li>
+    <li>\({a = 4 \times 2.5 = 10}\); \({c = \sqrt{100 + 6.25} = \sqrt{106.25} = 10.31}\); \({L = 11.31\ \text{m}}\) <b>לפחות</b>.<br>בדיקה: \({10 \div 2.5 = 4}\) ✓</li>
+    <li>מידות מיוצרות הן <b>קבועות</b>: סולם 5.12 מ' לא קיים (5, 5.5, 6). מוט 12 מ"מ לא קיים ← 13 או 14. "לפחות" = אם אין, לוקחים <b>מידה גדולה יותר</b>.</li>
+    <li>הסולם (5.5 מ') <b>קצר מהקיר</b> ונשען מתחת לגג. גם אם החזית הייתה 14 מ' או יותר, הסולם היה נוגע <b>באותו גובה</b>. ה-8 הוא נתון מיותר.</li>
+    <li>\(a = 6 \times \sin 76^\circ = 6 \times 0.9703 = \mathbf{5.82}\ \text{m}\); \(b = 6 \times \cos 76^\circ = 6 \times 0.2419 = \mathbf{1.45}\ \text{m}\).<br>בדיקה: \({5.82 \div 1.45 = 4.01}\) ✓</li>
+    <li>\({b = 7 \div 4 = 1.75}\); \({c = \sqrt{49 + 3.0625} = 7.22}\); \({L = 7.22 + 1 = 8.22\ \text{m}}\) <b>לפחות</b>.<br>בדיקה: \({7 &lt; 7.22 &lt; 8.75}\) ✓</li>
+    <li>\({\tan\alpha = a \div b = 4 \div 1 = 4}\). Shift + tan: \({\alpha = \tan^{-1}(4) = 75.96^\circ \approx 76^\circ}\).</li>
+    <li>\({6.31 \div 2.1 = 3.0 \neq 4}\) ← <b>לא סביר</b>: טעות במרחק. הנכון: \(6.5 \times \cos 76^\circ = 6.5 \times 0.2419 = 1.57\ \text{m}\). בדיקה: \({6.31 \div 1.57 = 4.0}\) ✓</li>
+  </ol>
+
+  <h3>📖 מילון מונחים</h3>
+  <dl class="glossary">
+    <dt>סולם</dt><dd>נשען ביחס 4:1, זווית 76° (לפי השיעור).</dd>
+    <dt>זקפים</dt><dd>שני העמודים הארוכים של הסולם. מרחק הזקפים התחתונים מהקיר = האופקי b.</dd>
+    <dt>חזית</dt><dd>קיר המבנה שהסולם נשען עליו.</dd>
+    <dt>מעקה</dt><dd>מעקה הגנה בקצה הגג או הגלריה. הסולם בולט מעליו מטר ("1 מ' שמעל המעקה" בלוח): המאחז.</dd>
+    <dt>יתר (c)</dt><dd>הצלע הארוכה במשולש ישר-זווית. הסולם עצמו, לפני המטר הנוסף.</dd>
+    <dt>אנכי (a), אופקי (b)</dt><dd>גובה הנגיעה על הקיר, והמרחק מהקיר על הרצפה.</dd>
+    <dt>משפט פיתגורס</dt><dd>\({a^2 + b^2 = c^2}\): מוצא את היתר.</dd>
+    <dt>טנגנס (tan)</dt><dd>\({a \div b}\), היחס אנכי : אופקי. Shift + tan נותן את הזווית.</dd>
+    <dt>סינוס (sin)</dt><dd>\({a \div c}\). בסולם: מוביל לגובה (למעלה). \({\sin 76^\circ = 0.97}\).</dd>
+    <dt>קוסינוס (cos)</dt><dd>\({b \div c}\). בסולם: מוביל למרחק (למטה). \({\cos 76^\circ = 0.24}\).</dd>
+    <dt>"על פי התקנות"</dt><dd>כשחסר נתון, לוקחים את הערך מהתקנות: סולם 4:1 (76°); יציאה מחפירה 1:1.5 (34°). הערכים לפי השיעור.</dd>
+    <dt>"לפחות"</dt><dd>מילת ביטחון. אם המידה לא מיוצרת, לוקחים גדולה יותר.</dd>
+    <dt>מה"ט</dt><dd>המכון הממשלתי להכשרה בטכנולוגיה ובמדע. עורך את מבחני ההסמכה להנדסאים.</dd>
+    <dt>גלריה</dt><dd>מפלס גבוה בתוך מבנה. לחישוב: "מבנה בגובה".</dd>
+    <dt>נתון מיותר</dt><dd>מספר בשאלה שלא משתמשים בו (גובה החזית 8 מ').</dd>
+    <dt>ציון מגן</dt><dd>ציון פנימי שנצבר מנקודות (תעודות, מבחנים, עבודה). לפי השיעור, עד 90.</dd>
+    <dt>דפי עזר</dt><dd>שני דפים שמכינים לבד מתוך "תמצית החומר", למבחן.</dd>
+  </dl>
+
+  <div class="box unclear"><div class="box-title">לא היה ברור בהקלטה</div>
+    <ul class="pts" style="font-size:10pt;line-height:1.5">
+      <li><span class="ltr">00:06:41</span> — <b>מבחן האמצע</b>: איזה מבחן נמשך 4 שעות ואיזה "מבחן פשוט" שעתיים (בהארכה: 5 ו-2.5)? "לפניו מבחן אמצע נוסף שלי": המשפט לא ברור.</li>
+      <li><span class="ltr">00:33:41</span> — <b>העלייה לגג</b> (נושא 3): המשפטים על האחיזה וההסתובבות נשמעו חלקית. הפרשנות לפי ההקשר.</li>
+      <li><span class="ltr">00:35:50</span> עד <span class="ltr">00:38:10</span> — <b>שאלת 1.25 מ'</b>: תשובות הכיתה לא נשמעו (אולי "8"). 6.15 מ' חושב בסיכום.</li>
+      <li><span class="ltr">00:39:45</span> עד <span class="ltr">00:41:20</span> — <b>שאלת הגלריה</b>: אין פתרון ברור בהקלטה, ו"יש סעיפים ... שנראה אחר כך" לא ברור. בסיכום של שיעור 18/10 (<span class="ltr">01:01:53</span>) מופיעה אותה דוגמה, עם כ-8.22 מ'. המטר הנוסף נלמד גם מההסבר ב-<span class="ltr">00:44:24</span>. מקרה "עם מעקה" לא נדון.</li>
+      <li><span class="ltr">00:45:12</span> — <b>"גג גזבזט"</b>: המילה לפני "או גג של מכלית" לא ברורה (אולי גזיבו).</li>
+      <li><span class="ltr">01:05:44</span> — <b>"מה"ט החליט להשתגע"</b>: נשמעו 7.5 מ' ו-4.5 מ' סולם. לא ברור מה הנתון החדש.</li>
+      <li><span class="ltr">01:18:17</span>, <span class="ltr">01:22:40</span> — <b>הצעה מהכיתה</b> למשולש 90°/30°, ודוגמה "סולם 7.5 מ', חזית 20 מ', תשובה 1.3": לא ברורות.</li>
+      <li><span class="ltr">01:32:29</span> — <b>סעיף "עד איזה גובה עומדים על הסולם"</b> (5.5 ← 4.5, שתי נקודות): נשמע חלקית. <span class="ltr">01:34:04</span> עד <span class="ltr">01:44:00</span>: התלמידים עבדו ודיברו, כמעט לא נשמע.</li>
+      <li><span class="ltr">01:47:53</span> — <b>תאריך מבחן האמצע</b>: בהקלטה "3 בדצמבר". במסמך שהוצג: כיתות יום (ג׳ + ד׳) <span class="ltr">29.11.2026</span> בשעה <span class="ltr">11:30</span>, כיתות ערב (ה׳ + ו׳) <span class="ltr">03.12.2026</span> בשעה <span class="ltr">17:00</span>. לברר לאיזו קבוצה הכיתה שייכת.</li>
+      <li><span class="ltr">01:49:51</span> עד <span class="ltr">01:51:08</span> — <b>"לא נותן מעל 90"</b>, ו"אם ציון המגן גבוה ב-20 מציון מה"ט, המגן לא עוזר": לא ברור. <span class="ltr">01:56:02</span>: שם הבנק בתשלום לא ברור.</li>
+      <li><span class="ltr">02:00:28</span> — <b>משמעות הצהוב</b> (לבד): נשמע שהוא מסמן חומר שכבר עברו עליו עם כיתה אחרת. לא ברור.</li>
+      <li><b>לא נדון בשיעור</b>: המטר הנוסף נמדד לאורך הסולם, והשלכתו האנכית כ-0.97 מ'. שווה לשאול.</li>
+    </ul>
+  </div>
+</section>
+
+</body>
+</html>
